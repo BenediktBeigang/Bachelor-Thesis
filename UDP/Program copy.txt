@@ -1,0 +1,45 @@
+﻿using System.Timers;
+
+public class Program
+{
+    public static UDP? udpConnection;
+    private static System.Timers.Timer? timer;
+
+    public static void Main(string[] args)
+    {
+        udpConnection = new UDP();
+        try
+        {
+            udpConnection.ReceiveUDP();
+            udpConnection.ConnectToESP();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Following error occured: {e}");
+            udpConnection.IsListening = false;
+        }
+
+        ConsoleLoop();
+        while (true) { };
+    }
+
+    public static void ConsoleLoop()
+    {
+        timer = new System.Timers.Timer(1000);
+        timer.Elapsed += PrintConsole!;
+        timer.AutoReset = true;
+        timer.Enabled = true;
+    }
+
+    public static void PrintConsole(object sender, ElapsedEventArgs e)
+    {
+        Console.Clear();
+        char leftNode = (udpConnection!.NodeLeftConnected) ? 'x' : ' ';
+        char rightNode = (udpConnection!.NodeRightConnected) ? 'x' : ' ';
+        Console.WriteLine("---Connected Nodes---");
+        Console.WriteLine("Left | Right ");
+        Console.WriteLine($"  {leftNode}  |   {rightNode}");
+        Console.WriteLine();
+        Console.WriteLine(udpConnection.LastPackage);
+    }
+}

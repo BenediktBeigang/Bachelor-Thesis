@@ -1,0 +1,25 @@
+#ifndef INCLUDES_H
+#define INCLUDES_H
+
+#include <Arduino.h>
+#include "Wire.h"
+// #include "Gyroscope/Gyro.h"
+#include <Gyroscope/Gyro.h>
+
+#include <WiFi.h>
+#include <WiFiUdp.h>
+#include <WiFiManager.h>
+
+// #include "Communication/UDPSending.h"
+#include <Communication/UDPSending.h>
+
+// #include "Helper/Hex.h"
+// #include "Helper/Hex.h"
+// #include "Helper/Conversion.h"
+// #include "Helper/Enums.h"
+#include <Helper/Hex.h>
+#include <Helper/Hex.h>
+#include <Helper/Conversion.h>
+#include <Helper/Enums.h>
+
+#endif

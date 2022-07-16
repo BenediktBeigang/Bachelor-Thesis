@@ -1,0 +1,57 @@
+// #include <string>
+// #include "WiFi.h"
+// #include "Enums.h"
+
+// using namespace std;
+
+// class Communication
+// {
+// private:
+//     CommunicationType communicationType;
+
+// public:
+//     Communication(CommunicationType type)
+//     {
+//         communicationType = type;
+//         switch (communicationType)
+//         {
+//         case WiFi:
+//             ConnectWithWiFi();
+//             break;
+//         case Bluetooth:
+//             ConnectWithBluetooth();
+//             break;
+//         case EspNow:
+//             ConnectWithEspNow();
+//             break;
+//         }
+//     }
+
+//     void SendInformation(string data)
+//     {
+//         switch (communicationType)
+//         {
+//         case WiFi:
+//             SendWithWiFi(data);
+//             break;
+//         case Bluetooth:
+//             SendWithBluetooth(data);
+//             break;
+//         case EspNow:
+//             SendWithEspNow(data);
+//             break;
+//         }
+//     }
+
+//     void ConnectWithWiFi(){};
+
+//     void ConnectWithEspNow(){};
+
+//     void ConnectWithBluetooth(){};
+
+//     void SendWithWiFi(string data){};
+
+//     void SendWithEspNow(string data){};
+
+//     void SendWithBluetooth(string data){};
+// };

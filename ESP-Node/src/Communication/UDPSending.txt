@@ -1,0 +1,162 @@
+#include <WiFi.h>
+#include <WiFiUdp.h>
+#include <WiFiManager.h>
+#include "Helper/Hex.h"
+#include "Helper/Conversion.h"
+
+const char *WIFI_MANAGER_NAME = "AutoConnectAP";
+const char *WIFI_MANAGER_PASSWORD = "Benedikt";
+
+IPAddress ESP_IP;
+uint16_t ESP_PORT = 11000;
+
+IPAddress HOST_IP;
+uint16_t HOST_PORT;
+
+WiFiUDP UDP;
+char receivingPacketBuffer[16];
+uint16_t PackageId = 0;
+
+const uint8_t BROADCAST_REPLY[] = {'I', ' ', 'a', 'm', ' ', 't', 'h', 'e', ' ', 'l', 'e', 'f', 't', ' ', 'N', 'o', 'd', 'e'};
+
+int status = WL_IDLE_STATUS;
+int keyIndex = 0;
+
+WiFiManager wifiManager;
+
+void PrintConnection()
+{
+    Serial.println("Connected to Host!");
+    Serial.print("ESP_IP: ");
+    Serial.println(ESP_IP);
+    Serial.print("ESP_PORT: ");
+    Serial.println(ESP_PORT);
+    Serial.println("----------");
+    Serial.print("HOST_IP: ");
+    Serial.println(HOST_IP);
+    Serial.print("HOST_PORT: ");
+    Serial.println(HOST_PORT);
+}
+
+void PrintRecivedPacket(int packetSize)
+{
+    Serial.print("Received packet of size ");
+    Serial.println(packetSize);
+    Serial.print("From ");
+    IPAddress remoteIp = UDP.remoteIP();
+    Serial.print(remoteIp);
+    Serial.print(", port ");
+    Serial.println(UDP.remotePort());
+}
+
+void UDPSend(const uint8_t *buffer, size_t size)
+{
+    Serial.println("Start sending reply");
+
+    UDP.beginPacket(HOST_IP, HOST_PORT);
+    Serial.println("1");
+    UDP.write(buffer, size);
+    Serial.println("2");
+    UDP.endPacket();
+    Serial.println("3");
+
+    // TODO: loop nicht vergessen
+    PackageId++;
+}
+
+void UDP_Reply()
+{
+    UDP.beginPacket(HOST_IP, HOST_PORT);
+    UDP.write(BROADCAST_REPLY, 18);
+    UDP.endPacket();
+    Serial.print(".");
+}
+
+void SendMessageWithUDP(String message, u_int16_t size)
+{
+    uint8_t buffer[size];
+    StringToInt8Array(message, size, buffer);
+    const uint8_t finalbuffer[] = {'T', 'e', 's', 't'}; // (uint8_t *)finalbuffer;
+    UDPSend(finalbuffer, size);
+}
+
+// void SendDataWithUDP(int16_t gyroValue)
+// {
+//     String hexData = ToHex_5Digits(gyroValue);
+//     int16_t size = 8;
+//     uint8_t buffer[size];
+//     StringToInt8Array(ToHex_3Digits(PackageId) + hexData, size, buffer);
+//     UDPSend(buffer, size);
+// }
+
+bool IsMessageFromHost()
+{
+    String expectedHostMessage = "Searching Nodes";
+    for (int i = 0; i < expectedHostMessage.length(); i++)
+    {
+        if (receivingPacketBuffer[i] != expectedHostMessage.charAt(i))
+            return false;
+    }
+    return true;
+}
+
+void WiFi_Manager_Setup()
+{
+    // WiFi.mode(WIFI_STA);
+    // wifiManager.resetSettings();
+    bool IsConnected = wifiManager.autoConnect(WIFI_MANAGER_NAME, WIFI_MANAGER_PASSWORD);
+
+    if (!IsConnected)
+    {
+        Serial.println("Failed to connect to Network");
+        // ESP.restart();
+    }
+    else
+    {
+        Serial.println("Connected to Network!");
+    }
+    UDP.begin(ESP_PORT);
+    // ESP_IP = WiFi.localIP();
+}
+
+bool LinkWithHost()
+{
+    try
+    {
+        int packetSize = UDP.parsePacket();
+        if (packetSize)
+        {
+            PrintRecivedPacket(packetSize);
+
+            // read the packet into receivingPacketBuffer
+            int len = UDP.read(receivingPacketBuffer, 16);
+            if (len > 0)
+            {
+                receivingPacketBuffer[len] = 0;
+            }
+
+            Serial.println("\nContent:\n----------\n");
+            Serial.println(receivingPacketBuffer);
+            Serial.println("\n----------\n");
+
+            if (IsMessageFromHost())
+            {
+                HOST_IP = UDP.remoteIP();
+                HOST_PORT = UDP.remotePort();
+                // SendMessageWithUDP("I am the left Node", 18);
+                // UDPSend(message, 18);
+                Serial.println("Sent Reply");
+                UDP_Reply();
+                // SendMessageWithUDP("I am the left Node", 18);
+                PrintConnection();
+                return true;
+            }
+            Serial.println("Received Packet that was not from Host.");
+        }
+    }
+    catch (int i)
+    {
+        Serial.println("Could not connect to Host.");
+    }
+    return false;
+}

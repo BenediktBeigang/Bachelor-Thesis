@@ -1,0 +1,137 @@
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Timers;
+
+public class UDP
+{
+    private UdpClient udpClient;
+    const int PORT = 11000;
+
+    private IPEndPoint? NodeLeftAddress;
+    private IPEndPoint? NodeRightAddress;
+
+    public bool NodeLeftConnected { get; set; }
+    public bool NodeRightConnected { get; set; }
+
+    private System.Timers.Timer timer;
+    public bool IsListening { get; set; }
+
+    public string LastPackage { get; set; }
+
+    public UDP()
+    {
+        NodeLeftConnected = false;
+        NodeRightConnected = false;
+        IsListening = false;
+        LastPackage = "";
+        EmptyLastPackage();
+        timer = new System.Timers.Timer(1000);
+        udpClient = new UdpClient();
+        IPEndPoint client = new IPEndPoint(IPAddress.Any, PORT);
+        udpClient.Client.Bind(client);
+    }
+
+    public void ConnectToESP()
+    {
+        timer.Elapsed += TimerOnElapsed!;
+        timer.AutoReset = true;
+        timer.Enabled = true;
+        Console.Write("Nodes connecting");
+    }
+
+    private void TimerOnElapsed(object sender, ElapsedEventArgs e)
+    {
+        // Console.Write(".");
+        SendUDP();
+    }
+
+    public void SendUDP()
+    {
+        udpClient.EnableBroadcast = true;
+        var data = Encoding.UTF8.GetBytes("Searching Nodes");
+        udpClient.Send(data, data.Length, "255.255.255.255", PORT);
+        udpClient.EnableBroadcast = false;
+    }
+
+    public Task ReceiveUDP()
+    {
+        IsListening = true;
+        var task = Task.Run(() =>
+            {
+                Console.WriteLine("UDP is listening!");
+                while (IsListening)
+                {
+                    IPEndPoint anyIP = new IPEndPoint(IPAddress.Any, PORT);
+                    byte[] buffer = udpClient.Receive(ref anyIP);
+                    if (buffer.Length > 0)
+                        HandleIncomingPackage(buffer, anyIP.Address);
+                }
+                Console.WriteLine("UDP is not listening!");
+            });
+        return task;
+    }
+
+    private void HandleIncomingPackage(byte[] buffer, IPAddress clientAddress)
+    {
+        string receivedString = System.Text.Encoding.UTF8.GetString(buffer);
+        UpdateLastPackage(clientAddress, receivedString);
+
+        switch (receivedString)
+        {
+            case "I am the left Node":
+                NewNode(ref NodeLeftAddress!, clientAddress);
+                break;
+
+            case "I am the right Node":
+                NewNode(ref NodeRightAddress!, clientAddress);
+                break;
+
+            default:
+                NewData(receivedString, clientAddress);
+                break;
+        }
+    }
+
+    private void NewData(string data, IPAddress clientAddress)
+    {
+        NodeType type = GetNodeType(clientAddress);
+        if (type is NodeType.Nothing) return;
+        string place = data.Substring(0, 3);
+        string wheel = data.Substring(3, 5);
+        if (type is NodeType.Left) Console.WriteLine($"Left: {place} | {wheel}");
+        if (type is NodeType.Right) Console.WriteLine($"Right: {place} | {wheel}");
+    }
+
+    private void NewNode(ref IPEndPoint node, IPAddress address)
+    {
+        node = new IPEndPoint(address, PORT);
+        NodeLeftConnected = NodeLeftAddress is not null;
+        NodeRightConnected = NodeRightAddress is not null;
+    }
+
+    private NodeType GetNodeType(IPAddress address)
+    {
+        if (address == NodeLeftAddress!.Address) return NodeType.Left;
+        if (address == NodeRightAddress!.Address) return NodeType.Right;
+        return NodeType.Nothing;
+    }
+
+    private void UpdateLastPackage(IPAddress? clientAddress, string data)
+    {
+        LastPackage =
+            "---Last Received Package--- \n"
+            + $"Client IP: {clientAddress}\n"
+            + $"Data: {data}\n"
+            + $"Time: {DateTime.Now}";
+    }
+
+    private void EmptyLastPackage()
+    {
+        LastPackage =
+            "---Last Received Package--- \n"
+            + $"Client IP:\n"
+            + $"Data:\n"
+            + $"Time:";
+    }
+}

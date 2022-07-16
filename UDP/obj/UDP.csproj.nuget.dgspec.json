@@ -1,0 +1,80 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\bened\\Meine Ablage\\Studium\\Semester\\Semester 6\\Bachelor Arbeit\\Software\\UDP\\UDP.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\bened\\Meine Ablage\\Studium\\Semester\\Semester 6\\Bachelor Arbeit\\Software\\UDP\\UDP.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\bened\\Meine Ablage\\Studium\\Semester\\Semester 6\\Bachelor Arbeit\\Software\\UDP\\UDP.csproj",
+        "projectName": "UDP",
+        "projectPath": "C:\\Users\\bened\\Meine Ablage\\Studium\\Semester\\Semester 6\\Bachelor Arbeit\\Software\\UDP\\UDP.csproj",
+        "packagesPath": "C:\\Users\\bened\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\bened\\Meine Ablage\\Studium\\Semester\\Semester 6\\Bachelor Arbeit\\Software\\UDP\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\bened\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "WebSocket4Net": {
+              "target": "Package",
+              "version": "[0.15.2, )"
+            },
+            "WebSocketSharp": {
+              "target": "Package",
+              "version": "[1.0.3-rc11, )"
+            },
+            "Websocket.Client": {
+              "target": "Package",
+              "version": "[4.4.43, )"
+            },
+            "esegece.sgcWebSockets": {
+              "target": "Package",
+              "version": "[2022.6.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
