@@ -3,36 +3,19 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
-// using WebSocketSharp;
-// using WebSocket4Net;
-// using esegece.sgcWebSockets;
 using Websocket.Client;
 
 public class WiFi
 {
-    private IPEndPoint LeftNodeEndPoint;
-    private IPEndPoint RightNodeEndPoint;
-
-    public bool LeftNodeConnected { get; set; }
-    public bool RightNodeConnected { get; set; }
-
-    // public WebSocket socket { get; set; }
-    // public TsgcWebSocketClient socket;
+    private IPEndPoint LeftNodeEndPoint = new IPEndPoint(new IPAddress(0), 0);
+    private IPEndPoint RightNodeEndPoint = new IPEndPoint(new IPAddress(0), 0);
 
     private UdpClient udpClient;
     public bool IsListening { get; set; }
     const int CLIENT_PORT = 11000;
     const int WEBSOCKET_PORT = 81;
 
-    public string LastMessage { get; set; }
-    public int GyroValue { get; set; }
-
-    public struct Received
-    {
-        public IPEndPoint Sender;
-        public string Message;
-        public override string ToString() => $"IP: {Sender.Address.ToString()}\nPORT: {Sender.Port}\nMessage: {Message}\n";
-    }
+    private WebsocketClient client;
 
     public WiFi()
     {
@@ -42,10 +25,17 @@ public class WiFi
         udpClient.Client.Bind(client);
     }
 
-    public async void ConnectToHost()
+    public void ConnectToHost()
+    {
+        Thread receiveThread = new Thread(new ThreadStart(this.ReceiveThread));
+        receiveThread.IsBackground = true;
+        receiveThread.Start();
+    }
+
+    private async void ReceiveThread()
     {
         IsListening = true;
-        Console.WriteLine("UDP is listening!");
+        GlobalData.LastMessage = "UDP is listening!";
         while (IsListening)
         {
             var result = await udpClient.ReceiveAsync();
@@ -54,8 +44,7 @@ public class WiFi
                 Message = Encoding.ASCII.GetString(result.Buffer, 0, result.Buffer.Length),
                 Sender = result.RemoteEndPoint
             };
-            Console.WriteLine("Packet Received:");
-            Console.WriteLine(received.ToString());
+            GlobalData.LastMessage = $"Packet Received:\n{received.ToString()}";
             HandleIncomingPackage(received);
         }
     }
@@ -76,38 +65,21 @@ public class WiFi
     private void NewNode(ref IPEndPoint nodeEndPoint_variable, Received package)
     {
         string url = WebSocketURL(package);
-        Console.WriteLine($"Try to connect to Web-Socket:\n{url}\n");
+        GlobalData.LastMessage = $"Try to connect to Web-Socket:\n{url}";
         nodeEndPoint_variable = package.Sender;
         ConnectToWebSocketServer(url);
     }
 
     private void ConnectToWebSocketServer(string serverURL)
     {
-        // socket = new WebSocket(serverURL);
-        // socket.OnMessage += WebSocket_OnMessage;
-        // socket.Connect();
-
-        // socket.OnMessage = WebSocket_OnMessage;
-        // socket.MessageReceived += WebSocket_OnMessage;
-        // socket.Open();
-        //----------------------------------------------------
-        // TsgcWebSocketClient socket = new TsgcWebSocketClient();
-        // // socket.Host = "ws://192.168.2.116";
-        // // socket.Port = 81;
-        // socket.URL = serverURL;
-        // socket.OnConnect += WebSocket_OnConnect;
-        // socket.OnMessage += WebSocket_OnMessage;
-
-        // socket.Active = true;
-        //----------------------------------------------------
         var exitEvent = new ManualResetEvent(false);
         var url = new Uri(serverURL);
 
-        using (var client = new WebsocketClient(url))
+        using (client = new WebsocketClient(url))
         {
             client.ReconnectTimeout = TimeSpan.FromSeconds(30);
             client.ReconnectionHappened.Subscribe(info =>
-                Console.WriteLine($"Host>> Reconnection happened, type: {info.Type}\n"));
+                GlobalData.LastMessage = $"Host>> Reconnection happened, type: {info.Type}\n");
 
             client.MessageReceived.Subscribe(msg => WebSocket_OnMessage(msg.Text));
             client.Start();
@@ -118,53 +90,47 @@ public class WiFi
         }
     }
 
-    // private void WebSocket_OnInfo(ReconnectionType info)
-    // {
-    //     switch (info)
-    //     {
-    //         case ReconnectionType.Lost:
-    //             Console.WriteLine("Host>> Connection Lost\n");
-    //             LeftNodeConnected = false;
-    //             break;
-    //     }
-    // }
-
     private void WebSocket_OnMessage(string message)
     {
         switch (message)
         {
             case "L Connected":
-                Console.WriteLine("Client>> Left Node Connected\n");
-                LeftNodeConnected = true;
+                GlobalData.LastMessage = "Client>> Left Node Connected";
+                GlobalData.LeftNodeConnected = true;
                 break;
             case "R Connected":
-                Console.WriteLine("Client>> Right Node Connected\n");
-                RightNodeConnected = true;
+                GlobalData.LastMessage = "Client>> Right Node Connected";
+                GlobalData.RightNodeConnected = true;
                 break;
             default:
-                char wheelside = message[0];
-                // char hi = message[1];
-                // char lo = message[2];
-                // int value = lo | hi << 8;
-
-                string value = "";
-                for (int i = 1; i < 7; i++)
-                {
-                    value = (message[i] == ' ') ? value : value + message[i];
-                }
-
-                LastMessage = message;
-                GyroValue = int.Parse(value);
-
-                // Console.WriteLine($"Host>> Message: {message}");
-                // Console.WriteLine($"Host>> Wheel: {value}");
-                // Console.WriteLine($"Message: {message}\nWheelside: {wheelside}\nHi: {(int)hi}\nLo: {(int)lo}");
-                // Console.WriteLine($"Host>> Length: {message.Length}\n");
+                HandleDataPackage(message);
                 break;
-
-                // Console.WriteLine($"Host>> Received from the server: {message}\nTime: {DateTime.Now}\n");
-                // break;
         }
+    }
+
+    private void HandleDataPackage(string message)
+    {
+        char wheelside = message[0];
+        // char hi = message[1];
+        // char lo = message[2];
+        // int value = lo | hi << 8;
+
+        string value = "";
+        for (int i = 1; i < 7; i++)
+        {
+            value = (message[i] == ' ') ? value : value + message[i];
+        }
+
+        switch (wheelside)
+        {
+            case 'L':
+                GlobalData.LeftValue = int.Parse(value);
+                break;
+            case 'R':
+                GlobalData.RightValue = int.Parse(value);
+                break;
+        }
+        GlobalData.LastMessage = message;
     }
 
     private string WebSocketURL(Received package)
@@ -172,5 +138,12 @@ public class WiFi
         string address = package.Sender.Address.ToString();
         string port = package.Sender.Port.ToString();
         return $"ws://{address}:{WEBSOCKET_PORT}/";
+    }
+
+    public void CloseWiFi()
+    {
+        if (client is not null)
+            client.Dispose();
+        IsListening = false;
     }
 }

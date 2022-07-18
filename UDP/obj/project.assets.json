@@ -3776,11 +3776,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\bened\\Meine Ablage\\Studium\\Semester\\Semester 6\\Bachelor Arbeit\\Software\\UDP\\UDP.csproj",
+      "projectUniqueName": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\UDP\\UDP.csproj",
       "projectName": "UDP",
-      "projectPath": "C:\\Users\\bened\\Meine Ablage\\Studium\\Semester\\Semester 6\\Bachelor Arbeit\\Software\\UDP\\UDP.csproj",
+      "projectPath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\UDP\\UDP.csproj",
       "packagesPath": "C:\\Users\\bened\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\bened\\Meine Ablage\\Studium\\Semester\\Semester 6\\Bachelor Arbeit\\Software\\UDP\\obj\\",
+      "outputPath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\UDP\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\bened\\AppData\\Roaming\\NuGet\\NuGet.Config",

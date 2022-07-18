@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1fCrAFIrGyKNPTNOobifb8DUxL4a9Y2w9HpEjMdH+qxZezHEC7fmyotiz83eTnteYXgCWf/spK23db5ze514WA==",
+  "dgSpecHash": "OK963NXK+xSfwKm9wAzVm7vR1Yjvtl5gvZFEPqxa0NPAR2XX5XeZGI8bt0d5sZ73xJzuXd8HA7WLdeqd0jg2rw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\bened\\Meine Ablage\\Studium\\Semester\\Semester 6\\Bachelor Arbeit\\Software\\UDP\\UDP.csproj",
+  "projectFilePath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\UDP\\UDP.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\bened\\.nuget\\packages\\esegece.sgcwebsockets\\2022.6.0\\esegece.sgcwebsockets.2022.6.0.nupkg.sha512",
     "C:\\Users\\bened\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
