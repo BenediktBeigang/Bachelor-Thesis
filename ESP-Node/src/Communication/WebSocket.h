@@ -2,6 +2,7 @@
 #include <WiFiClientSecure.h>
 #include <WebSocketsServer.h>
 #include <AsyncUDP.h>
+#include "Helper/Conversion.h"
 
 #define USE_SERIAL Serial1
 #define CLIENT_PORT 11000
@@ -14,13 +15,25 @@ int16_t TIME_BETWEEN_CONNECTION_CALLS = 5000;
 
 bool IsConnected = false;
 WebSocketsServer webSocket = WebSocketsServer(81);
+const int8_t DISCONNECT_MESSAGE[10] = {
+    68, 73, 83, 67, 79, 78, 78, 69, 67, 84};
 
 char intConversion[7];
 char data[8];
 
+char message[32];
+
 void Int16_To_CharArray(int16_t i)
 {
     sprintf(intConversion, "%6d", i);
+}
+
+void ClearMessage()
+{
+    for (int i = 0; i < 32; i++)
+    {
+        message[i] = 32;
+    }
 }
 
 void GetData(char wheelside, int16_t gyroValue)
@@ -35,6 +48,7 @@ void GetData(char wheelside, int16_t gyroValue)
 
 void SendGyroData(char wheelside, int16_t gyroValue)
 {
+    Serial.println(data);
     GetData(wheelside, gyroValue);
     webSocket.broadcastTXT(data);
 }
@@ -54,40 +68,59 @@ void ConnectToClient()
     }
 }
 
+bool IsDisconnect(uint8_t *payload, size_t length)
+{
+    if (length != 10)
+        return false;
+    for (int i = 0; i < 10; i++)
+    {
+        if (payload[i] != DISCONNECT_MESSAGE[i])
+            return false;
+    }
+    return true;
+}
+
 void WebSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
 {
     switch (type)
     {
     case WStype_DISCONNECTED:
-        USE_SERIAL.printf("[%u] Disconnected!\n", num);
         break;
     case WStype_CONNECTED:
     {
         webSocket.sendTXT(num, "L Connected");
         IsConnected = true;
-        Serial.println("\nConnection established");
-
-        IPAddress ip = webSocket.remoteIP(num);
-        Serial.print("Connected from: ");
-        Serial.println(ip);
+        Serial.print("\nConnection established from: ");
+        Serial.println(webSocket.remoteIP(num));
     }
     break;
+    case WStype_TEXT:
+        Serial.print("Client-Message: ");
+        Int8ArrayToCharArray(message, payload, length);
+        Serial.println(message);
+        if (IsDisconnect(payload, length))
+        {
+            webSocket.disconnect(num);
+            IsConnected = false;
+            Serial.print("Disconnected: Try to reconnect to Client");
+        }
+        break;
     }
 }
 
 void WebSocket_Setup(uint16_t espPort)
 {
-    USE_SERIAL.begin(115200);
-    USE_SERIAL.setDebugOutput(true);
+    // USE_SERIAL.begin(115200);
+    // USE_SERIAL.setDebugOutput(true);
 
-    USE_SERIAL.print("\n\n\n");
+    // USE_SERIAL.print("\n\n\n");
 
-    for (uint8_t t = 4; t > 0; t--)
-    {
-        USE_SERIAL.printf("[SETUP] BOOT WAIT %d...\n", t);
-        USE_SERIAL.flush();
-        delay(1000);
-    }
+    // for (uint8_t t = 4; t > 0; t--)
+    // {
+    //     USE_SERIAL.printf("[SETUP] BOOT WAIT %d...\n", t);
+    //     USE_SERIAL.flush();
+    //     delay(1000);
+    // }
 
     webSocket.begin();
     webSocket.onEvent(WebSocketEvent);

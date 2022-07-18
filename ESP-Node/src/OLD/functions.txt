@@ -1,0 +1,19 @@
+uint8_t gyroZ_hi, gyroZ_lo;
+
+void SendFastGyroData(uint8_t hi, uint8_t lo)
+{
+    uint8_t fastData[3] = {hi, lo, 0};
+    webSocket.broadcastBIN(fastData, 3);
+}
+
+void Gyro_FastUpdate()
+{
+    Wire.beginTransmission(MPU6050_ADDR);
+    Wire.write(MPU6050_GYRO_ZOUT_H);         // starting with register ACCEL_ZOUT_H
+    Wire.endTransmission(false);             // the parameter indicates that the Arduino will send a restart.
+                                             // As a result, the connection is kept active.
+    Wire.requestFrom(MPU6050_ADDR, 2, true); // request a total of 1*2=6 registers
+    gyroZ_hi = Wire.read();
+    gyroZ_lo = Wire.read();
+    gyroZ = gyroZ_hi << 8 | gyroZ_lo;
+}

@@ -4,70 +4,103 @@ public static class Program
 {
     private static WiFi? wifiConnection;
     private static System.Timers.Timer? timer;
-    private const int TIME_BETWEEN_CONSOLE_CALLS = 500;
+    private const int TIME_BETWEEN_CONSOLE_CALLS = 16;
+    private const GyroMode GYRO_MODE = GyroMode.Gyro_2000;
 
     public static void Main(string[] args)
     {
         wifiConnection = new WiFi(); // "ws://ip:port/"
         wifiConnection.ConnectToHost();
-        ConsoleLoop();
+        Loop();
         ExitCode();
     }
 
-    public static void ConsoleLoop()
+    private static void Loop()
     {
         timer = new System.Timers.Timer(TIME_BETWEEN_CONSOLE_CALLS);
-        timer.Elapsed += PrintConsole!;
+        timer.Elapsed += Frame!;
         timer.AutoReset = true;
         timer.Enabled = true;
     }
 
-    public static void PrintConsole(object sender, ElapsedEventArgs e)
+    private static void Frame(object sender, ElapsedEventArgs e)
     {
-        // Console.Clear();
+        ProgramStep();
+        PrintConsole();
+    }
+
+    private static void ProgramStep()
+    {
+        // TODO: muss für beide räder angepasst werden.
+        wifiConnection!.IsListening = (GlobalData.LeftNodeConnected is false);
+
+        CalcValuesToDegree();
+    }
+
+    private static void PrintConsole()
+    {
+        Console.Clear();
 
         if (wifiConnection is not null)
         {
-            char leftNodeConnected = (GlobalData.LeftNodeConnected) ? 'x' : ' ';
-            char rightNodeConnected = (GlobalData.RightNodeConnected) ? 'x' : ' ';
-            string leftValue = CenterValue(GlobalData.LeftValue, 7);
-            string rightValue = CenterValue(GlobalData.RightValue, 7);
-            Console.WriteLine("-------Nodes-------");
-            Console.WriteLine("   L   ||   R   ");
-            Console.WriteLine($"   {leftNodeConnected}   ||   {rightNodeConnected}   ");
-            Console.WriteLine($"{GlobalData.LeftValue}||{GlobalData.LeftValue}");
-            Console.WriteLine("------------------");
-            Console.WriteLine($"Last Message: {GlobalData.LastMessage}");
-            Console.WriteLine($"Press 'q' to quit.");
+            string leftNodeConnected = (GlobalData.LeftNodeConnected) ? "true" : "false";
+            string rightNodeConnected = (GlobalData.RightNodeConnected) ? "true" : "false";
+            string leftRaw = GlobalData.LeftValue.ToString();
+            string rightRaw = GlobalData.RightValue.ToString();
+            string leftValue = GlobalData.CalculatedLeftValue.ToString("0.00");
+            string rightValue = GlobalData.CalculatedRightValue.ToString("0.00");
+
+            string consoleString = "";
+            Console.WriteLine("----------------------------------");
+            consoleString += String.Format("|{0,10}|{1,10}|{2,10}|\n", " ", "L", "R");
+            consoleString += String.Format("|{0,10}|{1,10}|{2,10}|\n", "Connected", leftNodeConnected, rightNodeConnected);
+            consoleString += String.Format("|{0,10}|{1,10}|{2,10}|\n", "Raw Values", leftRaw, rightRaw);
+            consoleString += String.Format("|{0,10}|{1,10}|{2,10}|", "Values", leftValue, rightValue);
+            Console.WriteLine(consoleString);
+            Console.WriteLine("----------------------------------\n");
+            Console.WriteLine($"Last Messages:");
+            Console.WriteLine(LastMessagesString(5));
+            Console.WriteLine($"\nPress 'q' to quit.");
         }
     }
 
-    private static string CenterValue(int value, int maxLength)
+    private static string LastMessagesString(int messageCount)
     {
-        string valueAsString = value.ToString();
-        int valueLength = valueAsString.Length;
+        int listCount = GlobalData.LastMessages.Count;
 
-        int emptyCount = maxLength - valueLength;
-        int padding = (int)emptyCount / 2;
-
-        valueAsString.PadLeft(padding);
-        valueAsString.PadRight(padding);
-
-        while (valueAsString.Length < maxLength)
+        int messageCountMin = Math.Min(messageCount, listCount);
+        int subListStart = listCount - messageCountMin;
+        List<string> subList = GlobalData.LastMessages.GetRange(subListStart, messageCountMin);
+        string output = "";
+        for (int i = messageCountMin; i > 0; i--)
         {
-            valueAsString.PadRight(1);
+            output += "> " + subList[i - 1] + "\n";
         }
-        return valueAsString;
+        return output;
     }
 
     private static void ExitCode()
     {
-        char k = Convert.ToChar(Console.Read());
-        while (k is not 'q')
+        ConsoleKeyInfo k = Console.ReadKey();
+        if (k.KeyChar is not 'q')
         {
-            k = Convert.ToChar(Console.Read()); ;
+            k = Console.ReadKey();
         }
         wifiConnection!.CloseWiFi();
-        timer!.Enabled = false;
+        StopConsole();
+    }
+
+    private static void StopConsole()
+    {
+        timer!.Stop();
+        timer!.Close();
+        Thread.Sleep(200);
+        PrintConsole();
+    }
+
+    private static void CalcValuesToDegree()
+    {
+        GlobalData.CalculatedLeftValue = (GlobalData.LeftValue / EnumFunctions.StepsPerDegree(GYRO_MODE));
+        GlobalData.CalculatedRightValue = (GlobalData.RightValue / EnumFunctions.StepsPerDegree(GYRO_MODE));
     }
 }

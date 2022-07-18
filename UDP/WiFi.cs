@@ -15,12 +15,13 @@ public class WiFi
     const int CLIENT_PORT = 11000;
     const int WEBSOCKET_PORT = 81;
 
-    private WebsocketClient client;
+    private List<WebsocketClient> clients;
 
     public WiFi()
     {
         IsListening = false;
         udpClient = new UdpClient();
+        clients = new();
         IPEndPoint client = new IPEndPoint(IPAddress.Any, CLIENT_PORT); // <<<< notwendig?
         udpClient.Client.Bind(client);
     }
@@ -35,7 +36,7 @@ public class WiFi
     private async void ReceiveThread()
     {
         IsListening = true;
-        GlobalData.LastMessage = "UDP is listening!";
+        GlobalData.LastMessages.Add("UDP is listening!");
         while (IsListening)
         {
             var result = await udpClient.ReceiveAsync();
@@ -44,9 +45,10 @@ public class WiFi
                 Message = Encoding.ASCII.GetString(result.Buffer, 0, result.Buffer.Length),
                 Sender = result.RemoteEndPoint
             };
-            GlobalData.LastMessage = $"Packet Received:\n{received.ToString()}";
+            GlobalData.LastMessages.Add($"Packet Received:\n{received.ToString()}");
             HandleIncomingPackage(received);
         }
+        GlobalData.LastMessages.Add("UDP stopped listening!");
     }
 
     private void HandleIncomingPackage(Received package)
@@ -54,68 +56,63 @@ public class WiFi
         switch (package.Message)
         {
             case "I am the left Node":
-                NewNode(ref LeftNodeEndPoint, package);
+                NewNode(ref LeftNodeEndPoint, package, "left");
                 break;
             case "I am the right Node":
-                NewNode(ref RightNodeEndPoint, package);
+                NewNode(ref RightNodeEndPoint, package, "right");
                 break;
         }
     }
 
-    private void NewNode(ref IPEndPoint nodeEndPoint_variable, Received package)
+    private void NewNode(ref IPEndPoint nodeEndPoint_variable, Received package, string wheelside)
     {
         string url = WebSocketURL(package);
-        GlobalData.LastMessage = $"Try to connect to Web-Socket:\n{url}";
+        GlobalData.LastMessages.Add($"Try to connect to Web-Socket: {url}");
         nodeEndPoint_variable = package.Sender;
-        ConnectToWebSocketServer(url);
+        ConnectToWebSocketServer(url, wheelside);
     }
 
-    private void ConnectToWebSocketServer(string serverURL)
+    private void ConnectToWebSocketServer(string serverURL, string wheelside)
     {
         var exitEvent = new ManualResetEvent(false);
         var url = new Uri(serverURL);
 
-        using (client = new WebsocketClient(url))
+        using (var client = new WebsocketClient(url))
         {
+            clients.Add(client);
+            client.Name = wheelside;
             client.ReconnectTimeout = TimeSpan.FromSeconds(30);
             client.ReconnectionHappened.Subscribe(info =>
-                GlobalData.LastMessage = $"Host>> Reconnection happened, type: {info.Type}\n");
-
-            client.MessageReceived.Subscribe(msg => WebSocket_OnMessage(msg.Text));
+                GlobalData.LastMessages.Add($"Host>> Reconnection happened, type: {info.Type}"));
+            client.MessageReceived.Subscribe(msg => WebSocket_OnMessage(msg.Text, client));
             client.Start();
-
-            Task.Run(() => client.Send("{ message }"));
-
             exitEvent.WaitOne();
         }
     }
 
-    private void WebSocket_OnMessage(string message)
+    private void WebSocket_OnMessage(string message, WebsocketClient client)
     {
         switch (message)
         {
             case "L Connected":
-                GlobalData.LastMessage = "Client>> Left Node Connected";
+                GlobalData.LastMessages.Add("Client>> Left Node Connected");
                 GlobalData.LeftNodeConnected = true;
                 break;
             case "R Connected":
-                GlobalData.LastMessage = "Client>> Right Node Connected";
+                GlobalData.LastMessages.Add("Client>> Right Node Connected");
                 GlobalData.RightNodeConnected = true;
                 break;
             default:
-                HandleDataPackage(message);
+                HandleMessagePackage(message);
                 break;
         }
     }
 
-    private void HandleDataPackage(string message)
+    private void HandleMessagePackage(string message)
     {
         char wheelside = message[0];
-        // char hi = message[1];
-        // char lo = message[2];
-        // int value = lo | hi << 8;
-
         string value = "";
+
         for (int i = 1; i < 7; i++)
         {
             value = (message[i] == ' ') ? value : value + message[i];
@@ -129,8 +126,10 @@ public class WiFi
             case 'R':
                 GlobalData.RightValue = int.Parse(value);
                 break;
+            default:
+                GlobalData.LastMessages.Add(message);
+                break;
         }
-        GlobalData.LastMessage = message;
     }
 
     private string WebSocketURL(Received package)
@@ -142,8 +141,17 @@ public class WiFi
 
     public void CloseWiFi()
     {
-        if (client is not null)
+        GlobalData.LastMessages.Add("Disconnected from ESP");
+        foreach (WebsocketClient client in clients)
+        {
+            client.IsReconnectionEnabled = false;
+            var exitEvent = new ManualResetEvent(false);
+            Task.Run(() => client.Send("DISCONNECT"));
+            exitEvent.WaitOne();
             client.Dispose();
-        IsListening = false;
+        }
+        clients.Clear();
+        GlobalData.LastMessages.Add("PROGRAM STOPPED");
     }
+
 }

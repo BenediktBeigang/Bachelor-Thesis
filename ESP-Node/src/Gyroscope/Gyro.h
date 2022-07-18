@@ -8,6 +8,7 @@
 
 #define MPU6050_ACCEL_XOUT_H 0x3B
 #define MPU6050_GYRO_XOUT_H 0x43
+#define MPU6050_GYRO_ZOUT_H 0x47
 
 #define SDApin 21 // IO 21 SDA
 #define SCLpin 22 // IO 22 SCL
@@ -45,7 +46,7 @@ void Gyro_Setup()
     DEGREE_STEPS = DegreeSteps(GYRO_MODE);
 }
 
-int16_t Gyro_Update()
+void Gyro_Update()
 {
     Wire.beginTransmission(MPU6050_ADDR);
     Wire.write(MPU6050_GYRO_XOUT_H);         // starting with register ACCEL_XOUT_H
@@ -57,6 +58,4 @@ int16_t Gyro_Update()
     gyroX = Wire.read() << 8 | Wire.read(); // reading registers: 0x43 (GYRO_XOUT_H) and 0x44 (GYRO_XOUT_L)
     gyroY = Wire.read() << 8 | Wire.read(); // reading registers: 0x45 (GYRO_YOUT_H) and 0x46 (GYRO_YOUT_L)
     gyroZ = Wire.read() << 8 | Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
-
-    return gyroZ;
 }

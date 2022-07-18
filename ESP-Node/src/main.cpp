@@ -21,7 +21,7 @@ void setup()
   WebSocket_Setup(ESP_PORT);
   Serial.print("Try to connect to Client");
 
-  // // Timing
+  // Timing
   TIME_BETWEEN_CALLS = (int)(1000 / CALLS_PER_SECOND);
   SendingTimer = millis();
 }
