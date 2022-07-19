@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Quellen/General.md",
+            "file": "Hardware/MPU6050.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Quellen/General.md",
+                "file": "Hardware/MPU6050.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,8 +97,8 @@
   },
   "active": "555b92599469c159",
   "lastOpenFiles": [
-    "Untitled.md",
     "Quellen/General.md",
+    "Untitled.md",
     "Hardware/Node.md",
     "Hardware/Rollstuhl.md",
     "Hardware/Technische Daten.md",

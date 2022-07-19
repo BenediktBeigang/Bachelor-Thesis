@@ -34,15 +34,16 @@ void setGyrRange(mpu6050_gyr_range range)
 
 void SleepModeOff()
 {
-    writeRegister(0x6B, 0b00000000);
+    // writeRegister(0x6B, 0b00000000);
+    writeRegister(0x6B, 0);
 }
 
 void Gyro_Setup()
 {
     Serial.println("Gyro Setup");
     Wire.begin(SDApin, SCLpin);
-    setGyrRange(GYRO_MODE);
     SleepModeOff();
+    setGyrRange(GYRO_MODE);
     DEGREE_STEPS = DegreeSteps(GYRO_MODE);
 }
 
