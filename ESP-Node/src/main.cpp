@@ -21,7 +21,7 @@ void setup()
   WebSocket_Setup(ESP_PORT);
   Serial.print("Try to connect to Client");
 
-  // // Timing
+  // Timing
   TIME_BETWEEN_CALLS = (int)(1000 / CALLS_PER_SECOND);
   SendingTimer = millis();
 }
@@ -36,7 +36,7 @@ void loop()
   else if (millis() - SendingTimer > TIME_BETWEEN_CALLS)
   {
     Gyro_Update();
-    SendGyroData('L', gyroZ);
+    SendGyroData(gyroZ);
     SendingTimer = millis();
   }
 }

@@ -15,10 +15,10 @@ typedef enum
 
 typedef enum
 {
-    MPU6050_GYR_RANGE_250,  // +/- 250 deg/s (default)
-    MPU6050_GYR_RANGE_500,  // +/- 500 deg/s
-    MPU6050_GYR_RANGE_1000, // +/- 1000 deg/s
-    MPU6050_GYR_RANGE_2000  // +/- 2000 deg/s
+    MPU6050_GYR_RANGE_250 = 0,  // +/- 250 deg/s (default)
+    MPU6050_GYR_RANGE_500 = 1,  // +/- 500 deg/s
+    MPU6050_GYR_RANGE_1000 = 2, // +/- 1000 deg/s
+    MPU6050_GYR_RANGE_2000 = 3  // +/- 2000 deg/s
 } mpu6050_gyr_range;
 
 float DegreeSteps(mpu6050_gyr_range range)

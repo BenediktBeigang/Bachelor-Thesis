@@ -8,9 +8,10 @@
 
 #define MPU6050_ACCEL_XOUT_H 0x3B
 #define MPU6050_GYRO_XOUT_H 0x43
+#define MPU6050_GYRO_ZOUT_H 0x47
 
-#define SDApin 21 // IO 21 SDA
-#define SCLpin 22 // IO 22 SCL
+#define SDApin 21 // SDA
+#define SCLpin 22 // SCL
 
 mpu6050_gyr_range GYRO_MODE = MPU6050_GYR_RANGE_2000;
 float DEGREE_STEPS = 131;
@@ -33,19 +34,20 @@ void setGyrRange(mpu6050_gyr_range range)
 
 void SleepModeOff()
 {
-    writeRegister(0x6B, 0b00000000);
+    // writeRegister(0x6B, 0b00000000);
+    writeRegister(0x6B, 0);
 }
 
 void Gyro_Setup()
 {
     Serial.println("Gyro Setup");
     Wire.begin(SDApin, SCLpin);
-    setGyrRange(GYRO_MODE);
     SleepModeOff();
+    setGyrRange(GYRO_MODE);
     DEGREE_STEPS = DegreeSteps(GYRO_MODE);
 }
 
-int16_t Gyro_Update()
+void Gyro_Update()
 {
     Wire.beginTransmission(MPU6050_ADDR);
     Wire.write(MPU6050_GYRO_XOUT_H);         // starting with register ACCEL_XOUT_H
@@ -57,6 +59,4 @@ int16_t Gyro_Update()
     gyroX = Wire.read() << 8 | Wire.read(); // reading registers: 0x43 (GYRO_XOUT_H) and 0x44 (GYRO_XOUT_L)
     gyroY = Wire.read() << 8 | Wire.read(); // reading registers: 0x45 (GYRO_YOUT_H) and 0x46 (GYRO_YOUT_L)
     gyroZ = Wire.read() << 8 | Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
-
-    return gyroZ;
 }
