@@ -34,7 +34,6 @@ void setGyrRange(mpu6050_gyr_range range)
 
 void SleepModeOff()
 {
-    // writeRegister(0x6B, 0b00000000);
     writeRegister(0x6B, 0);
 }
 

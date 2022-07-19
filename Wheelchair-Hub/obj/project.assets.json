@@ -3776,11 +3776,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\UDP\\UDP.csproj",
+      "projectUniqueName": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\UDP.csproj",
       "projectName": "UDP",
-      "projectPath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\UDP\\UDP.csproj",
+      "projectPath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\UDP.csproj",
       "packagesPath": "C:\\Users\\bened\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\UDP\\obj\\",
+      "outputPath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\bened\\AppData\\Roaming\\NuGet\\NuGet.Config",

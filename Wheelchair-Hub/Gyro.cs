@@ -3,9 +3,8 @@ using System.Timers;
 public class Gyro
 {
     // Consturctor
-    public readonly GyroMode Gyro_Mode;
-    private readonly int CalibrationTime;
-    private readonly System.Timers.Timer? calibrationTimer;
+    public readonly DeviceNumber DeviceNumber;
+    public readonly GyroMode Mode;
 
     // public
     public int RawValue
@@ -21,36 +20,45 @@ public class Gyro
     }
     public double DegreePerSecond()
     {
-        return _rawValue / StepsPerDegree(Gyro_Mode);
+        return _rawValue / StepsPerDegree(Mode);
     }
+    public bool Calibrated { get; set; }
 
     // private
     private int _rawValue;
     private List<int> calibrationValues;
     private int Offset { get; set; }
+    private readonly System.Timers.Timer? calibrationTimer;
 
     // Constants
     private const int SAMPLE_RATE = 10;
 
-    public Gyro(GyroMode mode, int calibrationTime)
+    public Gyro(GyroMode mode, DeviceNumber device)
     {
-        Gyro_Mode = mode;
-        CalibrationTime = calibrationTime;
+        Mode = mode;
+        DeviceNumber = device;
         calibrationTimer = new System.Timers.Timer(SAMPLE_RATE);
         calibrationValues = new();
+        Calibrated = false;
     }
 
-    public void GyroCalibration(int seconds)
+    public void Calibration(int seconds)
     {
-        GlobalData.LastMessages.Add("Gyro");
+        calibrationValues = new();
+        GlobalData.LastMessages.Add($"Calibrating Gyro for {seconds}.");
 
         calibrationTimer!.Elapsed += TakeSample!;
         calibrationTimer!.AutoReset = true;
         calibrationTimer!.Enabled = true;
-        Thread.Sleep(CalibrationTime);
-        calibrationTimer.Stop();
+        Task.Run(() => CalibrationEnd(seconds));
+    }
 
+    private void CalibrationEnd(int seconds)
+    {
+        Thread.Sleep(seconds * 1000);
+        calibrationTimer!.Stop();
         Offset = -(int)calibrationValues.Average();
+        Calibrated = true;
     }
 
     private void TakeSample(object sender, ElapsedEventArgs e)
