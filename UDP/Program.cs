@@ -32,33 +32,33 @@ public static class Program
     private static void ProgramStep()
     {
         // TODO: muss für beide räder angepasst werden.
-        wifiConnection!.IsListening = (GlobalData.LeftNodeConnected is false);
+        wifiConnection!.IsListening = (GlobalData.NodeConnected_One is false);
 
         CalcValuesToDegree();
     }
 
     private static void PrintConsole()
     {
-        Console.Clear();
-
         if (wifiConnection is not null)
         {
-            string leftNodeConnected = (GlobalData.LeftNodeConnected) ? "true" : "false";
-            string rightNodeConnected = (GlobalData.RightNodeConnected) ? "true" : "false";
-            string leftRaw = GlobalData.LeftValue.ToString();
-            string rightRaw = GlobalData.RightValue.ToString();
-            string leftValue = GlobalData.CalculatedLeftValue.ToString("0.00");
-            string rightValue = GlobalData.CalculatedRightValue.ToString("0.00");
+            Console.Clear();
+            string nodeConnected_One = (GlobalData.NodeConnected_One) ? "true" : "false";
+            string nodeConnected_Two = (GlobalData.NodeConnected_Two) ? "true" : "false";
+            string raw_One = GlobalData.RawValue_One.ToString();
+            string raw_Two = GlobalData.RawValue_Two.ToString();
+            string value_One = GlobalData.CalculatedValue_One.ToString("0.00");
+            string value_Two = GlobalData.CalculatedValue_Two.ToString("0.00");
 
             string consoleString = "";
-            Console.WriteLine("----------------------------------");
-            consoleString += String.Format("|{0,10}|{1,10}|{2,10}|\n", " ", "L", "R");
-            consoleString += String.Format("|{0,10}|{1,10}|{2,10}|\n", "Connected", leftNodeConnected, rightNodeConnected);
-            consoleString += String.Format("|{0,10}|{1,10}|{2,10}|\n", "Raw Values", leftRaw, rightRaw);
-            consoleString += String.Format("|{0,10}|{1,10}|{2,10}|", "Values", leftValue, rightValue);
+            Console.WriteLine("--------------------------------------------");
+            consoleString += String.Format("|{0,20}|{1,10}|{2,10}|\n", "Node", "ONE", "TWO");
+            consoleString += String.Format("|{0,20}|{1,10}|{2,10}|\n", "--------------------", "----------", "----------");
+            consoleString += String.Format("|{0,20}|{1,10}|{2,10}|\n", "Connected", nodeConnected_One, nodeConnected_Two);
+            consoleString += String.Format("|{0,20}|{1,10}|{2,10}|\n", "Raw Values", raw_One, raw_Two);
+            consoleString += String.Format("|{0,20}|{1,10}|{2,10}|", "Calc Values", value_One, value_Two);
             Console.WriteLine(consoleString);
-            Console.WriteLine("----------------------------------\n");
-            Console.WriteLine($"Last Messages:");
+            Console.WriteLine("--------------------------------------------\n");
+            Console.WriteLine($"Last Messages: ");
             Console.WriteLine(LastMessagesString(5));
             Console.WriteLine($"\nPress 'q' to quit.");
         }
@@ -93,14 +93,14 @@ public static class Program
     private static void StopConsole()
     {
         timer!.Stop();
-        timer!.Close();
-        Thread.Sleep(200);
         PrintConsole();
+        Thread.Sleep(200);
+        Environment.Exit(0);
     }
 
     private static void CalcValuesToDegree()
     {
-        GlobalData.CalculatedLeftValue = (GlobalData.LeftValue / EnumFunctions.StepsPerDegree(GYRO_MODE));
-        GlobalData.CalculatedRightValue = (GlobalData.RightValue / EnumFunctions.StepsPerDegree(GYRO_MODE));
+        GlobalData.CalculatedValue_One = (GlobalData.RawValue_One / Gyro.StepsPerDegree(GYRO_MODE));
+        GlobalData.CalculatedValue_Two = (GlobalData.RawValue_Two / Gyro.StepsPerDegree(GYRO_MODE));
     }
 }

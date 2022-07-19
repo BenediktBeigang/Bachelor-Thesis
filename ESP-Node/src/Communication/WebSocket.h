@@ -9,7 +9,10 @@
 
 AsyncUDP UDP;
 const IPAddress BROADCAST_ADDRESS = IPAddress(196, 168, 255, 255);
-const char BROADCAST_MESSAGE[] = "I am the left Node";
+const char BROADCAST_MESSAGE[] = "I am Node ONE";
+const char CONNECTION_MESSAGE[] = "1 Connected";
+const char NODE_NUMBER = '1';
+
 unsigned long ConnectionTimer = millis();
 int16_t TIME_BETWEEN_CONNECTION_CALLS = 5000;
 
@@ -36,21 +39,20 @@ void ClearMessage()
     }
 }
 
-void GetData(char wheelside, int16_t gyroValue)
+void GetData(char nodeNumber, int16_t gyroValue)
 {
     Int16_To_CharArray(gyroValue);
-    data[0] = wheelside;
+    data[0] = nodeNumber;
     for (uint8_t i = 0; i < 7; i++)
     {
         data[i + 1] = intConversion[i];
     }
 }
 
-void SendGyroData(char wheelside, int16_t gyroValue)
+void SendGyroData(int16_t gyroValue)
 {
-    Serial.println(data);
-    GetData(wheelside, gyroValue);
-    webSocket.broadcastTXT(data);
+    GetData(NODE_NUMBER, gyroValue);
+    webSocket.broadcastTXT(intConversion);
 }
 
 void Broadcast()
@@ -88,7 +90,7 @@ void WebSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
         break;
     case WStype_CONNECTED:
     {
-        webSocket.sendTXT(num, "L Connected");
+        webSocket.sendTXT(num, CONNECTION_MESSAGE);
         IsConnected = true;
         Serial.print("\nConnection established from: ");
         Serial.println(webSocket.remoteIP(num));
@@ -110,18 +112,6 @@ void WebSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
 
 void WebSocket_Setup(uint16_t espPort)
 {
-    // USE_SERIAL.begin(115200);
-    // USE_SERIAL.setDebugOutput(true);
-
-    // USE_SERIAL.print("\n\n\n");
-
-    // for (uint8_t t = 4; t > 0; t--)
-    // {
-    //     USE_SERIAL.printf("[SETUP] BOOT WAIT %d...\n", t);
-    //     USE_SERIAL.flush();
-    //     delay(1000);
-    // }
-
     webSocket.begin();
     webSocket.onEvent(WebSocketEvent);
 

@@ -36,7 +36,7 @@ void loop()
   else if (millis() - SendingTimer > TIME_BETWEEN_CALLS)
   {
     Gyro_Update();
-    SendGyroData('L', gyroZ);
+    SendGyroData(gyroZ);
     SendingTimer = millis();
   }
 }

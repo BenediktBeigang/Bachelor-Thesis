@@ -10,8 +10,8 @@
 #define MPU6050_GYRO_XOUT_H 0x43
 #define MPU6050_GYRO_ZOUT_H 0x47
 
-#define SDApin 21 // IO 21 SDA
-#define SCLpin 22 // IO 22 SCL
+#define SDApin 21 // SDA
+#define SCLpin 22 // SCL
 
 mpu6050_gyr_range GYRO_MODE = MPU6050_GYR_RANGE_2000;
 float DEGREE_STEPS = 131;

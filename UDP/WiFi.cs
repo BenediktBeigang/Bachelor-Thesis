@@ -7,8 +7,8 @@ using Websocket.Client;
 
 public class WiFi
 {
-    private IPEndPoint LeftNodeEndPoint = new IPEndPoint(new IPAddress(0), 0);
-    private IPEndPoint RightNodeEndPoint = new IPEndPoint(new IPAddress(0), 0);
+    private IPEndPoint NodeEndPoint_One = new IPEndPoint(new IPAddress(0), 0);
+    private IPEndPoint NodeEndPoint_Two = new IPEndPoint(new IPAddress(0), 0);
 
     private UdpClient udpClient;
     public bool IsListening { get; set; }
@@ -22,7 +22,7 @@ public class WiFi
         IsListening = false;
         udpClient = new UdpClient();
         clients = new();
-        IPEndPoint client = new IPEndPoint(IPAddress.Any, CLIENT_PORT); // <<<< notwendig?
+        IPEndPoint client = new IPEndPoint(IPAddress.Any, CLIENT_PORT);
         udpClient.Client.Bind(client);
     }
 
@@ -55,11 +55,11 @@ public class WiFi
     {
         switch (package.Message)
         {
-            case "I am the left Node":
-                NewNode(ref LeftNodeEndPoint, package, "left");
+            case "I am Node ONE":
+                NewNode(ref NodeEndPoint_One, package, "one");
                 break;
-            case "I am the right Node":
-                NewNode(ref RightNodeEndPoint, package, "right");
+            case "I am Node TWO":
+                NewNode(ref NodeEndPoint_Two, package, "two");
                 break;
         }
     }
@@ -94,37 +94,29 @@ public class WiFi
     {
         switch (message)
         {
-            case "L Connected":
-                GlobalData.LastMessages.Add("Client>> Left Node Connected");
-                GlobalData.LeftNodeConnected = true;
+            case "1 Connected":
+                GlobalData.LastMessages.Add("Client>> Node One Connected");
+                GlobalData.NodeConnected_One = true;
                 break;
-            case "R Connected":
-                GlobalData.LastMessages.Add("Client>> Right Node Connected");
-                GlobalData.RightNodeConnected = true;
+            case "2 Connected":
+                GlobalData.LastMessages.Add("Client>> Node Two Connected");
+                GlobalData.NodeConnected_Two = true;
                 break;
             default:
-                HandleMessagePackage(message);
+                HandleMessagePackage(message, client);
                 break;
         }
     }
 
-    private void HandleMessagePackage(string message)
+    private void HandleMessagePackage(string message, WebsocketClient client)
     {
-        char wheelside = message[0];
-        string value = "";
-
-        for (int i = 1; i < 7; i++)
+        switch (client.Name)
         {
-            value = (message[i] == ' ') ? value : value + message[i];
-        }
-
-        switch (wheelside)
-        {
-            case 'L':
-                GlobalData.LeftValue = int.Parse(value);
+            case "one":
+                GlobalData.RawValue_One = int.Parse(message);
                 break;
-            case 'R':
-                GlobalData.RightValue = int.Parse(value);
+            case "two":
+                GlobalData.RawValue_Two = int.Parse(message);
                 break;
             default:
                 GlobalData.LastMessages.Add(message);
@@ -141,17 +133,17 @@ public class WiFi
 
     public void CloseWiFi()
     {
-        GlobalData.LastMessages.Add("Disconnected from ESP");
         foreach (WebsocketClient client in clients)
         {
             client.IsReconnectionEnabled = false;
-            var exitEvent = new ManualResetEvent(false);
             Task.Run(() => client.Send("DISCONNECT"));
-            exitEvent.WaitOne();
+            Thread.Sleep(100);
             client.Dispose();
         }
+        GlobalData.LastMessages.Add("Disconnected from ESPs");
         clients.Clear();
+        GlobalData.NodeConnected_One = false;
+        GlobalData.NodeConnected_Two = false;
         GlobalData.LastMessages.Add("PROGRAM STOPPED");
     }
-
 }
