@@ -22,7 +22,7 @@ public class Gyro
     {
         return _rawValue / StepsPerDegree(Mode);
     }
-    public bool Calibrated { get; set; }
+    public CalibrationStatus CalibrationStatus { get; set; }
 
     // private
     private int _rawValue;
@@ -39,14 +39,14 @@ public class Gyro
         DeviceNumber = device;
         calibrationTimer = new System.Timers.Timer(SAMPLE_RATE);
         calibrationValues = new();
-        Calibrated = false;
+        CalibrationStatus = CalibrationStatus.NOT_CALIBRATED;
     }
 
     public void Calibration(int seconds)
     {
+        CalibrationStatus = CalibrationStatus.CALIBRATING;
+        GlobalData.LastMessages.Add($"Calibrating Gyro for {seconds}seconds.");
         calibrationValues = new();
-        GlobalData.LastMessages.Add($"Calibrating Gyro for {seconds}.");
-
         calibrationTimer!.Elapsed += TakeSample!;
         calibrationTimer!.AutoReset = true;
         calibrationTimer!.Enabled = true;
@@ -58,7 +58,7 @@ public class Gyro
         Thread.Sleep(seconds * 1000);
         calibrationTimer!.Stop();
         Offset = -(int)calibrationValues.Average();
-        Calibrated = true;
+        CalibrationStatus = CalibrationStatus.CALIBRATED;
     }
 
     private void TakeSample(object sender, ElapsedEventArgs e)
@@ -70,10 +70,10 @@ public class Gyro
     {
         switch (mode)
         {
-            case GyroMode.Gyro_250: return 131;
-            case GyroMode.Gyro_500: return 65.5;
-            case GyroMode.Gyro_1000: return 32.8;
-            case GyroMode.Gyro_2000: return 16.4;
+            case GyroMode.GYRO_250: return 131;
+            case GyroMode.GYRO_500: return 65.5;
+            case GyroMode.GYRO_1000: return 32.8;
+            case GyroMode.GYRO_2000: return 16.4;
             default: return 131;
         }
     }

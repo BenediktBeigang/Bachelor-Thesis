@@ -9,9 +9,13 @@
 
 AsyncUDP UDP;
 const IPAddress BROADCAST_ADDRESS = IPAddress(196, 168, 255, 255);
-const char BROADCAST_MESSAGE[] = "I am Node ONE";
-const char CONNECTION_MESSAGE[] = "1 Connected";
-const char NODE_NUMBER = '1';
+// const char BROADCAST_MESSAGE[] = "I am Node ONE";
+// const char CONNECTION_MESSAGE[] = "1 Connected";
+// const char NODE_NUMBER = '1';
+
+const char BROADCAST_MESSAGE[] = "I am Node TWO";
+const char CONNECTION_MESSAGE[] = "2 Connected";
+const char NODE_NUMBER = '2';
 
 unsigned long ConnectionTimer = millis();
 int16_t TIME_BETWEEN_CONNECTION_CALLS = 5000;

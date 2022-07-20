@@ -6,11 +6,11 @@ using Websocket.Client;
 
 public class WiFi
 {
-    private IPEndPoint NodeEndPoint_One = new IPEndPoint(new IPAddress(0), 0);
-    private IPEndPoint NodeEndPoint_Two = new IPEndPoint(new IPAddress(0), 0);
+    // private IPEndPoint NodeEndPoint_One = new IPEndPoint(new IPAddress(0), 0);
+    // private IPEndPoint NodeEndPoint_Two = new IPEndPoint(new IPAddress(0), 0);
 
     private UdpClient udpClient;
-    public bool IsListening { get; set; }
+    public bool Listening { get; set; }
     const int CLIENT_PORT = 11000;
     const int WEBSOCKET_PORT = 81;
 
@@ -18,9 +18,9 @@ public class WiFi
 
     public WiFi()
     {
-        IsListening = false;
-        udpClient = new UdpClient();
+        Listening = false;
         clients = new();
+        udpClient = new UdpClient();
         IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Any, CLIENT_PORT);
         udpClient.Client.Bind(clientEndPoint);
     }
@@ -34,9 +34,9 @@ public class WiFi
 
     private async void ReceiveThread()
     {
-        IsListening = true;
+        Listening = true;
         GlobalData.LastMessages.Add("UDP is listening!");
-        while (IsListening)
+        while (Listening)
         {
             var result = await udpClient.ReceiveAsync();
             Received received = new Received()
@@ -44,8 +44,8 @@ public class WiFi
                 Message = Encoding.ASCII.GetString(result.Buffer, 0, result.Buffer.Length),
                 Sender = result.RemoteEndPoint
             };
-            GlobalData.LastMessages.Add($"Packet Received:\n{received.ToString()}");
             HandleIncomingPackage(received);
+            GlobalData.LastMessages.Add($"Packet Received:\n{received.ToString()}");
         }
         GlobalData.LastMessages.Add("UDP stopped listening!");
     }
@@ -55,33 +55,36 @@ public class WiFi
         switch (package.Message)
         {
             case "I am Node ONE":
-                NewNode(ref NodeEndPoint_One, package, DeviceNumber.ONE);
+                NewNode(package, DeviceNumber.ONE);
                 break;
             case "I am Node TWO":
-                NewNode(ref NodeEndPoint_Two, package, DeviceNumber.TWO);
+                NewNode(package, DeviceNumber.TWO);
                 break;
         }
     }
 
-    private void NewNode(ref IPEndPoint nodeEndPoint_variable, Received package, DeviceNumber device)
+    private void NewNode(Received package, DeviceNumber device)
     {
-        Gyro gyro = new Gyro(GyroMode.Gyro_2000, device);
+        Gyro gyro = new Gyro(GyroMode.GYRO_2000, device);
         switch (device)
         {
             case DeviceNumber.ONE:
-                GlobalData.Node_One = new Node(ConnectionType.WIFI, gyro, device, package.Sender);
+                GlobalData.Node_One = new Node(device, gyro, ConnectionType.WIFI, package.Sender);
                 break;
             case DeviceNumber.TWO:
-                GlobalData.Node_Two = new Node(ConnectionType.WIFI, gyro, device, package.Sender);
+                GlobalData.Node_Two = new Node(device, gyro, ConnectionType.WIFI, package.Sender);
                 break;
         }
 
         string url = WebSocketURL(package);
         GlobalData.LastMessages.Add($"Try to connect to Web-Socket of Node {device.ToString()}: {url}");
-        ConnectToWebSocketServer(url, device);
+
+        Thread connectionThread = new Thread(() => ConnectToWebSocketServer(url, device));
+        connectionThread.IsBackground = true;
+        connectionThread.Start();
     }
 
-    private WebsocketClient ConnectToWebSocketServer(string serverURL, DeviceNumber device)
+    private void ConnectToWebSocketServer(string serverURL, DeviceNumber device)
     {
         var exitEvent = new ManualResetEvent(false);
         var url = new Uri(serverURL);
@@ -96,7 +99,6 @@ public class WiFi
             client.MessageReceived.Subscribe(msg => WebSocket_OnMessage(msg.Text, client));
             client.Start();
             exitEvent.WaitOne();
-            return client;
         }
     }
 
@@ -106,13 +108,11 @@ public class WiFi
         {
             case "1 Connected":
                 GlobalData.LastMessages.Add("Client>> Node One Connected");
-                if (GlobalData.Node_One is not null)
-                    GlobalData.Node_One!.ConnectedWithWebsocket = true;
+                GlobalData.Node_One.Gyro!.CalibrationStatus = CalibrationStatus.REQUESTED;
                 break;
             case "2 Connected":
                 GlobalData.LastMessages.Add("Client>> Node Two Connected");
-                if (GlobalData.Node_Two is not null)
-                    GlobalData.Node_Two!.ConnectedWithWebsocket = true;
+                GlobalData.Node_Two.Gyro!.CalibrationStatus = CalibrationStatus.REQUESTED;
                 break;
             default:
                 HandleMessagePackage(message, client);
@@ -127,12 +127,12 @@ public class WiFi
             switch (client.Name)
             {
                 case "ONE":
-                    if (GlobalData.Node_One is not null)
-                        GlobalData.Node_One.Gyro.RawValue = int.Parse(message);
+                    if (GlobalData.Node_One.ConnectionType is ConnectionType.WIFI)
+                        GlobalData.Node_One.Gyro!.RawValue = int.Parse(message);
                     break;
                 case "TWO":
-                    if (GlobalData.Node_Two is not null)
-                        GlobalData.Node_Two.Gyro.RawValue = int.Parse(message);
+                    if (GlobalData.Node_Two.ConnectionType is ConnectionType.WIFI)
+                        GlobalData.Node_Two.Gyro!.RawValue = int.Parse(message);
                     break;
                 default:
                     GlobalData.LastMessages.Add(message);
@@ -154,7 +154,7 @@ public class WiFi
 
     public void CloseWiFi()
     {
-        IsListening = false;
+        Listening = false;
         foreach (WebsocketClient client in clients)
         {
             client.IsReconnectionEnabled = false;
@@ -164,6 +164,6 @@ public class WiFi
             client.Dispose();
         }
         clients.Clear();
-        GlobalData.LastMessages.Add("PROGRAM STOPPED");
+        GlobalData.ConnectionReset();
     }
 }

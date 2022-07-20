@@ -4,37 +4,43 @@ using Websocket.Client;
 public class Node
 {
     // public
-    public bool ConnectedWithWebsocket { get; set; }
+    public ConnectionType ConnectionType { get; set; }
 
     // readonlys
     // MUST
     public readonly DeviceNumber DeviceNumber;
-    public readonly Gyro Gyro;
-    public readonly ConnectionType ConnectionType;
     // CAN
+    public readonly Gyro? Gyro;
     public readonly IPEndPoint? EndPoint;
+    public readonly string? WebSocketURL;
 
-    public Node(ConnectionType connection, Gyro gyro, DeviceNumber device, IPEndPoint endPoint)
+    public Node(DeviceNumber device)
     {
-        Gyro = gyro;
-        ConnectionType = connection;
         DeviceNumber = device;
-        EndPoint = endPoint;
+        ConnectionType = ConnectionType.NOTHING;
     }
 
-    public
-    (string Device,
-    string Connection,
-    string Connected,
-    string RawValue,
-    string DegreePerSecond)
-    ToStringTupel()
+    public Node(DeviceNumber device, Gyro gyro, ConnectionType connection, IPEndPoint endPoint)
     {
-        return
-        (DeviceNumber.ToString(),
-        ConnectionType.ToString(),
-        ConnectedWithWebsocket.ToString(),
-        Gyro.RawValue.ToString(),
-        Gyro.DegreePerSecond().ToString());
+        Gyro = gyro;
+        DeviceNumber = device;
+        EndPoint = endPoint;
+        ConnectionType = connection;
+    }
+
+    public (string Device, string Connection, string RawValue, string DegreePerSecond) ToStringTupel()
+    {
+        string device = DeviceNumber.ToString();
+        string connection = ConnectionType.ToString();
+        string raw = "";
+        string degreePerSecond = "";
+
+        if (ConnectionType is not ConnectionType.NOTHING)
+        {
+            raw = Gyro!.RawValue.ToString();
+            degreePerSecond = Gyro!.DegreePerSecond().ToString();
+        }
+
+        return (device, connection, raw, degreePerSecond);
     }
 }
