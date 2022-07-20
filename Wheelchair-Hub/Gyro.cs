@@ -7,7 +7,8 @@ public class Gyro
     public readonly GyroMode Mode;
 
     // public
-    public int RawValue
+    public readonly Queue<int> RawValues;
+    public int LastRawValue
     {
         get
         {
@@ -32,6 +33,7 @@ public class Gyro
 
     // Constants
     private const int SAMPLE_RATE = 10;
+    private const int VALUE_BUFFER = 100;
 
     public Gyro(GyroMode mode, DeviceNumber device)
     {
@@ -42,10 +44,19 @@ public class Gyro
         CalibrationStatus = CalibrationStatus.NOT_CALIBRATED;
     }
 
+    public void AddRawValue(int value)
+    {
+        if (RawValues.Count > VALUE_BUFFER)
+        {
+            RawValues.Dequeue();
+        }
+        RawValues.Enqueue(value);
+    }
+
     public void Calibration(int seconds)
     {
         CalibrationStatus = CalibrationStatus.CALIBRATING;
-        GlobalData.LastMessages.Add($"Calibrating Gyro for {seconds}seconds.");
+        GlobalData.LastMessages.Add($"Calibrating Gyro for {seconds} seconds.");
         calibrationValues = new();
         calibrationTimer!.Elapsed += TakeSample!;
         calibrationTimer!.AutoReset = true;
@@ -63,7 +74,7 @@ public class Gyro
 
     private void TakeSample(object sender, ElapsedEventArgs e)
     {
-        calibrationValues.Add(RawValue);
+        calibrationValues.Add(LastRawValue);
     }
 
     public static double StepsPerDegree(GyroMode mode)

@@ -6,14 +6,11 @@ using Websocket.Client;
 
 public class WiFi
 {
-    // private IPEndPoint NodeEndPoint_One = new IPEndPoint(new IPAddress(0), 0);
-    // private IPEndPoint NodeEndPoint_Two = new IPEndPoint(new IPAddress(0), 0);
-
-    private UdpClient udpClient;
     public bool Listening { get; set; }
     const int CLIENT_PORT = 11000;
     const int WEBSOCKET_PORT = 81;
 
+    private UdpClient udpClient;
     private List<WebsocketClient> clients;
 
     public WiFi()
@@ -128,11 +125,17 @@ public class WiFi
             {
                 case "ONE":
                     if (GlobalData.Node_One.ConnectionType is ConnectionType.WIFI)
-                        GlobalData.Node_One.Gyro!.RawValue = int.Parse(message);
+                    {
+                        GlobalData.Node_One.DataCount++;
+                        GlobalData.Node_One.Gyro!.LastRawValue = int.Parse(message);
+                    }
                     break;
                 case "TWO":
                     if (GlobalData.Node_Two.ConnectionType is ConnectionType.WIFI)
-                        GlobalData.Node_Two.Gyro!.RawValue = int.Parse(message);
+                    {
+                        GlobalData.Node_Two.DataCount++;
+                        GlobalData.Node_Two.Gyro!.LastRawValue = int.Parse(message);
+                    }
                     break;
                 default:
                     GlobalData.LastMessages.Add(message);

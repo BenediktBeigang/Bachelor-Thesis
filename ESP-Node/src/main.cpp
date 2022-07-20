@@ -4,7 +4,7 @@
 #include "Communication/WebSocket.h"
 
 unsigned long SendingTimer = 0;
-const int16_t CALLS_PER_SECOND = 120;
+const int16_t DATA_PER_SECOND = 120;
 int16_t TIME_BETWEEN_CALLS = 1000;
 
 #define ESP_PORT 81
@@ -22,7 +22,7 @@ void setup()
   Serial.print("Try to connect to Client");
 
   // Timing
-  TIME_BETWEEN_CALLS = (int)(1000 / CALLS_PER_SECOND);
+  TIME_BETWEEN_CALLS = (int)(1000 / DATA_PER_SECOND);
   SendingTimer = millis();
 }
 

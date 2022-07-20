@@ -1,22 +1,36 @@
-public static class Formatting
+public class Formatting
 {
-    public static string GenerateSpacesLeft(string input, int count)
+    private readonly string[] Header;
+    private readonly string[] HeaderLine;
+    public readonly string FormatString;
+
+    public Formatting(string[] header)
     {
-        string spaces = "";
-        for (int i = 0; i < count; i++)
-        {
-            spaces += " ";
-        }
-        return spaces + input;
+        Header = header;
+        FormatString = GenerateFormatString();
+        HeaderLine = GenerateHeaderLine();
     }
 
-    public static string GenerateSpacesRight(string input, int count)
+    private string[] GenerateHeaderLine()
     {
-        string spaces = "";
-        for (int i = 0; i < count; i++)
+        string[] columns = new string[Header.Length];
+        for (int i = 0; i < Header.Length; i++)
         {
-            spaces += " ";
+            string line = "";
+            line.PadLeft(Header[i].Length, '-');
+            columns[i] = line;
         }
-        return input + spaces;
+        return columns;
+    }
+
+    private string GenerateFormatString()
+    {
+        string columns = "";
+        for (int i = 0; i < Header.Length; i++)
+        {
+            string mid = $"{i},{Header[i].Length}";
+            columns += "|{" + mid + "}";
+        }
+        return columns + "|";
     }
 }

@@ -16,6 +16,8 @@
     "bytes",
     "chars",
     "char",
-    "Gyro-Register"
+    "Gyro-Register",
+    "ESP-Now",
+    "WiFi"
   ]
 }

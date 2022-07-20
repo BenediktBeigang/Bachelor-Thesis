@@ -5,6 +5,8 @@ public class Node
 {
     // public
     public ConnectionType ConnectionType { get; set; }
+    public int DataPerSecond { get; set; }
+    public int DataCount { get; set; }
 
     // readonlys
     // MUST
@@ -37,10 +39,16 @@ public class Node
 
         if (ConnectionType is not ConnectionType.NOTHING)
         {
-            raw = Gyro!.RawValue.ToString();
+            raw = Gyro!.LastRawValue.ToString();
             degreePerSecond = Gyro!.DegreePerSecond().ToString();
         }
 
         return (device, connection, raw, degreePerSecond);
+    }
+
+    public void Update_DataRate(int timeBetweenCalls)
+    {
+        DataPerSecond = DataCount * (1000 / timeBetweenCalls);
+        DataCount = 0;
     }
 }
