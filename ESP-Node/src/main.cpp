@@ -4,7 +4,8 @@
 #include "Communication/WebSocket.h"
 
 unsigned long SendingTimer = 0;
-const int16_t DATA_PER_SECOND = 120;
+unsigned long HearbeatTimer = 0;
+const int16_t DATA_PER_SECOND = 100;
 int16_t TIME_BETWEEN_CALLS = 1000;
 
 #define ESP_PORT 81

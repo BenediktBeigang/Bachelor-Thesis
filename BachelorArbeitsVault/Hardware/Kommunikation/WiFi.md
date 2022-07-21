@@ -18,3 +18,27 @@ HTTP ist zu langsam für den austausch von Echtzeitdaten. Bei klassischem HTTP w
 Web-Sockets sind eine Möglichkeit wesentlich schneller Daten zu übertragen da keine Anfrage mitgeschickt wird sondern nach einem Handshake der server automatisch die Daten sendet. Außerdem wird auf große Header verzichtet. Es werden nur die nötigsten Daten mitgesendet. Dabei können Datentypen wie strings, oder auch binarys verschickt werden.
 
 - Server hört auf Port 81
+
+
+## Verbindungsaufbau
+| Software                                 |                                  | ESP                                                |
+| ---------------------------------------- | -------------------------------- | -------------------------------------------------- |
+| Warten auf Broadcast                     | <---"I am the Node ONE"---       | Broadcast senden                                   |
+|                                          |                                  |                                                    |
+|                                          |                                  |                                                    |
+|                                          |                                  |                                                    |
+| Node und Gyro anlegen                    |                                  |                                                    |
+| Verbindung mit WebSockerServer anfragen  | -------------------------------> | Broadcast beenden </br>Verbindungsanfrage annehmen |
+|                                          |                                  |                                                    |
+|                                          |                                  |                                                    |
+|                                          |                                  |                                                    |
+| Gyro Calibrirung starten                 | <-------"1 Connected"--------    | Bestätigung sendern                                |
+|                                          |                                  |                                                    |
+|                                          |                                  |                                                    |
+|                                          |                                  |                                                    |
+| Daten empfangen</br>DatenCounter erhöhen | <---------"-136750"----------    | Daten senden                                       |
+|                                          |                                  |                                                    |
+
+
+
+

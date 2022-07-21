@@ -16,27 +16,30 @@ public class Gyro
     {
         get
         {
-            return _rawValue + Offset;
+            return RawValues.Peek() + Offset;
         }
         set
         {
-            _rawValue = value;
+            if (RawValues.Count > VALUE_BUFFER)
+            {
+                RawValues.Dequeue();
+            }
+            RawValues.Enqueue(value);
         }
     }
     public double DegreePerSecond()
     {
-        return _rawValue / StepsPerDegree(Mode);
+        return LastRawValue / StepsPerDegree(Mode);
     }
     public CalibrationStatus CalibrationStatus { get; set; }
 
     // private
-    private int _rawValue;
     private List<int> calibrationValues;
     private int Offset { get; set; }
     private readonly System.Timers.Timer? calibrationTimer;
 
     // Constants
-    private const int SAMPLE_RATE = 10;
+    private const int SAMPLE_RATE = 10; // After what time the next calibration-sample is taken
     private const int VALUE_BUFFER = 100;
 
     public Gyro(GyroMode mode, DeviceNumber device)
@@ -49,15 +52,26 @@ public class Gyro
         CalibrationStatus = CalibrationStatus.NOT_CALIBRATED;
     }
 
-    public void AddRawValue(int value)
+    public static double StepsPerDegree(GyroMode mode)
     {
-        if (RawValues.Count > VALUE_BUFFER)
+        switch (mode)
         {
-            RawValues.Dequeue();
+            case GyroMode.GYRO_250: return 131;
+            case GyroMode.GYRO_500: return 65.5;
+            case GyroMode.GYRO_1000: return 32.8;
+            case GyroMode.GYRO_2000: return 16.4;
+            default: return 131;
         }
-        RawValues.Enqueue(value);
     }
 
+    # region Calibration
+    /// <summary>
+    /// Starts calibration of the Gyro of this Node.
+    /// For a given time a Timer is collecting samples of Gyro-Values.
+    /// After that time the average value is calculated 
+    /// and used as offset to improve the precision of the gyro-data.
+    /// </summary>
+    /// <param name="seconds"></param>
     public void Calibration(int seconds)
     {
         CalibrationStatus = CalibrationStatus.CALIBRATING;
@@ -81,16 +95,5 @@ public class Gyro
     {
         calibrationValues.Add(LastRawValue);
     }
-
-    public static double StepsPerDegree(GyroMode mode)
-    {
-        switch (mode)
-        {
-            case GyroMode.GYRO_250: return 131;
-            case GyroMode.GYRO_500: return 65.5;
-            case GyroMode.GYRO_1000: return 32.8;
-            case GyroMode.GYRO_2000: return 16.4;
-            default: return 131;
-        }
-    }
+    # endregion
 }

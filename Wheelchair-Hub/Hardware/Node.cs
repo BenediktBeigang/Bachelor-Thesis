@@ -7,14 +7,20 @@ public class Node
     public ConnectionType ConnectionType { get; set; }
     public int DataPerSecond { get; set; }
     public int DataCount { get; set; }
+    public WebsocketClient? Client { get; set; }
+    public int DisconnectionTime { get; set; } // in seconds
 
     // readonlys
     // MUST
     public readonly DeviceNumber DeviceNumber;
+    // public static implicit operator string(DeviceNumber device)
+    // {
+    //     return device.ToString();
+    // }
     // CAN
     public readonly Gyro? Gyro;
     public readonly IPEndPoint? EndPoint;
-    public readonly string? WebSocketURL;
+    public readonly string? WebSocketURI;
 
     public Node(DeviceNumber device)
     {
@@ -24,10 +30,10 @@ public class Node
 
     public Node(DeviceNumber device, Gyro gyro, ConnectionType connection, IPEndPoint endPoint)
     {
-        Gyro = gyro;
         DeviceNumber = device;
-        EndPoint = endPoint;
+        Gyro = gyro;
         ConnectionType = connection;
+        EndPoint = endPoint;
     }
 
     public (string Device, string Connection, string RawValue, string DegreePerSecond) ToStringTupel()
@@ -50,5 +56,12 @@ public class Node
     {
         DataPerSecond = DataCount * (1000 / timeBetweenCalls);
         DataCount = 0;
+    }
+
+    public void Reset()
+    {
+        GlobalData.LastMessages.Add($"Reset Node: {DeviceNumber.ToString()}");
+        ConnectionType = ConnectionType.NOTHING;
+        Client = null;
     }
 }
