@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Software/Messungen.md",
+            "file": "Hardware/Node.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Software/Messungen.md",
+                "file": "Hardware/Node.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,15 +97,15 @@
   },
   "active": "555b92599469c159",
   "lastOpenFiles": [
-    "Hardware/MPU6050.md",
-    "Quellen/General.md",
-    "Untitled.md",
+    "Hardware/ESP32.md",
     "Hardware/Node.md",
+    "Hardware/Mikrochips/Händler.md",
+    "Hardware/ESP8266.md",
+    "Hardware/MPU6050.md",
     "Hardware/Rollstuhl.md",
     "Hardware/Technische Daten.md",
-    "Gliederung.md",
-    "Box_Hardware.jpg.md",
-    "Quellen/Bilder/ASCII.bmp",
-    "Hardware/ESP8266.md"
+    "Arbeit/Messungen.md",
+    "Software/Kommunikation.md",
+    "Software/EingabeSchnittstellen.md"
   ]
 }

@@ -7,7 +7,7 @@ public static class Program
 {
     private static WiFi? wifiConnection;
     private static System.Timers.Timer? timer;
-    private static Formatting Formatting;
+    private static Formatting? Formatting;
     private const int TIME_BETWEEN_CONSOLE_CALLS = 16;
     private const GyroMode GYRO_MODE = GyroMode.GYRO_2000;
 
@@ -44,12 +44,12 @@ public static class Program
             Console.WriteLine("-----------------------------------------------------------------------------------");
 
             string table = "";
-            table += String.Format($"{Formatting.FormatString}", "Node", "", "Connection", "Raw Values", "DegreesPerSecond", "Calibration Status", "MessagesPerSecond") + '\n';
-            table += String.Format($"{Formatting.FormatString}", "----", "", "----------", "----------", "----------------", "------------------", "-----------------") + '\n';
+            table += String.Format($"{Formatting!.FormatString}", "Node", "", "Connection", "Raw Values", "DegreesPerSecond", "Calibration Status", "MessagesPerSecond") + '\n';
+            table += String.Format($"{Formatting!.FormatString}", "----", "", "----------", "----------", "----------------", "------------------", "-----------------") + '\n';
 
             table += (GlobalData.Node_One.ConnectionType is ConnectionType.NOTHING)
-            ? String.Format($"{Formatting.FormatString}", "ONE", "", "NOTHING", "", "", "NO GYRO", "") + '\n'
-            : String.Format($"{Formatting.FormatString}",
+            ? String.Format($"{Formatting!.FormatString}", "ONE", "", "NOTHING", "", "", "NO GYRO", "") + '\n'
+            : String.Format($"{Formatting!.FormatString}",
             "ONE", "",
             GlobalData.Node_One.ConnectionType,
             GlobalData.Node_One.Gyro!.LastRawValue,
@@ -58,8 +58,8 @@ public static class Program
             GlobalData.Node_One.DataPerSecond) + '\n';
 
             table += (GlobalData.Node_Two.ConnectionType is ConnectionType.NOTHING)
-            ? String.Format($"{Formatting.FormatString}", "TWO", "", "NOTHING", "", "", "NO GYRO", "")
-            : String.Format($"{Formatting.FormatString}",
+            ? String.Format($"{Formatting!.FormatString}", "TWO", "", "NOTHING", "", "", "NO GYRO", "")
+            : String.Format($"{Formatting!.FormatString}",
             "TWO", "",
             GlobalData.Node_Two.ConnectionType,
             GlobalData.Node_Two.Gyro!.LastRawValue,

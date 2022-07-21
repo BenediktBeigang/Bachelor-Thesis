@@ -41,6 +41,7 @@ public class Gyro
 
     public Gyro(GyroMode mode, DeviceNumber device)
     {
+        RawValues = new();
         Mode = mode;
         DeviceNumber = device;
         calibrationTimer = new System.Timers.Timer(SAMPLE_RATE);
