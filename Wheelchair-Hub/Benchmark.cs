@@ -25,6 +25,4 @@ public class Benchmark
         if (GlobalData.Node_Two.ConnectionType is not ConnectionType.NOTHING)
             GlobalData.Node_Two.Update_DataRate(TIME_BETWEEN_CALLS);
     }
-
-
 }

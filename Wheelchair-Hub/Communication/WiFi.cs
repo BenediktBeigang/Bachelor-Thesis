@@ -10,12 +10,14 @@ using Websocket.Client;
 
 public class WiFi : Connection
 {
+    #region Fields
     public bool Listening { get; set; }
     const int CLIENT_PORT = 11000;
     const int WEBSOCKET_PORT = 81;
 
     private UdpClient udpClient;
     private List<WebsocketClient> Clients;
+    #endregion
 
     public WiFi()
     {
@@ -36,6 +38,7 @@ public class WiFi : Connection
         receiveThread.Start();
     }
 
+    #region UDP
     /// <summary>
     /// Starts a UDP-Client that is listenting for a Broadcast. 
     /// When a Message is received a Handle-Function is called to react to the Message.
@@ -103,7 +106,9 @@ public class WiFi : Connection
         connectionThread.IsBackground = true;
         connectionThread.Start();
     }
+    #endregion
 
+    #region WebSocket
     /// <summary>
     /// Initializes new WebSocketClient and trys to connect to WebSocketServer.
     /// </summary>
@@ -181,14 +186,14 @@ public class WiFi : Connection
                     if (GlobalData.Node_One.ConnectionType is ConnectionType.WIFI)
                     {
                         GlobalData.Node_One.DataCount++;
-                        GlobalData.Node_One.Gyro!.LastRawValue = int.Parse(message);
+                        GlobalData.Node_One.Gyro!.RawValue_Next(int.Parse(message));
                     }
                     break;
                 case "TWO":
                     if (GlobalData.Node_Two.ConnectionType is ConnectionType.WIFI)
                     {
                         GlobalData.Node_Two.DataCount++;
-                        GlobalData.Node_Two.Gyro!.LastRawValue = int.Parse(message);
+                        GlobalData.Node_Two.Gyro!.RawValue_Next(int.Parse(message));
                     }
                     break;
                 default:
@@ -201,14 +206,9 @@ public class WiFi : Connection
             GlobalData.LastMessages.Add(message);
         }
     }
+    #endregion
 
-    private static string WebSocketURI(Received package)
-    {
-        string address = package.Sender.Address.ToString();
-        string port = package.Sender.Port.ToString();
-        return $"ws://{address}:{WEBSOCKET_PORT}/";
-    }
-
+    #region Disconnect
     /// <summary>
     /// Stops Node-Connection over WiFi.
     /// 1. All Connections with WebSocketServers are closed/stopped
@@ -243,42 +243,12 @@ public class WiFi : Connection
         Clients.Remove(client!);
         node.Reset();
     }
+    #endregion
 
-    // /// <summary>
-    // /// Checks that connection with nodes is still alive, 
-    // /// when Node is indicating that it is connected over WiFi.
-    // /// When MessageReceived-Flag is true in Node the connection is still alive and set to false.
-    // /// When MessageReceived-Flag is false connection is lost and Kill_Client() is called to announce that connection is lost.
-    // /// /// </summary>
-    // public void Heartbeat()
-    // {
-    //     foreach (Node node in GlobalData.Nodes)
-    //     {
-    //         if (node.ConnectionType is not ConnectionType.NOTHING)
-    //         {
-    //             GlobalData.LastMessages.Add($"HEARTBEAT: {node.DeviceNumber.ToString()}");
-    //             if (node.MessageReceived)
-    //                 node.MessageReceived = false;
-    //             else
-    //             {
-    //                 node.MessageReceived = false;
-    //                 Kill_Client(node);
-    //             }
-    //         }
-    //     }
-    // }
-
-    // /// <summary>
-    // /// Kills the connection with WebSocketServer.
-    // /// Resets the associated Node.
-    // /// </summary>
-    // /// <param name="node"></param>
-    // private void Kill_Client(Node node)
-    // {
-    //     WebsocketClient client = Clients.First(c => c.Name == node.DeviceNumber.ToString());
-    //     GlobalData.LastMessages.Add($"Lost connection to Node {node.DeviceNumber.ToString()}");
-    //     Task.Run(() => client!.Stop(WebSocketCloseStatus.EndpointUnavailable, "Lost Connection"));
-    //     Clients.Remove(client!);
-    //     node.Reset();
-    // }
+    private static string WebSocketURI(Received package)
+    {
+        string address = package.Sender.Address.ToString();
+        string port = package.Sender.Port.ToString();
+        return $"ws://{address}:{WEBSOCKET_PORT}/";
+    }
 }

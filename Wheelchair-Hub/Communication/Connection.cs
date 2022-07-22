@@ -18,6 +18,12 @@ public abstract class Connection : ICommunication
         Check_Node(GlobalData.Node_Two);
     }
 
+    /// <summary>
+    /// Checks for disconnection. 
+    /// When to often in a row zero packages per second are received, the Disconnectino function is called.
+    /// The tolerated number of times with zero packages is defined by the constant MAXIMUM_DISCONNECTION_DURATION.
+    /// </summary>
+    /// <param name="node"></param>
     private void Check_Node(Node node)
     {
         if (node.ConnectionType is not ConnectionType.NOTHING)

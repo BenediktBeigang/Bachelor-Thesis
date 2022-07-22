@@ -5,6 +5,7 @@ using System.Timers;
 
 public static class Program
 {
+    #region Fields
     private static WiFi? wifiConnection;
     private static Formatting? Formatting;
     private const GyroMode GYRO_MODE = GyroMode.GYRO_2000;
@@ -15,6 +16,7 @@ public static class Program
     private const int TIME_BETWEEN_CONSOLE_CALLS = 100;
     private const int TIME_BETWEEN_PROGRAM_CALLS = 1000;
     private const int TIME_BETWEEN_HEARTBEAT_CALLS = 1000;
+    #endregion
 
     public static void Main(string[] args)
     {
@@ -26,6 +28,7 @@ public static class Program
         Exit_Code();
     }
 
+    #region Timer
     private static void Loop()
     {
         Set_Timer(ref ConsoleTimer!, TIME_BETWEEN_CONSOLE_CALLS, "PrintConsole");
@@ -52,6 +55,15 @@ public static class Program
         timer.Enabled = true;
     }
 
+    private static void StopTimers()
+    {
+        ConsoleTimer!.Stop();
+        ProgrammTimer!.Stop();
+        HeartbeatTimer!.Stop();
+    }
+    #endregion
+
+    #region Console
     private static void PrintConsole(object sender, ElapsedEventArgs e)
     {
         if (wifiConnection is not null)
@@ -60,24 +72,21 @@ public static class Program
         }
     }
 
+    private static void Stop_Console()
+    {
+        GlobalData.LastMessages.Add("PROGRAM STOPPED");
+        Thread.Sleep(500);
+        File.WriteAllTextAsync("LastConsolePrint.txt", Terminal.Print());
+        Environment.Exit(0);
+    }
+    #endregion
+
+    #region Programm
     private static void ProgramStep(object sender, ElapsedEventArgs e)
     {
         wifiConnection!.Listening = (GlobalData.Node_One.ConnectionType is ConnectionType.NOTHING || GlobalData.Node_Two.ConnectionType is ConnectionType.NOTHING);
         Check_Calibration(GlobalData.Node_One!);
         Check_Calibration(GlobalData.Node_Two!);
-    }
-
-    private static void Heartbeat(object sender, ElapsedEventArgs e)
-    {
-        wifiConnection!.Heartbeat();
-    }
-
-    private static void Check_Calibration(Node node)
-    {
-        if (node.ConnectionType is not ConnectionType.NOTHING && node.Gyro!.CalibrationStatus is CalibrationStatus.REQUESTED)
-        {
-            node.Gyro.Calibration(3);
-        }
     }
 
     private static void Exit_Code()
@@ -90,19 +99,29 @@ public static class Program
         wifiConnection!.Disconnect_AllNodes();
         Stop_Console();
     }
+    #endregion
 
-    private static void StopTimers()
+    #region Node
+    /// <summary>
+    /// Calls the Heartbeatfunction in Connection to verify that the connection is still alive.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private static void Heartbeat(object sender, ElapsedEventArgs e)
     {
-        ConsoleTimer!.Stop();
-        ProgrammTimer!.Stop();
-        HeartbeatTimer!.Stop();
+        wifiConnection!.Heartbeat();
     }
 
-    private static void Stop_Console()
+    /// <summary>
+    /// Checks if Calibration is requested and starts the Calibration-Process if true.
+    /// </summary>
+    /// <param name="node"></param>
+    private static void Check_Calibration(Node node)
     {
-        GlobalData.LastMessages.Add("PROGRAM STOPPED");
-        Thread.Sleep(500);
-        File.WriteAllTextAsync("LastConsolePrint.txt", Terminal.Print());
-        Environment.Exit(0);
+        if (node.ConnectionType is not ConnectionType.NOTHING && node.Gyro!.CalibrationStatus is CalibrationStatus.REQUESTED)
+        {
+            node.Gyro.Calibration(3);
+        }
     }
+    #endregion
 }

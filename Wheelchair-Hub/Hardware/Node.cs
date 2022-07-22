@@ -3,6 +3,7 @@ using Websocket.Client;
 
 public class Node
 {
+    #region Fields
     // public
     public ConnectionType ConnectionType { get; set; }
     public int DataPerSecond { get; set; }
@@ -13,21 +14,31 @@ public class Node
     // readonlys
     // MUST
     public readonly DeviceNumber DeviceNumber;
-    // public static implicit operator string(DeviceNumber device)
-    // {
-    //     return device.ToString();
-    // }
+
     // CAN
     public readonly Gyro? Gyro;
     public readonly IPEndPoint? EndPoint;
     public readonly string? WebSocketURI;
+    #endregion
 
+    #region Initialization
+    /// <summary>
+    /// Constructor when no connection is established (default).
+    /// </summary>
+    /// <param name="device"></param>
     public Node(DeviceNumber device)
     {
         DeviceNumber = device;
         ConnectionType = ConnectionType.NOTHING;
     }
 
+    /// <summary>
+    /// Constructor for WiFi-Connection.
+    /// </summary>
+    /// <param name="device"></param>
+    /// <param name="gyro"></param>
+    /// <param name="connection"></param>
+    /// <param name="endPoint"></param>
     public Node(DeviceNumber device, Gyro gyro, ConnectionType connection, IPEndPoint endPoint)
     {
         DeviceNumber = device;
@@ -35,23 +46,9 @@ public class Node
         ConnectionType = connection;
         EndPoint = endPoint;
     }
+    #endregion
 
-    public (string Device, string Connection, string RawValue, string DegreePerSecond) ToStringTupel()
-    {
-        string device = DeviceNumber.ToString();
-        string connection = ConnectionType.ToString();
-        string raw = "";
-        string degreePerSecond = "";
-
-        if (ConnectionType is not ConnectionType.NOTHING)
-        {
-            raw = Gyro!.LastRawValue.ToString();
-            degreePerSecond = Gyro!.DegreePerSecond().ToString();
-        }
-
-        return (device, connection, raw, degreePerSecond);
-    }
-
+    #region StateChange
     public void Update_DataRate(int timeBetweenCalls)
     {
         DataPerSecond = DataCount * (1000 / timeBetweenCalls);
@@ -64,4 +61,5 @@ public class Node
         ConnectionType = ConnectionType.NOTHING;
         Client = null;
     }
+    #endregion
 }

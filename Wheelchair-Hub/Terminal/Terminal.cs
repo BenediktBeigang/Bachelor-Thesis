@@ -15,6 +15,7 @@ public static class Terminal
         return output;
     }
 
+    #region Helper
     private static string Generate_Table()
     {
         string table = "";
@@ -28,14 +29,14 @@ public static class Terminal
         return table;
     }
 
-    private static string? Generate_TableLine(Node node)
+    private static string Generate_TableLine(Node node)
     {
         string deviceNumber;
         switch (node.DeviceNumber)
         {
             case DeviceNumber.ONE: deviceNumber = "ONE"; break;
             case DeviceNumber.TWO: deviceNumber = "TWO"; break;
-            default: return null;
+            default: return "";
         }
         return (node.ConnectionType is ConnectionType.NOTHING)
         ? String.Format($"{format.FormatString}", deviceNumber, "", "NOTHING", "", "", "NO GYRO", "", "")
@@ -43,7 +44,7 @@ public static class Terminal
         deviceNumber,
         "",
         node.ConnectionType,
-        node.Gyro!.LastRawValue,
+        node.Gyro!.RawValue_Last(),
         node.Gyro!.DegreePerSecond().ToString("0.00"),
         node.Gyro!.CalibrationStatus,
         node.DataPerSecond,
@@ -60,4 +61,5 @@ public static class Terminal
         }
         return output;
     }
+    #endregion
 }
