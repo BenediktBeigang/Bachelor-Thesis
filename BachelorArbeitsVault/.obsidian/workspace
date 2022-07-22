@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Hardware/Node.md",
+            "file": "Hardware/Kommunikation/WiFi.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Hardware/Node.md",
+                "file": "Hardware/Kommunikation/WiFi.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,8 +97,8 @@
   },
   "active": "555b92599469c159",
   "lastOpenFiles": [
-    "Hardware/ESP32.md",
     "Hardware/Node.md",
+    "Hardware/ESP32.md",
     "Hardware/Mikrochips/Händler.md",
     "Hardware/ESP8266.md",
     "Hardware/MPU6050.md",

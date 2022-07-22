@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public static class GlobalData
 {
-    public static List<string> LastMessages { get; set; } = new();
+    public static ConcurrentBag<string> LastMessages { get; set; } = new();
     public static Queue<Received> Packages { get; set; } = new();
 
     public static Node Node_One { get; set; } = new Node(DeviceNumber.ONE);
@@ -12,12 +12,9 @@ public static class GlobalData
 
     public static string other { get; set; } = "";
 
-    public static void ConnectionReset()
+    public static void Reset_AllNodes()
     {
-        Node_One = new Node(DeviceNumber.ONE);
-        Node_Two = new Node(DeviceNumber.TWO);
-        Nodes.Clear();
-        Nodes.Add(Node_One);
-        Nodes.Add(Node_Two);
+        Node_One.Reset();
+        Node_Two.Reset();
     }
 }

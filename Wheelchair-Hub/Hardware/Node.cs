@@ -3,52 +3,63 @@ using Websocket.Client;
 
 public class Node
 {
+    #region Fields
     // public
     public ConnectionType ConnectionType { get; set; }
     public int DataPerSecond { get; set; }
     public int DataCount { get; set; }
+    public WebsocketClient? Client { get; set; }
+    public int DisconnectionTime { get; set; } // in seconds
 
     // readonlys
     // MUST
     public readonly DeviceNumber DeviceNumber;
+
     // CAN
     public readonly Gyro? Gyro;
     public readonly IPEndPoint? EndPoint;
-    public readonly string? WebSocketURL;
+    public readonly string? WebSocketURI;
+    #endregion
 
+    #region Initialization
+    /// <summary>
+    /// Constructor when no connection is established (default).
+    /// </summary>
+    /// <param name="device"></param>
     public Node(DeviceNumber device)
     {
         DeviceNumber = device;
         ConnectionType = ConnectionType.NOTHING;
     }
 
+    /// <summary>
+    /// Constructor for WiFi-Connection.
+    /// </summary>
+    /// <param name="device"></param>
+    /// <param name="gyro"></param>
+    /// <param name="connection"></param>
+    /// <param name="endPoint"></param>
     public Node(DeviceNumber device, Gyro gyro, ConnectionType connection, IPEndPoint endPoint)
     {
-        Gyro = gyro;
         DeviceNumber = device;
-        EndPoint = endPoint;
+        Gyro = gyro;
         ConnectionType = connection;
+        EndPoint = endPoint;
     }
+    #endregion
 
-    public (string Device, string Connection, string RawValue, string DegreePerSecond) ToStringTupel()
-    {
-        string device = DeviceNumber.ToString();
-        string connection = ConnectionType.ToString();
-        string raw = "";
-        string degreePerSecond = "";
-
-        if (ConnectionType is not ConnectionType.NOTHING)
-        {
-            raw = Gyro!.LastRawValue.ToString();
-            degreePerSecond = Gyro!.DegreePerSecond().ToString();
-        }
-
-        return (device, connection, raw, degreePerSecond);
-    }
-
+    #region StateChange
     public void Update_DataRate(int timeBetweenCalls)
     {
         DataPerSecond = DataCount * (1000 / timeBetweenCalls);
         DataCount = 0;
     }
+
+    public void Reset()
+    {
+        GlobalData.LastMessages.Add($"Reset Node: {DeviceNumber.ToString()}");
+        ConnectionType = ConnectionType.NOTHING;
+        Client = null;
+    }
+    #endregion
 }
