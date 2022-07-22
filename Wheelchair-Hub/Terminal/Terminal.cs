@@ -1,3 +1,5 @@
+using System;
+
 public static class Terminal
 {
     private static Formatting format = new Formatting(new string[] { "Node", "", "Connection", "Raw Values", "DegreesPerSecond", "Calibration Status", "MessagesPerSecond", "DisconnectionTime" });
