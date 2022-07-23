@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Hardware/Kommunikation/WiFi.md",
+            "file": "Arbeit/0. Einleitung.md",
             "mode": "source",
             "source": false
           }
@@ -40,7 +40,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#Maße",
+                "query": "ESP",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Hardware/Kommunikation/WiFi.md",
+                "file": "Arbeit/0. Einleitung.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,15 +97,15 @@
   },
   "active": "555b92599469c159",
   "lastOpenFiles": [
-    "Hardware/Node.md",
-    "Hardware/ESP32.md",
-    "Hardware/Mikrochips/Händler.md",
-    "Hardware/ESP8266.md",
-    "Hardware/MPU6050.md",
-    "Hardware/Rollstuhl.md",
-    "Hardware/Technische Daten.md",
+    "Arbeit/5. Ausblick.md",
+    "Arbeit/4. Erkenntnis.md",
+    "Arbeit/3. Experiment.md",
+    "Arbeit/2. Methode.md",
+    "Arbeit/1. Theorie.md",
+    "Arbeit/Gliederung.md",
     "Arbeit/Messungen.md",
-    "Software/Kommunikation.md",
-    "Software/EingabeSchnittstellen.md"
+    "Arbeit/0. Einleitung.md",
+    "Arbeit/Theorie/Abstract.md",
+    "Hardware/MPU6050.md"
   ]
 }

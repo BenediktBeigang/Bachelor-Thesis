@@ -7,7 +7,6 @@
 ## Vor und Nachteile
 - Beide Seiten müssen die Adressen des Anderen kennen
 
-
 ## UDP vs TCP
 - UDP hat weniger Last da keine Verbindungssicherheit herscht
 - UDP garantiert nicht die Reihenfolge

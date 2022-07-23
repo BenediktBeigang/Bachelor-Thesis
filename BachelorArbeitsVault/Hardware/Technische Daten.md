@@ -38,7 +38,7 @@
 | Höhe (complete) |     | 11mm   |     | 11mm |
 | Tiefe (plastic) |     | 2mm    |     | 2mm  |
 
-### Node
+### [[Node]]
 | Attribut       | Wert  |
 | -------------- | ----- |
 | Höhe (Außen)   | 6cm   |
@@ -61,7 +61,7 @@
 Wand: 5mm
 
 
-### ESP32
+### [[ESP32]]
 | Attribut        | Wert |
 | --------------- | ---- |
 | Höhe (Brett)    | 7mm  |

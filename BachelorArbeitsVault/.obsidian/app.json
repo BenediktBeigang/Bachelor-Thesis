@@ -18,6 +18,8 @@
     "char",
     "Gyro-Register",
     "ESP-Now",
-    "WiFi"
+    "WiFi",
+    "Node",
+    "Motion-Sickness"
   ]
 }
