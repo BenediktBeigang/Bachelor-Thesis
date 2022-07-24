@@ -7,6 +7,7 @@ using System.Timers;
 public static class Program
 {
     #region Fields
+    private static Connection? connection;
     private static WiFi? wifiConnection;
     private static Formatting? Formatting;
     private const GyroMode GYRO_MODE = GyroMode.GYRO_2000;
@@ -17,16 +18,32 @@ public static class Program
     private const int TIME_BETWEEN_CONSOLE_CALLS = 100;
     private const int TIME_BETWEEN_PROGRAM_CALLS = 1000;
     private const int TIME_BETWEEN_HEARTBEAT_CALLS = 1000;
+
+    private const string COM = "COM3";
+    private const int BAUDRATE = 115200;
     #endregion
 
     public static void Main(string[] args)
     {
         new Benchmark();
+        // connection = SetConnection(ConnectionType.WIFI);
+        // connection.ConnectToHost(GyroMode.GYRO_2000);
         wifiConnection = new WiFi(); // "ws://ip:port/"
-        wifiConnection.ConnectToHost();
+        wifiConnection.ConnectToHost(GyroMode.GYRO_2000);
 
         Loop();
         Exit_Code();
+    }
+
+    private static Connection? SetConnection(ConnectionType connection)
+    {
+        switch (connection)
+        {
+            case ConnectionType.WIFI: return new WiFi();
+            case ConnectionType.ESP_NOW: return new ESP_Now(COM, BAUDRATE);
+            case ConnectionType.BLUETOOTH: return null;
+            default: return null;
+        }
     }
 
     #region Timer

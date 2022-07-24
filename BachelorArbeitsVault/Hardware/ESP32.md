@@ -1,8 +1,11 @@
 # ESP-32 (Dev Kit C V4)
+___
 Chip der Firma AZ-Delivery
 
 ## IO Pins
 ![[ESP32_IO_Pins.PNG|700]]
+
+___
 
 ## Treiber
 Mein Chip von AZ-Delivery verwendet einen **CP2102** USB to UART Bridge Controller. Bevor man den Chip flashen kann, muss erst der Treiber auf dem Chip installiert werden.
@@ -13,7 +16,7 @@ Mein Chip von AZ-Delivery verwendet einen **CP2102** USB to UART Bridge Controll
 [Meine Bridge](https://www.silabs.com/interface/usb-bridges/classic/device.cp2102)
 
 
-## I2C
+## [[I2C]]
 - [Wie setzt man die SCL/SDA Pins](https://randomnerdtutorials.com/esp32-i2c-communication-arduino-ide/)
 - [SCL/SDA erklärt](https://deepbluembedded.com/esp32-i2c-tutorial-change-pins-i2c-scanner-arduino/)
 

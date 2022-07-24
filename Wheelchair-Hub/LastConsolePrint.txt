@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------------------------------
 |Node||Connection|Raw Values|DegreesPerSecond|Calibration Status|MessagesPerSecond|DisconnectionTime|
 |----||----------|----------|----------------|------------------|-----------------|-----------------|
-| ONE||      WIFI|         5|            0,30|         REQUESTED|                0|                0|
+| ONE||      WIFI|         5|            0,30|       CALIBRATING|               36|                0|
 | TWO||   NOTHING|          |                |           NO GYRO|                 |                 |
 -----------------------------------------------------------------------------------------------------
 
@@ -9,23 +9,25 @@
 Press 'q' to quit.
 
 Last Messages: 
+> Calibrating Gyro for 3 seconds.
+> Client>> Node One Connected
+> Host>> Reconnection happened, type: Initial
+> UDP stopped listening!
+> Packet Received:
+IP: 192.168.2.115
+PORT: 56992
+Message: I am Node ONE
+> Try to connect to Web-Socket of Node ONE: ws://192.168.2.115:81/
 > PROGRAM STOPPED
 > Reset Node: TWO
 > Reset Node: ONE
 > Disconnected from Node ONE
 > Calibrating Gyro for 3 seconds.
-> Client>> Node One Connected
-> Host>> Reconnection happened, type: Initial
-> Packet Received:
-IP: 192.168.2.115
-PORT: 59492
-Message: I am Node ONE
-> Try to connect to Web-Socket of Node ONE: ws://192.168.2.115:81/
 > Host>> Reconnection happened, type: Initial
 > Client>> Node One Connected
 > Packet Received:
 IP: 192.168.2.115
-PORT: 59492
+PORT: 56992
 Message: I am Node ONE
 > Try to connect to Web-Socket of Node ONE: ws://192.168.2.115:81/
 > UDP is listening!

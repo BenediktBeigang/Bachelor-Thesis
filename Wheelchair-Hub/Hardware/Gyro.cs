@@ -17,9 +17,9 @@ public class Gyro
 
     // private
     private short BufferPointer;
-    private int[] RawValueBuffer;
+    private short[] RawValueBuffer;
     private List<int> calibrationValues;
-    private int Offset { get; set; }
+    private short Offset { get; set; }
     private readonly System.Timers.Timer? calibrationTimer;
     private double StepsPerDegree;
 
@@ -31,7 +31,7 @@ public class Gyro
     #region Initialization
     public Gyro(GyroMode mode, DeviceNumber device)
     {
-        RawValueBuffer = new int[BUFFER_SIZE];
+        RawValueBuffer = new short[BUFFER_SIZE];
         // RawValues = new();
         Mode = mode;
         StepsPerDegree = GyroModeToStepsPerDegree(mode);
@@ -59,7 +59,7 @@ public class Gyro
     /// Overides oldest RawValue in Buffer with new RawValue.
     /// </summary>
     /// <param name="newValue"></param>
-    public void RawValue_Next(int newValue)
+    public void RawValue_Next(short newValue)
     {
         BufferPointer++;
         if (BufferPointer >= BUFFER_SIZE)
@@ -73,7 +73,7 @@ public class Gyro
     /// Returns newest RawValue.
     /// </summary>
     /// <returns></returns>
-    public int RawValue_Last()
+    public short RawValue_Last()
     {
         return RawValueBuffer[BufferPointer];
     }
@@ -82,10 +82,10 @@ public class Gyro
     /// Returns the Buffer, containg the newest RawValues.
     /// </summary>
     /// <returns></returns>
-    public int[] RawValues_Buffer()
+    public short[] RawValues_Buffer()
     {
-        int[] result = new int[BUFFER_SIZE];
-        int pivot = BufferPointer + 1;
+        short[] result = new short[BUFFER_SIZE];
+        short pivot = (short)(BufferPointer + 1);
         Array.Copy(RawValueBuffer, 0, result, pivot, pivot);
         Array.Copy(RawValueBuffer, pivot, result, 0, pivot);
         return result.Reverse().ToArray();
@@ -120,13 +120,14 @@ public class Gyro
     {
         Thread.Sleep(seconds * 1000);
         calibrationTimer!.Stop();
-        Offset = -(int)calibrationValues.Average();
+        Offset = (short)(-calibrationValues.Average());
         CalibrationStatus = CalibrationStatus.CALIBRATED;
     }
 
     private void TakeSample(object sender, ElapsedEventArgs e)
     {
-        calibrationValues.Add(RawValue_Last());
+        short value = RawValue_Last();
+        if (value != 0) calibrationValues.Add(value);
     }
     # endregion
 }

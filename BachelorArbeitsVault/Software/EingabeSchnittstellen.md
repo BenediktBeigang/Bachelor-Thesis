@@ -1,6 +1,6 @@
-# EingabeSchnittstellen
+# Eingabe-Schnittstellen
 
-Ein (XBOX)-Controller besitzt zwei Joysticks.
+Ein (XBOX)-[[Controller]] besitzt zwei [[Joysticks]].
 Der linke ist meist für die Bewegung belegt, der rechte zum Umschauen.
 
 y-Achse des linken Sticks für Position

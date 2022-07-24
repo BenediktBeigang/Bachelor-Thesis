@@ -1,6 +1,6 @@
 # Batterie Pack
-- lifepo4 könnte die richte technologie sein
-
+___
+- lifepo4 könnte die richtige technologie sein
 
 U = R * I
 

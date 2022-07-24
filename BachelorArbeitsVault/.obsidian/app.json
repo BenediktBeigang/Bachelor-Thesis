@@ -20,6 +20,8 @@
     "ESP-Now",
     "WiFi",
     "Node",
-    "Motion-Sickness"
+    "Motion-Sickness",
+    "Gyro-Modus",
+    "Gyro-Modi"
   ]
 }

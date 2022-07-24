@@ -1,6 +1,6 @@
 # Technische Daten
 
-### Rollstuhl
+### [[Rollstuhl]]
 | Reifen              | Wert   |
 | ------------------- | ------ |
 | Abstand             | ?50cm? |
@@ -9,7 +9,7 @@
 | Umfang              | 185cm  |
 | Millimeter pro Grad | 5,1mm  |
 
-### Powerbank
+### [[Powerbank]]
 | Attribut    | Wert    |
 | ----------- | ------- |
 | Höhe        | 13 mm   |
@@ -21,7 +21,7 @@
 | Weight      | 100g    |
 | Charge-Time | 5-8h    |
 
-### Breadboards
+### [[Breadboards]]
 | Attribut      |     | Groß  |     | Klein |
 | ------------- | --- | ----- | --- | ----- |
 | Höhe          |     | 1,6mm |     | 1,6mm |

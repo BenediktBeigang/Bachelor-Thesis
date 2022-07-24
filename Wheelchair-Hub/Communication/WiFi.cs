@@ -18,6 +18,7 @@ public class WiFi : Connection
 
     private UdpClient udpClient;
     private List<WebsocketClient> Clients;
+    private GyroMode GyroMode;
     #endregion
 
     public WiFi()
@@ -32,8 +33,9 @@ public class WiFi : Connection
     /// <summary>
     /// Starts a Thread that waits for Broadcast of ESP to connect to it.
     /// </summary>
-    public override void ConnectToHost()
+    public override void ConnectToHost(GyroMode gyroMode)
     {
+        GyroMode = gyroMode;
         Thread receiveThread = new Thread(new ThreadStart(this.Receive_UDP));
         receiveThread.IsBackground = true;
         receiveThread.Start();
@@ -90,16 +92,7 @@ public class WiFi : Connection
     /// <param name="device"></param>
     private void NewNode(Received package, DeviceNumber device)
     {
-        Gyro gyro = new Gyro(GyroMode.GYRO_2000, device);
-        switch (device)
-        {
-            case DeviceNumber.ONE:
-                GlobalData.Node_One = new Node(device, gyro, ConnectionType.WIFI, package.Sender);
-                break;
-            case DeviceNumber.TWO:
-                GlobalData.Node_Two = new Node(device, gyro, ConnectionType.WIFI, package.Sender);
-                break;
-        }
+        InitializeNode(ConnectionType.WIFI, device, GyroMode, package.Sender);
 
         string uri = WebSocketURI(package);
         GlobalData.LastMessages.Add($"Try to connect to Web-Socket of Node {device.ToString()}: {uri}");
@@ -184,18 +177,12 @@ public class WiFi : Connection
             switch (client.Name)
             {
                 case "ONE":
-                    if (GlobalData.Node_One.ConnectionType is ConnectionType.WIFI)
-                    {
-                        GlobalData.Node_One.DataCount++;
-                        GlobalData.Node_One.Gyro!.RawValue_Next(int.Parse(message));
-                    }
+                    GlobalData.Node_One.DataCount++;
+                    GlobalData.Node_One.Gyro.RawValue_Next(short.Parse(message));
                     break;
                 case "TWO":
-                    if (GlobalData.Node_Two.ConnectionType is ConnectionType.WIFI)
-                    {
-                        GlobalData.Node_Two.DataCount++;
-                        GlobalData.Node_Two.Gyro!.RawValue_Next(int.Parse(message));
-                    }
+                    GlobalData.Node_Two.DataCount++;
+                    GlobalData.Node_Two.Gyro.RawValue_Next(short.Parse(message));
                     break;
                 default:
                     GlobalData.LastMessages.Add(message);

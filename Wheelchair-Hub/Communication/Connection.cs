@@ -1,6 +1,7 @@
+using System.Net;
 using System.Timers;
 
-public abstract class Connection : ICommunication
+public abstract class Connection
 {
 
     private const int MAXIMUM_DISCONNECTION_DURATION = 10;
@@ -39,7 +40,28 @@ public abstract class Connection : ICommunication
         }
     }
 
+    protected void InitializeNode(ConnectionType connection, DeviceNumber device, GyroMode gyroMode, IPEndPoint? sender = null)
+    {
+        Node node = new Node(device);
+        switch (connection)
+        {
+            case ConnectionType.WIFI: node = new Node(device, connection, sender!, gyroMode); break;
+            case ConnectionType.ESP_NOW: node = new Node(device, connection, gyroMode); break;
+            case ConnectionType.BLUETOOTH: break;
+        }
+        WriteNodeInGlobalData(device, node);
+    }
+
+    private void WriteNodeInGlobalData(DeviceNumber device, Node node)
+    {
+        switch (device)
+        {
+            case DeviceNumber.ONE: GlobalData.Node_One = node; break;
+            case DeviceNumber.TWO: GlobalData.Node_Two = node; break;
+        }
+    }
+
     protected abstract void Disconnect_Node(Node node);
     public abstract void Disconnect_AllNodes();
-    public abstract void ConnectToHost();
+    public abstract void ConnectToHost(GyroMode gyroMode);
 }
