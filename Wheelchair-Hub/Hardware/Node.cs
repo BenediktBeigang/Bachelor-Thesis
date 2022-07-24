@@ -16,7 +16,7 @@ public class Node
     public readonly DeviceNumber DeviceNumber;
 
     // CAN
-    public readonly Gyro? Gyro;
+    public readonly Gyro Gyro;
     public readonly IPEndPoint? EndPoint;
     public readonly string? WebSocketURI;
     #endregion
@@ -26,10 +26,24 @@ public class Node
     /// Constructor when no connection is established (default).
     /// </summary>
     /// <param name="device"></param>
-    public Node(DeviceNumber device)
+    public Node(DeviceNumber device, GyroMode gyroMode = GyroMode.GYRO_250)
     {
         DeviceNumber = device;
         ConnectionType = ConnectionType.NOTHING;
+        Gyro = new Gyro(gyroMode, device);
+    }
+
+    /// <summary>
+    /// Constructor for ESP-Now/SerialPort-Connection
+    /// </summary>
+    /// <param name="device"></param>
+    /// <param name="gyro"></param>
+    /// <param name="connection"></param>
+    public Node(DeviceNumber device, ConnectionType connection, GyroMode gyroMode = GyroMode.GYRO_250)
+    {
+        DeviceNumber = device;
+        ConnectionType = connection;
+        Gyro = Gyro = new Gyro(gyroMode, device);
     }
 
     /// <summary>
@@ -39,12 +53,12 @@ public class Node
     /// <param name="gyro"></param>
     /// <param name="connection"></param>
     /// <param name="endPoint"></param>
-    public Node(DeviceNumber device, Gyro gyro, ConnectionType connection, IPEndPoint endPoint)
+    public Node(DeviceNumber device, ConnectionType connection, IPEndPoint endPoint, GyroMode gyroMode = GyroMode.GYRO_250)
     {
         DeviceNumber = device;
-        Gyro = gyro;
         ConnectionType = connection;
         EndPoint = endPoint;
+        Gyro = new Gyro(gyroMode, device);
     }
     #endregion
 

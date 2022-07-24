@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Arbeit/0. Einleitung.md",
+            "file": "Quellen/General.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/0. Einleitung.md",
+                "file": "Quellen/General.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,15 +97,15 @@
   },
   "active": "555b92599469c159",
   "lastOpenFiles": [
-    "Arbeit/5. Ausblick.md",
-    "Arbeit/4. Erkenntnis.md",
-    "Arbeit/3. Experiment.md",
-    "Arbeit/2. Methode.md",
-    "Arbeit/1. Theorie.md",
-    "Arbeit/Gliederung.md",
-    "Arbeit/Messungen.md",
-    "Arbeit/0. Einleitung.md",
-    "Arbeit/Theorie/Abstract.md",
-    "Hardware/MPU6050.md"
+    "Quellen/Amazon.md",
+    "Quellen/YouTube.md",
+    "Quellen/General.md",
+    "Hardware/Node.md",
+    "Hardware/ESP32.md",
+    "Quellen/Bilder/Hardware/Verkabelung.PNG",
+    "Hardware/MPU6050.md",
+    "Hardware/ESP8266.md",
+    "Hardware/Batterie.md",
+    "Hardware/Kommunikation/WiFi.md"
   ]
 }

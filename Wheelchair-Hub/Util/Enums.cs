@@ -27,3 +27,10 @@ public enum CalibrationStatus
     CALIBRATING,
     CALIBRATED
 }
+
+public enum WheelchairMode
+{
+    Wheelchair_Simple,
+    Wheelchair_Realistic,
+    Mouse
+}
