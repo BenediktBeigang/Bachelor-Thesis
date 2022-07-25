@@ -22,16 +22,16 @@ const char NODE_NUMBER = '1';
 unsigned long ConnectionTimer = millis();
 int16_t TIME_BETWEEN_CONNECTION_CALLS = 5000;
 
-bool IsConnected = false;
+bool WebSocket_Connected = false;
 WebSocketsServer webSocket = WebSocketsServer(81);
 
-char data[7];
+char data_wifi[7];
 
 char message[32];
 
 void GetData(int16_t value)
 {
-    sprintf(data, "%6d", value);
+    sprintf(data_wifi, "%6d", value);
 }
 
 void ClearMessage()
@@ -42,10 +42,10 @@ void ClearMessage()
     }
 }
 
-void SendGyroData(int16_t gyroValue)
+void WebSocket_SendGyroData(int16_t gyroValue)
 {
     GetData(gyroValue);
-    webSocket.broadcastTXT(data);
+    webSocket.broadcastTXT(data_wifi);
 }
 
 void Broadcast()
@@ -53,7 +53,7 @@ void Broadcast()
     UDP.broadcastTo(BROADCAST_MESSAGE, CLIENT_PORT);
 }
 
-void ConnectToClient()
+void WebSocket_ConnectToClient()
 {
     if (millis() - ConnectionTimer > TIME_BETWEEN_CONNECTION_CALLS)
     {
@@ -63,21 +63,21 @@ void ConnectToClient()
     }
 }
 
-void WebSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
+void WebSocket_Event(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
 {
     switch (type)
     {
     case WStype_DISCONNECTED:
     {
         webSocket.disconnect(num);
-        IsConnected = false;
+        WebSocket_Connected = false;
         Serial.print("Disconnected: Try to reconnect to Client");
     }
     break;
     case WStype_CONNECTED:
     {
         webSocket.sendTXT(num, CONNECTION_MESSAGE);
-        IsConnected = true;
+        WebSocket_Connected = true;
         Serial.print("\nConnection established from: ");
         Serial.println(webSocket.remoteIP(num));
     }
@@ -95,7 +95,7 @@ void WebSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
 void WebSocket_Setup(uint16_t espPort)
 {
     webSocket.begin();
-    webSocket.onEvent(WebSocketEvent);
+    webSocket.onEvent(WebSocket_Event);
 
     UDP.connect(WiFi.localIP(), espPort);
 }

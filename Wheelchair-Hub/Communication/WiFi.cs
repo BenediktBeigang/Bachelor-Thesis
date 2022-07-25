@@ -18,7 +18,6 @@ public class WiFi : Connection
 
     private UdpClient udpClient;
     private List<WebsocketClient> Clients;
-    private GyroMode GyroMode;
     #endregion
 
     public WiFi()
@@ -33,9 +32,8 @@ public class WiFi : Connection
     /// <summary>
     /// Starts a Thread that waits for Broadcast of ESP to connect to it.
     /// </summary>
-    public override void ConnectToHost(GyroMode gyroMode)
+    public override void Connect_ToHost()
     {
-        GyroMode = gyroMode;
         Thread receiveThread = new Thread(new ThreadStart(this.Receive_UDP));
         receiveThread.IsBackground = true;
         receiveThread.Start();
@@ -58,7 +56,7 @@ public class WiFi : Connection
                 Message = Encoding.ASCII.GetString(result.Buffer, 0, result.Buffer.Length),
                 Sender = result.RemoteEndPoint
             };
-            HandleIncomingPackage(received);
+            Handle_UDPPackage(received);
             GlobalData.LastMessages.Add($"Packet Received:\n{received.ToString()}");
         }
         GlobalData.LastMessages.Add("UDP stopped listening!");
@@ -69,7 +67,7 @@ public class WiFi : Connection
     /// If the message comes from one of the Nodes (has correct message) a new Node is generated.
     /// </summary>
     /// <param name="package"></param>
-    private void HandleIncomingPackage(Received package)
+    private void Handle_UDPPackage(Received package)
     {
         switch (package.Message)
         {
@@ -92,11 +90,11 @@ public class WiFi : Connection
     /// <param name="device"></param>
     private void NewNode(Received package, DeviceNumber device)
     {
-        InitializeNode(ConnectionType.WIFI, device, GyroMode, package.Sender);
+        InitializeNode(ConnectionType.WIFI, device);
 
         string uri = WebSocketURI(package);
         GlobalData.LastMessages.Add($"Try to connect to Web-Socket of Node {device.ToString()}: {uri}");
-        Thread connectionThread = new Thread(() => ConnectToWebSocketServer(uri, device));
+        Thread connectionThread = new Thread(() => Connect_ToWebSocketServer(uri, device));
         connectionThread.IsBackground = true;
         connectionThread.Start();
     }
@@ -109,7 +107,7 @@ public class WiFi : Connection
     /// <param name="serverURL"></param>
     /// <param name="device"></param>
     /// <remarks>The client is given over to Node but if you try to get the client from somewhere else client is null.</remarks>
-    private void ConnectToWebSocketServer(string serverURL, DeviceNumber device)
+    private void Connect_ToWebSocketServer(string serverURL, DeviceNumber device)
     {
         var exitEvent = new ManualResetEvent(false);
         var url = new Uri(serverURL);
@@ -128,7 +126,7 @@ public class WiFi : Connection
             client.ReconnectTimeout = TimeSpan.FromSeconds(5);
             client.ReconnectionHappened.Subscribe(info =>
                 GlobalData.LastMessages.Add($"Host>> Reconnection happened, type: {info.Type}"));
-            client.MessageReceived.Subscribe(msg => WebSocket_OnMessage(msg.Text, client));
+            client.MessageReceived.Subscribe(msg => Handle_WebSocketMessage(msg.Text, client));
             client.Start();
             exitEvent.WaitOne();
         }
@@ -142,7 +140,7 @@ public class WiFi : Connection
     /// </summary>
     /// <param name="message"></param>
     /// <param name="client"></param>
-    private void WebSocket_OnMessage(string message, WebsocketClient client)
+    private void Handle_WebSocketMessage(string message, WebsocketClient client)
     {
         switch (message)
         {
@@ -155,7 +153,7 @@ public class WiFi : Connection
                 GlobalData.Node_Two.Gyro!.CalibrationStatus = CalibrationStatus.REQUESTED;
                 break;
             default:
-                HandleMessagePackage(message, client);
+                Handle_WebSocketPackage(message, client);
                 break;
         }
     }
@@ -170,7 +168,7 @@ public class WiFi : Connection
     /// </summary>
     /// <param name="message"></param>
     /// <param name="client"></param>
-    private void HandleMessagePackage(string message, WebsocketClient client)
+    private void Handle_WebSocketPackage(string message, WebsocketClient client)
     {
         try
         {

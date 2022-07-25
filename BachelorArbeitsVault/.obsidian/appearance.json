@@ -1,3 +1,9 @@
 {
-  "cssTheme": "Atom"
+  "cssTheme": "Atom",
+  "translucency": false,
+  "interfaceFontFamily": "",
+  "enabledCssSnippets": [],
+  "textFontFamily": "",
+  "monospaceFontFamily": "",
+  "baseFontSize": 16
 }

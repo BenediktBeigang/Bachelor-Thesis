@@ -17,17 +17,6 @@ public class Controller
         client = new ViGEmClient();
         controller = client.CreateXbox360Controller();
         controller.Connect();
-
-        // //minimum of -32768, maximum of 32767
-        // controller.SetAxisValue(Xbox360Axis.LeftThumbX, -32768);
-
-        // //true or false
-        // controller.SetButtonState(Xbox360Button.X, true);
-
-        // //minimum of 0, maximum of 255
-        // controller.SetSliderValue(Xbox360Slider.LeftTrigger, 255);
-
-        Thread.Sleep(5000);
     }
 
     public void Move(short rawValue)

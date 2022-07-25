@@ -1,10 +1,6 @@
 # Eingabe-Schnittstellen
 
-Ein (XBOX)-[[Controller]] besitzt zwei [[Joysticks]].
-Der linke ist meist für die Bewegung belegt, der rechte zum Umschauen.
 
-y-Achse des linken Sticks für Position
-x-Achse des rechten Sticks für Rotation um die eigene Achse
 
 
 ### XInput
@@ -24,12 +20,6 @@ Mit dieser Library lässt sich ein Arduino so programmieren, dass er wie ein Con
 
 [Vielversprechend mit C#](https://github.com/ViGEm/ViGEm.NET)
 [Doku](https://vigem.org/projects/ViGEm/How-to-Install/)
-
-##### sThumbLX (XInput Axis):
-```text
-Left thumbstick x-axis value. Each of the thumbstick axis members is a signed value between -32768 and 32767 describing the position of the thumbstick. A value of 0 is centered. Negative values signify down or to the left. Positive values signify up or to the right. The constants XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE or XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE can be used as a positive and negative value to filter a thumbstick input.
-```
-[Source](https://docs.microsoft.com/de-de/windows/win32/api/xinput/ns-xinput-xinput_gamepad)
 
 
 

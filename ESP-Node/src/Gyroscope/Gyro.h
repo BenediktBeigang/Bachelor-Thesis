@@ -18,6 +18,7 @@ float DEGREE_STEPS = 131;
 
 int16_t accX, accY, accZ, gyroX, gyroY, gyroZ, tRaw; // Raw register values (accelaration, gyroscope, temperature)
 char result[7];
+uint8_t gyroZ_Hi, gyroZ_Lo;
 
 void writeRegister(uint16_t reg, byte value)
 {
@@ -39,7 +40,7 @@ void SleepModeOff()
 
 void Gyro_Setup()
 {
-    Serial.println("Gyro Setup");
+    Serial.println("\n<<<Gyro Setup>>>\n");
     Wire.begin(SDApin, SCLpin);
     SleepModeOff();
     setGyrRange(GYRO_MODE);
@@ -57,5 +58,9 @@ void Gyro_Update()
     // "Wire.read()<<8 | Wire.read();" means two registers are read and stored in the same variable
     gyroX = Wire.read() << 8 | Wire.read(); // reading registers: 0x43 (GYRO_XOUT_H) and 0x44 (GYRO_XOUT_L)
     gyroY = Wire.read() << 8 | Wire.read(); // reading registers: 0x45 (GYRO_YOUT_H) and 0x46 (GYRO_YOUT_L)
-    gyroZ = Wire.read() << 8 | Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
+    // gyroZ = Wire.read() << 8 | Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
+
+    gyroZ_Hi = Wire.read();
+    gyroZ_Lo = Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
+    gyroZ = gyroZ_Lo | gyroZ_Hi << 8;
 }

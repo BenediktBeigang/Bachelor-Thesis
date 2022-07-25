@@ -1,9 +1,10 @@
 typedef enum
 {
-    WiFi_Connection,
-    EspNow_Connection,
-    Bluetooth_Connection
-} CommunicationType;
+    NOTHING,
+    WIFI,
+    ESPNOW,
+    BLUETOOTH
+} ConnectionType;
 
 typedef enum
 {

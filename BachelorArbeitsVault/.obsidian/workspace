@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Quellen/General.md",
+            "file": "Hardware/MPU6050.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Quellen/General.md",
+                "file": "Hardware/MPU6050.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,15 +97,15 @@
   },
   "active": "555b92599469c159",
   "lastOpenFiles": [
-    "Quellen/Amazon.md",
-    "Quellen/YouTube.md",
-    "Quellen/General.md",
-    "Hardware/Node.md",
-    "Hardware/ESP32.md",
-    "Quellen/Bilder/Hardware/Verkabelung.PNG",
-    "Hardware/MPU6050.md",
-    "Hardware/ESP8266.md",
     "Hardware/Batterie.md",
-    "Hardware/Kommunikation/WiFi.md"
+    "Hardware/ESP32.md",
+    "Software/Programm Ablauf.md",
+    "Software/Kommunikation.md",
+    "Software/Plotter.md",
+    "Software/EingabeSchnittstellen.md",
+    "Software/Heartbeat.md",
+    "Arbeit/3. Experiment.md",
+    "Hardware/Kommunikation/WiFi.md",
+    "Hardware/Kommunikation/ESP-Now.md"
   ]
 }

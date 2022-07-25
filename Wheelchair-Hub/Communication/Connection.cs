@@ -40,13 +40,13 @@ public abstract class Connection
         }
     }
 
-    protected void InitializeNode(ConnectionType connection, DeviceNumber device, GyroMode gyroMode, IPEndPoint? sender = null)
+    protected void InitializeNode(ConnectionType connection, DeviceNumber device, IPEndPoint? sender = null)
     {
         Node node = new Node(device);
         switch (connection)
         {
-            case ConnectionType.WIFI: node = new Node(device, connection, sender!, gyroMode); break;
-            case ConnectionType.ESP_NOW: node = new Node(device, connection, gyroMode); break;
+            case ConnectionType.WIFI: node = new Node(device, connection, sender!, GlobalData.GyroMode); break;
+            case ConnectionType.ESP_NOW: node = new Node(device, connection, GlobalData.GyroMode); break;
             case ConnectionType.BLUETOOTH: break;
         }
         WriteNodeInGlobalData(device, node);
@@ -63,5 +63,5 @@ public abstract class Connection
 
     protected abstract void Disconnect_Node(Node node);
     public abstract void Disconnect_AllNodes();
-    public abstract void ConnectToHost(GyroMode gyroMode);
+    public abstract void Connect_ToHost();
 }

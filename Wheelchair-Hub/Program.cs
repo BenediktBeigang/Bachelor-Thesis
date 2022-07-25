@@ -8,7 +8,8 @@ public static class Program
 {
     #region Fields
     private static Connection? connection;
-    private static WiFi? wifiConnection;
+    // private static WiFi? wifiConnection;
+    // private static ESP_Now? espNowConnection;
     private static Formatting? Formatting;
     private const GyroMode GYRO_MODE = GyroMode.GYRO_2000;
 
@@ -18,18 +19,21 @@ public static class Program
     private const int TIME_BETWEEN_CONSOLE_CALLS = 100;
     private const int TIME_BETWEEN_PROGRAM_CALLS = 1000;
     private const int TIME_BETWEEN_HEARTBEAT_CALLS = 1000;
+    private const int TIME_BETWEEN_CONNECTION_CALLS = 2000;
 
-    private const string COM = "COM3";
+    private const string COM = "COM4";
     private const int BAUDRATE = 115200;
     #endregion
 
     public static void Main(string[] args)
     {
         new Benchmark();
-        // connection = SetConnection(ConnectionType.WIFI);
-        // connection.ConnectToHost(GyroMode.GYRO_2000);
-        wifiConnection = new WiFi(); // "ws://ip:port/"
-        wifiConnection.ConnectToHost(GyroMode.GYRO_2000);
+        GlobalData.GyroMode = GyroMode.GYRO_2000;
+        // connection = SetConnection(ConnectionType.ESP_NOW);
+        // connection!.Connect_ToHost();
+
+        connection = SetConnection(ConnectionType.WIFI);
+        connection!.Connect_ToHost();
 
         Loop();
         Exit_Code();
@@ -84,10 +88,7 @@ public static class Program
     #region Console
     private static void PrintConsole(object sender, ElapsedEventArgs e)
     {
-        if (wifiConnection is not null)
-        {
-            Terminal.Print();
-        }
+        Terminal.Print();
     }
 
     private static void Stop_Console()
@@ -102,7 +103,6 @@ public static class Program
     #region Programm
     private static void ProgramStep(object sender, ElapsedEventArgs e)
     {
-        wifiConnection!.Listening = (GlobalData.Node_One.ConnectionType is ConnectionType.NOTHING || GlobalData.Node_Two.ConnectionType is ConnectionType.NOTHING);
         Check_Calibration(GlobalData.Node_One!);
         Check_Calibration(GlobalData.Node_Two!);
     }
@@ -114,7 +114,8 @@ public static class Program
         {
             k = Console.ReadKey();
         }
-        wifiConnection!.Disconnect_AllNodes();
+        // wifiConnection!.Disconnect_AllNodes();
+        connection!.Disconnect_AllNodes();
         Stop_Console();
     }
     #endregion
@@ -127,7 +128,8 @@ public static class Program
     /// <param name="e"></param>
     private static void Heartbeat(object sender, ElapsedEventArgs e)
     {
-        wifiConnection!.Heartbeat();
+        // wifiConnection!.Heartbeat();
+        connection!.Heartbeat();
     }
 
     /// <summary>
@@ -136,7 +138,7 @@ public static class Program
     /// <param name="node"></param>
     private static void Check_Calibration(Node node)
     {
-        if (node.ConnectionType is not ConnectionType.NOTHING && node.Gyro!.CalibrationStatus is CalibrationStatus.REQUESTED)
+        if (node.Gyro.CalibrationStatus is CalibrationStatus.REQUESTED)
         {
             node.Gyro.Calibration(3);
         }

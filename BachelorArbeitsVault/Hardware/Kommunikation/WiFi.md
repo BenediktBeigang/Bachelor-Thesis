@@ -1,11 +1,11 @@
 # WiFi
 ---
 
-|ESP32|---------------------\
+|[[ESP32]]|---------------------\
 											\
-											  |-------------</WiFi-Websocket/>--------------|C#|
+											 |>------------</[[WiFi]]-[[WebSocket]]/>--------------|[[C#]]|
 											/
-|ESP32|---------------------/
+|[[ESP32]]|---------------------/
 
 ___
 ## Quellen
@@ -20,7 +20,7 @@ ___
 
 ___
 
-## [[UDP]] vs [[TCP]]
+## [[UDP]] vs. [[TCP]]
 - [[UDP]] hat weniger Last da keine Verbindungssicherheit herrscht
 - [[UDP]] garantiert nicht die Reihenfolge
 	- Die ersten drei HEX-Zeichen könnten Reihenfolge sein. (262144 Zahlen bis wieder bei 0)
@@ -29,7 +29,7 @@ ___
 
 ## [[Web-Sockets]]
 HTTP ist zu langsam für den Austausch von Echtzeitdaten. Bei klassischem HTTP wird eine [[TCP]] Verbindung aufgebaut bei der der Client für jede Anfrage den Server einzeln anfragen muss.
-[[Web-Sockets]] sind eine Möglichkeit wesentlich schneller Daten zu übertragen da keine Anfrage mitgeschickt wird sondern nach einem Handshake der Server automatisch die Daten sendet. Außerdem wird auf große Header verzichtet. Es werden nur die nötigsten Daten mitgesendet. Dabei können Datentypen wie strings, oder auch binarys verschickt werden.
+[[Web-Sockets]] sind eine Möglichkeit wesentlich schneller Daten zu übertrage, da keine Anfrage mitgeschickt wird sondern nach einem Handshake der Server automatisch die Daten sendet. Außerdem wird auf große Header verzichtet. Es werden nur die nötigsten Daten mitgesendet. Dabei können Datentypen wie strings, oder auch binarys verschickt werden.
 
 ### NuGet Pakete
 - [Websocket.Client](https://www.nuget.org/packages/Websocket.Client)

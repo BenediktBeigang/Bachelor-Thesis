@@ -22,6 +22,29 @@
     "Node",
     "Motion-Sickness",
     "Gyro-Modus",
-    "Gyro-Modi"
-  ]
+    "Gyro-Modi",
+    "Now",
+    "Raw",
+    "Alyx",
+    "Paint",
+    "struct",
+    "Node-Hub",
+    "COM",
+    "short",
+    "Lo-Byte",
+    "Nodes",
+    "Heartbeat",
+    "Printet",
+    "CalibrationState",
+    "REQUESTET",
+    "GlobalData",
+    "Connect",
+    "Program-Step",
+    "ConsolePrint",
+    "ProgramStep",
+    "GPIO"
+  ],
+  "vimMode": false,
+  "foldIndent": true,
+  "communityThemeSortOrder": "download"
 }
