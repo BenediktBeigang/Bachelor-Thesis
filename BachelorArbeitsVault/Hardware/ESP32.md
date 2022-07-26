@@ -1,4 +1,4 @@
-# [[ESP-32]] (Dev Kit C V4)
+# [[ESP32]] (Dev Kit C V4)
 ___
 Chip der Firma AZ-Delivery
 
@@ -7,7 +7,7 @@ Chip der Firma AZ-Delivery
 
 ___
 
-## MAC-Adressen
+## [[MAC-Adresse]]n
 
 | ESP   | Mac-Adresse       |
 | ----- | ----------------- |

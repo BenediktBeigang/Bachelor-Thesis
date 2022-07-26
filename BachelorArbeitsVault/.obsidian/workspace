@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Hardware/MPU6050.md",
+            "file": "Software/Plotter.md",
             "mode": "source",
             "source": false
           }
@@ -40,7 +40,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "ESP",
+                "query": "Serieller",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Hardware/MPU6050.md",
+                "file": "Software/Plotter.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,15 +97,15 @@
   },
   "active": "555b92599469c159",
   "lastOpenFiles": [
-    "Hardware/Batterie.md",
-    "Hardware/ESP32.md",
     "Software/Programm Ablauf.md",
     "Software/Kommunikation.md",
-    "Software/Plotter.md",
-    "Software/EingabeSchnittstellen.md",
-    "Software/Heartbeat.md",
-    "Arbeit/3. Experiment.md",
+    "Hardware/ESP32.md",
+    "Rollstuhl.md",
+    "Arbeit/0. Einleitung.md",
     "Hardware/Kommunikation/WiFi.md",
-    "Hardware/Kommunikation/ESP-Now.md"
+    "Hardware/Kommunikation/ESP-Now.md",
+    "Arbeit/3. Experiment.md",
+    "Software/Eingabe Schnittstellen.md",
+    "Software/Controller Emulation.md"
   ]
 }

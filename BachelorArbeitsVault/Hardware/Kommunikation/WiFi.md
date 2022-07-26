@@ -27,9 +27,9 @@ ___
 
 ___
 
-## [[Web-Sockets]]
+## [[WebSocket]]
 HTTP ist zu langsam für den Austausch von Echtzeitdaten. Bei klassischem HTTP wird eine [[TCP]] Verbindung aufgebaut bei der der Client für jede Anfrage den Server einzeln anfragen muss.
-[[Web-Sockets]] sind eine Möglichkeit wesentlich schneller Daten zu übertrage, da keine Anfrage mitgeschickt wird sondern nach einem Handshake der Server automatisch die Daten sendet. Außerdem wird auf große Header verzichtet. Es werden nur die nötigsten Daten mitgesendet. Dabei können Datentypen wie strings, oder auch binarys verschickt werden.
+[[WebSocket]]s sind eine Möglichkeit wesentlich schneller Daten zu übertrage, da keine Anfrage mitgeschickt wird sondern nach einem Handshake der Server automatisch die Daten sendet. Außerdem wird auf große Header verzichtet. Es werden nur die nötigsten Daten mitgesendet. Dabei können Datentypen wie strings, oder auch binarys verschickt werden.
 
 ### NuGet Pakete
 - [Websocket.Client](https://www.nuget.org/packages/Websocket.Client)
@@ -49,8 +49,8 @@ ___
 |                                          |                                  |                                                        |
 |                                          |                                  |                                                        |
 |                                          |                                  |                                                        |
-| Node und [[Gyro]] anlegen                |                                  |                                                        |
-| Verbindung mit [[WebSockerServer]] anfragen  | -------------------------------> | [[Broadcast]] beenden </br>Verbindungsanfrage annehmen |
+| Node und [[Gyroskop]] anlegen                |                                  |                                                        |
+| Verbindung mit [[WebSocketServer]] anfragen  | -------------------------------> | [[Broadcast]] beenden </br>Verbindungsanfrage annehmen |
 |                                          |                                  |                                                        |
 |                                          |                                  |                                                        |
 |                                          |                                  |                                                        |

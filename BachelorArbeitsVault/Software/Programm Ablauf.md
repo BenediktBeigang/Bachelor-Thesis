@@ -3,7 +3,7 @@ ___
 
 ## Connection
 1. Connection wird angelegt (Setup)
-2. [[Nodes]] werden überschrieben mit neuer Connection Variante
+2. [[Node]]s werden überschrieben mit neuer Connection Variante
 3. Verbindungsaufbau (Connect)
 4. [[Gyro-Calibration]] wird gestartet
 5. Es werden Pakete empfangen und in den Value-Buffer gespeichert

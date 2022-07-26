@@ -27,7 +27,7 @@ ___
 Da der [[Controller]] nur einen endlichen Wertebereich für alle seine Eingaben ermöglicht, 
 muss eine maximale Geschwindigkeit ermittelt/gesetzt werden, bei dem der [[Controller]] seinen maximalen Wert übermittelt. 
 
-Da der Wertebereich einer [[Joystick-Achse]] und die Ausgabe des [[Gyroskops]] beides 16-Bit sind, wäre es möglich, 
+Da der Wertebereich einer [[Joystick-Achse]] und die Ausgabe des [[Gyroskop]]s beides 16-Bit sind, wäre es möglich, 
 die Rohdaten direkt durch den [[ValueTransform]] zu schicken und anschließend als Rohdaten an den [[Controller]] zu schicken. 
 Dabei könnte man sich die Umrechnung in GradProSekunde sparen.
 

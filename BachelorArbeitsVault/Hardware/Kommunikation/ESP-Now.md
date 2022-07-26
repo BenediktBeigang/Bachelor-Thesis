@@ -3,7 +3,7 @@ ___
 
 |[[ESP32]]|---------------------\
 											 \
-											  |>--------------</[[ESP-Now]]/>-------------|[[ESP32]]|----------------</[[Serieller-Port]]/>---------------------|[[C#]]|
+											  |>--------------</[[ESP-Now]]/>-------------|[[ESP32]]|----------------</[[Serieller Port]]/>---------------------|[[C#]]|
 											 /
 |[[ESP32]]|---------------------/
 
@@ -14,7 +14,7 @@ ___
 Da die Daten beider Räder über einen seriellen Port kommen, muss in der Nachricht ein Verweis stehen, um welches Rad es sich handelt. 
 Der erste char der Nachricht ist entweder '1' oder 'R'.
 
-Die Verbindung zwischen den [[ESP32]] wird durch [[ESP_Now]] realisiert. Hier wird ein struct bei jedem Senden verschickt:
+Die Verbindung zwischen den [[ESP32]] wird durch [[ESP-Now]] realisiert. Hier wird ein struct bei jedem Senden verschickt:
 
 ```c++
 typedef struct struct_message
@@ -41,7 +41,7 @@ Danach wird, werden Hi- und Lo-Byte mit wieder zu einem short zusammen gesetzt.
 ___
 
 ## Trivia
-- [[ESP_Now]] benötigt die [[MAC-Adresse]]. Konkret bedeutet das, dass die [[MAC-Adresse]] des [[Node-Hubs]] den restlichen [[Nodes]] bekannt sein muss.
+- [[ESP-Now]] benötigt die [[MAC-Adresse]]. Konkret bedeutet das, dass die [[MAC-Adresse]] des [[Node-Hub]]s den restlichen [[Node]]s bekannt sein muss.
 
 ___
 
