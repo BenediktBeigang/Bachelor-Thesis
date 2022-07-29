@@ -31,6 +31,14 @@ ___
 HTTP ist zu langsam für den Austausch von Echtzeitdaten. Bei klassischem HTTP wird eine [[TCP]] Verbindung aufgebaut bei der der Client für jede Anfrage den Server einzeln anfragen muss.
 [[WebSocket]]s sind eine Möglichkeit wesentlich schneller Daten zu übertrage, da keine Anfrage mitgeschickt wird sondern nach einem Handshake der Server automatisch die Daten sendet. Außerdem wird auf große Header verzichtet. Es werden nur die nötigsten Daten mitgesendet. Dabei können Datentypen wie strings, oder auch binarys verschickt werden.
 
+### Literatur
+[[@ietfRFC6455WebSocket]]
+[[@pimentelCommunicatingDisplayingRealTime2012]]
+[[@alma99133637002586]]
+[[@taylorWasSindWebSockets2022]]
+[[@WebSocketErklarungFunktionsweise2020]]
+
+
 ### NuGet Pakete
 - [Websocket.Client](https://www.nuget.org/packages/Websocket.Client)
 - [WebSocket4Net](https://www.nuget.org/packages/WebSocket4Net)

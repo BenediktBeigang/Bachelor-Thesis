@@ -58,12 +58,20 @@ Wand: 5mm
 
 
 ### [[ESP32]]
-| Attribut        | Wert |
-| --------------- | ---- |
-| Höhe (Brett)    | 7mm  |
-| Höhe (mit Pins) | 13mm |
-| Breite          | 29mm |
-| Tiefe (Außen)   | 55mm |
+| Attribut        | Wert  |
+| --------------- | ----- |
+| Höhe (Brett)    | 7 mm  |
+| Höhe (mit Pins) | 13 mm |
+| Breite          | 29 mm |
+| Tiefe (Außen)   | 55 mm |
+
+### [[MPU-6050]]
+| Attribut        | Wert  |
+| --------------- | ----- |
+| Höhe (Board)    | 1 mm  |
+| Höhe (mit Pins) | 11 mm |
+| Breite          | 20 mm |
+| Tiefe           | 15 mm |
 
 ### ASCII Table
 ![[ASCII.bmp|700]]

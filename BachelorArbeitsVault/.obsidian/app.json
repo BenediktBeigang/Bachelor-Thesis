@@ -42,9 +42,21 @@
     "Program-Step",
     "ConsolePrint",
     "ProgramStep",
-    "GPIO"
+    "GPIO",
+    "sensitivsten",
+    "Serial",
+    "Espressif",
+    "Espressif",
+    "WiFi-Allianz",
+    "WebSockets",
+    "Clienten",
+    "WebSocket",
+    "SRAM",
+    "WebSocket-Server",
+    "WiFi-Netzwerk"
   ],
   "vimMode": false,
   "foldIndent": true,
-  "communityThemeSortOrder": "download"
+  "communityThemeSortOrder": "download",
+  "alwaysUpdateLinks": true
 }

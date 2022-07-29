@@ -38,6 +38,25 @@ Nachdem die Nachricht über [[ESP-Now]] zum [[Node-Hub]] gesendet wurde, wird si
 
 Danach wird, werden Hi- und Lo-Byte mit wieder zu einem short zusammen gesetzt.
 
+### [[Serieller Port]]
+
+Verfügbare Ports suchen:
+```csharp
+using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE Caption like '%(COM%'"))
+        {
+            var portnames = SerialPort.GetPortNames();
+            var ports = searcher.Get().Cast<ManagementBaseObject>().ToList().Select(p => p["Caption"].ToString());
+
+            var portList = portnames.Select(n => n + " - " + ports.FirstOrDefault(s => s.Contains(n))).ToList();
+
+            foreach(string s in portList)
+            {
+                Console.WriteLine(s);
+            }
+        }
+```
+>[Quelle](https://stackoverflow.com/questions/2837985/getting-serial-port-information)
+
 ___
 
 ## Trivia
