@@ -1,0 +1,46 @@
+-----------------------------------------------------------------------------------------------------
+|Node||Connection|Raw Values|DegreesPerSecond|Calibration Status|MessagesPerSecond|DisconnectionTime|
+|----||----------|----------|----------------|------------------|-----------------|-----------------|
+| ONE||   NOTHING|          |                |           NO GYRO|                 |                 |
+| TWO||      WIFI|       -55|           -3,35|         REQUESTED|                0|                0|
+-----------------------------------------------------------------------------------------------------
+
+
+Press 'q' to quit.
+
+Last Messages: 
+> Device ONE Offset: -63
+> Device TWO Offset: -54
+> Calibrating Gyro for 3 seconds.
+> Calibrating Gyro for 3 seconds.
+> Host>> Reconnection happened, type: Initial
+> Client>> Node Two Connected
+> Host>> Reconnection happened, type: Initial
+> Client>> Node One Connected
+> Packet Received:
+IP: 192.168.2.116
+PORT: 50810
+Message: I am Node TWO
+> Try to connect to Web-Socket of Node TWO: ws://192.168.2.116:81/
+> Packet Received:
+IP: 192.168.2.115
+PORT: 58218
+Message: I am Node ONE
+> Try to connect to Web-Socket of Node ONE: ws://192.168.2.115:81/
+> Client>> Node Two Connected
+> Host>> Reconnection happened, type: Initial
+> UDP stopped listening!
+> Packet Received:
+IP: 192.168.2.116
+PORT: 50810
+Message: I am Node TWO
+> Try to connect to Web-Socket of Node TWO: ws://192.168.2.116:81/
+> UDP is listening!
+> PROGRAM STOPPED
+> Reset Node: TWO
+> Reset Node: ONE
+> Disconnected from Node TWO
+> Disconnected from Node ONE
+> Controller connected!
+
+

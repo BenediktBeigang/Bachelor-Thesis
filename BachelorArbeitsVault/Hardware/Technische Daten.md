@@ -1,13 +1,13 @@
 # Technische Daten
 
 ### [[Rollstuhl]]
-| Reifen              | Wert    |
-| ------------------- | ------- |
-| Abstand             | ?50 cm? |
-| Radius              | 29,5 cm |
-| Durchmesser         | 59 cm   |
-| Umfang              | 185 cm  |
-| Millimeter pro Grad | 5,1 mm  |
+| Reifen              | Wert       |
+| ------------------- | ---------- |
+| Abstand             | 55,5 cm    |
+| Radius              | 30 cm      |
+| Durchmesser         | 60 cm      |
+| Umfang              | 188,496 cm |
+| Millimeter pro Grad | 5,236 mm   |
 
 ### [[Powerbank]]
 | Attribut    | Wert     |

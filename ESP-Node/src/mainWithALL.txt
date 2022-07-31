@@ -1,0 +1,147 @@
+#include <Arduino.h>
+#include "Gyroscope/Gyro.h"
+#include "Communication/Network.h"
+#include "Communication/WebSocket.h"
+#include "Communication/ESP_Now.h"
+
+// const uint8_t BUTTON = 0;
+// const uint16_t TIME_FOR_BUTTON_PRESS = 2000;
+// int LastButtonState = HIGH;
+// unsigned long ButtonTimer = 0;
+// int8_t ButtonCounter = 0;
+// bool ButtonPressing = false;
+
+unsigned long SendingTimer = 0;
+unsigned long HearbeatTimer = 0;
+const int16_t DATA_PER_SECOND = 100;
+int16_t TIME_BETWEEN_CALLS = 1000;
+
+ConnectionType connection = NOTHING;
+
+#define ESP_PORT 81 // WebSocket-Port
+bool WiFiSetup = false;
+const uint8_t DEVICE_NUMBER = '1';
+
+void setup()
+{
+  Serial.begin(115200);
+  // pinMode(BUTTON, INPUT);
+
+  // Gyro
+  Gyro_Setup();
+
+  // Connection
+  // connection = ESPNOW;
+  connection = WIFI;
+
+  // Timing
+  TIME_BETWEEN_CALLS = (int)(1000 / DATA_PER_SECOND);
+  SendingTimer = millis();
+}
+
+// void SetConnection()
+// {
+//   switch (ButtonCounter)
+//   {
+//   case 1:
+//     connection = WIFI;
+//     break;
+//   case 2:
+//     connection = ESPNOW;
+//     break;
+//   case 3:
+//     connection = BLUETOOTH;
+//     break;
+//   default:
+//     connection = NOTHING;
+//     break;
+//   }
+// }
+
+// void Nothing_Loop()
+// {
+//   int currentButtonState = digitalRead(BUTTON);
+//   if (currentButtonState == LOW && LastButtonState == HIGH)
+//   {
+//     LastButtonState = LOW;
+//     ButtonTimer = millis();
+//     ButtonCounter++;
+//     ButtonPressing = true;
+//     Serial.println("low");
+//   }
+//   if (currentButtonState == HIGH && LastButtonState == LOW)
+//   {
+//     LastButtonState = HIGH;
+//     Serial.println("high");
+//   }
+//   if (ButtonPressing && millis() - ButtonTimer > TIME_FOR_BUTTON_PRESS)
+//   {
+//     ButtonPressing = false;
+//     SetConnection();
+//     Serial.print("Connection Mode selected: ");
+//     Serial.println(ButtonCounter);
+//     ButtonCounter = 0;
+//   }
+// }
+
+void ESPNow_Loop()
+{
+  if (!ESPNow_Connected)
+  {
+    ESPNow_ConnectToClient();
+    delay(1000);
+  }
+  else if (millis() - SendingTimer > TIME_BETWEEN_CALLS)
+  {
+    Gyro_Update();
+    ESPNow_SendGyroData(gyroZ_Hi, gyroZ_Lo, DEVICE_NUMBER);
+    SendingTimer = millis();
+  }
+}
+
+void WebSocket_Loop()
+{
+  if (!WiFiSetup)
+  {
+    WiFi_Manager_Setup(ESP_PORT);
+    WebSocket_Setup(ESP_PORT);
+    WiFiSetup = true;
+    Serial.print("Try to connect to Client");
+  }
+
+  webSocket.loop();
+  if (!WebSocket_Connected)
+  {
+    WebSocket_ConnectToClient();
+  }
+  else if (millis() - SendingTimer > TIME_BETWEEN_CALLS)
+  {
+    Gyro_Update();
+    // WebSocket_SendGyroData(gyroZ);
+    WebSocket_SendGyroData(gyroX);
+    SendingTimer = millis();
+  }
+}
+
+void Bluetooth_Loop()
+{
+}
+
+void loop()
+{
+  switch (connection)
+  {
+  case WIFI:
+    WebSocket_Loop();
+    break;
+  case ESPNOW:
+    ESPNow_Loop();
+    break;
+  case BLUETOOTH:
+    Bluetooth_Loop();
+    break;
+  case NOTHING:
+    // Nothing_Loop();
+    break;
+  }
+}

@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Arbeit/3. Experiment.md",
+            "file": "Software/Programm Ablauf.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/3. Experiment.md",
+                "file": "Software/Programm Ablauf.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,15 +97,15 @@
   },
   "active": "8f04c7f89ef2a8ac",
   "lastOpenFiles": [
-    "Arbeit/5. Ausblick.md",
-    "Arbeit/4. Erkenntnis.md",
     "Arbeit/3. Experiment.md",
-    "Quellen/Citation/@ietfRFC6455WebSocket.md",
     "Arbeit/2. Methode.md",
-    "Quellen/Literatur/esp32/ESP-32 Dev Kit C V4_DE.pdf",
-    "Quellen/Literatur/esp32/ESP-32_DevKit_C_V4_Datenblatt_AZ-Delivery_Vertriebs_GmbH_24ec770f-c65e-4bd3-92c9-cd64b4d070b8.pdf",
-    "Quellen/Literatur/esp32/esp32_datasheet_en.pdf",
-    "Quellen/Literatur/esp32/ESP32_DevKit_C_V4_Pinout.pdf",
-    "Quellen/Bilder/Hardware/ESP32_IO_Pins.PNG"
+    "Hardware/Technische Daten.md",
+    "Software/Programm Ablauf.md",
+    "Software/Heartbeat.md",
+    "Software/Rauschen.md",
+    "Software/Plotter.md",
+    "Software/Kommunikation.md",
+    "Software/Eingabe Schnittstellen.md",
+    "Software/Controller Emulation.md"
   ]
 }

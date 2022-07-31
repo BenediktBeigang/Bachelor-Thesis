@@ -12,7 +12,6 @@ void WiFi_Manager_Setup(uint16_t espPort)
     if (!IsConnected)
     {
         Serial.println("Failed to connect to Network");
-        // ESP.restart();
     }
     else
     {

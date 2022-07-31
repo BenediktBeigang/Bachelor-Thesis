@@ -53,14 +53,20 @@ void Gyro_Update()
     Wire.write(MPU6050_GYRO_XOUT_H);         // starting with register ACCEL_XOUT_H
     Wire.endTransmission(false);             // the parameter indicates that the Arduino will send a restart.
                                              // As a result, the connection is kept active.
-    Wire.requestFrom(MPU6050_ADDR, 6, true); // request a total of 3*2=6 registers
+    Wire.requestFrom(MPU6050_ADDR, 2, true); // request a total of 1*2=2 registers
 
     // "Wire.read()<<8 | Wire.read();" means two registers are read and stored in the same variable
     gyroX = Wire.read() << 8 | Wire.read(); // reading registers: 0x43 (GYRO_XOUT_H) and 0x44 (GYRO_XOUT_L)
-    gyroY = Wire.read() << 8 | Wire.read(); // reading registers: 0x45 (GYRO_YOUT_H) and 0x46 (GYRO_YOUT_L)
-    // gyroZ = Wire.read() << 8 | Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
 
-    gyroZ_Hi = Wire.read();
-    gyroZ_Lo = Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
-    gyroZ = gyroZ_Lo | gyroZ_Hi << 8;
+    // ----------------------------------
+    // Wire.requestFrom(MPU6050_ADDR, 6, true); // request a total of 3*2=6 registers
+
+    // // "Wire.read()<<8 | Wire.read();" means two registers are read and stored in the same variable
+    // gyroX = Wire.read() << 8 | Wire.read(); // reading registers: 0x43 (GYRO_XOUT_H) and 0x44 (GYRO_XOUT_L)
+    // gyroY = Wire.read() << 8 | Wire.read(); // reading registers: 0x45 (GYRO_YOUT_H) and 0x46 (GYRO_YOUT_L)
+    // // gyroZ = Wire.read() << 8 | Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
+
+    // gyroZ_Hi = Wire.read();
+    // gyroZ_Lo = Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
+    // gyroZ = gyroZ_Lo | gyroZ_Hi << 8;
 }

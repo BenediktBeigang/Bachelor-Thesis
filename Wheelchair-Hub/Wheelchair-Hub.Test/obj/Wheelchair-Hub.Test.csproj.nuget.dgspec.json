@@ -1,0 +1,152 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\Wheelchair-Hub.Test\\Wheelchair-Hub.Test.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\Wheelchair-Hub.Test\\Wheelchair-Hub.Test.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\Wheelchair-Hub.Test\\Wheelchair-Hub.Test.csproj",
+        "projectName": "Wheelchair-Hub.Test",
+        "projectPath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\Wheelchair-Hub.Test\\Wheelchair-Hub.Test.csproj",
+        "packagesPath": "C:\\Users\\bened\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\Wheelchair-Hub.Test\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\bened\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\Wheelchair-Hub\\Wheelchair-Hub.csproj": {
+                "projectPath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\Wheelchair-Hub\\Wheelchair-Hub.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.11.0, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.13.2, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\Wheelchair-Hub\\Wheelchair-Hub.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\Wheelchair-Hub\\Wheelchair-Hub.csproj",
+        "projectName": "Wheelchair-Hub",
+        "projectPath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\Wheelchair-Hub\\Wheelchair-Hub.csproj",
+        "packagesPath": "C:\\Users\\bened\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\Wheelchair-Hub\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\bened\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Nefarius.ViGEm.Client": {
+              "target": "Package",
+              "version": "[1.17.183, )"
+            },
+            "System.IO.Ports": {
+              "target": "Package",
+              "version": "[7.0.0-preview.6.22324.4, )"
+            },
+            "Websocket.Client": {
+              "target": "Package",
+              "version": "[4.4.43, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
