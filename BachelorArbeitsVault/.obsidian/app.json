@@ -53,7 +53,9 @@
     "WebSocket",
     "SRAM",
     "WebSocket-Server",
-    "WiFi-Netzwerk"
+    "WiFi-Netzwerk",
+    "WiFi-Kommunikation",
+    "WiFi-Alternative"
   ],
   "vimMode": false,
   "foldIndent": true,

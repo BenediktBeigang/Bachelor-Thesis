@@ -93,5 +93,10 @@ public class ESP_Now : Connection
         node.Reset();
         Connect_ToHost();
     }
+
+    public override void Change_GyroMode(GyroMode mode)
+    {
+        GlobalData.LastMessages.Add("Change GyroMode not implemented!");
+    }
     #endregion
 }

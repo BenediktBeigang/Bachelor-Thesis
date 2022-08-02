@@ -30,7 +30,7 @@ public static class Program
     public static void Main(string[] args)
     {
         new Benchmark();
-        GlobalData.GyroMode = GyroMode.GYRO_2000;
+        GlobalData.GyroMode = GyroMode.GYRO_1000;
         GlobalData.WheelchairMode = WheelchairMode.Wheelchair_Realistic;
         ValueTransformation = new RealisticWheelchair(30, 55.5);
         controllerInput = new Controller();
@@ -111,28 +111,10 @@ public static class Program
     }
     #endregion
 
-    #region Programm
+    #region Program
     private static void Exit_Code()
     {
-        bool running = true;
-        // ConsoleKeyInfo k = Console.ReadKey();
-        // if (k.KeyChar is not 'q')
-        // {
-        //     k = Console.ReadKey();
-        // }
-
-        while (running)
-        {
-            ConsoleKeyInfo k = Console.ReadKey();
-            switch (k.KeyChar)
-            {
-                case 'q': running = false; break; // programm stopps
-                case 'c': Request_Calibration(); break; // gyros start calibration
-                case 'f': GlobalData.NodesFlipped = !GlobalData.NodesFlipped; GlobalData.LastMessages.Add("Nodes Flipped"); break; // nodes flip
-                case '1': GlobalData.Node_One.Gyro.RotationValueFlip = !GlobalData.Node_One.Gyro.RotationValueFlip; GlobalData.LastMessages.Add("Device ONE: Rotation Flipped!"); break; // wheeldirection of device one flips
-                case '2': GlobalData.Node_Two.Gyro.RotationValueFlip = !GlobalData.Node_Two.Gyro.RotationValueFlip; GlobalData.LastMessages.Add("Device TWO: Rotation Flipped!"); break; // wheeldirection of device two flips   
-            }
-        }
+        UserInput.Input(connection!);
         SaveOptions();
         connection!.Disconnect_AllNodes();
         Stop_Console();

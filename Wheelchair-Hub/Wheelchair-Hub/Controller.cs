@@ -18,6 +18,7 @@ public class Controller
         controller = client.CreateXbox360Controller();
         controller.Connect();
         GlobalData.LastMessages.Add($"Controller connected!");
+        Reset_Controller();
     }
 
     #region Controller API
@@ -64,6 +65,14 @@ public class Controller
     {
         Thread.Sleep(CLICK_DELAY);
         controller.SetButtonState(Xbox360Button.A, false);
+    }
+
+    public void Reset_Controller()
+    {
+        controller.SetAxisValue(Xbox360Axis.LeftThumbX, 0);
+        controller.SetAxisValue(Xbox360Axis.LeftThumbY, 0);
+        controller.SetAxisValue(Xbox360Axis.RightThumbX, 0);
+        controller.SetAxisValue(Xbox360Axis.RightThumbY, 0);
     }
     #endregion
 }

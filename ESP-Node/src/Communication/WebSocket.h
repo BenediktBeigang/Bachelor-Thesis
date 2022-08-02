@@ -10,6 +10,9 @@
 AsyncUDP UDP;
 const IPAddress BROADCAST_ADDRESS = IPAddress(196, 168, 255, 255);
 
+const char GYROMODE_CHANGE_MESSAGE[] = "GyroMode";
+const char GYROMODE_INDEX = 8;
+
 // const char BROADCAST_MESSAGE[] = "I am Node ONE";
 // const char CONNECTION_MESSAGE[] = "1 Connected";
 // const char HEARTBEAT_MESSAGE[] = "ONE Heartbeat";
@@ -63,6 +66,25 @@ void WebSocket_ConnectToClient()
     }
 }
 
+bool Is_GyroChange()
+{
+    for (int i = 0; i < 8; i++)
+    {
+        if (message[i] != GYROMODE_CHANGE_MESSAGE[i])
+            return false;
+    }
+    return true;
+}
+
+void HandleIncomingText()
+{
+    if (Is_GyroChange())
+    {
+        char gyroMode = message[GYROMODE_INDEX];
+        Gyro_ChangeMode(gyroMode);
+    }
+}
+
 void WebSocket_Event(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
 {
     switch (type)
@@ -87,6 +109,7 @@ void WebSocket_Event(uint8_t num, WStype_t type, uint8_t *payload, size_t length
         Serial.print("Client-Message: ");
         Int8ArrayToCharArray(message, payload, length);
         Serial.println(message);
+        HandleIncomingText();
     }
     break;
     }

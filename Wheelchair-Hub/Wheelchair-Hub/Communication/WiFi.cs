@@ -146,11 +146,11 @@ public class WiFi : Connection
         {
             case "1 Connected":
                 GlobalData.LastMessages.Add("Client>> Node One Connected");
-                GlobalData.Node_One.Gyro!.CalibrationStatus = CalibrationStatus.REQUESTED;
+                Change_GyroMode(GlobalData.GyroMode);
                 break;
             case "2 Connected":
                 GlobalData.LastMessages.Add("Client>> Node Two Connected");
-                GlobalData.Node_Two.Gyro!.CalibrationStatus = CalibrationStatus.REQUESTED;
+                Change_GyroMode(GlobalData.GyroMode);
                 break;
             default:
                 Handle_WebSocketPackage(message, client);
@@ -191,6 +191,18 @@ public class WiFi : Connection
         {
             GlobalData.LastMessages.Add(message);
         }
+    }
+
+    public override void Change_GyroMode(GyroMode mode)
+    {
+        string message = "GyroMode" + (int)mode;
+        foreach (WebsocketClient client in Clients)
+        {
+            Task.Run(() => client.Send(message));
+        }
+        GlobalData.Node_One.Change_GyroMode(mode);
+        GlobalData.Node_Two.Change_GyroMode(mode);
+        GlobalData.LastMessages.Add($"Changed GyroMode to: {mode}");
     }
     #endregion
 

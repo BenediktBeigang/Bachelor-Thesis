@@ -33,7 +33,7 @@ public class RealisticWheelchair : ValueTransformation
     #region Wheel-Cases
     private (double distance, double rotation) SingleWheel(double wheelDistance, bool isForwardRotation)
     {
-        double omega = wheelDistance / wheelchair.TurningCircle;
+        double omega = wheelDistance / wheelchair.OuterTurningCircle;
         double speed = omega * wheelchair.InnerTurningCircle;
         speed *= isForwardRotation ? 1 : -1;
         double rotation = omega * 360;

@@ -1,46 +1,74 @@
 -----------------------------------------------------------------------------------------------------
 |Node||Connection|Raw Values|DegreesPerSecond|Calibration Status|MessagesPerSecond|DisconnectionTime|
 |----||----------|----------|----------------|------------------|-----------------|-----------------|
-| ONE||   NOTHING|          |                |           NO GYRO|                 |                 |
-| TWO||      WIFI|       -55|           -3,35|         REQUESTED|                0|                0|
+| ONE||      WIFI|        57|            3,48|         REQUESTED|                0|                0|
+| TWO||   NOTHING|          |                |           NO GYRO|                 |                 |
 -----------------------------------------------------------------------------------------------------
 
 
-Press 'q' to quit.
+'q'     - quit
+'c'     - calibrate gyros
+'f'     - flip:
+ |==> n  - nodes
+ |==> 1  - wheel one
+ |==> 2  - wheel two
+'g'     - gyroMode
+ |==> 0  - 250
+ |==> 1  - 500
+ |==> 2  - 1000
+ |==> 3  - 2000
 
 Last Messages: 
-> Device ONE Offset: -63
-> Device TWO Offset: -54
-> Calibrating Gyro for 3 seconds.
-> Calibrating Gyro for 3 seconds.
-> Host>> Reconnection happened, type: Initial
-> Client>> Node Two Connected
-> Host>> Reconnection happened, type: Initial
+> Changed GyroMode to: GYRO_2000
 > Client>> Node One Connected
-> Packet Received:
-IP: 192.168.2.116
-PORT: 50810
-Message: I am Node TWO
-> Try to connect to Web-Socket of Node TWO: ws://192.168.2.116:81/
-> Packet Received:
-IP: 192.168.2.115
-PORT: 58218
-Message: I am Node ONE
-> Try to connect to Web-Socket of Node ONE: ws://192.168.2.115:81/
-> Client>> Node Two Connected
 > Host>> Reconnection happened, type: Initial
 > UDP stopped listening!
 > Packet Received:
 IP: 192.168.2.116
-PORT: 50810
+PORT: 56976
+Message: I am Node ONE
+> Try to connect to Web-Socket of Node ONE: ws://192.168.2.116:81/
+> Device ONE Offset: -109
+> Device TWO Offset: -126
+> Calibrating Gyro for 3 seconds.
+> Calibrating Gyro for 3 seconds.
+> Device ONE Offset: -54
+> Device TWO Offset: -63
+> Calibrating Gyro for 3 seconds.
+> Calibrating Gyro for 3 seconds.
+> Device ONE Offset: -54
+> Device TWO Offset: -63
+> Calibrating Gyro for 3 seconds.
+> Calibrating Gyro for 3 seconds.
+> Changed GyroMode to: GYRO_2000
+> Client>> Node One Connected
+> Host>> Reconnection happened, type: Initial
+> Packet Received:
+IP: 192.168.2.116
+PORT: 56976
+Message: I am Node ONE
+> Try to connect to Web-Socket of Node ONE: ws://192.168.2.116:81/
+> Device TWO Offset: -63
+> Calibrating Gyro for 3 seconds.
+> Calibrating Gyro for 3 seconds.
+> Host>> Reconnection happened, type: Initial
+> Changed GyroMode to: GYRO_2000
+> Client>> Node Two Connected
+> Packet Received:
+IP: 192.168.2.115
+PORT: 63506
 Message: I am Node TWO
-> Try to connect to Web-Socket of Node TWO: ws://192.168.2.116:81/
+> Try to connect to Web-Socket of Node TWO: ws://192.168.2.115:81/
 > UDP is listening!
 > PROGRAM STOPPED
 > Reset Node: TWO
 > Reset Node: ONE
-> Disconnected from Node TWO
 > Disconnected from Node ONE
+> Disconnected from Node TWO
+> Changed GyroMode to: GYRO_1000
+> Select new GyroMode: 
+> Changed GyroMode to: GYRO_2000
+> Select new GyroMode: 
 > Controller connected!
 
 

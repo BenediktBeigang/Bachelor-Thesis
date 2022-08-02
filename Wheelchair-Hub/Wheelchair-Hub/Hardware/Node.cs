@@ -10,13 +10,13 @@ public class Node
     public int DataCount { get; set; }
     public WebsocketClient? Client { get; set; }
     public int DisconnectionTime { get; set; } // in seconds
+    public Gyro Gyro { get; set; }
 
     // readonlys
     // MUST
     public readonly DeviceNumber DeviceNumber;
 
     // CAN
-    public readonly Gyro Gyro;
     public readonly IPEndPoint? EndPoint;
     public readonly string? WebSocketURI;
     #endregion
@@ -74,6 +74,13 @@ public class Node
         GlobalData.LastMessages.Add($"Reset Node: {DeviceNumber.ToString()}");
         ConnectionType = ConnectionType.NOTHING;
         Client = null;
+    }
+
+    public void Change_GyroMode(GyroMode mode)
+    {
+        bool flipped = Gyro.RotationValueFlip;
+        Gyro = new Gyro(mode, DeviceNumber, flipped);
+        Gyro.CalibrationStatus = CalibrationStatus.REQUESTED;
     }
     #endregion
 }

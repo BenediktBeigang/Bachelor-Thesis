@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "8f04c7f89ef2a8ac",
+        "id": "1e1618fa1eced1dd",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Software/Programm Ablauf.md",
+            "file": "Hardware/Technische Daten.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Software/Programm Ablauf.md",
+                "file": "Hardware/Technische Daten.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -95,17 +95,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "8f04c7f89ef2a8ac",
+  "active": "1e1618fa1eced1dd",
   "lastOpenFiles": [
+    "Software/Mappen der Eingaben.md",
     "Arbeit/3. Experiment.md",
-    "Arbeit/2. Methode.md",
-    "Hardware/Technische Daten.md",
-    "Software/Programm Ablauf.md",
-    "Software/Heartbeat.md",
     "Software/Rauschen.md",
-    "Software/Plotter.md",
-    "Software/Kommunikation.md",
+    "Software/Programm Ablauf.md",
+    "Software/Controller Emulation.md",
     "Software/Eingabe Schnittstellen.md",
-    "Software/Controller Emulation.md"
+    "Hardware/MPU-6050.md",
+    "SprintBerichte/Bericht 2.md",
+    "SprintBerichte/Bericht 1.md",
+    "Quellen/Bilder/Box/Box_AnRollstuhl.jpg"
   ]
 }

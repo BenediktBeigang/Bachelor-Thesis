@@ -11,10 +11,10 @@ public class Gyro
     // public
     public CalibrationStatus CalibrationStatus { get; set; }
     public bool RotationValueFlip { get; set; }
+    public GyroMode Mode { get; set; }
 
     // readonly
     public readonly DeviceNumber DeviceNumber;
-    public readonly GyroMode Mode;
 
     // private
     private short BufferPointer;
@@ -31,7 +31,6 @@ public class Gyro
     public Gyro(GyroMode mode, DeviceNumber device, bool flipped = false)
     {
         RawValueBuffer = new short[BUFFER_SIZE];
-        // RawValues = new();
         Mode = mode;
         StepsPerDegree = GyroModeToStepsPerDegree(mode);
         DeviceNumber = device;

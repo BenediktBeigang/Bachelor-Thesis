@@ -1,4 +1,5 @@
 # Bericht 1 (Woche 1/2)
+---
 
 ### Box drucken
 Zunächst habe ich mich vorwiegend mit dem Fertigstellen und und 3D-Drucken der Boxen für die Räder beschäftigt. Dabei musste ich immer wieder kleinere Änderungen vornehmen, da der Haltemechanismus mit dem der Deckel auf der Box gehalten wird nicht optimal funktioniert hat. Unter anderem waren die kleinen Harken mit denen beide Teile zusammengehalten werden zu dünn und schlecht gedruckt, da für das Drucken Stützen notwendig waren. Mein derzeitges Design von dem ich mir viel verspreche kann ich in den kommenden Tagen abholen. 

@@ -7,6 +7,12 @@ public struct Received
     public override string ToString() => $"IP: {Sender.Address.ToString()}\nPORT: {Sender.Port}\nMessage: {Message}";
 }
 
+public struct Message
+{
+    public string Text;
+    public DateTime Time;
+}
+
 public readonly struct Wheelchair
 {
     public Wheelchair()
@@ -18,7 +24,7 @@ public readonly struct Wheelchair
         Wheel_Circumference = (float)Math.PI * Wheel_Diameter;
         Chair_Width = chairWidth;
         Chair_HalfWidth = chairWidth / 2;
-        TurningCircle = (float)Math.PI * chairWidth * 2;
+        OuterTurningCircle = (float)Math.PI * chairWidth * 2;
         InnerTurningCircle = (float)Math.PI * chairWidth;
         LengthOfOneDegree = Wheel_Circumference / 360;
     }
@@ -35,7 +41,7 @@ public readonly struct Wheelchair
         Wheel_Circumference = (double)Math.PI * Wheel_Diameter;
         Chair_Width = chairWidth;
         Chair_HalfWidth = chairWidth / 2;
-        TurningCircle = (double)Math.PI * chairWidth * 2;
+        OuterTurningCircle = (double)Math.PI * chairWidth * 2;
         InnerTurningCircle = (double)Math.PI * chairWidth;
         LengthOfOneDegree = Wheel_Circumference / 360;
     }
@@ -45,7 +51,7 @@ public readonly struct Wheelchair
     public double Wheel_Diameter { get; }
     public double Wheel_Circumference { get; }
     public double Chair_HalfWidth { get; }
-    public double TurningCircle { get; }
+    public double OuterTurningCircle { get; }
     public double InnerTurningCircle { get; }
     public double LengthOfOneDegree { get; }
     public override string ToString()
@@ -53,6 +59,6 @@ public readonly struct Wheelchair
     + $"Radius|Diameter: {Wheel_Radius} | {Wheel_Diameter}\n"
     + $"Circumference: {Wheel_Circumference}\n"
     + $"ChairWidth(Half): {Chair_Width} | {Chair_HalfWidth}\n"
-    + $"(Inner)TurningCircle: {InnerTurningCircle} | {TurningCircle}"
+    + $"(Inner)TurningCircle: {InnerTurningCircle} | {OuterTurningCircle}"
     + "\n========================================";
 }

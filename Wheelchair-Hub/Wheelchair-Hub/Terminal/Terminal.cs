@@ -9,7 +9,7 @@ public static class Terminal
         Console.Clear();
         string output = "";
         output += Generate_Table() + '\n';
-        output += $"\nPress 'q' to quit.\n" + '\n';
+        output += $"\n" + Legend() + '\n';
         output += $"Last Messages: " + '\n';
         output += LastMessagesString() + '\n';
         output += $"{GlobalData.other}" + '\n';
@@ -61,6 +61,23 @@ public static class Terminal
         {
             output += $"> {messages[i]}\n";
         }
+        return output;
+    }
+
+    private static string Legend()
+    {
+        string output = "";
+        output += $"'q'     - quit" + '\n';
+        output += $"'c'     - calibrate gyros" + '\n';
+        output += $"'f'     - flip:" + '\n';
+        output += $" |==> n  - nodes" + '\n';
+        output += $" |==> 1  - wheel one" + '\n';
+        output += $" |==> 2  - wheel two" + '\n';
+        output += $"'g'     - gyroMode" + '\n';
+        output += $" |==> 0  - 250" + '\n';
+        output += $" |==> 1  - 500" + '\n';
+        output += $" |==> 2  - 1000" + '\n';
+        output += $" |==> 3  - 2000" + '\n';
         return output;
     }
     #endregion

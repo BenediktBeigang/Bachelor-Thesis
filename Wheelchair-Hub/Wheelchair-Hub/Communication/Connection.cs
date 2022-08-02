@@ -64,4 +64,5 @@ public abstract class Connection
     protected abstract void Disconnect_Node(Node node);
     public abstract void Disconnect_AllNodes();
     public abstract void Connect_ToHost();
+    public abstract void Change_GyroMode(GyroMode mode);
 }

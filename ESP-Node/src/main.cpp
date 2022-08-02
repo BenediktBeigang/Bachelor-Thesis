@@ -13,6 +13,7 @@ ConnectionType connection = NOTHING;
 
 #define ESP_PORT 81 // WebSocket-Port
 bool WiFiSetup = false;
+// const uint8_t DEVICE_NUMBER = '1';
 const uint8_t DEVICE_NUMBER = '2';
 
 void setup()
@@ -20,7 +21,8 @@ void setup()
   Serial.begin(115200);
 
   // Gyro
-  Gyro_Setup();
+  // MPU6050_GYR_RANGE_250 | MPU6050_GYR_RANGE_2000
+  Gyro_Setup(MPU6050_GYR_RANGE_250);
 
   // Connection
   connection = WIFI;

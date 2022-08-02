@@ -13,7 +13,6 @@
 #define SDApin 21 // SDA
 #define SCLpin 22 // SCL
 
-mpu6050_gyr_range GYRO_MODE = MPU6050_GYR_RANGE_2000;
 float DEGREE_STEPS = 131;
 
 int16_t accX, accY, accZ, gyroX, gyroY, gyroZ, tRaw; // Raw register values (accelaration, gyroscope, temperature)
@@ -38,13 +37,14 @@ void SleepModeOff()
     writeRegister(0x6B, 0);
 }
 
-void Gyro_Setup()
+void Gyro_Setup(mpu6050_gyr_range gyroMode)
 {
-    Serial.println("\n<<<Gyro Setup>>>\n");
+    Serial.print("\n<<<Gyro Setup - Mode: ");
+    Serial.println((int)gyroMode + ">>>\n");
     Wire.begin(SDApin, SCLpin);
     SleepModeOff();
-    setGyrRange(GYRO_MODE);
-    DEGREE_STEPS = DegreeSteps(GYRO_MODE);
+    setGyrRange(gyroMode);
+    DEGREE_STEPS = DegreeSteps(gyroMode);
 }
 
 void Gyro_Update()
@@ -69,4 +69,24 @@ void Gyro_Update()
     // gyroZ_Hi = Wire.read();
     // gyroZ_Lo = Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
     // gyroZ = gyroZ_Lo | gyroZ_Hi << 8;
+}
+
+void Gyro_ChangeMode(char mode)
+{
+    Wire.end();
+    switch (mode)
+    {
+    case '0':
+        Gyro_Setup(MPU6050_GYR_RANGE_250);
+        break;
+    case '1':
+        Gyro_Setup(MPU6050_GYR_RANGE_500);
+        break;
+    case '2':
+        Gyro_Setup(MPU6050_GYR_RANGE_1000);
+        break;
+    case '3':
+        Gyro_Setup(MPU6050_GYR_RANGE_2000);
+        break;
+    }
 }

@@ -33,7 +33,7 @@ float DegreeSteps(mpu6050_gyr_range range)
     case MPU6050_GYR_RANGE_1000:
         return 32.8;
     case MPU6050_GYR_RANGE_2000:
-        return 16, 4;
+        return 16.4;
     default:
         return 131;
     }
