@@ -71,7 +71,7 @@ public class Node
 
     public void Reset()
     {
-        GlobalData.LastMessages.Add($"Reset Node: {DeviceNumber.ToString()}");
+        GlobalData.Add_Message($"Reset Node: {DeviceNumber.ToString()}");
         ConnectionType = ConnectionType.NOTHING;
         Client = null;
     }
@@ -80,7 +80,7 @@ public class Node
     {
         bool flipped = Gyro.RotationValueFlip;
         Gyro = new Gyro(mode, DeviceNumber, flipped);
-        Gyro.CalibrationStatus = CalibrationStatus.REQUESTED;
+        if (ConnectionType is not ConnectionType.NOTHING) Gyro.CalibrationStatus = CalibrationStatus.REQUESTED;
     }
     #endregion
 }

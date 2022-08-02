@@ -9,7 +9,6 @@ public static class Program
 {
     #region Fields
     private static Connection? connection;
-    private static Formatting? Formatting;
     private static ValueTransformation? ValueTransformation;
     private static Controller? controllerInput;
 
@@ -104,7 +103,7 @@ public static class Program
 
     private static void Stop_Console()
     {
-        GlobalData.LastMessages.Add("PROGRAM STOPPED");
+        GlobalData.Add_Message("PROGRAM STOPPED");
         Thread.Sleep(500);
         File.WriteAllTextAsync("LastConsolePrint.txt", Terminal.Print());
         Environment.Exit(0);

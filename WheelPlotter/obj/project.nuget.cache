@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "v1d4xEfBfVY2CmOV3JHtXCErGwdR79zLF7JU6STglQ4NoSH1Rfi4F2FNg9efY8FWGyt4i/HN6vQQjWaaR5fTQQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\WheelPlotter\\WheelPlotter.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\bened\\.nuget\\packages\\microsoft.netcore.platforms\\3.0.0\\microsoft.netcore.platforms.3.0.0.nupkg.sha512",
+    "C:\\Users\\bened\\.nuget\\packages\\microsoft.win32.systemevents\\4.6.0\\microsoft.win32.systemevents.4.6.0.nupkg.sha512",
+    "C:\\Users\\bened\\.nuget\\packages\\scottplot\\4.1.27\\scottplot.4.1.27.nupkg.sha512",
+    "C:\\Users\\bened\\.nuget\\packages\\scottplot.winforms\\4.1.27\\scottplot.winforms.4.1.27.nupkg.sha512",
+    "C:\\Users\\bened\\.nuget\\packages\\system.drawing.common\\4.6.1\\system.drawing.common.4.6.1.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -101,7 +101,7 @@ public class Gyro
     {
         CalibrationStatus = CalibrationStatus.CALIBRATING;
         calibrationValues.Clear();
-        GlobalData.LastMessages.Add($"Calibrating Gyro for {seconds} seconds.");
+        GlobalData.Add_Message($"Calibrating Gyro for {seconds} seconds.");
         Task.Run(() => CalibrationEnd(seconds));
     }
 
@@ -109,7 +109,7 @@ public class Gyro
     {
         Thread.Sleep(seconds * 1000);
         Offset = (short)calibrationValues.Average();
-        GlobalData.LastMessages.Add($"Device {DeviceNumber} Offset: {Offset}");
+        GlobalData.Add_Message($"Device {DeviceNumber} Offset: {Offset}");
         CalibrationStatus = CalibrationStatus.CALIBRATED;
     }
     # endregion

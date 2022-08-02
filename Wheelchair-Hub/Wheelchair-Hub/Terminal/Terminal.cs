@@ -3,6 +3,7 @@ using System;
 public static class Terminal
 {
     private static Formatting format = new Formatting(new string[] { "Node", "", "Connection", "Raw Values", "DegreesPerSecond", "Calibration Status", "MessagesPerSecond", "DisconnectionTime" });
+    private const int VISIBLE_MESSAGES = 15;
 
     public static string Print()
     {
@@ -56,9 +57,11 @@ public static class Terminal
     private static string LastMessagesString()
     {
         string output = "";
-        string[] messages = GlobalData.LastMessages.ToArray();
-        for (int i = 0; i < messages.Length; i++)
+        List<string> messages = GlobalData.Get_MessageHistory();
+        messages.Reverse();
+        for (int i = 0; i < VISIBLE_MESSAGES; i++)
         {
+            if (i == messages.Count) break;
             output += $"> {messages[i]}\n";
         }
         return output;

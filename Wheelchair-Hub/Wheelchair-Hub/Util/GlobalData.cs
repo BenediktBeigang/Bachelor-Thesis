@@ -3,15 +3,34 @@ using System.Collections.Generic;
 
 public static class GlobalData
 {
-    public static ConcurrentBag<string> LastMessages { get; set; } = new();
+    private static ConcurrentBag<Message> MessageHistory { get; set; } = new();
     public static Queue<Received> Packages { get; set; } = new();
+
     public static Node Node_One { get; set; } = new Node(DeviceNumber.ONE);
     public static Node Node_Two { get; set; } = new Node(DeviceNumber.TWO);
     public static List<Node> Nodes { get; set; } = new List<Node>() { Node_One, Node_Two };
-    public static bool NodesFlipped { get; set; }
     public static GyroMode GyroMode { get; set; } = GyroMode.GYRO_250;
     public static WheelchairMode WheelchairMode { get; set; }
+
+    public static bool NodesFlipped { get; set; }
+    public static bool Recording { get; set; }
     public static string other { get; set; } = "";
+
+    public static void Add_Message(string message)
+    {
+        MessageHistory.Add(new Message
+        {
+            Text = message,
+            Time = DateTime.Now
+        });
+    }
+
+    public static List<string> Get_MessageHistory()
+    {
+        List<Message> messages = MessageHistory.ToList();
+        messages.Sort((x, y) => DateTime.Compare(x.Time, y.Time));
+        return messages.Select(x => x.Text).ToList<string>();
+    }
 
     public static void Reset_AllNodes()
     {

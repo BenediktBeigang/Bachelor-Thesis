@@ -17,7 +17,7 @@ public class Controller
         client = new ViGEmClient();
         controller = client.CreateXbox360Controller();
         controller.Connect();
-        GlobalData.LastMessages.Add($"Controller connected!");
+        GlobalData.Add_Message($"Controller connected!");
         Reset_Controller();
     }
 

@@ -23,7 +23,7 @@ public class ESP_Now : Connection
         InitializeNode(ConnectionType.ESP_NOW, DeviceNumber.TWO);
         serialPort.DataReceived += Handle_Message;
         serialPort.Open();
-        GlobalData.LastMessages.Add($"Listening to Serial Port:\nCom: {Com}\nBaudrate: {Baudrate}");
+        GlobalData.Add_Message($"Listening to Serial Port:\nCom: {Com}\nBaudrate: {Baudrate}");
     }
 
     private void Handle_Message(object sender, SerialDataReceivedEventArgs e)
@@ -96,7 +96,7 @@ public class ESP_Now : Connection
 
     public override void Change_GyroMode(GyroMode mode)
     {
-        GlobalData.LastMessages.Add("Change GyroMode not implemented!");
+        GlobalData.Add_Message("Change GyroMode not implemented!");
     }
     #endregion
 }
