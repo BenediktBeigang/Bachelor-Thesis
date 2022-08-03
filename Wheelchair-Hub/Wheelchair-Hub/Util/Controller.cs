@@ -5,9 +5,6 @@ using Nefarius.ViGEm.Client.Targets.Xbox360;
 
 public static class Controller
 {
-    /// <summary>
-    /// Determines what rotation-speed is equivalent with the maximum controller-input
-    /// </summary>
     private const int CLICK_DELAY = 200;
     private const int CONTROLLER_MAX = 32768;
     private static ViGEmClient? client;
@@ -25,12 +22,12 @@ public static class Controller
     public static void Refresh_Controller(object sender, ElapsedEventArgs e)
     {
         if (controller is null) return;
-        (short RawLeft, short RawRight, double Left, double Right) rawValues = Node.Rotations();
-        (double, double) controllerValues = Mapping._Mapping!.Values_Next(rawValues.RawLeft, rawValues.RawRight, rawValues.Left, rawValues.Right);
-        ValuesToController(controllerValues);
+        Rotations rotations = Node.Rotations();
+        ControllerInput input = Mapping._Mapping!.Values_Next(rotations);
+        ValuesToController(input);
     }
 
-    public static void Click()
+    public static void Click_A()
     {
         if (controller is null) return;
         controller.SetButtonState(Xbox360Button.A, true);
@@ -44,30 +41,33 @@ public static class Controller
     /// If the WheelchairMode is set to Mouse v1 and v2 representing the Values for the y- and x-axis.
     /// </summary>
     /// <param name="values"></param>
-    private static void ValuesToController((double, double) values)
+    private static void ValuesToController(ControllerInput input)
     {
-        double GyroModeScalar = Gyro.StepsPerDegree;
-        short v1 = (short)(values.Item1 * GyroModeScalar);
-        short v2 = (short)(values.Item2 * GyroModeScalar);
+        Terminal.Other = Mapping.Mode.ToString();
         switch (Mapping.Mode)
         {
-            case MappingMode.Wheelchair_Realistic: Handle_Wheelchair(v1, v2); break;
-            case MappingMode.Wheelchair_Simple: Handle_Wheelchair(v1, v2); break;
-            case MappingMode.GUI: Handle_Mouse(v1, v2); break;
+            case MappingMode.Wheelchair_Realistic: Handle_Wheelchair(input); break;
+            case MappingMode.Wheelchair_Simple: Handle_Wheelchair(input); break;
+            case MappingMode.GUI: Handle_Mouse(input); break;
         }
     }
 
     #region Handle Inputs
-    private static void Handle_Wheelchair(short move, short rotation)
+    private static void Handle_Wheelchair(ControllerInput input)
     {
-        controller!.SetAxisValue(Xbox360Axis.LeftThumbY, move);
-        controller!.SetAxisValue(Xbox360Axis.RightThumbX, rotation);
+        controller!.SetAxisValue(Xbox360Axis.LeftThumbY, input.Value_One);
+        controller!.SetAxisValue(Xbox360Axis.RightThumbX, input.Value_Two);
     }
 
-    private static void Handle_Mouse(short left, short right)
+    private static void Handle_Mouse(ControllerInput input)
     {
-        controller!.SetAxisValue(Xbox360Axis.LeftThumbX, right);
-        controller!.SetAxisValue(Xbox360Axis.LeftThumbY, left);
+        Terminal.Other = input.ToString();
+        controller!.SetAxisValue(Xbox360Axis.LeftThumbX, input.Value_One);
+        controller!.SetAxisValue(Xbox360Axis.LeftThumbY, input.Value_Two);
+        controller!.SetButtonState(Xbox360Button.A, input.RightPositive);
+        controller!.SetButtonState(Xbox360Button.B, input.RightNegative);
+        controller!.SetButtonState(Xbox360Button.X, input.LeftPositive);
+        controller!.SetButtonState(Xbox360Button.Y, input.LeftNegative);
     }
 
     private static void Click_Delay()

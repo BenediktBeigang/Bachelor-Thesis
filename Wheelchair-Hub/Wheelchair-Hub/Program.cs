@@ -10,7 +10,7 @@ public static class Program
     public static void Main(string[] args)
     {
         new Benchmark();
-        Mapping._Mapping = new RealisticWheelchair(30, 55.5);
+        Mapping._Mapping = new GUI(30, 55.5, 200);
         Controller.Start();
         SavedOptions.Options.Load();
         Connection._Connection = Connection.SetConnection(ConnectionType.WIFI);

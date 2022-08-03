@@ -13,6 +13,7 @@ public static class UserInput
                 case 'f': Flip(); break;
                 case 'g': Change_GyroMode(); break;
                 case 'r': Switch_Record(); break;
+                case 'm': Change_Mapping(); break;
                 default: Terminal.Add_Message($"Invalid Input!"); continue;
             }
         }
@@ -50,6 +51,24 @@ public static class UserInput
     #endregion
 
     #region Selection
+    private static void Change_Mapping()
+    {
+        Terminal.Add_Message("Select Mapping: ");
+        bool running = true;
+        while (running)
+        {
+            ConsoleKeyInfo k = Console.ReadKey();
+            switch (k.KeyChar)
+            {
+                case '1': Mapping.Change_Mapping(MappingMode.Wheelchair_Realistic); break;
+                case '2': Mapping.Change_Mapping(MappingMode.Wheelchair_Simple); break;
+                case '3': Mapping.Change_Mapping(MappingMode.GUI); break;
+                default: Terminal.Add_Message($"Flip-Entity '{k.KeyChar}' not valid!"); continue;
+            }
+            running = false;
+        }
+    }
+
     private static void Flip()
     {
         Terminal.Add_Message("Select Flip-Entity: ");

@@ -7,7 +7,7 @@ public static class Terminal
     public static string Other { get; set; } = "";
     private static ConcurrentBag<Message> MessageHistory { get; set; } = new();
     private static Formatting format = new Formatting(new string[] { "Node", "", "Connection", "Raw Values", "DegreesPerSecond", "Calibration Status", "MessagesPerSecond", "DisconnectionTime" });
-    private const int VISIBLE_MESSAGES = 15;
+    private const int VISIBLE_MESSAGES = 5;
 
     public static void Print(object sender, ElapsedEventArgs e)
     {
@@ -110,6 +110,10 @@ public static class Terminal
         output += $" |==> 1  - 500" + '\n';
         output += $" |==> 2  - 1000" + '\n';
         output += $" |==> 3  - 2000" + '\n';
+        output += $"'m'     - mapping" + '\n';
+        output += $" |==> 1  - realisiticWheelchair" + '\n';
+        output += $" |==> 2  - simpleWheelchair" + '\n';
+        output += $" |==> 3  - gui" + '\n';
         return output;
     }
     #endregion

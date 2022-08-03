@@ -13,6 +13,47 @@ public struct Message
     public DateTime Time;
 }
 
+public readonly struct ControllerInput
+{
+    public readonly short Value_One;
+    public readonly short Value_Two;
+    public readonly bool LeftPositive;
+    public readonly bool LeftNegative;
+    public readonly bool RightPositive;
+    public readonly bool RightNegative;
+
+    public ControllerInput(short v1, short v2, bool lP, bool lN, bool rP, bool rN)
+    {
+        Value_One = v1;
+        Value_Two = v2;
+        LeftPositive = lP;
+        LeftNegative = lN;
+        RightPositive = rP;
+        RightNegative = rN;
+    }
+
+    public override string ToString()
+    {
+        return $"Value_One: {Value_One}\nValue_Two: {Value_Two}\nLeftPos: {LeftPositive}\nLeftNeg: {LeftNegative}\nRightPos: {RightPositive}\nRightNeg: {RightNegative}";
+    }
+}
+
+public readonly struct Rotations
+{
+    public readonly short RawLeft;
+    public readonly short RawRight;
+    public readonly double AngularVelocityLeft;
+    public readonly double AngularVelocityRight;
+
+    public Rotations(short rL, short rR, double aVL, double aVR)
+    {
+        RawLeft = rL;
+        RawRight = rR;
+        AngularVelocityLeft = aVL;
+        AngularVelocityRight = aVR;
+    }
+}
+
 public readonly struct Wheelchair
 {
     public Wheelchair()

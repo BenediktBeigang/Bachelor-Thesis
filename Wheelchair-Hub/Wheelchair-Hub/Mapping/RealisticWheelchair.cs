@@ -1,14 +1,14 @@
-public class RealisticWheelchair : WheelchairMovement
+public class RealisticWheelchair : Mapping
 {
-    public RealisticWheelchair(double wheelRadius, double chairWidth)
-    : base(wheelRadius, chairWidth, MappingMode.Wheelchair_Realistic)
+    public RealisticWheelchair(double wheelRadius, double chairWidth, double threshold)
+    : base(MappingMode.Wheelchair_Realistic, threshold, wheelRadius, chairWidth)
     {
     }
 
-    public override (double, double) Values_Next(short rawValue_One, short rawValue_Two, double value_One, double value_Two)
+    public override ControllerInput Values_Next(Rotations rotations)
     {
-        double rotationLeftAbs = Math.Abs(value_One);
-        double rotationRightAbs = Math.Abs(value_Two);
+        double rotationLeftAbs = Math.Abs(rotations.AngularVelocityLeft);
+        double rotationRightAbs = Math.Abs(rotations.AngularVelocityRight);
         double subtraction = Math.Abs(rotationLeftAbs - rotationRightAbs);
         double minimum = Math.Min(rotationLeftAbs, rotationRightAbs);
 
@@ -16,15 +16,16 @@ public class RealisticWheelchair : WheelchairMovement
         double speed = 0;
 
         // Calculation of one-wheel movement
-        (double distance, double rotation) singleWheelMovement = SingleWheel(subtraction, IsForwardRotation(value_One, value_Two));
+        (double distance, double rotation) singleWheelMovement = SingleWheel(subtraction, Are_BothRotationsForeward(rotations.AngularVelocityLeft, rotations.AngularVelocityRight));
         speed += singleWheelMovement.distance;
-        rotation += IsLeftRotation(value_One, value_Two) ? -singleWheelMovement.rotation : singleWheelMovement.rotation;
+        rotation += Is_LeftRotation(rotations.AngularVelocityLeft, rotations.AngularVelocityRight) ? -singleWheelMovement.rotation : singleWheelMovement.rotation;
 
         // Calculation of dual-wheel movement
-        (double distance, double rotation) dualWheelMovement = DualWheel(minimum, IsRotationAgainstEachOther(value_One, value_Two));
-        speed += IsForwardRotation(value_One, value_Two) ? dualWheelMovement.distance : -dualWheelMovement.distance;
-        rotation += IsLeftRotation(value_One, value_Two) ? -dualWheelMovement.rotation : dualWheelMovement.rotation;
+        (double distance, double rotation) dualWheelMovement = DualWheel(minimum, Is_RotationAgainstEachOther(rotations.AngularVelocityLeft, rotations.AngularVelocityRight));
+        speed += Are_BothRotationsForeward(rotations.AngularVelocityLeft, rotations.AngularVelocityRight) ? dualWheelMovement.distance : -dualWheelMovement.distance;
+        rotation += Is_LeftRotation(rotations.AngularVelocityLeft, rotations.AngularVelocityRight) ? -dualWheelMovement.rotation : dualWheelMovement.rotation;
 
-        return (speed, rotation);
+        // Scales angualar velocity to 16-Bit Controller-Input
+        return AngularVelocityToControllerInput(speed, rotation, false, false, false, false);
     }
 }

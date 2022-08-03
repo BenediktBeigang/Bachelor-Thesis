@@ -91,7 +91,7 @@ public class Node
     }
     #endregion
 
-    public static (short RawLeft, short RawRight, double Left, double Right) Rotations()
+    public static Rotations Rotations()
     {
         short rawOne = Node_One.Gyro.RawValue_Last();
         short rawTwo = Node_Two.Gyro.RawValue_Last();
@@ -99,8 +99,8 @@ public class Node
         double two = Node_Two.Gyro.DegreePerSecond_Last();
         switch (NodesFlipped)
         {
-            case false: return (RawLeft: rawOne, RawRight: rawTwo, Left: one, Right: two);
-            case true: return (RawLeft: rawTwo, RawRight: rawOne, Left: two, Right: one);
+            case false: return new Rotations(rawOne, rawTwo, one, two);
+            case true: return new Rotations(rawTwo, rawOne, two, one);
         }
     }
 

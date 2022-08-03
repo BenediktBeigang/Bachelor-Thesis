@@ -2,7 +2,6 @@ public class Loop
 {
     public static List<Loop> Loops { get; set; } = new();
 
-    private readonly int LOOP_DELAY;
     private readonly System.Timers.Timer Timer;
 
     public const int LOOP_DELAY_CONSOLE = 100;
