@@ -1,24 +1,51 @@
 using System;
+using System.Collections.Concurrent;
+using System.Timers;
 
 public static class Terminal
 {
+    public static string Other { get; set; } = "";
+    private static ConcurrentBag<Message> MessageHistory { get; set; } = new();
     private static Formatting format = new Formatting(new string[] { "Node", "", "Connection", "Raw Values", "DegreesPerSecond", "Calibration Status", "MessagesPerSecond", "DisconnectionTime" });
     private const int VISIBLE_MESSAGES = 15;
 
-    public static string Print()
+    public static void Print(object sender, ElapsedEventArgs e)
     {
         Console.Clear();
+        string userInterface = InterfaceToString();
+        Console.Write(userInterface);
+    }
+
+    public static string InterfaceToString()
+    {
         string output = "";
         output += Generate_Table() + '\n';
-        output += $"\n" + Legend() + '\n';
+        output += $"\n" + LegendToString() + '\n';
         output += $"Last Messages: " + '\n';
-        output += LastMessagesString() + '\n';
-        output += $"{GlobalData.other}" + '\n';
-        Console.Write(output);
+        output += MessageHistoryToString() + '\n';
+        output += $"{Other}" + '\n';
         return output;
     }
 
-    #region Helper
+    #region MessageHistory
+    public static void Add_Message(string message)
+    {
+        MessageHistory.Add(new Message
+        {
+            Text = message,
+            Time = DateTime.Now
+        });
+    }
+
+    public static List<string> Get_MessageHistory()
+    {
+        List<Message> messages = MessageHistory.ToList();
+        messages.Sort((x, y) => DateTime.Compare(x.Time, y.Time));
+        return messages.Select(x => x.Text).ToList<string>();
+    }
+    #endregion
+
+    #region Table
     private static string Generate_Table()
     {
         string table = "";
@@ -26,8 +53,8 @@ public static class Terminal
         table += String.Format($"{format.FormatString}", "Node", "", "Connection", "Raw Values", "DegreesPerSecond", "Calibration Status", "MessagesPerSecond", "DisconnectionTime") + '\n';
         table += String.Format($"{format.FormatString}", "----", "", "----------", "----------", "----------------", "------------------", "-----------------", "-----------------") + '\n';
 
-        table += Generate_TableLine(GlobalData.Node_One) + '\n';
-        table += Generate_TableLine(GlobalData.Node_Two) + '\n';
+        table += Generate_TableLine(Node.Node_One) + '\n';
+        table += Generate_TableLine(Node.Node_Two) + '\n';
         table += "-----------------------------------------------------------------------------------------------------" + "\n";
         return table;
     }
@@ -53,11 +80,13 @@ public static class Terminal
         node.DataPerSecond,
         node.DisconnectionTime);
     }
+    #endregion
 
-    private static string LastMessagesString()
+    #region String-Generator
+    private static string MessageHistoryToString()
     {
         string output = "";
-        List<string> messages = GlobalData.Get_MessageHistory();
+        List<string> messages = Get_MessageHistory();
         messages.Reverse();
         for (int i = 0; i < VISIBLE_MESSAGES; i++)
         {
@@ -67,7 +96,7 @@ public static class Terminal
         return output;
     }
 
-    private static string Legend()
+    private static string LegendToString()
     {
         string output = "";
         output += $"'q'     - quit" + '\n';

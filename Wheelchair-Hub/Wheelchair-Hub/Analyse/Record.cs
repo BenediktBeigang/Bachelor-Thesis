@@ -26,7 +26,7 @@ public class Record
         RecordedValues.Clear();
         Recording = true;
         Start_Timer();
-        GlobalData.Add_Message("Started recording.");
+        Terminal.Add_Message("Started recording.");
     }
 
     private static void Stop_Record()
@@ -35,7 +35,7 @@ public class Record
         Timer.Close();
         Recording = false;
         Save_Recording();
-        GlobalData.Add_Message("Stopped recording.");
+        Terminal.Add_Message("Stopped recording.");
     }
 
     private static void Start_Timer()
@@ -48,8 +48,8 @@ public class Record
 
     private static void TakeSample(object sender, ElapsedEventArgs e)
     {
-        short v1 = GlobalData.Node_One.Gyro.RawValue_Last();
-        short v2 = GlobalData.Node_Two.Gyro.RawValue_Last();
+        short v1 = Node.Node_One.Gyro.RawValue_Last();
+        short v2 = Node.Node_Two.Gyro.RawValue_Last();
         RecordedValues.Add((v1, v2));
     }
 
@@ -74,7 +74,7 @@ public class Record
         }
         catch (Exception e)
         {
-            GlobalData.other = e.ToString();
+            Terminal.Other = e.ToString();
         }
     }
 }

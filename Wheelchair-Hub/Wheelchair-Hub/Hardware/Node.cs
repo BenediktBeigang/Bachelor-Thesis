@@ -4,6 +4,12 @@ using Websocket.Client;
 public class Node
 {
     #region Fields
+    // static
+    public static Node Node_One { get; set; } = new Node(DeviceNumber.ONE);
+    public static Node Node_Two { get; set; } = new Node(DeviceNumber.TWO);
+    public static List<Node> Nodes { get; set; } = new List<Node>() { Node_One, Node_Two };
+    public static bool NodesFlipped { get; set; }
+
     // public
     public ConnectionType ConnectionType { get; set; }
     public int DataPerSecond { get; set; }
@@ -21,7 +27,7 @@ public class Node
     public readonly string? WebSocketURI;
     #endregion
 
-    #region Initialization
+    #region Constructors
     /// <summary>
     /// Constructor when no connection is established (default).
     /// </summary>
@@ -68,19 +74,59 @@ public class Node
         DataPerSecond = DataCount * (1000 / timeBetweenCalls);
         DataCount = 0;
     }
+    #endregion
+
+    #region Reset
+    public static void Reset_AllNodes()
+    {
+        Node_One.Reset();
+        Node_Two.Reset();
+    }
 
     public void Reset()
     {
-        GlobalData.Add_Message($"Reset Node: {DeviceNumber.ToString()}");
+        Terminal.Add_Message($"Reset Node: {DeviceNumber.ToString()}");
         ConnectionType = ConnectionType.NOTHING;
         Client = null;
     }
-
-    public void Change_GyroMode(GyroMode mode)
-    {
-        bool flipped = Gyro.RotationValueFlip;
-        Gyro = new Gyro(mode, DeviceNumber, flipped);
-        if (ConnectionType is not ConnectionType.NOTHING) Gyro.CalibrationStatus = CalibrationStatus.REQUESTED;
-    }
     #endregion
+
+    public static (short RawLeft, short RawRight, double Left, double Right) Rotations()
+    {
+        short rawOne = Node_One.Gyro.RawValue_Last();
+        short rawTwo = Node_Two.Gyro.RawValue_Last();
+        double one = Node_One.Gyro.DegreePerSecond_Last();
+        double two = Node_Two.Gyro.DegreePerSecond_Last();
+        switch (NodesFlipped)
+        {
+            case false: return (RawLeft: rawOne, RawRight: rawTwo, Left: one, Right: two);
+            case true: return (RawLeft: rawTwo, RawRight: rawOne, Left: two, Right: one);
+        }
+    }
+
+    public static Node? Get_Node(DeviceNumber device)
+    {
+        switch (device)
+        {
+            case DeviceNumber.ONE: return Node_One;
+            case DeviceNumber.TWO: return Node_Two;
+            default: return null;
+        }
+    }
+
+    public bool Check_Disconnect(int timeout)
+    {
+        if (ConnectionType is not ConnectionType.NOTHING)
+        {
+            if (DataPerSecond > 0)
+                DisconnectionTime = 0;
+            else
+                DisconnectionTime++;
+            if (DisconnectionTime > timeout)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

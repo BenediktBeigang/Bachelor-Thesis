@@ -20,9 +20,9 @@ public class Benchmark
 
     private static void Datarate(object sender, ElapsedEventArgs e)
     {
-        if (GlobalData.Node_One.ConnectionType is not ConnectionType.NOTHING)
-            GlobalData.Node_One.Update_DataRate(TIME_BETWEEN_CALLS);
-        if (GlobalData.Node_Two.ConnectionType is not ConnectionType.NOTHING)
-            GlobalData.Node_Two.Update_DataRate(TIME_BETWEEN_CALLS);
+        if (Node.Node_One.ConnectionType is not ConnectionType.NOTHING)
+            Node.Node_One.Update_DataRate(TIME_BETWEEN_CALLS);
+        if (Node.Node_Two.ConnectionType is not ConnectionType.NOTHING)
+            Node.Node_Two.Update_DataRate(TIME_BETWEEN_CALLS);
     }
 }

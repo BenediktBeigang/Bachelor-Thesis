@@ -15,15 +15,16 @@ public class ESP_Now : Connection
         Baudrate = baudrate;
         serialPort = new SerialPort(com, baudrate);
         serialPort.ReceivedBytesThreshold = 3; // Gets or sets the number of bytes in the internal input buffer before a DataReceived event occurs.
+        Connect_ToHost();
     }
 
-    public override void Connect_ToHost()
+    protected override void Connect_ToHost()
     {
-        InitializeNode(ConnectionType.ESP_NOW, DeviceNumber.ONE);
-        InitializeNode(ConnectionType.ESP_NOW, DeviceNumber.TWO);
+        Initialize_Node(ConnectionType.ESP_NOW, DeviceNumber.ONE);
+        Initialize_Node(ConnectionType.ESP_NOW, DeviceNumber.TWO);
         serialPort.DataReceived += Handle_Message;
         serialPort.Open();
-        GlobalData.Add_Message($"Listening to Serial Port:\nCom: {Com}\nBaudrate: {Baudrate}");
+        Terminal.Add_Message($"Listening to Serial Port:\nCom: {Com}\nBaudrate: {Baudrate}");
     }
 
     private void Handle_Message(object sender, SerialDataReceivedEventArgs e)
@@ -44,12 +45,12 @@ public class ESP_Now : Connection
             switch (device)
             {
                 case (byte)'1':
-                    GlobalData.Node_One.DataCount++;
-                    GlobalData.Node_One.Gyro.RawValue_Next(value);
+                    Node.Node_One.DataCount++;
+                    Node.Node_One.Gyro.RawValue_Next(value);
                     break;
                 case (byte)'2':
-                    GlobalData.Node_Two.DataCount++;
-                    GlobalData.Node_Two.Gyro.RawValue_Next(value);
+                    Node.Node_Two.DataCount++;
+                    Node.Node_Two.Gyro.RawValue_Next(value);
                     break;
             }
 
@@ -65,14 +66,14 @@ public class ESP_Now : Connection
             case '1':
                 if (FirstMessage_NodeOne)
                 {
-                    GlobalData.Node_One.Gyro.CalibrationStatus = CalibrationStatus.REQUESTED;
+                    Node.Node_One.Gyro.CalibrationStatus = CalibrationStatus.REQUESTED;
                     FirstMessage_NodeOne = false;
                 }
                 break;
             case '2':
                 if (FirstMessage_NodeTwo)
                 {
-                    GlobalData.Node_Two.Gyro.CalibrationStatus = CalibrationStatus.REQUESTED;
+                    Node.Node_Two.Gyro.CalibrationStatus = CalibrationStatus.REQUESTED;
                     FirstMessage_NodeTwo = false;
                 }
                 break;
@@ -83,7 +84,7 @@ public class ESP_Now : Connection
     public override void Disconnect_AllNodes()
     {
         serialPort.Close();
-        GlobalData.Reset_AllNodes();
+        Node.Reset_AllNodes();
         Connect_ToHost();
     }
 
@@ -96,7 +97,7 @@ public class ESP_Now : Connection
 
     public override void Change_GyroMode(GyroMode mode)
     {
-        GlobalData.Add_Message("Change GyroMode not implemented!");
+        Terminal.Add_Message("Change GyroMode not implemented!");
     }
     #endregion
 }

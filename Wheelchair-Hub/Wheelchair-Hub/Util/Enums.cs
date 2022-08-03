@@ -28,11 +28,11 @@ public enum CalibrationStatus
     CALIBRATED
 }
 
-public enum WheelchairMode
+public enum MappingMode
 {
     Wheelchair_Simple,
     Wheelchair_Realistic,
-    Mouse
+    GUI
 }
 
 public enum MovementState

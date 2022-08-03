@@ -1,26 +1,21 @@
-public class SimpleWheelchair : ValueTransformation
+public class SimpleWheelchair : WheelchairMovement
 {
     private const double MOVEMENT_THRESHOLD = 0.5;
 
-    public SimpleWheelchair(double wheelRadius, double chairWidth) : base(wheelRadius, chairWidth) { }
+    public SimpleWheelchair(double wheelRadius, double chairWidth) : base(wheelRadius, chairWidth, MappingMode.Wheelchair_Simple) { }
 
-    public override (double, double) TransformedValues_Next(short rawValue_One, short rawValue_Two, double value_One, double value_Two)
+    public override (double, double) Values_Next(short rawValue_One, short rawValue_Two, double value_One, double value_Two)
     {
         double valueInterpolation = Math.Abs((value_One + value_Two) / 2);
         switch (Movement(value_One, value_One))
         {
             case MovementState.ViewAxis_Motion:
-                return WheelchairMovement.DualWheel_Move(valueInterpolation);
+                return DualWheel_Move(valueInterpolation);
             case MovementState.SingleWheel_Turn:
-                return WheelchairMovement.SingleWheel(
-                    Math.Max(Math.Abs(value_One), Math.Abs(value_Two)),
-                    wheelchair.OuterTurningCircle,
-                    wheelchair.InnerTurningCircle,
-                    IsForwardRotation(value_One, value_Two));
+                return SingleWheel(
+                    Math.Max(Math.Abs(value_One), Math.Abs(value_Two)), IsForwardRotation(value_One, value_Two));
             case MovementState.DualWheel_Turn:
-                return WheelchairMovement.DualWheel_Turn(
-                    valueInterpolation,
-                    wheelchair.InnerTurningCircle);
+                return DualWheel_Turn(valueInterpolation);
             default: return (0, 0);
         }
     }

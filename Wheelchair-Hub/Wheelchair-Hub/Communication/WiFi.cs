@@ -27,12 +27,13 @@ public class WiFi : Connection
         udpClient = new UdpClient();
         IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Any, CLIENT_PORT);
         udpClient.Client.Bind(clientEndPoint);
+        Connect_ToHost();
     }
 
     /// <summary>
     /// Starts a Thread that waits for Broadcast of ESP to connect to it.
     /// </summary>
-    public override void Connect_ToHost()
+    protected override void Connect_ToHost()
     {
         Thread receiveThread = new Thread(new ThreadStart(this.Receive_UDP));
         receiveThread.IsBackground = true;
@@ -47,7 +48,7 @@ public class WiFi : Connection
     private async void Receive_UDP()
     {
         Listening = true;
-        GlobalData.Add_Message("UDP is listening!");
+        Terminal.Add_Message("UDP is listening!");
         while (Listening)
         {
             var result = await udpClient.ReceiveAsync();
@@ -57,9 +58,9 @@ public class WiFi : Connection
                 Sender = result.RemoteEndPoint
             };
             Handle_UDPPackage(received);
-            GlobalData.Add_Message($"Packet Received:\n{received.ToString()}");
+            Terminal.Add_Message($"Packet Received:\n{received.ToString()}");
         }
-        GlobalData.Add_Message("UDP stopped listening!");
+        Terminal.Add_Message("UDP stopped listening!");
     }
 
     /// <summary>
@@ -90,10 +91,10 @@ public class WiFi : Connection
     /// <param name="device"></param>
     private void NewNode(Received package, DeviceNumber device)
     {
-        InitializeNode(ConnectionType.WIFI, device, GlobalData.Node_ByDeviceNumber(device)!.Gyro.RotationValueFlip);
+        Initialize_Node(ConnectionType.WIFI, device, Node.Get_Node(device)!.Gyro.RotationValueFlip);
 
         string uri = WebSocketURI(package);
-        GlobalData.Add_Message($"Try to connect to Web-Socket of Node {device.ToString()}: {uri}");
+        Terminal.Add_Message($"Try to connect to Web-Socket of Node {device.ToString()}: {uri}");
         Thread connectionThread = new Thread(() => Connect_ToWebSocketServer(uri, device));
         connectionThread.IsBackground = true;
         connectionThread.Start();
@@ -117,15 +118,15 @@ public class WiFi : Connection
             Clients.Add(client);
             switch (device)
             {
-                case DeviceNumber.ONE: GlobalData.Node_One.Client = client; break;
-                case DeviceNumber.TWO: GlobalData.Node_Two.Client = client; break;
+                case DeviceNumber.ONE: Node.Node_One.Client = client; break;
+                case DeviceNumber.TWO: Node.Node_Two.Client = client; break;
             }
 
             client.Name = device.ToString();
             client.IsReconnectionEnabled = false;
             client.ReconnectTimeout = TimeSpan.FromSeconds(5);
             client.ReconnectionHappened.Subscribe(info =>
-                GlobalData.Add_Message($"Host>> Reconnection happened, type: {info.Type}"));
+                Terminal.Add_Message($"Host>> Reconnection happened, type: {info.Type}"));
             client.MessageReceived.Subscribe(msg => Handle_WebSocketMessage(msg.Text, client));
             client.Start();
             exitEvent.WaitOne();
@@ -145,12 +146,12 @@ public class WiFi : Connection
         switch (message)
         {
             case "1 Connected":
-                GlobalData.Add_Message("Client>> Node One Connected");
-                Change_GyroMode(GlobalData.GyroMode);
+                Terminal.Add_Message("Client>> Node One Connected");
+                Change_GyroMode(Gyro.Mode);
                 break;
             case "2 Connected":
-                GlobalData.Add_Message("Client>> Node Two Connected");
-                Change_GyroMode(GlobalData.GyroMode);
+                Terminal.Add_Message("Client>> Node Two Connected");
+                Change_GyroMode(Gyro.Mode);
                 break;
             default:
                 Handle_WebSocketPackage(message, client);
@@ -175,21 +176,21 @@ public class WiFi : Connection
             switch (client.Name)
             {
                 case "ONE":
-                    GlobalData.Node_One.DataCount++;
-                    GlobalData.Node_One.Gyro.RawValue_Next(short.Parse(message));
+                    Node.Node_One.DataCount++;
+                    Node.Node_One.Gyro.RawValue_Next(short.Parse(message));
                     break;
                 case "TWO":
-                    GlobalData.Node_Two.DataCount++;
-                    GlobalData.Node_Two.Gyro.RawValue_Next(short.Parse(message));
+                    Node.Node_Two.DataCount++;
+                    Node.Node_Two.Gyro.RawValue_Next(short.Parse(message));
                     break;
                 default:
-                    GlobalData.Add_Message(message);
+                    Terminal.Add_Message(message);
                     break;
             }
         }
         catch (FormatException)
         {
-            GlobalData.Add_Message(message);
+            Terminal.Add_Message(message);
         }
     }
 
@@ -200,9 +201,9 @@ public class WiFi : Connection
         {
             Task.Run(() => client.Send(message));
         }
-        GlobalData.Node_One.Change_GyroMode(mode);
-        GlobalData.Node_Two.Change_GyroMode(mode);
-        GlobalData.Add_Message($"Changed GyroMode to: {mode}");
+        Gyro.Mode = mode;
+        Gyro.Request_Calibration();
+        Terminal.Add_Message($"Changed GyroMode to: {mode}");
     }
     #endregion
 
@@ -220,11 +221,11 @@ public class WiFi : Connection
         {
             client.IsReconnectionEnabled = false;
             Task.Run(() => client.Stop(WebSocketCloseStatus.NormalClosure, "Programm closing"));
-            GlobalData.Add_Message($"Disconnected from Node {client.Name}");
+            Terminal.Add_Message($"Disconnected from Node {client.Name}");
             // Thread.Sleep(100);
         }
         Clients.Clear();
-        GlobalData.Reset_AllNodes();
+        Node.Reset_AllNodes();
     }
 
     /// <summary>
@@ -237,7 +238,7 @@ public class WiFi : Connection
         WebsocketClient client = Clients.First(c => c.Name == node.DeviceNumber.ToString());
         client.IsReconnectionEnabled = false;
         Task.Run(() => client!.Stop(WebSocketCloseStatus.EndpointUnavailable, "Lost Connection"));
-        GlobalData.Add_Message($"Lost connection to Node {node.DeviceNumber.ToString()}");
+        Terminal.Add_Message($"Lost connection to Node {node.DeviceNumber.ToString()}");
         Clients.Remove(client!);
         node.Reset();
     }

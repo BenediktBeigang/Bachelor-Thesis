@@ -2,7 +2,7 @@
 |Node||Connection|Raw Values|DegreesPerSecond|Calibration Status|MessagesPerSecond|DisconnectionTime|
 |----||----------|----------|----------------|------------------|-----------------|-----------------|
 | ONE||   NOTHING|          |                |           NO GYRO|                 |                 |
-| TWO||      WIFI|       -65|           -3,96|       CALIBRATING|                6|                0|
+| TWO||   NOTHING|          |                |           NO GYRO|                 |                 |
 -----------------------------------------------------------------------------------------------------
 
 
@@ -19,23 +19,10 @@
  |==> 3  - 2000
 
 Last Messages: 
-> Calibrating Gyro for 3 seconds.
-> Changed GyroMode to: GYRO_2000
-> Client>> Node Two Connected
-> Host>> Reconnection happened, type: Initial
-> UDP stopped listening!
-> Packet Received:
-IP: 192.168.2.115
-PORT: 64589
-Message: I am Node TWO
-> Try to connect to Web-Socket of Node TWO: ws://192.168.2.115:81/
 > PROGRAM STOPPED
 > Reset Node: TWO
 > Reset Node: ONE
-> Disconnected from Node ONE
-> Disconnected from Node TWO
-> Invalid Input!
-> Stopped recording.
-> Started recording.
+> UDP is listening!
+> Controller connected!
 
 

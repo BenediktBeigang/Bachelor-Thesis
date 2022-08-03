@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Wheelchair-Hub/bin/Debug/net6.0/Wheelchair-Hub.dll",
+            "program": "${workspaceFolder}/Wheelchair-Hub/bin/Debug/net6.0-windows/Wheelchair-Hub.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Wheelchair-Hub",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

@@ -3,8 +3,21 @@ using System.Timers;
 
 public abstract class Connection
 {
+    private const int TIMEOUT = 10;
+    private const string COM = "COM4";
+    private const int BAUDRATE = 115200;
+    public static Connection? _Connection { get; set; }
 
-    private const int MAXIMUM_DISCONNECTION_DURATION = 10;
+    public static Connection? SetConnection(ConnectionType connection)
+    {
+        switch (connection)
+        {
+            case ConnectionType.WIFI: return new WiFi();
+            case ConnectionType.ESP_NOW: return new ESP_Now(COM, BAUDRATE);
+            case ConnectionType.BLUETOOTH: return null;
+            default: return null;
+        }
+    }
 
     /// <summary>
     /// Checks that connection with nodes is still alive, 
@@ -13,40 +26,22 @@ public abstract class Connection
     /// 1. new data is received => counter is reset
     /// 2. reconnection take too long => Disconnection is called/announced
     /// /// </summary>
-    public void Heartbeat()
+    public static void Heartbeat(object sender, ElapsedEventArgs e)
     {
-        Check_Node(GlobalData.Node_One);
-        Check_Node(GlobalData.Node_Two);
-    }
-
-    /// <summary>
-    /// Checks for disconnection. 
-    /// When to often in a row zero packages per second are received, the Disconnectino function is called.
-    /// The tolerated number of times with zero packages is defined by the constant MAXIMUM_DISCONNECTION_DURATION.
-    /// </summary>
-    /// <param name="node"></param>
-    private void Check_Node(Node node)
-    {
-        if (node.ConnectionType is not ConnectionType.NOTHING)
+        if (_Connection is not null)
         {
-            if (node.DataPerSecond > 0)
-                node.DisconnectionTime = 0;
-            else
-                node.DisconnectionTime++;
-            if (node.DisconnectionTime > MAXIMUM_DISCONNECTION_DURATION)
-            {
-                Disconnect_Node(node);
-            }
+            if (Node.Node_One.Check_Disconnect(TIMEOUT)) _Connection.Disconnect_Node(Node.Node_One);
+            if (Node.Node_Two.Check_Disconnect(TIMEOUT)) _Connection.Disconnect_Node(Node.Node_Two);
         }
     }
 
-    protected void InitializeNode(ConnectionType connection, DeviceNumber device, bool wheelFlipped = false, IPEndPoint? sender = null)
+    protected void Initialize_Node(ConnectionType connection, DeviceNumber device, bool wheelFlipped = false, IPEndPoint? sender = null)
     {
         Node node = new Node(device);
         switch (connection)
         {
-            case ConnectionType.WIFI: node = new Node(device, connection, sender!, GlobalData.GyroMode, wheelFlipped); break;
-            case ConnectionType.ESP_NOW: node = new Node(device, connection, GlobalData.GyroMode, wheelFlipped); break;
+            case ConnectionType.WIFI: node = new Node(device, connection, sender!, Gyro.Mode, wheelFlipped); break;
+            case ConnectionType.ESP_NOW: node = new Node(device, connection, Gyro.Mode, wheelFlipped); break;
             case ConnectionType.BLUETOOTH: break;
         }
         WriteNodeInGlobalData(device, node);
@@ -56,13 +51,13 @@ public abstract class Connection
     {
         switch (device)
         {
-            case DeviceNumber.ONE: GlobalData.Node_One = node; break;
-            case DeviceNumber.TWO: GlobalData.Node_Two = node; break;
+            case DeviceNumber.ONE: Node.Node_One = node; break;
+            case DeviceNumber.TWO: Node.Node_Two = node; break;
         }
     }
 
+    protected abstract void Connect_ToHost();
     protected abstract void Disconnect_Node(Node node);
     public abstract void Disconnect_AllNodes();
-    public abstract void Connect_ToHost();
     public abstract void Change_GyroMode(GyroMode mode);
 }
