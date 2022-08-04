@@ -17,6 +17,7 @@ On the other end is a .Net 6.0 Console Application receiving the data and using 
 ## Used Libraries
 
 **C++**
+
 | Library                                                                       | Description                                                         |
 | ----------------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | [WiFi-Manager](https://github.com/tzapu/WiFiManager)                          | Used to connect ESP with WiFI-Network without hardcoded credentials |
@@ -31,5 +32,3 @@ On the other end is a .Net 6.0 Console Application receiving the data and using 
 | [nunit](https://github.com/nunit/nunit)                           | Used for Unit-Testing                                                    |
 
 ## Gallery
-<img src="BachelorArbeitsVault\Quellen\Bilder\Hardware\Platine.jpg" width=50% height=50%/><img src="BachelorArbeitsVault\Quellen\Bilder\Box\Box_Closed.jpg" width=50% height=50%/>
-<img src="BachelorArbeitsVault\Quellen\Bilder\Box\Box_Open.jpg" width=50% height=50%/><img src="BachelorArbeitsVault\Quellen\Bilder\Hardware\Wheel.jpg" width=50% height=50%/>
