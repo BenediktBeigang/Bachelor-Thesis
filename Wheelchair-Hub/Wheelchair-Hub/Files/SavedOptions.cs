@@ -3,26 +3,33 @@ using System.Text.Json;
 public class SavedOptions
 {
     private const string FILEPATH = @"Files\SavedOptions.json";
-    public static SavedOptions Options { get; set; } = new SavedOptions();
+    public static SavedOptions Options { get; set; } = new();
+    private static string? Json = null;
 
-    public SavedOptions()
+    public bool Read_JSON()
     {
-        Update();
+        try
+        {
+            string json = File.ReadAllText(FILEPATH);
+            Options = JsonSerializer.Deserialize<SavedOptions>(json) ?? Options;
+            return true;
+        }
+        catch (System.IO.FileNotFoundException)
+        {
+            return false;
+        }
     }
 
     public void Load()
     {
         try
         {
-            string json = File.ReadAllText(FILEPATH);
-            SavedOptions? saved = JsonSerializer.Deserialize<SavedOptions>(json);
-
-            if (saved is null) return;
-            Gyro.Mode = saved.GyroMode;
-            Node.NodesFlipped = saved.NodesFlipped;
-            Node.Node_One.Gyro.RotationValueFlip = saved.WheelFlipped_One;
-            Node.Node_Two.Gyro.RotationValueFlip = saved.WheelFlipped_Two;
-            Mapping.Mode = saved.WheelchairMode;
+            if (Options is null) return;
+            Gyro.Mode = Options.GyroMode;
+            Node.NodesFlipped = Options.NodesFlipped;
+            Node.Node_One.Gyro.RotationValueFlip = Options.WheelFlipped_One;
+            Node.Node_Two.Gyro.RotationValueFlip = Options.WheelFlipped_Two;
+            Mapping.Change_Mapping(Options.WheelchairMode, Options.Wheel_Radius, Options.Chair_Width, Options.Button_Pressing_Threshold);
         }
         catch (System.IO.FileNotFoundException)
         {
@@ -34,18 +41,20 @@ public class SavedOptions
     public void Save()
     {
         Update();
-        SavedOptions saved = new SavedOptions();
-        string json = JsonSerializer.Serialize(saved);
+        string json = JsonSerializer.Serialize(Options);
         File.WriteAllText(FILEPATH, json);
     }
 
     private void Update()
     {
-        GyroMode = Gyro.Mode;
-        NodesFlipped = Node.NodesFlipped;
-        WheelFlipped_One = Node.Node_One.Gyro.RotationValueFlip;
-        WheelFlipped_Two = Node.Node_Two.Gyro.RotationValueFlip;
-        WheelchairMode = Mapping.Mode;
+        Options.GyroMode = Gyro.Mode;
+        Options.NodesFlipped = Node.NodesFlipped;
+        Options.WheelFlipped_One = Node.Node_One.Gyro.RotationValueFlip;
+        Options.WheelFlipped_Two = Node.Node_Two.Gyro.RotationValueFlip;
+        Options.WheelchairMode = Mapping.Get_Mode();
+        Options.Wheel_Radius = Mapping.Get_Wheelchair().Wheel_Radius;
+        Options.Chair_Width = Mapping.Get_Wheelchair().Chair_Width;
+        Options.Button_Pressing_Threshold = Mapping.Get_ButtonPressingThreshold();
     }
 
     public GyroMode GyroMode { get; set; }
@@ -53,4 +62,7 @@ public class SavedOptions
     public bool WheelFlipped_One { get; set; }
     public bool WheelFlipped_Two { get; set; }
     public MappingMode WheelchairMode { get; set; }
+    public double Wheel_Radius { get; set; }
+    public double Chair_Width { get; set; }
+    public double Button_Pressing_Threshold { get; set; }
 }

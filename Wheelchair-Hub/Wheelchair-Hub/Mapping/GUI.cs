@@ -2,7 +2,7 @@ using System.Drawing;
 
 public class GUI : Mapping
 {
-    public GUI(double threshold, double wheelRadius, double chairWidth)
+    public GUI(double wheelRadius, double chairWidth, double threshold)
     : base(MappingMode.GUI, threshold, wheelRadius, chairWidth) { }
 
     public override ControllerInput Values_Next(Rotations rotations)

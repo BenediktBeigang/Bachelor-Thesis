@@ -43,8 +43,7 @@ public static class Controller
     /// <param name="values"></param>
     private static void ValuesToController(ControllerInput input)
     {
-        Terminal.Other = Mapping.Mode.ToString();
-        switch (Mapping.Mode)
+        switch (Mapping.Get_Mode())
         {
             case MappingMode.Wheelchair_Realistic: Handle_Wheelchair(input); break;
             case MappingMode.Wheelchair_Simple: Handle_Wheelchair(input); break;
@@ -61,7 +60,6 @@ public static class Controller
 
     private static void Handle_Mouse(ControllerInput input)
     {
-        Terminal.Other = input.ToString();
         controller!.SetAxisValue(Xbox360Axis.LeftThumbX, input.Value_One);
         controller!.SetAxisValue(Xbox360Axis.LeftThumbY, input.Value_Two);
         controller!.SetButtonState(Xbox360Button.A, input.RightPositive);

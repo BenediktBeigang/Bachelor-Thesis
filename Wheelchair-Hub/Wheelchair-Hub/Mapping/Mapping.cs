@@ -1,27 +1,24 @@
 public abstract class Mapping
 {
-    public static Mapping _Mapping { get; set; } = new GUI(1000, 30, 55.5);
-    public static MappingMode Mode { get; set; }
-    public static double Threshold { get; set; }
-    public static Wheelchair Wheelchair;
+    public static Mapping _Mapping { get; set; } = new GUI(30, 55.5, 200);
+    public readonly double Button_Pressing_Threshold;
+    public readonly MappingMode Mode;
+    public readonly Wheelchair Wheelchair;
 
     public Mapping(MappingMode mode, double threshold, double wheelRadius, double chairWidth)
     {
         Mode = mode;
-        Threshold = threshold;
+        Button_Pressing_Threshold = threshold;
         Wheelchair = new Wheelchair(wheelRadius, chairWidth);
     }
 
-    public static void Change_Mapping(MappingMode mode)
+    public static void Change_Mapping(MappingMode mode, double wheelRadius, double chairWidth, double buttonPressingThreshold)
     {
-        double oldThreshold = Threshold;
-        double oldWheelchairWidth = Wheelchair.Chair_Width;
-        double oldWheelRadius = Wheelchair.Wheel_Radius;
         switch (mode)
         {
-            case MappingMode.Wheelchair_Realistic: _Mapping = new RealisticWheelchair(oldWheelRadius, oldWheelchairWidth, oldThreshold); break;
-            case MappingMode.Wheelchair_Simple: _Mapping = new SimpleWheelchair(oldWheelRadius, oldWheelchairWidth, oldThreshold); break;
-            case MappingMode.GUI: _Mapping = new GUI(oldThreshold, oldWheelRadius, oldWheelchairWidth); break;
+            case MappingMode.Wheelchair_Realistic: _Mapping = new RealisticWheelchair(wheelRadius, chairWidth, buttonPressingThreshold); break;
+            case MappingMode.Wheelchair_Simple: _Mapping = new SimpleWheelchair(wheelRadius, chairWidth, buttonPressingThreshold); break;
+            case MappingMode.GUI: _Mapping = new GUI(wheelRadius, chairWidth, buttonPressingThreshold); break;
         }
     }
 
@@ -45,16 +42,21 @@ public abstract class Mapping
 
     protected static bool Is_OneRotationUnderThreshold(double value_One, double value_Two)
     {
-        bool b1 = Math.Abs(value_One) < Threshold;
-        bool b2 = Math.Abs(value_Two) < Threshold;
+        bool b1 = Math.Abs(value_One) < Get_ButtonPressingThreshold();
+        bool b2 = Math.Abs(value_Two) < Get_ButtonPressingThreshold();
         return b1 ^ b2;
     }
 
     protected static bool Are_BothRotationsUnderThreshold(double value_One, double value_Two)
     {
-        bool b1 = Math.Abs(value_One) < Threshold;
-        bool b2 = Math.Abs(value_Two) < Threshold;
+        bool b1 = Math.Abs(value_One) < Get_ButtonPressingThreshold();
+        bool b2 = Math.Abs(value_Two) < Get_ButtonPressingThreshold();
         return b1 && b2;
+    }
+
+    protected bool Is_RotationForward(double value)
+    {
+        return value > 0;
     }
     #endregion
 
@@ -98,14 +100,14 @@ public abstract class Mapping
         bool leftNegative = false;
         bool rightPositive = false;
         bool rightNegative = false;
-        if (Math.Abs(left) > Threshold)
+        if (Math.Abs(left) > Button_Pressing_Threshold)
         {
             if (Is_RotationForward(left))
                 leftPositive = true;
             else
                 leftNegative = true;
         }
-        if (Math.Abs(right) > Threshold)
+        if (Math.Abs(right) > Button_Pressing_Threshold)
         {
             if (Is_RotationForward(right))
                 rightPositive = true;
@@ -144,8 +146,18 @@ public abstract class Mapping
         return Math.Max(Math.Abs(rotationOne), Math.Abs(rotationTwo));
     }
 
-    protected bool Is_RotationForward(double value)
+    #region Getter
+    public static MappingMode Get_Mode()
     {
-        return value > 0;
+        return Mapping._Mapping.Mode;
     }
+    public static double Get_ButtonPressingThreshold()
+    {
+        return Mapping._Mapping.Button_Pressing_Threshold;
+    }
+    public static Wheelchair Get_Wheelchair()
+    {
+        return Mapping._Mapping.Wheelchair;
+    }
+    #endregion
 }

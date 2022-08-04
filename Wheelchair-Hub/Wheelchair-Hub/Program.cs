@@ -9,13 +9,11 @@ public static class Program
 {
     public static void Main(string[] args)
     {
-        new Benchmark();
-        Mapping._Mapping = new GUI(30, 55.5, 200);
-        Controller.Start();
-        SavedOptions.Options.Load();
-        Connection._Connection = Connection.SetConnection(ConnectionType.WIFI);
-
         Start_Loops();
+        new Benchmark();
+        Controller.Start();
+        Connection._Connection = Connection.SetConnection(ConnectionType.WIFI);
+        Load_Options();
         Exit_Code();
     }
 
@@ -25,6 +23,15 @@ public static class Program
         new Loop(Loop.LOOP_DELAY_CALIBRATION, Gyro.Check_Calibration!);
         new Loop(Loop.LOOP_DELAY_HEARTBEAT, Connection.Heartbeat!);
         new Loop(Loop.LOOP_DELAY_CONTROLLER, Controller.Refresh_Controller!);
+    }
+
+    private static void Load_Options()
+    {
+        bool optionsExisting = SavedOptions.Options.Read_JSON();
+        if (optionsExisting)
+            SavedOptions.Options.Load();
+        else
+            UserInput.Change_Mapping();
     }
 
     private static void Exit_Code()

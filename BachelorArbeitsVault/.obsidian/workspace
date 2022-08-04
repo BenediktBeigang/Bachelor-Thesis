@@ -7,11 +7,9 @@
         "id": "1e1618fa1eced1dd",
         "type": "leaf",
         "state": {
-          "type": "markdown",
+          "type": "kanban",
           "state": {
-            "file": "Hardware/Technische Daten.md",
-            "mode": "source",
-            "source": false
+            "file": "ToDo-Board.md"
           }
         }
       }
@@ -69,7 +67,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Hardware/Technische Daten.md",
+                "file": "ToDo-Board.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -95,17 +93,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "1e1618fa1eced1dd",
+  "active": "e20ff62347ec4197",
   "lastOpenFiles": [
+    "ToDo/Buttonaktivierung nach Delay.md",
+    "ToDo-Board.md",
+    "ToDo/Buttonakitvierung.md",
+    "Hardware/Technische Daten.md",
     "Software/Mappen der Eingaben.md",
     "Arbeit/3. Experiment.md",
     "Software/Rauschen.md",
     "Software/Programm Ablauf.md",
     "Software/Controller Emulation.md",
-    "Software/Eingabe Schnittstellen.md",
-    "Hardware/MPU-6050.md",
-    "SprintBerichte/Bericht 2.md",
-    "SprintBerichte/Bericht 1.md",
-    "Quellen/Bilder/Box/Box_AnRollstuhl.jpg"
+    "Software/Eingabe Schnittstellen.md"
   ]
 }

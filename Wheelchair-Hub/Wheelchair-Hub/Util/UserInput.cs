@@ -51,8 +51,10 @@ public static class UserInput
     #endregion
 
     #region Selection
-    private static void Change_Mapping()
+    public static void Change_Mapping()
     {
+        MappingMode mode = MappingMode.GUI;
+
         Terminal.Add_Message("Select Mapping: ");
         bool running = true;
         while (running)
@@ -60,13 +62,20 @@ public static class UserInput
             ConsoleKeyInfo k = Console.ReadKey();
             switch (k.KeyChar)
             {
-                case '1': Mapping.Change_Mapping(MappingMode.Wheelchair_Realistic); break;
-                case '2': Mapping.Change_Mapping(MappingMode.Wheelchair_Simple); break;
-                case '3': Mapping.Change_Mapping(MappingMode.GUI); break;
+                case '1': mode = MappingMode.Wheelchair_Realistic; break;
+                case '2': mode = MappingMode.Wheelchair_Simple; break;
+                case '3': mode = MappingMode.GUI; break;
                 default: Terminal.Add_Message($"Flip-Entity '{k.KeyChar}' not valid!"); continue;
             }
             running = false;
         }
+
+        double wheelRadius = Enter_Number("Enter Wheel-Radius");
+        double chairWidth = Enter_Number("Enter Chair-Width");
+        double buttonPressingThreshold = Enter_Number("Enter Button-Pressing-Threshold");
+
+        Terminal.Add_Message($"New Mapping:\nMode->{mode}\nWheel-Radius->{wheelRadius}\nChair-Width->{chairWidth}\nButtonPressingThreshold->{buttonPressingThreshold}");
+        Mapping.Change_Mapping(mode, wheelRadius, chairWidth, buttonPressingThreshold);
     }
 
     private static void Flip()
@@ -82,6 +91,25 @@ public static class UserInput
                 case '1': Flip_NodeOne_WheelDirection(); break;
                 case '2': Flip_NodeTwo_WheelDirection(); break;
                 default: Terminal.Add_Message($"Flip-Entity '{k.KeyChar}' not valid!"); continue;
+            }
+            running = false;
+        }
+    }
+
+    private static void Change_Wheelchair()
+    {
+        Terminal.Add_Message("Enter Wheelchair Data: ");
+        bool running = true;
+        while (running)
+        {
+            ConsoleKeyInfo k = Console.ReadKey();
+            switch (k.KeyChar)
+            {
+                case '0': Connection._Connection!.Change_GyroMode(GyroMode.GYRO_250); break;
+                case '1': Connection._Connection!.Change_GyroMode(GyroMode.GYRO_500); break;
+                case '2': Connection._Connection!.Change_GyroMode(GyroMode.GYRO_1000); break;
+                case '3': Connection._Connection!.Change_GyroMode(GyroMode.GYRO_2000); break;
+                default: Terminal.Add_Message($"GyroMode '{k.KeyChar}' not valid!"); continue;
             }
             running = false;
         }
@@ -104,6 +132,35 @@ public static class UserInput
             }
             running = false;
         }
+    }
+
+    private static double Enter_Number(string message)
+    {
+        Terminal.Add_Message(message);
+        bool running = true;
+        string number = "";
+        while (running)
+        {
+            ConsoleKeyInfo k = Console.ReadKey();
+            switch (k.KeyChar)
+            {
+                case '0': number += '0'; break;
+                case '1': number += '1'; break;
+                case '2': number += '2'; break;
+                case '3': number += '3'; break;
+                case '4': number += '4'; break;
+                case '5': number += '5'; break;
+                case '6': number += '6'; break;
+                case '7': number += '7'; break;
+                case '8': number += '8'; break;
+                case '9': number += '9'; break;
+                case '.': number += '.'; break;
+                case (char)13: running = false; break;
+                default: Terminal.Add_Message($"GyroMode '{k.KeyChar}' not valid!"); continue;
+            }
+        }
+        Terminal.Add_Message(number);
+        return double.Parse(number);
     }
     #endregion
 }
