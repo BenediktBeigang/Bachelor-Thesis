@@ -13,4 +13,7 @@
 ### Marktplätze
 [KT-electronic](https://www.kt-micro.de/shop/Stromversorgung/Akku-Ladetechnik/Laderegler-nur-Akku:::4_15_16.html)
 
+## Git
+[gitattributes](https://dev.to/deadlybyte/please-add-gitattributes-to-your-git-repository-1jld)
+[gitattributes documentation](https://github.com/github/linguist/blob/master/docs/overrides.md)
 
