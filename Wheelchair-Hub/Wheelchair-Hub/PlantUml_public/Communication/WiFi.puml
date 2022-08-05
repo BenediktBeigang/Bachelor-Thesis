@@ -1,0 +1,24 @@
+@startuml
+class WiFi {
+    + Listening : bool <<get>> <<set>>
+    <<const>> CLIENT_PORT : int = 11000
+    <<const>> WEBSOCKET_PORT : int = 81
+    + WiFi()
+    # <<override>> Connect_ToHost() : void
+    - <<async>> Receive_UDP() : void
+    - Handle_UDPPackage(package:Received) : void
+    - NewNode(package:Received, device:DeviceNumber) : void
+    - Connect_ToWebSocketServer(serverURL:string, device:DeviceNumber) : void
+    - Handle_WebSocketMessage(message:string, client:WebsocketClient) : void
+    - Handle_WebSocketPackage(message:string, client:WebsocketClient) : void
+    + <<override>> Change_GyroMode(mode:GyroMode) : void
+    + <<override>> Disconnect_AllNodes() : void
+    # <<override>> Disconnect_Node(node:Node) : void
+    - {static} WebSocketURI(package:Received) : string
+}
+class "List`1"<T> {
+}
+Connection <|-- WiFi
+WiFi --> "udpClient" UdpClient
+WiFi --> "Clients<WebsocketClient>" "List`1"
+@enduml

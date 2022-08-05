@@ -1,0 +1,8 @@
+@startuml
+class ESP_Now {
+    + ESP_Now(com:string, baudrate:int)
+    + <<override>> Disconnect_AllNodes() : void
+    + <<override>> Change_GyroMode(mode:GyroMode) : void
+}
+Connection <|-- ESP_Now
+@enduml

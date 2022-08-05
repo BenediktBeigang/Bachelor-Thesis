@@ -1,0 +1,17 @@
+@startuml
+class ESP_Now {
+    - <<readonly>> Com : string
+    - <<readonly>> Baudrate : int
+    - FirstMessage_NodeOne : bool = true
+    - FirstMessage_NodeTwo : bool = true
+    + ESP_Now(com:string, baudrate:int)
+    # <<override>> Connect_ToHost() : void
+    - Handle_Message(sender:object, e:SerialDataReceivedEventArgs) : void
+    - Check_FirstMessage(device:char) : void
+    + <<override>> Disconnect_AllNodes() : void
+    # <<override>> Disconnect_Node(node:Node) : void
+    + <<override>> Change_GyroMode(mode:GyroMode) : void
+}
+Connection <|-- ESP_Now
+ESP_Now --> "serialPort" SerialPort
+@enduml

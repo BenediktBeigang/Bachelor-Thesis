@@ -1,0 +1,28 @@
+@startuml
+class Node {
+    + {static} NodesFlipped : bool <<get>> <<set>>
+    + DataPerSecond : int <<get>> <<set>>
+    + DataCount : int <<get>> <<set>>
+    + Client : WebsocketClient? <<get>> <<set>>
+    + DisconnectionTime : int <<get>> <<set>>
+    + <<readonly>> EndPoint : IPEndPoint?
+    + <<readonly>> WebSocketURI : string?
+    + Node(device:DeviceNumber, gyroMode:GyroMode, wheelFlipped:bool)
+    + Node(device:DeviceNumber, connection:ConnectionType, gyroMode:GyroMode, wheelFlipped:bool)
+    + Node(device:DeviceNumber, connection:ConnectionType, endPoint:IPEndPoint, gyroMode:GyroMode, wheelFlipped:bool)
+    + Update_DataRate(timeBetweenCalls:int) : void
+    + {static} Reset_AllNodes() : void
+    + Reset() : void
+    + {static} Rotations() : Rotations
+    + {static} Get_Node(device:DeviceNumber) : Node?
+    + Check_Disconnect(timeout:int) : bool
+}
+class "List`1"<T> {
+}
+Node o-> "Node_One" Node
+Node o-> "Node_Two" Node
+Node o-> "Nodes<Node>" "List`1"
+Node --> "ConnectionType" ConnectionType
+Node --> "Gyro" Gyro
+Node --> "DeviceNumber" DeviceNumber
+@enduml

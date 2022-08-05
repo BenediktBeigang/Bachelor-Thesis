@@ -1,0 +1,16 @@
+@startuml
+abstract class Mapping {
+    + <<readonly>> WheelMovement_Threshold : int
+    + <<readonly>> ButtonPressing_Threshold : int
+    + Mapping(mode:MappingMode, wheelMovement_Threshold:int, buttonPressing_Threshold:int, wheelRadius:double, chairWidth:double)
+    + {static} Change_Mapping(mode:MappingMode, wheelRadius:double, chairWidth:double, wheelMovement_Threshold:int, buttonPressingThreshold:int) : void
+    + {abstract} Values_Next(rotations:Rotations) : ControllerInput
+    + {static} Get_Mode() : MappingMode
+    + {static} Get_ButtonPressingThreshold() : int
+    + {static} Get_WheelMovementThreshold() : int
+    + {static} Get_Wheelchair() : Wheelchair
+}
+Mapping o-> "_Mapping" Mapping
+Mapping --> "Mode" MappingMode
+Mapping --> "Wheelchair" Wheelchair
+@enduml

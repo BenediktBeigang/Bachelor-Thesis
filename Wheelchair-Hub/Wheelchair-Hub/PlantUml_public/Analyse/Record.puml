@@ -1,0 +1,16 @@
+@startuml
+class Record {
+    - {static} Recording : bool <<get>> <<set>>
+    - <<const>> TIME_BETWEEN_CALLS : int = 16
+    + {static} Is_Recording() : bool
+    + {static} Switch_Record() : void
+    - {static} Start_Record() : void
+    - {static} Stop_Record() : void
+    - {static} Start_Timer() : void
+    - {static} TakeSample(sender:object, e:ElapsedEventArgs) : void
+    - {static} Save_Recording() : void
+}
+class "List`1"<T> {
+}
+Record o-> "RecordedValues<(short one, short two)>" "List`1"
+@enduml

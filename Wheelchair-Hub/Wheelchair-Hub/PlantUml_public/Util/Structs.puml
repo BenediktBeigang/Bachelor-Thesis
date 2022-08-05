@@ -1,0 +1,41 @@
+@startuml
+class Received <<struct>> {
+    + Message : string
+    + <<override>> ToString() : string
+}
+class Message <<struct>> {
+    + Text : string
+}
+class ControllerInput <<struct>> {
+    + <<readonly>> Value_One : short
+    + <<readonly>> Value_Two : short
+    + <<readonly>> LeftPositive : bool
+    + <<readonly>> LeftNegative : bool
+    + <<readonly>> RightPositive : bool
+    + <<readonly>> RightNegative : bool
+    + ControllerInput(v1:short, v2:short, lP:bool, lN:bool, rP:bool, rN:bool)
+    + <<override>> ToString() : string
+}
+class Rotations <<struct>> {
+    + <<readonly>> RawLeft : short
+    + <<readonly>> RawRight : short
+    + <<readonly>> AngularVelocityLeft : double
+    + <<readonly>> AngularVelocityRight : double
+    + Rotations(rL:short, rR:short, aVL:double, aVR:double)
+}
+class Wheelchair <<struct>> {
+    + Wheelchair()
+    + Wheelchair(wheelRadius:double, chairWidth:double)
+    + Wheel_Radius : double <<get>>
+    + Chair_Width : double <<get>>
+    + Wheel_Diameter : double <<get>>
+    + Wheel_Circumference : double <<get>>
+    + Chair_HalfWidth : double <<get>>
+    + OuterTurningCircle : double <<get>>
+    + InnerTurningCircle : double <<get>>
+    + LengthOfOneDegree : double <<get>>
+    + <<override>> ToString() : string
+}
+Received --> "Sender" IPEndPoint
+Message --> "Time" DateTime
+@enduml

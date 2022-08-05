@@ -1,0 +1,8 @@
+@startuml
+class Program <<static>> {
+    + {static} Main(args:string[]) : void
+    - {static} Start_Loops() : void
+    - {static} Load_Options() : void
+    - {static} Exit_Code() : void
+}
+@enduml

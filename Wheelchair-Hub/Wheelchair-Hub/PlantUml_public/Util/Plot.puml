@@ -1,0 +1,6 @@
+@startuml
+class Plot {
+    + Plot(record:List<(short, short)>)
+    - ToDoubleArray(values:short[]) : double[]
+}
+@enduml

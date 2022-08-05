@@ -1,0 +1,8 @@
+@startuml
+class Controller <<static>> {
+    + {static} Start() : void
+    + {static} Refresh_Controller(sender:object, e:ElapsedEventArgs) : void
+    + {static} Click_A() : void
+    + {static} Reset_Controller() : void
+}
+@enduml

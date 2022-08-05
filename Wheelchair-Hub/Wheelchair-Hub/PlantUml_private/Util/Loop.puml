@@ -1,0 +1,15 @@
+@startuml
+class Loop {
+    + <<const>> LOOP_DELAY_CONSOLE : int = 100
+    + <<const>> LOOP_DELAY_CALIBRATION : int = 1000
+    + <<const>> LOOP_DELAY_HEARTBEAT : int = 1000
+    + <<const>> LOOP_DELAY_CONTROLLER : int = 16
+    + Loop(loopDelay:int, function:System.Timers.ElapsedEventHandler)
+    + Start() : void
+    + Stop() : void
+    + {static} Close_AllLoops() : void
+}
+class "List`1"<T> {
+}
+Loop o-> "Loops<Loop>" "List`1"
+@enduml

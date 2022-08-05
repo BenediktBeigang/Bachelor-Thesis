@@ -1,0 +1,5 @@
+@startuml
+class Plot {
+    + Plot(record:List<(short, short)>)
+}
+@enduml

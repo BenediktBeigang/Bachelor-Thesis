@@ -1,0 +1,17 @@
+@startuml
+class SavedOptions {
+    + Read_JSON() : bool
+    + Load() : void
+    + Save() : void
+    + NodesFlipped : bool <<get>> <<set>>
+    + WheelFlipped_One : bool <<get>> <<set>>
+    + WheelFlipped_Two : bool <<get>> <<set>>
+    + Wheel_Radius : double <<get>> <<set>>
+    + Chair_Width : double <<get>> <<set>>
+    + ButtonPressing_Threshold : int <<get>> <<set>>
+    + WheelMovement_Threshold : int <<get>> <<set>>
+}
+SavedOptions o-> "Options" SavedOptions
+SavedOptions --> "GyroMode" GyroMode
+SavedOptions --> "WheelchairMode" MappingMode
+@enduml

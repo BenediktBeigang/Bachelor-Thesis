@@ -1,0 +1,16 @@
+@startuml
+abstract class Connection {
+    - <<const>> TIMEOUT : int = 10
+    - <<const>> COM : string = "COM4"
+    - <<const>> BAUDRATE : int = 115200
+    + {static} _Connection : Connection? <<get>> <<set>>
+    + {static} SetConnection(connection:ConnectionType) : Connection?
+    + {static} Heartbeat(sender:object, e:ElapsedEventArgs) : void
+    # Initialize_Node(connection:ConnectionType, device:DeviceNumber, wheelFlipped:bool, sender:IPEndPoint?) : void
+    - WriteNodeInGlobalData(device:DeviceNumber, node:Node) : void
+    # {abstract} Connect_ToHost() : void
+    # {abstract} Disconnect_Node(node:Node) : void
+    + {abstract} Disconnect_AllNodes() : void
+    + {abstract} Change_GyroMode(mode:GyroMode) : void
+}
+@enduml
