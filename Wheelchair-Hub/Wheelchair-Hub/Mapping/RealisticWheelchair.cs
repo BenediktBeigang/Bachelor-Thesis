@@ -1,7 +1,7 @@
 public class RealisticWheelchair : Mapping
 {
-    public RealisticWheelchair(double wheelRadius, double chairWidth, double threshold)
-    : base(MappingMode.Wheelchair_Realistic, threshold, wheelRadius, chairWidth)
+    public RealisticWheelchair(double wheelRadius, double chairWidth, int wheelMovement_Threshold, int buttonPressingThreshold)
+    : base(MappingMode.Wheelchair_Realistic, wheelMovement_Threshold, buttonPressingThreshold, wheelRadius, chairWidth)
     {
     }
 

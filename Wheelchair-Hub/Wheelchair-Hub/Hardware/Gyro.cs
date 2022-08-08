@@ -66,7 +66,10 @@ public class Gyro
             BufferPointer = 0;
         }
         if (CalibrationStatus is CalibrationStatus.CALIBRATING) CalibrationValues.Add(newValue);
-        RawValueBuffer[BufferPointer] = (short)((RotationValueFlip) ? (newValue - Offset) : (newValue - Offset) * -1);
+        short transformedValue = (short)((RotationValueFlip) ? (newValue - Offset) : (newValue - Offset) * -1);
+        double NOISE_THRESHOLD = StepsPerDegree; // Threshold is set to 1 degree
+        transformedValue = (short)((Math.Abs(transformedValue) > NOISE_THRESHOLD) ? transformedValue : 0);
+        RawValueBuffer[BufferPointer] = transformedValue;
     }
 
     /// <summary>
@@ -136,10 +139,10 @@ public class Gyro
     {
         switch (mode)
         {
-            case GyroMode.GYRO_250: return 131;
-            case GyroMode.GYRO_500: return 65.5;
-            case GyroMode.GYRO_1000: return 32.8;
-            case GyroMode.GYRO_2000: return 16.4;
+            case GyroMode.GYRO_250: return 131.068;
+            case GyroMode.GYRO_500: return 65.534;
+            case GyroMode.GYRO_1000: return 32.767;
+            case GyroMode.GYRO_2000: return 16.3835;
             default: return 131;
         }
     }
@@ -149,9 +152,9 @@ public class Gyro
         switch (mode)
         {
             case GyroMode.GYRO_250: return 250;
-            case GyroMode.GYRO_500: return 250;
-            case GyroMode.GYRO_1000: return 250;
-            case GyroMode.GYRO_2000: return 250;
+            case GyroMode.GYRO_500: return 500;
+            case GyroMode.GYRO_1000: return 1000;
+            case GyroMode.GYRO_2000: return 2000;
             default: return 250;
         }
     }

@@ -6,10 +6,10 @@ public class Formatting
     public Formatting(string[] header)
     {
         Header = header;
-        FormatString = GenerateFormatString();
+        FormatString = Generate_TableFormatString();
     }
 
-    private string GenerateFormatString()
+    private string Generate_TableFormatString()
     {
         string columns = "";
         for (int i = 0; i < Header.Length; i++)

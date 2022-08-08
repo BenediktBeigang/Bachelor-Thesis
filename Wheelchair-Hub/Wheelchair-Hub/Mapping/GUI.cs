@@ -1,16 +1,13 @@
-using System.Drawing;
-
 public class GUI : Mapping
 {
-    public GUI(double wheelRadius, double chairWidth, double threshold)
-    : base(MappingMode.GUI, threshold, wheelRadius, chairWidth) { }
+    public GUI(double wheelRadius, double chairWidth, int wheelMovement_Threshold, int buttonPressingThreshold)
+    : base(MappingMode.GUI, wheelMovement_Threshold, buttonPressingThreshold, wheelRadius, chairWidth) { }
 
     public override ControllerInput Values_Next(Rotations rotations)
     {
         double valueInterpolation = Math.Abs((rotations.AngularVelocityLeft + rotations.AngularVelocityRight) / 2);
         (double, double) result = (0, 0);
-
-        switch (Analyse_Movement(rotations.AngularVelocityLeft, rotations.AngularVelocityRight))
+        switch (Get_MovementState(rotations.AngularVelocityLeft, rotations.AngularVelocityRight))
         {
             case MovementState.StandingStill: return new ControllerInput();
             case MovementState.ViewAxis_Motion: result = DualWheel_Move(valueInterpolation); break;

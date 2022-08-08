@@ -1,16 +1,15 @@
 public class SimpleWheelchair : Mapping
 {
-    private const double MOVEMENT_THRESHOLD = 0.5;
-
-    public SimpleWheelchair(double wheelRadius, double chairWidth, double threshold)
-    : base(MappingMode.Wheelchair_Simple, threshold, wheelRadius, chairWidth) { }
+    public SimpleWheelchair(double wheelRadius, double chairWidth, int wheelMovement_Threshold, int buttonPressingThreshold)
+    : base(MappingMode.Wheelchair_Simple, wheelMovement_Threshold, buttonPressingThreshold, wheelRadius, chairWidth) { }
 
     public override ControllerInput Values_Next(Rotations rotations)
     {
         double valueInterpolation = Math.Abs((rotations.AngularVelocityLeft + rotations.AngularVelocityRight) / 2);
         (double, double) result = (0, 0);
-        switch (Analyse_Movement(rotations.AngularVelocityLeft, rotations.AngularVelocityLeft))
+        switch (Get_MovementState(rotations.AngularVelocityLeft, rotations.AngularVelocityRight))
         {
+            case MovementState.StandingStill: return new ControllerInput();
             case MovementState.ViewAxis_Motion: result = DualWheel_Move(valueInterpolation); break;
             case MovementState.DualWheel_Turn: result = DualWheel_Turn(valueInterpolation); break;
             case MovementState.SingleWheel_Turn:

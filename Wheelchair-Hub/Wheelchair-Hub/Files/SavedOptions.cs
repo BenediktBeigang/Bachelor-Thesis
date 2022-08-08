@@ -29,7 +29,7 @@ public class SavedOptions
             Node.NodesFlipped = Options.NodesFlipped;
             Node.Node_One.Gyro.RotationValueFlip = Options.WheelFlipped_One;
             Node.Node_Two.Gyro.RotationValueFlip = Options.WheelFlipped_Two;
-            Mapping.Change_Mapping(Options.WheelchairMode, Options.Wheel_Radius, Options.Chair_Width, Options.Button_Pressing_Threshold);
+            Mapping._Mapping.Change_Mapping(Options.MappingMode, Options.Wheel_Radius, Options.Chair_Width, Options.WheelMovement_Threshold, Options.ButtonPressing_Threshold);
         }
         catch (System.IO.FileNotFoundException)
         {
@@ -51,18 +51,20 @@ public class SavedOptions
         Options.NodesFlipped = Node.NodesFlipped;
         Options.WheelFlipped_One = Node.Node_One.Gyro.RotationValueFlip;
         Options.WheelFlipped_Two = Node.Node_Two.Gyro.RotationValueFlip;
-        Options.WheelchairMode = Mapping.Get_Mode();
+        Options.MappingMode = Mapping.Get_Mode();
         Options.Wheel_Radius = Mapping.Get_Wheelchair().Wheel_Radius;
         Options.Chair_Width = Mapping.Get_Wheelchair().Chair_Width;
-        Options.Button_Pressing_Threshold = Mapping.Get_ButtonPressingThreshold();
+        Options.ButtonPressing_Threshold = Mapping.Get_ButtonPressingThreshold();
+        Options.WheelMovement_Threshold = Mapping.Get_WheelMovementThreshold();
     }
 
     public GyroMode GyroMode { get; set; }
     public bool NodesFlipped { get; set; }
     public bool WheelFlipped_One { get; set; }
     public bool WheelFlipped_Two { get; set; }
-    public MappingMode WheelchairMode { get; set; }
+    public MappingMode MappingMode { get; set; }
     public double Wheel_Radius { get; set; }
     public double Chair_Width { get; set; }
-    public double Button_Pressing_Threshold { get; set; }
+    public int ButtonPressing_Threshold { get; set; }
+    public int WheelMovement_Threshold { get; set; }
 }

@@ -32,7 +32,8 @@ public enum MappingMode
 {
     Wheelchair_Simple,
     Wheelchair_Realistic,
-    GUI
+    GUI,
+    Wheelchair_WithButtons
 }
 
 public enum MovementState
@@ -40,5 +41,6 @@ public enum MovementState
     StandingStill,
     ViewAxis_Motion,
     SingleWheel_Turn,
-    DualWheel_Turn
+    DualWheel_Turn,
+    Tilt
 }

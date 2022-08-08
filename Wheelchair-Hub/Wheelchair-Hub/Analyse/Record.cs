@@ -3,7 +3,7 @@ using System.Timers;
 public class Record
 {
     private static bool Recording { get; set; }
-    private static List<(short one, short two)> RecordedValues = new();
+    private static List<(double one, double two)> RecordedValues = new();
     private const int TIME_BETWEEN_CALLS = 16;
     private static System.Timers.Timer Timer = new System.Timers.Timer(TIME_BETWEEN_CALLS);
 
@@ -60,8 +60,8 @@ public class Record
             string fileString = "";
             for (int i = 0; i < RecordedValues.Count; i++)
             {
-                short v1 = RecordedValues[i].one;
-                short v2 = RecordedValues[i].two;
+                double v1 = RecordedValues[i].one / Gyro.StepsPerDegree;
+                double v2 = RecordedValues[i].two / Gyro.StepsPerDegree;
                 fileString += $"{v1};{v2}\n";
             }
 

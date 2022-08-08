@@ -4,14 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "1e1618fa1eced1dd",
+        "id": "16c40749d380bccd",
         "type": "leaf",
         "state": {
-          "type": "markdown",
+          "type": "kanban",
           "state": {
-            "file": "Arbeit/Abstract.md",
-            "mode": "source",
-            "source": false
+            "file": "ToDo-Board.md"
           }
         }
       }
@@ -69,7 +67,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/Abstract.md",
+                "file": "ToDo-Board.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -95,17 +93,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "1e1618fa1eced1dd",
+  "active": "16c40749d380bccd",
   "lastOpenFiles": [
-    "Quellen/Bilder/Hardware/ESP32_IO_Pins.PNG",
-    "Quellen/Bilder/Hardware/MPU6050.PNG",
-    "Quellen/Bilder/Hardware/ESP32.PNG",
-    "Quellen/Bilder/Box/Box_Zu.jpg",
-    "Quellen/Bilder/Box/Box_Mängel.jpg",
-    "Quellen/Bilder/Box/Box_Hardware.jpg",
-    "Quellen/Bilder/Box/Box_AnRollstuhl.jpg",
-    "Quellen/Bilder/Box/Abstand.jpg",
-    "Arbeit/Abstract.md",
-    "Quellen/Literatur/esp32/ESP-32 Dev Kit C V4_DE.pdf"
+    "Arbeit/1. Theorie.md",
+    "Arbeit/4. Erkenntnis.md",
+    "Quellen/Literatur/vr/virtual und aufmented reality.pdf",
+    "Quellen/Literatur/eingebetteteSysteme/Eingebettete Systeme_Grundlagen Eingebetteter Systeme in Cyber-Physikalischen Systemen_2007.pdf",
+    "Quellen/Literatur/eingebetteteSysteme/eingebetteteSysteme_karstenBerns_berndSchürmann_marioTrapp.pdf",
+    "Quellen/Literatur/eingebetteteSysteme/Marwedel2007_Book_EingebetteteSysteme.pdf",
+    "Quellen/Literatur/eingebetteteSysteme/2010_Bookmatter_EingebetteteSysteme.pdf",
+    "Arbeit/3. Experiment.md",
+    "ToDo-Board.md",
+    "Arbeit/Abstract.md"
   ]
 }

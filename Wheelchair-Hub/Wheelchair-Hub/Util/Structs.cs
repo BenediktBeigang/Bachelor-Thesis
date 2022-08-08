@@ -38,6 +38,45 @@ public readonly struct ControllerInput
     }
 }
 
+public readonly struct ControllerInput2
+{
+    public readonly short LeftThumbX;
+    public readonly short LeftThumbY;
+    public readonly short RightThumbX;
+    public readonly short RightThumbY;
+
+    public readonly bool A;
+    public readonly bool B;
+    public readonly bool X;
+    public readonly bool Y;
+
+    public ControllerInput2(short leftThumbX, short leftThumbY, short rightThumbX, short rightThumbY, bool a, bool b, bool x, bool y)
+    {
+        LeftThumbX = leftThumbX;
+        LeftThumbY = leftThumbY;
+        RightThumbX = rightThumbX;
+        RightThumbY = rightThumbY;
+        A = a;
+        B = b;
+        X = x;
+        Y = y;
+    }
+
+    public override string ToString()
+    {
+        string output = "";
+        output += $"LeftThumbX: {LeftThumbX}\n";
+        output += $"LeftThumbY: {LeftThumbY}\n";
+        output += $"RightThumbX: {RightThumbX}\n";
+        output += $"RightThumbY: {RightThumbY}\n";
+        output += $"A: {A}\n";
+        output += $"B: {B}\n";
+        output += $"X: {X}\n";
+        output += $"Y: {Y}";
+        return output;
+    }
+}
+
 public readonly struct Rotations
 {
     public readonly short RawLeft;
