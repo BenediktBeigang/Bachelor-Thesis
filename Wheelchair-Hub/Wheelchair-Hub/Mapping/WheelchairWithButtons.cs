@@ -5,20 +5,48 @@ public class WheelchairWithButtons : Mapping
 
     public override ControllerInput Values_Next(Rotations rotations)
     {
-        (double movement, double rotation) result = (0, 0);
-        switch (Get_MovementState(rotations.AngularVelocityLeft, rotations.AngularVelocityRight))
+        switch (Get_MovementState(rotations))
         {
             case MovementState.StandingStill: return new ControllerInput();
-            case MovementState.ViewAxis_Motion:
-                result.movement = (Is_RotationForward(rotations.AngularVelocityLeft)) ? Gyro.GyroModeInterger() : -Gyro.GyroModeInterger(); break;
-            case MovementState.DualWheel_Turn:
-                double interpolation = (Math.Abs(rotations.AngularVelocityLeft) + Math.Abs(rotations.AngularVelocityRight)) / 2;
-                result = DualWheel_Turn(interpolation);
-                result.rotation *= Is_LeftRotation(rotations.AngularVelocityLeft, rotations.AngularVelocityRight) ? -1 : 1;
-                break;
-            case MovementState.SingleWheel_Turn:
-                return What_ButtonPressed(rotations.AngularVelocityLeft, rotations.AngularVelocityRight);
+            case MovementState.ViewAxis_Motion: return Move(rotations);
+            case MovementState.DualWheel_Turn: return Turn(rotations);
+            case MovementState.SingleWheel_Turn: return What_ButtonPressed(rotations);
+            case MovementState.Tilt: return Tilt(rotations);
         }
-        return AngularVelocityToControllerInput(result.Item1, result.Item2, false, false, false, false);
+        return new ControllerInput();
+    }
+
+    /// <summary>
+    /// The Output is the max- or min-value of the angularVelocity, so the controller-ThumbStick is at max deflection.
+    /// </summary>
+    /// <param name="movement"></param>
+    /// <param name="angularVelocity"></param>
+    /// <returns></returns>
+    private ControllerInput Move(Rotations rotations)
+    {
+        double resultVector = (Wheelchair.Is_RotationForward(rotations.AngularVelocityLeft)) ? Gyro.GyroModeInterger() : -Gyro.GyroModeInterger();
+        short controllerVector = Wheelchair.AngularVelocityToControllerAxis(resultVector);
+        return new ControllerInput(0, controllerVector, 0, 0, false, false, false, false);
+    }
+
+    private ControllerInput Turn(Rotations rotations)
+    {
+        double turnVector = AbsoluteInterpolation(rotations);
+        turnVector = Wheelchair.RatioToDegree(turnVector, Wheelchair.InnerTurningCircle);
+        turnVector = Wheelchair.Is_LeftRotation(rotations) ? -turnVector : turnVector;
+        return new ControllerInput()
+        {
+            RightThumbX = Wheelchair.AngularVelocityToControllerAxis(turnVector)
+        };
+    }
+
+    private ControllerInput Tilt(Rotations rotations)
+    {
+        double tiltVector = AbsoluteInterpolation(rotations);
+        tiltVector = Wheelchair.Is_RotationSumForeward(rotations) ? tiltVector : -tiltVector;
+        return new ControllerInput()
+        {
+            RightThumbY = Wheelchair.AngularVelocityToControllerAxis(tiltVector)
+        };
     }
 }

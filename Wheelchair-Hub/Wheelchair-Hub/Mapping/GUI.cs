@@ -5,16 +5,33 @@ public class GUI : Mapping
 
     public override ControllerInput Values_Next(Rotations rotations)
     {
-        double valueInterpolation = Math.Abs((rotations.AngularVelocityLeft + rotations.AngularVelocityRight) / 2);
-        (double, double) result = (0, 0);
-        switch (Get_MovementState(rotations.AngularVelocityLeft, rotations.AngularVelocityRight))
+        switch (Get_MovementState(rotations))
         {
             case MovementState.StandingStill: return new ControllerInput();
-            case MovementState.ViewAxis_Motion: result = DualWheel_Move(valueInterpolation); break;
-            case MovementState.DualWheel_Turn: result = DualWheel_Turn(valueInterpolation); break;
-            case MovementState.SingleWheel_Turn:
-                return What_ButtonPressed(rotations.AngularVelocityLeft, rotations.AngularVelocityRight);
+            case MovementState.ViewAxis_Motion: return YAxis(rotations);
+            case MovementState.DualWheel_Turn: return XAxis(rotations);
+            case MovementState.SingleWheel_Turn: return What_ButtonPressed(rotations);
         }
-        return AngularVelocityToControllerInput(result.Item1, result.Item2, false, false, false, false);
+        return new ControllerInput();
+    }
+
+    private ControllerInput YAxis(Rotations rotations)
+    {
+        double moveVector = AbsoluteInterpolation(rotations);
+        moveVector = Wheelchair.Is_RotationSumForeward(rotations) ? moveVector : -moveVector;
+        return new ControllerInput()
+        {
+            LeftThumbY = Wheelchair.AngularVelocityToControllerAxis(moveVector)
+        };
+    }
+
+    private ControllerInput XAxis(Rotations rotations)
+    {
+        double turnVector = AbsoluteInterpolation(rotations);
+        turnVector = Wheelchair.Is_LeftRotation(rotations) ? -turnVector : turnVector;
+        return new ControllerInput()
+        {
+            LeftThumbX = Wheelchair.AngularVelocityToControllerAxis(turnVector)
+        };
     }
 }

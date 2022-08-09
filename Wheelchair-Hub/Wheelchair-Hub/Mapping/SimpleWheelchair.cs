@@ -5,19 +5,46 @@ public class SimpleWheelchair : Mapping
 
     public override ControllerInput Values_Next(Rotations rotations)
     {
-        double valueInterpolation = Math.Abs((rotations.AngularVelocityLeft + rotations.AngularVelocityRight) / 2);
-        (double, double) result = (0, 0);
-        switch (Get_MovementState(rotations.AngularVelocityLeft, rotations.AngularVelocityRight))
+        switch (Get_MovementState(rotations))
         {
             case MovementState.StandingStill: return new ControllerInput();
-            case MovementState.ViewAxis_Motion: result = DualWheel_Move(valueInterpolation); break;
-            case MovementState.DualWheel_Turn: result = DualWheel_Turn(valueInterpolation); break;
-            case MovementState.SingleWheel_Turn:
-                result =
-                SingleWheel(MaxAbsolutRotation(rotations.AngularVelocityLeft, rotations.AngularVelocityRight),
-                Are_BothRotationsForeward(rotations.AngularVelocityLeft, rotations.AngularVelocityRight));
-                break;
+            case MovementState.ViewAxis_Motion: return Handle_ViewAxisMotion(rotations);
+            case MovementState.DualWheel_Turn: return Handle_DualWheelTurn(rotations);
+            case MovementState.SingleWheel_Turn: return Handle_SingleWheelTurn(rotations);
         }
-        return AngularVelocityToControllerInput(result.Item1, result.Item2, false, false, false, false);
+        return new ControllerInput();
+    }
+
+    private ControllerInput Handle_ViewAxisMotion(Rotations rotations)
+    {
+        double moveVector = AbsoluteInterpolation(rotations);
+        moveVector = Wheelchair.Is_RotationSumForeward(rotations) ? moveVector : -moveVector;
+        return new ControllerInput()
+        {
+            LeftThumbY = Wheelchair.AngularVelocityToControllerAxis(moveVector)
+        };
+    }
+
+    private ControllerInput Handle_DualWheelTurn(Rotations rotations)
+    {
+        double turnVector = AbsoluteInterpolation(rotations);
+        turnVector = Wheelchair.RatioToDegree(turnVector, Wheelchair.InnerTurningCircle);
+        turnVector = Wheelchair.Is_LeftRotation(rotations) ? -turnVector : turnVector;
+        return new ControllerInput()
+        {
+            RightThumbX = Wheelchair.AngularVelocityToControllerAxis(turnVector)
+        };
+    }
+
+    private ControllerInput Handle_SingleWheelTurn(Rotations rotations)
+    {
+        if (Wheelchair.Is_RotationUnderThreshold(rotations.AngularVelocityLeft, WheelMovement_Threshold)) rotations.MuteLeft();
+        if (Wheelchair.Is_RotationUnderThreshold(rotations.AngularVelocityRight, WheelMovement_Threshold)) rotations.MuteRight();
+        (double moveVector, double turnVector) vectors = DualWheel(rotations);
+        return new ControllerInput()
+        {
+            LeftThumbY = Wheelchair.AngularVelocityToControllerAxis(vectors.moveVector),
+            RightThumbX = Wheelchair.AngularVelocityToControllerAxis(vectors.turnVector)
+        };
     }
 }

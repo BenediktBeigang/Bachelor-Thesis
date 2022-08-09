@@ -31,45 +31,60 @@ public static class Controller
     }
     #endregion
 
-    /// <summary>
-    /// Uses the given values to trigger a controller-input.
-    /// If the WheelchairMode is set to a WheelchairOutput v1 and v2 representing movement and rotation.
-    /// If the WheelchairMode is set to Mouse v1 and v2 representing the Values for the y- and x-axis.
-    /// </summary>
-    /// <param name="values"></param>
+    // /// <summary>
+    // /// Uses the given values to trigger a controller-input.
+    // /// If the WheelchairMode is set to a WheelchairOutput v1 and v2 representing movement and rotation.
+    // /// If the WheelchairMode is set to Mouse v1 and v2 representing the Values for the y- and x-axis.
+    // /// </summary>
+    // /// <param name="values"></param>
+    // private static void ValuesToController(ControllerInput input)
+    // {
+    //     switch (Mapping.Get_Mode())
+    //     {
+    //         case MappingMode.Wheelchair_Realistic: Handle_Wheelchair(input); break;
+    //         case MappingMode.Wheelchair_Simple: Handle_Wheelchair(input); break;
+    //         case MappingMode.Wheelchair_WithButtons: Handle_Wheelchair(input); break;
+    //         case MappingMode.GUI: Handle_Mouse(input); break;
+    //     }
+    //     Handle_Buttons(input);
+    // }
+
     private static void ValuesToController(ControllerInput input)
     {
-        switch (Mapping.Get_Mode())
+        if (controller is not null)
         {
-            case MappingMode.Wheelchair_Realistic: Handle_Wheelchair(input); break;
-            case MappingMode.Wheelchair_Simple: Handle_Wheelchair(input); break;
-            case MappingMode.Wheelchair_WithButtons: Handle_Wheelchair(input); break;
-            case MappingMode.GUI: Handle_Mouse(input); break;
+            controller.SetAxisValue(Xbox360Axis.LeftThumbX, input.LeftThumbX);
+            controller.SetAxisValue(Xbox360Axis.LeftThumbY, input.LeftThumbY);
+            controller.SetAxisValue(Xbox360Axis.RightThumbX, input.RightThumbX);
+            controller.SetAxisValue(Xbox360Axis.RightThumbY, input.RightThumbY);
+            controller.SetButtonState(Xbox360Button.A, input.A);
+            controller.SetButtonState(Xbox360Button.B, input.B);
+            controller.SetButtonState(Xbox360Button.X, input.X);
+            controller.SetButtonState(Xbox360Button.Y, input.Y);
         }
-        Handle_Buttons(input);
     }
 
     #region Handle Inputs
-    private static void Handle_Wheelchair(ControllerInput input)
-    {
-        controller!.SetAxisValue(Xbox360Axis.LeftThumbY, input.Value_One);
-        controller!.SetAxisValue(Xbox360Axis.RightThumbX, input.Value_Two);
-    }
+    // private static void Handle_Wheelchair(ControllerInput input)
+    // {
+    //     controller!.SetAxisValue(Xbox360Axis.LeftThumbY, input.Value_One);
+    //     controller!.SetAxisValue(Xbox360Axis.RightThumbX, input.Value_Two);
+    // }
 
-    private static void Handle_Mouse(ControllerInput input)
-    {
-        controller!.SetAxisValue(Xbox360Axis.LeftThumbY, input.Value_One);
-        controller!.SetAxisValue(Xbox360Axis.LeftThumbX, input.Value_Two);
-    }
+    // private static void Handle_Mouse(ControllerInput input)
+    // {
+    //     controller!.SetAxisValue(Xbox360Axis.LeftThumbY, input.Value_One);
+    //     controller!.SetAxisValue(Xbox360Axis.LeftThumbX, input.Value_Two);
+    // }
 
-    private static void Handle_Buttons(ControllerInput input)
-    {
-        controller!.SetButtonState(Xbox360Button.A, input.RightPositive);
-        controller!.SetButtonState(Xbox360Button.B, input.RightNegative);
-        controller!.SetButtonState(Xbox360Button.X, input.LeftPositive);
-        controller!.SetButtonState(Xbox360Button.Y, input.LeftNegative);
-        // if (input.LeftNegative) Switch_MovementState();
-    }
+    // private static void Handle_Buttons(ControllerInput input)
+    // {
+    //     controller!.SetButtonState(Xbox360Button.A, input.RightPositive);
+    //     controller!.SetButtonState(Xbox360Button.B, input.RightNegative);
+    //     controller!.SetButtonState(Xbox360Button.X, input.LeftPositive);
+    //     controller!.SetButtonState(Xbox360Button.Y, input.LeftNegative);
+    //     // if (input.LeftNegative) Switch_MovementState();
+    // }
 
     /// <summary>
     /// Switches between WheelchairWithButtons and GUI

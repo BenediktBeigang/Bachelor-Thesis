@@ -7,9 +7,11 @@
         "id": "16c40749d380bccd",
         "type": "leaf",
         "state": {
-          "type": "kanban",
+          "type": "markdown",
           "state": {
-            "file": "ToDo-Board.md"
+            "file": "Master.md",
+            "mode": "source",
+            "source": false
           }
         }
       }
@@ -67,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ToDo-Board.md",
+                "file": "Master.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -86,7 +88,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -95,6 +98,8 @@
   },
   "active": "16c40749d380bccd",
   "lastOpenFiles": [
+    "Arbeit/3. Experiment.md",
+    "ToDo-Board.md",
     "Arbeit/1. Theorie.md",
     "Arbeit/4. Erkenntnis.md",
     "Quellen/Literatur/vr/virtual und aufmented reality.pdf",
@@ -102,8 +107,6 @@
     "Quellen/Literatur/eingebetteteSysteme/eingebetteteSysteme_karstenBerns_berndSchürmann_marioTrapp.pdf",
     "Quellen/Literatur/eingebetteteSysteme/Marwedel2007_Book_EingebetteteSysteme.pdf",
     "Quellen/Literatur/eingebetteteSysteme/2010_Bookmatter_EingebetteteSysteme.pdf",
-    "Arbeit/3. Experiment.md",
-    "ToDo-Board.md",
     "Arbeit/Abstract.md"
   ]
 }
