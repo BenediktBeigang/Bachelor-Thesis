@@ -3,5 +3,6 @@
   "obsidian-languagetool-plugin",
   "cm-editor-syntax-highlight-obsidian",
   "obsidian-citation-plugin",
-  "obsidian-kanban"
+  "obsidian-kanban",
+  "obsidian-dynamic-toc"
 ]

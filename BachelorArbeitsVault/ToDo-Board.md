@@ -16,6 +16,7 @@ kanban-plugin: basic
 - [ ] smoth rotation
 - [ ] klick delay
 - [ ] ControllerInput umbauen
+- [ ] simpleWheelchair optional bei interaktion?
 
 
 ## Connection
@@ -35,6 +36,8 @@ kanban-plugin: basic
 
 ## Arbeit
 
+- [ ] Messwerte messen
+- [ ] controller emulation schreiben
 
 
 
