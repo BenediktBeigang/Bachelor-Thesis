@@ -4,14 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "408a7f8540195f3c",
+        "id": "5fff159e8fb15a22",
         "type": "leaf",
         "state": {
-          "type": "markdown",
+          "type": "kanban",
           "state": {
-            "file": "Arbeit/5_Experiment.md",
-            "mode": "source",
-            "source": false
+            "file": "ToDo-Board.md"
           }
         }
       }
@@ -69,7 +67,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/5_Experiment.md",
+                "file": "ToDo-Board.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -96,17 +94,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "408a7f8540195f3c",
+  "active": "5fff159e8fb15a22",
   "lastOpenFiles": [
-    "ToDo-Board.md",
     "Arbeit/5_Experiment.md",
-    "Arbeit/0_Inhaltsverzeichnis.md",
-    "Arbeit/4_Theorie.md",
-    "Arbeit/3_Methode.md",
-    "Arbeit/1_Abstract.md",
-    "Arbeit/8_Abkürzungsverzeichnis.md",
-    "Arbeit/7_Ausblick.md",
     "Arbeit/6_Erkenntnis.md",
-    "Arbeit/2_Einleitung.md"
+    "Arbeit/9_Literaturverzeichnis.md",
+    "Arbeit/8_Abkürzungsverzeichnis.md",
+    "Arbeit/1_Abstract.md",
+    "Arbeit/0_Inhaltsverzeichnis.md",
+    "Arbeit/7_Ausblick.md",
+    "ToDo-Board.md",
+    "Quellen/Bilder/Hardware/ASCII.bmp",
+    "Software/Base64 Encoder.md"
   ]
 }

@@ -6,17 +6,6 @@ kanban-plugin: basic
 
 ## Mapping
 
-- [ ] Rotations-Skalierung
-- [ ] Neigen und Fahren
-- [ ] wheelchairWithButtons set max in mapping class
-- [ ] wheelchairWithButtons fixen
-- [ ] gui switch für y welchsel zu wheelchair with buttons
-- [ ] immer positive werte
-- [ ] buttons werden immer gedrückt wenn man beide räder dreht
-- [ ] smoth rotation
-- [ ] klick delay
-- [ ] ControllerInput umbauen
-- [ ] simpleWheelchair optional bei interaktion?
 
 
 ## Connection
@@ -37,7 +26,20 @@ kanban-plugin: basic
 ## Arbeit
 
 - [ ] Messwerte messen
-- [ ] controller emulation schreiben
+- [ ] coden durchschnitt und sowas
+- [ ] Rechner kaufen?
+- [ ] knöpfe werden ausgelöst bei kleinen bewegungen und am anfang von anderen zuständen
+
+
+## Messen
+
+- [ ] Daten pro Sekunde Messen
+- [ ] neigen testen
+- [ ] smoth rotation | wenn unter threshold keine rotation
+- [ ] buttons werden immer gedrückt wenn man beide räder dreht | exisitert dass problem immer noch?
+- [ ] GyroMax mit terminal ändern können FIXXEN
+- [ ] simpleWheelchair testen
+- [ ] esp Daten sammeln
 
 
 

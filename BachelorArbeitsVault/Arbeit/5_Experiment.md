@@ -39,7 +39,7 @@ Das Gyroskop des MPU-6050 kann in vier verschiedenen Konfigurationen betrieben w
 | 3     | 2000                          | 16,4            | 5,56                                | 34,93                          | 0,32                                   |
 \*Werte bei einem Raddurchmesser von 60 cm.
 
-<mark>welcher wert sollte gewählt werden und warum?</mark>
+An dieser Stelle stellt sich die Frage welcher Modus für das hier entwickelte System das Richtige ist. Auf der einen Seite möchte der Nutzer ein möglichst <mark>ruckelfreies</mark> Erlebnis haben. Um dies zu gewährleisten muss das Gyroskop so senstiv wie möglich eingestellt werden und der Wertebereich möglichst weit ausgereizt ist. Ist der Modus nicht sensitiv genug so bemerkt der Nutzer möglicherweise das Springen der Bitwerte in Form eines Vorspringens der Bewegung. Jedoch soll der Nutzer nicht schneller als die maximale Gradzahl pro Sekunde drehen können, da es sonst zu einem Zahlenüberlauf kommt und zu einer fehlerhaften Weiterverarbeitung der Daten führt. Der gewählte Modus muss also möglichst niedrig sein, sollange der Nutzer nicht in der Lage ist die maximale Gradzahl pro Sekunde zu erreichen. Im Kapitel System-Analyse wird dieser Frage weiter nachgegangen.
 
 ### 5.1.3 ESP32
 Um den MPU-6050 betreiben und dessen Daten an eine Software übermitteln zu können, wird ein Mikrocontroller-Board benötigt. Es muss per I2C die entsprechenden Register auslesen und mittels drahtloser Kommunikation versenden. Außerdem muss er das Gyroskop, sowie sich selbst mit Strom versorgen. Auf dem Markt gibt es eine große Anzahl von Produkten, für die verschiedensten Anwendungsgebiete und <mark>mit den verschiedensten Features.</mark> Im Rahmen dieser Arbeit wurde der Mikrocontroller ESP32 verwendet, das aktuellste Modell der Firma _Espressif_. Boards mit diesem Chip sind kostengünstig (~8€) und ermöglichen ein unkompliziertes Arbeiten mit der Hardware, da der Chip verbreitet ist und viel Literatur und Anleitungen existieren. Ausgestattet ist der ESP32 mit WiFi und Bluetooth Unterstützung, Espressif bietet aber auch ein eigenes Verbindungsprotokoll an: _ESP-Now_. Verbaut wurde ein Xtensa® 32-bit LX6 Mikroprozessor, mit 240MHz Taktfrequenz, 448 KB ROM und 520 KB SRAM. [[@ESP32Datasheet2022]]
@@ -96,66 +96,58 @@ ESP-Now ist ein vom Unternehmen _Espressif_ selbst entwickeltes Übertragungspro
 | Das empfangende Gerät kann einfach mit einem USB-Kabel angeschlossen werden | Ein zusätzliches Gerät wird benötigt, um die Daten zu empfangen und an die Software weiterzureichen         |
 |                                                                             | Die Ziel-MAC-Adressen müssen im Code hartkodiert werden oder über andere Wege übertragen werden |
 
-### 5.2.3 Messungen
-- Maximale Umdrehungszahl pro Sekunde ermitteln => Diagramm
-- verschiedene Bewegungen plotten 
-	- Knopf drücken im Vergleich zu Bewegung
-	- Neigen und bewegen (Threshold oder filter?)
-- Kommunikation vergleichen
+___
 
+## 5.3 Interface für Nutzung in Spielen und Software
+Damit das bis hier entwickelte System die transformierten Raddaten beziehungsweise Interaktionen in externer Software nutzen kann, ist eine Verbindung zwischen Rollstuhl-Software und der externen Software notwendig. Da man nicht davon ausgehen kann, dass jede externe Software eine Schnittstelle implementiert, mit der die beiden Softwares kommunizieren können, müssen die Daten des Rollstuhls auf herkömmliche Eingabegeräte gemappt/abgebildet werden. 
 
-#### Alte Nodes
+### 5.3.1 Tastatur oder Spielcontroller
+Dabei kommen zwei Möglichkeiten infrage: eine Tastatureingabe und eine Spielcontrollereingabe. Beide Eingaben werden von den meisten Anwendungen unterstützt und eigenen sich unterschiedlich gut für die Zwecke des hier entwickelten Systems. Tastatureingaben bieten den Vorteil, dass sie von fast jeder erdenklichen Software unterstützt werden. Jedoch lassen sich damit nur binäre Eingaben tätigen, sprich es lassen sich nur Tasten drücken. Da die Rollstuhl-Eingaben jedoch unterschiedliche Werte innerhalb eines Wertebereichs darstellen, wird bei einer Tastatureingabe die Interaktionsmöglichkeit stark eingeschränkt. 
+Die Alternative ist eine Spielcontroller-Eingabe. Hier gibt es ebenfalls Knöpfe, beziehungsweise binäre Eingaben, jedoch auch Eingaben entlang von Achsen innerhalb eines Wertebereichs. Überwiegend werden die Achsen in Form eines Thumb-Sticks oder Knopfes mit mehreren Stufen realisiert. Rollstuhl-Eingaben wie das Fortbewegen könnte so einfacher auf das Gerät abgebildet werden. Allerdings unterstützt nicht jede Software Eingaben mittels eines Spielcontrollers. Da jedoch die meiste Software in der Fortbewegung eine Rolle spielt, Spielcontroller unterstützt, wurde sich im Rahmen dieser Arbeit für diese Eingabeform entschieden.
 
-| Pakete pro Sekunde | Durchschnitt | Minimum | Maximum | Delay |
-| ------------------ | ------------ | ------- | ------- | ----- |
-| Ein Node           |              |         |         |       |
-| Zwei Nodes         |              |         |         |       |
+### 5.3.2 Virtual Gamepad Emulation Framework
+Um die Eingaben des Rollstuhls in tatsächliche Spielcontroller-Eingaben umzuwandeln, die von einem <mark>Rechner</mark> auch als Controller-Eingabe verstanden werden, ist eine Emulation eines Controllers notwendig. Ziel ist es, programmatisch Controller-Eingaben an den Rechner zu senden. Um sich den Aufwand des Schreibens eines neuen Treibers zu ersparen, wird an dieser Stelle auf das _Virtual Gamepad Emulation Framework_ zurückgegriffen. Dies ist eine Bibliothek, welche in bestehende Software integriert werden kann und einen virtuellen Controller mit dem Rechner verbindet. Über Befehle lassen sich anschließend Controller-Eingaben tätigen. Das Framework unterstützt Xbox 360-, sowie DualShock 4-Controller.
 
-#### WiFi mit WebSocket
+Eine von der Internet-Vertriebsplattform Steam, welche hauptsächlich Computerspiele vertreibt, veröffentlichte Umfrage hat ergeben, dass $45\%$ der Nutzer auf ihrer Plattform über einen Xbox 360 Controller verfügen, sowie $19\%$ über das neuere Xbox One Modell, welches seinem Vorgänger sehr ähnlich ist. 
 
-| Pakete pro Sekunde | Durchschnitt | Minimum | Maximum | Delay |
-| ------------------ | ------------ | ------- | ------- | ----- |
-| Ein Node           | ?80?         |         |         |       |
-| Zwei Nodes         |              |         |         |       |
+![[steamControllerStatistik.jpg|600]]
+(Abb.<mark>?</mark>, Verteilung von Besitz von verschiedenen Spielcontrollern auf der Plattform Steam)
 
-[Messung andere Entwickler](https://github.com/Links2004/arduinoWebSockets/issues/21)
-
-#### ESP-Now mit seriellem Port
-
-| Pakete pro Sekunde | Durchschnitt | Minimum | Maximum | Delay |
-| ------------------ | ------------ | ------- | ------- | ----- |
-| Ein Node           |              |         |         |       |
-| Zwei Nodes         |              |         |         |       |
+Damit sind Xbox Controller mit großem Abstand am verbreitetsten. Es ist davon auszugehen, dass Software im Allgemeinen am wahrscheinlichsten einen Xbox Controller unterstützt, um möglichst vielen Kunden das Nutzen eines Controllers zu ermöglichen. <mark>Quelle</mark>
+Aufgrund dieser Annahme wurde sich für die Emulation eines Xbox 360 Controllers entschieden.
 
 ___
 
-## 5.3 Algorithmen zur Abbildung der Raddaten in Eingaben
-Die Sensor-Daten der Gyroskope liefern die Winkelgeschwindigkeiten der Räder des Rollstuhls. Es sollen <mark>verschiedene Abbildungen auf Eingaben</mark> getestet werden, um sich im virtuellen Raum bewegen zu können oder andere Eingaben tätigen zu können. Die Abbildung erfolgt dabei auf einem emulierten Spielcontroller. So können die Eingaben von jeder Software entgegengenommen werden, die eine Controllerunterützung hat.
+## 5.4 Algorithmen zur Abbildung der Raddaten in Eingaben
+Die Sensor-Daten der Gyroskope liefern die Winkelgeschwindigkeiten der Räder des Rollstuhls. Es sollen <mark>verschiedene Abbildungen auf Eingaben</mark> getestet werden, um sich im virtuellen Raum bewegen zu können oder andere Eingaben tätigen zu können. Die Abbildung erfolgt dabei, wie im vorangegangenen Kapitel evaluiert auf einen Xbox360 Controller. Somit sind die abgebildeten Eingaben von jeder Software lesbar, die eine Controllerunterstützung dieses Controllers implementiert hat.
 
-### 5.3.1 Abbildung auf einen Cursor
+### 5.4.1 Abbildung auf einen Cursor
 Die einfachste Art und Weise, wie die Raddaten in Eingaben abgebildet werden können, ist die Steuerung eines Cursors. Dabei wird ein Rad genutzt, um die x-Achse abzubilden und das andere Rad bildet die y-Achse ab. Vorteil dabei ist, dass beide Achsen gleichzeitig angesprochen werden können. <mark>Jedoch ist es schwieriger, die x-Achse zu bewegen, da diese anders ausgerichtet ist als das Rad, das gedreht wird.</mark> 
 
 <mark>Eine Alternative ist, dass jede Achse von beiden Rädern gesteuert wird. Die x-Achse wird dabei dann angesprochen, wenn sich die Räder gegeneinander drehen. Drehen sich die Räder miteinander, so wird die y-Achse angesprochen. Jedoch ist es dabei nicht mehr möglich, gleichzeitig den Cursor entlang beider Achsen zu bewegen, da sich die Räder nicht gleichzeitig mit und gegeneinander drehen können.</mark>
 
-### 5.3.2 Abbildung auf einen realistisch simulierten Rollstuhl
+### 5.4.2 Abbildung auf einen realistisch simulierten Rollstuhl
 Da das im Rahmen dieser Arbeit entwickelte System darauf abzielt im virtuellen Raum zu navigieren, wird eine Abbildung benötigt, die die Position des Nutzers im virtuellen Raum verändert. Die naheliegendste Methode ist dabei die Abbildung auf einen simulierten Rollstuhl, da die Daten ursprünglich von einem realen Rollstuhl gekommen sind und die Bewegungsmuster einfach aufeinander abgebildet werden können. Um die Raddaten der zwei Räder auf eine Bewegung und Rotation eines Rollstuhls umzurechnen, muss erst festgestellt werden, welche Radbewegungen zu welchen Rollstuhlbewegungen führt. Dabei können drei idealisierte Fälle unterschieden werden:
 
 **Fall 1:** Drehen sich die Räder mit gleicher Geschwindigkeit in dieselbe Richtung, so ruft dies eine Bewegung nach vorne oder hinten aus.
 **Fall 2:** Drehen sich die Räder mit gleicher Geschwindigkeit gegeneinander, so ruft dies eine Rotation um die eigene Achse hervor.
 **Fall 3:** Dreht sich nur ein Rad, so dreht sich dieses um das Stehende.
 
-Im Folgenden wird die Berechnung der Bewegungsanteile aufgezeigt, bestehend aus Bewegung nach vorne/hinten und Rotation um die eigene Achse: <mark>Skizze einfügen</mark>
+Im Folgenden wird die Berechnung der Bewegungsanteile aufgezeigt, bestehend aus Bewegung nach vorne/hinten und Rotation um die eigene Achse:
 $$
 \begin{align}
-LinkeRadGeschwindigkeit: vL \\
-RechteRadGeschwindigkeit: vR \\
-RadMinimum: m \\
-RadOvershoot: o \\
-AbstandDerRäder: d \\
-BewegungAufSichtachse: s \\
-RotationUmDieEigeneAchse: r \\
+Bahngeschwindigkeit\ des\ linken\ Rades: vL \\
+Bahngeschwindigkeit\ des\ rechten\ Rades: vR \\
+Bahngeschwindigkeit\ Minimum: m \\
+Overshoot: o \\
+Abstand\ Der\ Räder: d \\
+Fortbewegungsvektor: s \\
+Rotationvektor: r \\
 \end{align}
 $$
+![[WheelchairMath.PNG|500]]
+(Abb.<mark>?</mark> Skizze eines Rollstuhls, mit den relevanten Größen)
+
 Da in der Realität die Bewegung nicht idealisiert ist, ist festzustellen, dass die tatsächliche Bewegung zusammengesetzt ist aus einer der ersten beiden Fälle und dem dritten Fall:
 $$
 \begin{align}
@@ -167,9 +159,9 @@ Um bestimmen zu können, ob es sich um Fall 1 oder Fall 2 handelt, muss folgende
 $$
 (vL > 0) \oplus (vR > 0)
 $$
-Die Rotation beider Räder lässt sich in zwei Komponenten aufspalten. Zum einen den Anteil, den sich beide Räder drehen.
+Die Rotation beider Räder lässt sich in zwei Komponenten aufspalten. Zum einen den Minimum-Anteil $m$, den sich beide Räder drehen.
 $$m = min(\left| vL \right|-\left| vR\right|)$$
-Zum anderen der Anteil den sich ein Rad schneller dreht als das andere.
+Zum anderen der Overshoot-Anteil $o$ den sich ein Rad schneller dreht als das andere.
 $$o = \left|\left| vL \right|-\left| vR\right| \right|$$
 **Fall 1:**
 Die Bewegung nach vorne (oder hinten) ergibt sich in diesem Fall aus dem Anteil der Geschwindigkeit, mit denen sich beide Räder drehen.
@@ -178,8 +170,8 @@ $$s_1 = m$$
 Um die Rotation um die eigene Achse errechnen zu können, wird zunächst der Wendekreis $w_1$ bestimmt. Dieser Wendekreis ist abhängig vom Abstand der beiden Räder $d$ und dessen Mittelpunkt liegt im Mittelpunkt dieses Abstandes. Anschließend wird mithilfe des RadMinimums $m$, das Verhältnis von $m$ zu $w_1$ errechnet. Dieses Verhältnis muss zum Schluss mit $360$ multipliziert werden, um den resultierenden Winkel $r_{1,2}$ zu berechnen.
 $$
 \begin{align}
-w_1 = d \times π \\
-r_{1,2} = (\frac {m} {w_1}) \times 360
+w_1 = d \cdot π \\
+r_{1,2} = (\frac {m} {w_1}) \cdot 360
 \end{align}
 $$
 **Fall 3:**
@@ -187,15 +179,15 @@ Bei diesem Fall gibt es eine Bewegungs- und eine Rotationskomponente. Da sich nu
 
 $$
 \begin{align}
-w_2 = 2 \times d \times π \\
+w_2 = 2 \cdot d \cdot π \\
 Θ = \frac {o} {w_2} \\
-s_3 = Θ \times w_1
+s_3 = Θ \cdot w_1
 \end{align}
 $$
 Um die Rotationskomponente $r_3$ berechnen zu können muss $Θ$ mit $360$ multipliziert werden.
 $$
 \begin{align}
-r_3 = Θ \times 360
+r_3 = Θ \cdot 360
 \end{align}
 $$
 Da die Bewegungskomponenten mit den absoluten Rotationswerten errechnet wurden, ist es notwendig anhand der Drehrichtungen beider Räder zu bestimmen, ob sich der Rollstuhl vor- oder zurückbewegt und ob er sich dabei nach links oder rechts dreht. Die Drehrichtung ist immer dann links, wenn:
@@ -206,7 +198,7 @@ Es handelt sich um eine Vorwärtsbewegung, wenn:
 $$
 vL + vR > 0
 $$
-### 5.3.3 Abbildung auf einen idealisierten simulierten Rollstuhl
+### 5.4.3 Abbildung auf einen idealisierten simulierten Rollstuhl
 Bei der Verwendung der Abbildung hin zu einem realistischen Rollstuhl hat sich gezeigt, dass ein schnelles Vorankommen gestört wird. Ursache dafür ist, dass die Räder sich in leicht unterschiedlicher Geschwindigkeit drehen und so automatisch die Bewegung nach vorne <mark>Drall</mark> nach links oder rechts bekommt. 
 
 Dieses Problem kann gelöst werden, wenn mit den Rotationen beider Räder ein Mittelwert $v$ errechnet wird der für die Kalkulation von Fall 1 und Fall 2 statt dem Minimum $m$ verwendet wird. 
@@ -220,7 +212,7 @@ Jedoch müssen die Fälle in diesem Fall distinkt sein, da sonst das Wenden mit 
 >Um dieses Problem zu lösen, können die drei verschiedenen Fälle als distinkt angenommen werden. 
 >So ist die Abbildungskalkulation in einem von drei Zuständen, die die Fälle repräsentieren. Für Fall 1 und Fall 2 kann statt der Verwendung des Minimums $m$ stattdessen ein interpolierter Wert $v$ verwendet werden.
 
-### 5.3.4 Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen
+### 5.4.4 Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen
 Werden wie oben erläutert die Eingaben direkt auf eine Rollstuhlbewegung abgebildet, so ist der Nutzer eingeschränkt in seinen Interaktionsmöglichkeiten. Aktionen wie einen Knopfdruck sind in diesen Fällen nicht möglich. Jedoch können bestimmte Bewegungsmuster, die nicht zwangsläufig notwendig sind, weggelassen werden, um Interaktionen wie zum Beispiel das Drücken eines Knopfes abzubilden. Um diese Bewegungsmuster erkennen zu können, muss die Bewegung der Räder als diskret verstanden werden. So kann sich ein Rad in drei Zuständen befinden: Still stehend, nach vorne drehend und nach hinten drehend. Zwei Räder mit jeweils drei Zuständen ergibt dabei $3^2 = 9$ Bewegungsmuster.
 
 ![[WheelchairStates.PNG|500]]
@@ -233,10 +225,41 @@ Ein Ansatz kann es dann sein, bei langsamen Bewegungen die Rotation nicht auf ei
 
 ___
 
-## Interface für Nutzung in Spielen und Software
+## 5.5 System-Analyse
+Um das vorher beschriebende System zu testen, wurden verschiedene Datenreihen gemessen. Im Folgenden sollen diese analysiert werden. 
 
+### 5.5.1 Idealer Gyroskop-Modus
+Als erstes wird der Frage nach gegangen in welchem Modus das Gyroskop betrieben werden sollte. Hierfür wurde eine Datenreihe gemessen mit der Gradzahl pro Sekunde im Verlauf der Zeit. Eine Testperson hat dabei versucht ein Rad so schnell wie möglich zu drehen. 
+
+<mark>Bild einfügen
+(Abb.? Gradzahl pro Sekunde im Verlauf der Zeit bei dem Testperson ein Rad so schnell wie möglich dreht)</mark>
+
+Der Graph zeigt, dass der maximal erreicht Ausschlag um die $800$ beziehungsweise $-800$ herum ist. Daraus folgt dass Gyroskop-Modus 2 für dieses Szenario der ideale ist. Der Nutzer erreicht nicht die maximal Geschwindigkeit und reizt trotzdem den Wertebereich ca. $80\%$ aus. 
+Jedoch hat sich beim Testen herausgestellt, dass es für den Nutzer in bestimmten Szenarien störend sein kann wenn er nicht die maximale mögliche Geschwindkeit mit niedriger Umdrehungszahl erreicht. Dies ist zwar nicht realistisch, da aber in vielen Anwendungen meist der maximale Ausschlag angestrebt wird um sich fortzugebewegen, ist es sehr anstrengend für den Nutzer lange viel Kraft und Energie in die Fortbewegung stecken zu müssen. Denkbar wäre hier eine neue Skaliereung des Wertebereichts während des Mappings, damit schneller der maximale Wert erreicht wird, ohne einen Zahlenüberlauf zu riskieren, wenn man den Gyromodus stattdessen runtersetzt.
+
+### 5.5.2 Datenrate der Übertragungsprotokolle
+Zunächst soll der Frage nachgegangen werden ob hektische Bewegungen eines Rades zu einer schlechteren Übertragung der Daten führen, und ob schnellere Bewegungen dazu führen ob weniger Daten-Pakete den Clienten erreichen.
+
+<mark>Geplotteter Graph</mark>
+<mark>Blablabal zu graph</mark>
+
+Bei gewöhnlicher Nutzung des Systems ergeben sich folgende Werte bei der Übertragung: 
+
+| Pakete pro Sekunde         | Durchschnitt | Minimum | Maximum | Delay |
+| -------------------------- | ------------ | ------- | ------- | ----- |
+| WiFi mit WebSocket         |              |         |         |       |
+| ESP-Now mit seriellem Port |              |         |         |       |
+
+Aus der Tabelle ist zu entnehmen das im normalen Betrieb mindestens <mark>Zahl</mark> Daten-Packete pro Sekunde erreicht werden. Es hat sich gezeigt, dass im hier untersuchten Echtzeit-Szenario die Datenrate ausreichen ist um eine angenehme Nutzererfahrung zu generieren. 
+<mark>blablabla</mark>
+
+### 5.5.3 
+- verschiedene Bewegungen plotten 
+	- Knopf drücken im Vergleich zu Bewegung
+	- Neigen und bewegen (Threshold oder filter?)
+- Kommunikation vergleichen 
 ___
 
-## Anwendbarkeit in Software
+## 5.6 Anwendbarkeit in Software
 
 ___
