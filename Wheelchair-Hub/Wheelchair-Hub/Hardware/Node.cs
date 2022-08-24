@@ -1,4 +1,5 @@
 using System.Net;
+using System.Timers;
 using Websocket.Client;
 
 public class Node
@@ -68,8 +69,16 @@ public class Node
     }
     #endregion
 
-    #region StateChange
-    public void Update_DataRate(int timeBetweenCalls)
+    #region Datarate
+    public static void Update_Datarate_AllNodes(object sender, ElapsedEventArgs e)
+    {
+        if (Node.Node_One.ConnectionType is not ConnectionType.NOTHING)
+            Node.Node_One.Update_Datarate(Loop.LOOP_DELAY_MESSAGEBENCHMARK);
+        if (Node.Node_Two.ConnectionType is not ConnectionType.NOTHING)
+            Node.Node_Two.Update_Datarate(Loop.LOOP_DELAY_MESSAGEBENCHMARK);
+    }
+
+    public void Update_Datarate(int timeBetweenCalls)
     {
         DataPerSecond = DataCount * (1000 / timeBetweenCalls);
         DataCount = 0;

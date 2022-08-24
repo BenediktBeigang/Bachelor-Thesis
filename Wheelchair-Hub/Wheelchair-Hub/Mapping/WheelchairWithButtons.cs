@@ -1,7 +1,7 @@
 public class WheelchairWithButtons : Mapping
 {
-    public WheelchairWithButtons(double wheelRadius, double chairWidth, int wheelMovement_Threshold, int buttonPressingThreshold)
-    : base(MappingMode.Wheelchair_WithButtons, wheelMovement_Threshold, buttonPressingThreshold, wheelRadius, chairWidth) { }
+    public WheelchairWithButtons(double wheelRadius, double chairWidth, int wheelMovement_Threshold, int buttonPressingThreshold, int wheelMovementMax = 0)
+    : base(MappingMode.Wheelchair_WithButtons, wheelMovement_Threshold, buttonPressingThreshold, wheelRadius, chairWidth, wheelMovementMax) { }
 
     public override ControllerInput Values_Next(Rotations rotations)
     {
@@ -32,8 +32,9 @@ public class WheelchairWithButtons : Mapping
     private ControllerInput Turn(Rotations rotations)
     {
         double turnVector = AbsoluteInterpolation(rotations);
-        turnVector = Wheelchair.RatioToDegree(turnVector, Wheelchair.InnerTurningCircle);
+        // turnVector = Wheelchair.RatioToDegree(turnVector, Wheelchair.InnerTurningCircle);
         turnVector = Wheelchair.Is_LeftRotation(rotations) ? -turnVector : turnVector;
+        turnVector *= 10;
         return new ControllerInput()
         {
             RightThumbX = Wheelchair.AngularVelocityToControllerAxis(turnVector)
@@ -44,6 +45,7 @@ public class WheelchairWithButtons : Mapping
     {
         double tiltVector = AbsoluteInterpolation(rotations);
         tiltVector = Wheelchair.Is_RotationSumForeward(rotations) ? tiltVector : -tiltVector;
+        tiltVector *= 10;
         return new ControllerInput()
         {
             RightThumbY = Wheelchair.AngularVelocityToControllerAxis(tiltVector)

@@ -75,9 +75,9 @@ public static class Terminal
         table += Generate_TableLine(Node.Node_One) + '\n';
         table += Generate_TableLine(Node.Node_Two) + '\n';
         table += "-----------------------------------------------------------------------------------------------------" + "\n";
-        table += "-----------------------------------------------------------------------------------------------------" + "\n";
+        table += "----------------------------------------------------------------------------------------------------------------------------" + "\n";
         table += Generate_InfoLine() + "\n";
-        table += "-----------------------------------------------------------------------------------------------------" + "\n";
+        table += "----------------------------------------------------------------------------------------------------------------------------" + "\n";
         table += "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------" + "\n";
         table += LegendToStringFlat();
         table += "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
@@ -87,14 +87,15 @@ public static class Terminal
     private static string Generate_InfoLine()
     {
         string output = "";
-        string infoHead = "|{0,-11}||{1,-24}||{2,-29}||{3,-32}|";
-        string info = "|{0,-11}||{1,-24}||{2,-7}|{3,-10}|{4,-10}||{5,-15}|{6,-16}|";
-        output += String.Format(infoHead, "", "", "         Flipped", "         Threshold") + '\n';
-        output += String.Format(info, " GYRO-MODE", " MAPPING-MODE", " Nodes", " Node-One", " Node-Two", " WheelMovement", " ButtonPressing") + '\n';
+        string infoHead = "|{0,-11}||{1,-24}||{2,-29}||{3,-32}||{4,-18}|";
+        string info = "|{0,-11}||{1,-24}||{2,-7}|{3,-10}|{4,-10}||{5,-15}|{6,-16}||{7,-18}|";
+        output += String.Format(infoHead, "", "", "         Flipped", "          Threshold", "") + '\n';
+        output += String.Format(info, " GYRO-MODE", " MAPPING-MODE", " Nodes", " Node-One", " Node-Two", " WheelMovement", " ButtonPressing", " WheelMovementMax") + '\n';
         output += String.Format(info,
         $" {Gyro.Mode}", $" {Mapping.Get_Mode().ToString()}",
         $" {Node.NodesFlipped}", $" {Node.Node_One.Gyro.RotationValueFlip}", $" {Node.Node_Two.Gyro.RotationValueFlip}",
-        $" {Mapping.Get_WheelMovementThreshold()}", $"{Mapping.Get_ButtonPressingThreshold()}");
+        $" {Mapping.Get_WheelMovementThreshold()}", $" {Mapping.Get_ButtonPressingThreshold()}",
+        $" {Mapping.Get_WheelMovement_Max()}");
         return output;
     }
 

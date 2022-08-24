@@ -10,7 +10,7 @@ public static class Program
     public static void Main(string[] args)
     {
         Start_Loops();
-        new Benchmark();
+        // new Benchmark();
         Controller.Start();
         Connection._Connection = Connection.SetConnection(ConnectionType.WIFI);
         Load_Options();
@@ -23,6 +23,7 @@ public static class Program
         new Loop(Loop.LOOP_DELAY_CALIBRATION, Gyro.Check_Calibration!);
         new Loop(Loop.LOOP_DELAY_HEARTBEAT, Connection.Heartbeat!);
         new Loop(Loop.LOOP_DELAY_CONTROLLER, Controller.Refresh_Controller!);
+        new Loop(Loop.LOOP_DELAY_MESSAGEBENCHMARK, Node.Update_Datarate_AllNodes!);
     }
 
     private static void Load_Options()

@@ -78,7 +78,11 @@ public class Wheelchair
 
     public static short AngularVelocityToControllerAxis(double value)
     {
-        return (short)(value * Gyro.StepsPerDegree);
+        // const int CONTROLLER_MAX = 35767;
+        // double StepsPerDegree = CONTROLLER_MAX / Mapping.Get_WheelMovement_Max();
+        // return (short)(value * StepsPerDegree);
+        int sign = (value < 0) ? -1 : 1;
+        return (short)((value > short.MaxValue - 7) ? sign * short.MaxValue - 7 : value * Gyro.StepsPerDegree);
     }
 
     public override string ToString()

@@ -8,6 +8,7 @@ public class Loop
     public const int LOOP_DELAY_CALIBRATION = 1000;
     public const int LOOP_DELAY_HEARTBEAT = 1000;
     public const int LOOP_DELAY_CONTROLLER = 16;
+    public const int LOOP_DELAY_MESSAGEBENCHMARK = 250;
 
     public Loop(int loopDelay, System.Timers.ElapsedEventHandler function)
     {

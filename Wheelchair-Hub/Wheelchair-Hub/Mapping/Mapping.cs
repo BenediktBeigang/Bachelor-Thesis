@@ -1,19 +1,21 @@
 public abstract class Mapping
 {
     public static Mapping _Mapping { get; set; } = new GUI(30, 55.5, 200, 300);
+    public readonly int WheelMovement_Max;
     public readonly int WheelMovement_Threshold;
     public readonly int ButtonPressing_Threshold;
     public readonly MappingMode Mode;
     public readonly Wheelchair Wheelchair;
     private long LastMovement_Timestamp;
 
-    public Mapping(MappingMode mode, int wheelMovement_Threshold, int buttonPressing_Threshold, double wheelRadius, double chairWidth)
+    public Mapping(MappingMode mode, int wheelMovement_Threshold, int buttonPressing_Threshold, double wheelRadius, double chairWidth, int wheelMovementMax = 0)
     {
         Mode = mode;
         ButtonPressing_Threshold = buttonPressing_Threshold;
         WheelMovement_Threshold = wheelMovement_Threshold;
         Wheelchair = new Wheelchair(wheelRadius, chairWidth);
         LastMovement_Timestamp = 0;
+        WheelMovement_Max = (wheelMovementMax is 0 || wheelMovementMax > Gyro.GyroModeInterger()) ? Gyro.GyroModeInterger() : wheelMovementMax;
     }
 
     #region Change_Mapping
@@ -32,14 +34,14 @@ public abstract class Mapping
         }
     }
 
-    public void Change_Mapping(MappingMode mode, double wheelRadius, double chairWidth, int wheelMovement_Threshold, int buttonPressingThreshold)
+    public void Change_Mapping(MappingMode mode, double wheelRadius, double chairWidth, int wheelMovementThreshold, int buttonPressingThreshold, int wheelMovementMax)
     {
         switch (mode)
         {
-            case MappingMode.Wheelchair_Realistic: _Mapping = new RealisticWheelchair(wheelRadius, chairWidth, wheelMovement_Threshold, buttonPressingThreshold); break;
-            case MappingMode.Wheelchair_Simple: _Mapping = new SimpleWheelchair(wheelRadius, chairWidth, wheelMovement_Threshold, buttonPressingThreshold); break;
-            case MappingMode.Wheelchair_WithButtons: _Mapping = new WheelchairWithButtons(wheelRadius, chairWidth, wheelMovement_Threshold, buttonPressingThreshold); break;
-            case MappingMode.GUI: _Mapping = new GUI(wheelRadius, chairWidth, wheelMovement_Threshold, buttonPressingThreshold); break;
+            case MappingMode.Wheelchair_Realistic: _Mapping = new RealisticWheelchair(wheelRadius, chairWidth, wheelMovementThreshold, buttonPressingThreshold); break;
+            case MappingMode.Wheelchair_Simple: _Mapping = new SimpleWheelchair(wheelRadius, chairWidth, wheelMovementThreshold, buttonPressingThreshold); break;
+            case MappingMode.Wheelchair_WithButtons: _Mapping = new WheelchairWithButtons(wheelRadius, chairWidth, wheelMovementThreshold, buttonPressingThreshold); break;
+            case MappingMode.GUI: _Mapping = new GUI(wheelRadius, chairWidth, wheelMovementThreshold, buttonPressingThreshold); break;
         }
     }
     #endregion
@@ -99,7 +101,7 @@ public abstract class Mapping
     /// <param name="value_One"></param>
     /// <param name="value_Two"></param>
     /// <returns></returns>
-    protected MovementState Get_MovementState(Rotations rotations)
+    protected MovementState Get_MovementState2(Rotations rotations)
     {
         if (Wheelchair.Are_BothRotationsUnderThreshold(rotations, WheelMovement_Threshold))
         {
@@ -110,6 +112,22 @@ public abstract class Mapping
 
         Reset_LastMovement_Timestamp();
         if (Wheelchair.Is_RotationAgainstEachOther(rotations)) return MovementState.DualWheel_Turn;
+        return MovementState.ViewAxis_Motion;
+    }
+
+    protected MovementState Get_MovementState(Rotations rotations)
+    {
+        if (rotations.RawLeft is 0 && rotations.RawRight is 0) return MovementState.StandingStill;
+        if (Wheelchair.Is_ExactlyOneRotationUnderThreshold(rotations, WheelMovement_Threshold)) return MovementState.SingleWheel_Turn;
+
+        if (Wheelchair.Is_RotationAgainstEachOther(rotations))
+        {
+            Reset_LastMovement_Timestamp();
+            return MovementState.DualWheel_Turn;
+        }
+        if (Wheelchair.Are_BothRotationsUnderThreshold(rotations, WheelMovement_Threshold)) return MovementState.Tilt;
+
+        Reset_LastMovement_Timestamp();
         return MovementState.ViewAxis_Motion;
     }
 
@@ -178,6 +196,10 @@ public abstract class Mapping
     public static Wheelchair Get_Wheelchair()
     {
         return Mapping._Mapping.Wheelchair;
+    }
+    public static int Get_WheelMovement_Max()
+    {
+        return Mapping._Mapping.WheelMovement_Max;
     }
     #endregion
 }

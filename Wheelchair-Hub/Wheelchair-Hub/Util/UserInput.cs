@@ -79,11 +79,12 @@ public static class UserInput
     {
         double wheelRadius = Enter_Number("Enter Wheel-Radius").Double;
         double chairWidth = Enter_Number("Enter Chair-Width").Double;
-        int wheelPressingThreshold = Enter_Number("Enter Wheel-Movement-Threshold").Integer;
+        int wheelMovementThreshold = Enter_Number("Enter Wheel-Movement-Threshold").Integer;
         int buttonPressingThreshold = Enter_Number("Enter Button-Pressing-Threshold").Integer;
+        int wheelMovement_Max = Enter_Number("Enter Wheel-Movement-Max (0 if not needed)").Integer;
 
-        Terminal.Add_Command($"New Mapping:\nMode->{mode}\nWheel-Radius->{wheelRadius}\nChair-Width->{chairWidth}\nButtonPressingThreshold->{buttonPressingThreshold}");
-        Mapping._Mapping.Change_Mapping(mode, wheelRadius, chairWidth, wheelPressingThreshold, buttonPressingThreshold);
+        Terminal.Add_Command($"New Mapping:\nMode->{mode}\nWheel-Radius->{wheelRadius}\nChair-Width->{chairWidth}\nWheelMovementThreshold->{wheelMovementThreshold}\nButtonPressingThreshold->{buttonPressingThreshold}\nWheelMovementMax->{wheelMovement_Max}");
+        Mapping._Mapping.Change_Mapping(mode, wheelRadius, chairWidth, wheelMovementThreshold, buttonPressingThreshold, wheelMovement_Max);
     }
 
     private static void Flip()

@@ -1,7 +1,7 @@
 public class GUI : Mapping
 {
-    public GUI(double wheelRadius, double chairWidth, int wheelMovement_Threshold, int buttonPressingThreshold)
-    : base(MappingMode.GUI, wheelMovement_Threshold, buttonPressingThreshold, wheelRadius, chairWidth) { }
+    public GUI(double wheelRadius, double chairWidth, int wheelMovement_Threshold, int buttonPressingThreshold, int wheelMovementMax = 0)
+    : base(MappingMode.GUI, wheelMovement_Threshold, buttonPressingThreshold, wheelRadius, chairWidth, wheelMovementMax) { }
 
     public override ControllerInput Values_Next(Rotations rotations)
     {

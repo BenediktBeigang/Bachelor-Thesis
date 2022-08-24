@@ -4,7 +4,6 @@ public class SavedOptions
 {
     private const string FILEPATH = @"Files\SavedOptions.json";
     public static SavedOptions Options { get; set; } = new();
-    private static string? Json = null;
 
     public bool Read_JSON()
     {
@@ -29,7 +28,7 @@ public class SavedOptions
             Node.NodesFlipped = Options.NodesFlipped;
             Node.Node_One.Gyro.RotationValueFlip = Options.WheelFlipped_One;
             Node.Node_Two.Gyro.RotationValueFlip = Options.WheelFlipped_Two;
-            Mapping._Mapping.Change_Mapping(Options.MappingMode, Options.Wheel_Radius, Options.Chair_Width, Options.WheelMovement_Threshold, Options.ButtonPressing_Threshold);
+            Mapping._Mapping.Change_Mapping(Options.MappingMode, Options.Wheel_Radius, Options.Chair_Width, Options.WheelMovement_Threshold, Options.ButtonPressing_Threshold, Options.WheelMovement_Max);
         }
         catch (System.IO.FileNotFoundException)
         {
@@ -56,6 +55,7 @@ public class SavedOptions
         Options.Chair_Width = Mapping.Get_Wheelchair().Chair_Width;
         Options.ButtonPressing_Threshold = Mapping.Get_ButtonPressingThreshold();
         Options.WheelMovement_Threshold = Mapping.Get_WheelMovementThreshold();
+        Options.WheelMovement_Max = Mapping.Get_WheelMovement_Max();
     }
 
     public GyroMode GyroMode { get; set; }
@@ -67,4 +67,5 @@ public class SavedOptions
     public double Chair_Width { get; set; }
     public int ButtonPressing_Threshold { get; set; }
     public int WheelMovement_Threshold { get; set; }
+    public int WheelMovement_Max { get; set; }
 }

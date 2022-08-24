@@ -1,7 +1,7 @@
 public class SimpleWheelchair : Mapping
 {
-    public SimpleWheelchair(double wheelRadius, double chairWidth, int wheelMovement_Threshold, int buttonPressingThreshold)
-    : base(MappingMode.Wheelchair_Simple, wheelMovement_Threshold, buttonPressingThreshold, wheelRadius, chairWidth) { }
+    public SimpleWheelchair(double wheelRadius, double chairWidth, int wheelMovement_Threshold, int buttonPressingThreshold, int wheelMovementMax = 0)
+    : base(MappingMode.Wheelchair_Simple, wheelMovement_Threshold, buttonPressingThreshold, wheelRadius, chairWidth, wheelMovementMax) { }
 
     public override ControllerInput Values_Next(Rotations rotations)
     {
