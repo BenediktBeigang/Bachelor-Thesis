@@ -9,6 +9,7 @@ public class Program
         {
             Console.WriteLine("Enter Name of File:");
             string? input = Console.ReadLine();
+            // string? input = "ohneAcc";
             if (input == "q") break;
 
             string path = @"Files\";
@@ -22,10 +23,11 @@ public class Program
                 string jsonString = File.ReadAllText(path + name + filetype);
                 List<Sample> record = JsonSerializer.Deserialize<List<Sample>>(jsonString) ?? new List<Sample>();
 
-                Plot_GyroValues(record);
-                Plot_Datarate(record);
-                Plot_Nodes(record);
                 Stats_Datarate(record);
+                new Plot_Gyro(record);
+                new Plot_Datarate(record);
+                new Plot_GyroWithAcceleration(record);
+                new Plot_NodeOne(record);
             }
             catch (Exception)
             {
@@ -44,55 +46,73 @@ public class Program
         Console.WriteLine($"Pakets per second\nAverage: {average}\nMinimum: {minimum}\nMaximum: {maximum}");
     }
 
-    private static void Plot_GyroValues(List<Sample> record)
+    public static System.Drawing.Color GetMovementStateColor_Default(MovementState state)
     {
-        double[] x_One = record.Select(r => r.NodeOne_Value).ToArray();
-        double[] x_Two = record.Select(r => r.NodeTwo_Value).ToArray();
-        PlotSignal("GyroValues", x_One, x_Two);
+        switch (state)
+        {
+            case MovementState.StandingStill: return System.Drawing.Color.Transparent;
+            case MovementState.ViewAxis_Motion: return Colors.Color_ViewAxis_Motion();//System.Drawing.Color.Purple;
+            case MovementState.DualWheel_Turn: return System.Drawing.Color.Chocolate;
+            case MovementState.SingleWheel_Turn: return System.Drawing.Color.Cyan;
+            case MovementState.Tilt: return System.Drawing.Color.PeachPuff;
+        }
+        return System.Drawing.Color.Transparent;
     }
 
-    private static void Plot_Datarate(List<Sample> record)
+    public static System.Drawing.Color MovementStateColor_Tilt(MovementState state)
     {
-        double[] x_One = record.Select(r => r.NodeOne_Datarate).ToArray();
-        double[] x_Two = record.Select(r => r.NodeTwo_Datarate).ToArray();
-        PlotSignal("Datarate", x_One, x_Two);
+        switch (state)
+        {
+            case MovementState.StandingStill: return System.Drawing.Color.LightGray;
+            case MovementState.Tilt: return System.Drawing.Color.Red;
+            case MovementState.ViewAxis_Motion: return System.Drawing.Color.LightGreen;
+            case MovementState.DualWheel_Turn: return System.Drawing.Color.Transparent;
+            case MovementState.SingleWheel_Turn: return System.Drawing.Color.Transparent;
+        }
+        return System.Drawing.Color.Transparent;
     }
 
-    private static void Plot_Nodes(List<Sample> record)
+    public static System.Drawing.Color MovementStateColor_Button(MovementState state)
     {
-        double[] x_One = record.Select(r => r.NodeOne_Value).ToArray();
-        double[] x_Two = record.Select(r => r.NodeOne_Datarate).ToArray();
-        PlotMultAxisSignal("Node One", x_One, x_Two);
-
-        x_One = record.Select(r => r.NodeTwo_Value).ToArray();
-        x_Two = record.Select(r => r.NodeTwo_Datarate).ToArray();
-        PlotMultAxisSignal("Node Two", x_One, x_Two);
+        switch (state)
+        {
+            case MovementState.StandingStill: return System.Drawing.Color.LightGray;
+            case MovementState.Tilt: return System.Drawing.Color.Transparent;
+            case MovementState.ViewAxis_Motion: return System.Drawing.Color.LightGreen;
+            case MovementState.DualWheel_Turn: return System.Drawing.Color.LightGreen;
+            case MovementState.SingleWheel_Turn: return System.Drawing.Color.Red;
+        }
+        return System.Drawing.Color.Transparent;
     }
 
-    private static void PlotMultAxisSignal(string title, double[] x_One, double[] x_Two)
+    public static void DrawMovementStates(List<Sample> record, ref ScottPlot.Plot plt, string drawingMode)
     {
-        var plt = new ScottPlot.Plot(1600, 900);
-
-        var gyroValues = plt.AddSignal(x_One, sampleRate: 60);
-        gyroValues.YAxisIndex = 0;
-        var datarate = plt.AddSignal(x_Two, sampleRate: 60);
-        datarate.YAxisIndex = 1;
-
-        plt.SetAxisLimits(yMin: -1000, yMax: 1000, yAxisIndex: 0);
-        plt.SetAxisLimits(yMin: 0, yMax: 100, yAxisIndex: 1);
-
-        plt.Title(title);
-        ScottPlot.FormsPlotViewer win = new(plt);
-        Task.Run(() => win.ShowDialog());
+        int span_start = 0;
+        int span_end = 0;
+        double scale = (double)1 / (double)60;
+        for (int i = 1; i < record.Count; i++)
+        {
+            if (record[i].MovementState != record[i - 1].MovementState)
+            {
+                span_end = i - 1;
+                plt.AddHorizontalSpan(span_start * scale, span_end * scale, GetColor(drawingMode, record[i - 1].MovementState));
+                span_start = i;
+            }
+            else if (i + 1 == record.Count)
+            {
+                span_end = i;
+                plt.AddHorizontalSpan(span_start * scale, span_end * scale, GetColor(drawingMode, record[i - 1].MovementState));
+            }
+        }
     }
 
-    private static void PlotSignal(string title, double[] x_One, double[] x_Two)
+    private static System.Drawing.Color GetColor(string drawindMode, MovementState state)
     {
-        var plt = new ScottPlot.Plot(1600, 900);
-        plt.AddSignal(x_One, sampleRate: 60);
-        plt.AddSignal(x_Two, sampleRate: 60);
-        plt.Title(title);
-        ScottPlot.FormsPlotViewer win = new(plt);
-        Task.Run(() => win.ShowDialog());
+        switch (drawindMode)
+        {
+            case "tilt": return MovementStateColor_Tilt(state);
+            case "button": return MovementStateColor_Button(state);
+            default: return GetMovementStateColor_Default(state);
+        }
     }
 }
