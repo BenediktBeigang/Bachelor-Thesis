@@ -15,7 +15,7 @@ public abstract class Mapping
         WheelMovement_Threshold = wheelMovement_Threshold;
         Wheelchair = new Wheelchair(wheelRadius, chairWidth);
         LastMovement_Timestamp = 0;
-        WheelMovement_Max = (wheelMovementMax is 0 || wheelMovementMax > Gyro.GyroModeInterger()) ? Gyro.GyroModeInterger() : wheelMovementMax;
+        WheelMovement_Max = (wheelMovementMax is 0 || wheelMovementMax > Gyro.ModeAsInteger()) ? Gyro.ModeAsInteger() : wheelMovementMax;
     }
 
     #region Change_Mapping
@@ -115,19 +115,19 @@ public abstract class Mapping
         return MovementState.ViewAxis_Motion;
     }
 
-    protected MovementState Get_MovementState(Rotations rotations)
+    public MovementState Get_MovementState(Rotations rotations)
     {
-        if (rotations.RawLeft is 0 && rotations.RawRight is 0) return MovementState.StandingStill;
+        if (rotations.RawLeft is 0 && rotations.RawRight is 0 || Wheelchair.Is_MovementStateChanging()) return MovementState.StandingStill;
         if (Wheelchair.Is_ExactlyOneRotationUnderThreshold(rotations, WheelMovement_Threshold)) return MovementState.SingleWheel_Turn;
 
         if (Wheelchair.Is_RotationAgainstEachOther(rotations))
         {
-            Reset_LastMovement_Timestamp();
+            //Reset_LastMovement_Timestamp();
             return MovementState.DualWheel_Turn;
         }
         if (Wheelchair.Are_BothRotationsUnderThreshold(rotations, WheelMovement_Threshold)) return MovementState.Tilt;
 
-        Reset_LastMovement_Timestamp();
+        //Reset_LastMovement_Timestamp();
         return MovementState.ViewAxis_Motion;
     }
 

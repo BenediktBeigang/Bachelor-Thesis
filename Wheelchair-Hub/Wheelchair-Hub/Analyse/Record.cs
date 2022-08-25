@@ -54,7 +54,10 @@ public class Record
             NodeOne_Value = Node.Node_One.Gyro.RawValue_Last() / Gyro.StepsPerDegree,
             NodeTwo_Value = Node.Node_Two.Gyro.RawValue_Last() / Gyro.StepsPerDegree,
             NodeOne_Datarate = Node.Node_One.DataPerSecond,
-            NodeTwo_Datarate = Node.Node_Two.DataPerSecond
+            NodeTwo_Datarate = Node.Node_Two.DataPerSecond,
+            NodeOne_Acceleration = Node.Node_One.Gyro.Acceleration(),
+            NodeTwo_Acceleration = Node.Node_Two.Gyro.Acceleration(),
+            MovementState = Mapping._Mapping.Get_MovementState(Node.Rotations())
             // , Timestamp = DateTime.Now
         });
     }

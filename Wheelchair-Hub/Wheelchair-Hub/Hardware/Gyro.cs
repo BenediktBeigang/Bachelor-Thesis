@@ -81,6 +81,25 @@ public class Gyro
         return RawValueBuffer[BufferPointer];
     }
 
+    public short[] RawValue_Last(int count)
+    {
+        short[] result = new short[count];
+        int resultCounter = 0;
+        int bufferPointer = BufferPointer;
+        while (resultCounter < count)
+        {
+            if (bufferPointer < 0)
+            {
+                bufferPointer = BUFFER_SIZE - 1;
+                continue;
+            }
+            result[resultCounter] = RawValueBuffer[bufferPointer];
+            resultCounter++;
+            bufferPointer--;
+        }
+        return result;
+    }
+
     /// <summary>
     /// Returns the Buffer, containg the newest RawValues.
     /// </summary>
@@ -97,6 +116,34 @@ public class Gyro
     public double DegreePerSecond_Last()
     {
         return RawValue_Last() / StepsPerDegree;
+    }
+
+    public double[] DegreePerSecond_Last(int count)
+    {
+        double[] result = new double[count];
+        short[] rawValues = RawValue_Last(count);
+        for (int i = 0; i < count; i++)
+        {
+            result[i] = rawValues[i] / StepsPerDegree;
+        }
+        return result;
+    }
+
+    public double Acceleration()
+    {
+        const int samples = 10;
+        double[] values = DegreePerSecond_Last(samples);
+        double[] accelerations = new double[samples - 1];
+        for (int i = 0; i < samples - 1; i++)
+        {
+            accelerations[i] = Math.Abs(values[i] - values[i + 1]);
+        }
+        return accelerations.Average();
+    }
+
+    public static (double, double) Acceleration_BothNodes()
+    {
+        return (Node.Node_One.Gyro.Acceleration(), Node.Node_Two.Gyro.Acceleration());
     }
     #endregion
 
@@ -147,7 +194,7 @@ public class Gyro
         }
     }
 
-    public static int GyroModeInterger()
+    public static int ModeAsInteger()
     {
         switch (mode)
         {

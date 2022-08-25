@@ -24,7 +24,7 @@ public class WheelchairWithButtons : Mapping
     /// <returns></returns>
     private ControllerInput Move(Rotations rotations)
     {
-        double resultVector = (Wheelchair.Is_RotationForward(rotations.AngularVelocityLeft)) ? Gyro.GyroModeInterger() : -Gyro.GyroModeInterger();
+        double resultVector = (Wheelchair.Is_RotationForward(rotations.AngularVelocityLeft)) ? Gyro.ModeAsInteger() : -Gyro.ModeAsInteger();
         short controllerVector = Wheelchair.AngularVelocityToControllerAxis(resultVector);
         return new ControllerInput(0, controllerVector, 0, 0, false, false, false, false);
     }
