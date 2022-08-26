@@ -4,8 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "5fff159e8fb15a22",
+        "id": "b3f6b184d812456b",
         "type": "leaf",
+        "dimension": 84.63356973995272,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Arbeit/5_Experiment.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      },
+      {
+        "id": "f7cdb776773cc27d",
+        "type": "leaf",
+        "dimension": 15.36643026004728,
         "state": {
           "type": "kanban",
           "state": {
@@ -67,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ToDo-Board.md",
+                "file": "Arbeit/5_Experiment.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,17 +108,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "5fff159e8fb15a22",
+  "active": "b3f6b184d812456b",
   "lastOpenFiles": [
-    "Arbeit/5_Experiment.md",
-    "Arbeit/6_Erkenntnis.md",
-    "Arbeit/9_Literaturverzeichnis.md",
-    "Arbeit/8_Abkürzungsverzeichnis.md",
-    "Arbeit/1_Abstract.md",
-    "Arbeit/0_Inhaltsverzeichnis.md",
-    "Arbeit/7_Ausblick.md",
     "ToDo-Board.md",
-    "Quellen/Bilder/Hardware/ASCII.bmp",
-    "Software/Base64 Encoder.md"
+    "Arbeit/5_Experiment.md",
+    "Quellen/Bilder/Software/WheelchairMath.PNG",
+    "Quellen/Bilder/Software/WheelchairMath1.PNG",
+    "Quellen/Bilder/Software/WheelchairMath2.PNG",
+    "Quellen/Bilder/Software/WheelchairStates.PNG",
+    "Arbeit/6_Erkenntnis.md",
+    "Arbeit/3_Methode.md",
+    "Master.md",
+    "Arbeit/9_Literaturverzeichnis.md"
   ]
 }

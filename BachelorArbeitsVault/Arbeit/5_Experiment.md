@@ -121,6 +121,12 @@ ___
 ## 5.4 Algorithmen zur Abbildung der Raddaten in Eingaben
 Die Sensor-Daten der Gyroskope liefern die Winkelgeschwindigkeiten der Räder des Rollstuhls. Es sollen <mark>verschiedene Abbildungen auf Eingaben</mark> getestet werden, um sich im virtuellen Raum bewegen zu können oder andere Eingaben tätigen zu können. Die Abbildung erfolgt dabei, wie im vorangegangenen Kapitel evaluiert auf einen Xbox360 Controller. Somit sind die abgebildeten Eingaben von jeder Software lesbar, die eine Controllerunterstützung dieses Controllers implementiert hat.
 
+### 5.4.1 Gyroskop-Werte bereinigen
+Die ausgelesenen Werte des Gyroskops sind nicht automatisch kalibriert. Sie besitzen einen konstanten Offset. Deshalb wird nach dem Verbindungsaufbau zwischen Node und Software eine Kalibrierungssequenz gestartet. Diese errechnet aus einer Reihe ausgelesener Werte einen Mittelwert, der anschließend von allen zukünfitgen Werten abgezogen wird. Dazu dürfen die Räder nicht bewegt werden, da dies das Ergebnis der Kalibrierung unbrauchbar machen würde.
+
+Darüber hinaus besitzen die rauscht das Gyroskop-Signal. Dreht sich das Rad fällt dieses Rauschen nicht weiter ins Gewicht, da es nur einen kleinen Anteil an der 
+Gesamtrotation hat. Jedoch ist es später notwendig zu erkennen ob ein Rad still steht. Deshalb wird ein Schwellenwert bestimmt den ein Gyroskop-Wert überschreiten muss, damit der Wert nicth abgeschitten wird. Damit ist sichergestellt, dass es sich tatsächlich um eine Rotation handelt die vom Nutzer ausgelöst wurde.
+
 ### 5.4.1 Abbildung auf einen Cursor
 Die einfachste Art und Weise, wie die Raddaten in Eingaben abgebildet werden können, ist die Steuerung eines Cursors. Dabei wird ein Rad genutzt, um die x-Achse abzubilden und das andere Rad bildet die y-Achse ab. Vorteil dabei ist, dass beide Achsen gleichzeitig angesprochen werden können. <mark>Jedoch ist es schwieriger, die x-Achse zu bewegen, da diese anders ausgerichtet ist als das Rad, das gedreht wird.</mark> 
 
@@ -201,27 +207,101 @@ $$
 ### 5.4.3 Abbildung auf einen idealisierten simulierten Rollstuhl
 Bei der Verwendung der Abbildung hin zu einem realistischen Rollstuhl hat sich gezeigt, dass ein schnelles Vorankommen gestört wird. Ursache dafür ist, dass die Räder sich in leicht unterschiedlicher Geschwindigkeit drehen und so automatisch die Bewegung nach vorne <mark>Drall</mark> nach links oder rechts bekommt. 
 
-Dieses Problem kann gelöst werden, wenn mit den Rotationen beider Räder ein Mittelwert $v$ errechnet wird der für die Kalkulation von Fall 1 und Fall 2 statt dem Minimum $m$ verwendet wird. 
+Dieses Problem kann gelöst werden, wenn mit den Rotationen beider Räder ein Mittelwert $v$ errechnet. Dieser Mittelwert wird dann die Kalkulation von Fall 1 und Fall 2, statt dem Minimum $m$ verwendet. 
 $$
 \begin{align}
 v = \frac {(vL + vR)} {2} 
 \end{align}
 $$
-Jedoch müssen die Fälle in diesem Fall distinkt sein, da sonst das Wenden mit einem Rad nicht mehr möglich wäre. Grund dafür ist, dass die Geschwindigkeiten des stillstehende Rades und das sich Drehenden zu einem Mittelwert zusammengerechnet werden würde und der Rollstuhl sich nur nach vorne bewegt, statt sich zu drehen. Das Zusammenrechnen von Fall 1 oder Fall 2 mit Fall 3 darf also nicht geschehen. Realisiert man die Bewegung des Rollstuhls indem der Rollstuhl in verschiedenen Bewegungszuständen sein kann, so kann die Bewegung für jeden Fall einzeln richtig errechnet werden.
+Jedoch müssen die Fälle in diesem Fall distinkt sein, da sonst das Wenden mit einem Rad nicht mehr möglich wäre. Grund dafür ist, dass die Geschwindigkeiten des stillstehende Rades und das sich Drehenden zu einem Mittelwert zusammengerechnet werden würde und der Rollstuhl sich nur nach vorne bewegt, statt sich zu drehen. Das Zusammenrechnen von Fall 1 oder Fall 2 mit Fall 3 darf also nicht geschehen. Realisiert man die Bewegung des Rollstuhls, indem der Rollstuhl in verschiedenen Bewegungszuständen sein kann, so kann die Bewegung für jeden Fall einzeln richtig errechnet werden.
 
->Um dieses Problem zu lösen, können die drei verschiedenen Fälle als distinkt angenommen werden. 
->So ist die Abbildungskalkulation in einem von drei Zuständen, die die Fälle repräsentieren. Für Fall 1 und Fall 2 kann statt der Verwendung des Minimums $m$ stattdessen ein interpolierter Wert $v$ verwendet werden.
-
-### 5.4.4 Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen
-Werden wie oben erläutert die Eingaben direkt auf eine Rollstuhlbewegung abgebildet, so ist der Nutzer eingeschränkt in seinen Interaktionsmöglichkeiten. Aktionen wie einen Knopfdruck sind in diesen Fällen nicht möglich. Jedoch können bestimmte Bewegungsmuster, die nicht zwangsläufig notwendig sind, weggelassen werden, um Interaktionen wie zum Beispiel das Drücken eines Knopfes abzubilden. Um diese Bewegungsmuster erkennen zu können, muss die Bewegung der Räder als diskret verstanden werden. So kann sich ein Rad in drei Zuständen befinden: Still stehend, nach vorne drehend und nach hinten drehend. Zwei Räder mit jeweils drei Zuständen ergibt dabei $3^2 = 9$ Bewegungsmuster.
+### 5.4.4 Bewegungszustände
+Um alle Bewegungszustand-Permutationen ermitteln zu können, muss die Rotation der Räder als diskret und nicht als kontinuierliche Bewegung verstanden werden. So kann sich ein Rad in drei Zuständen befinden: Still stehend, nach vorne drehend und nach hinten drehend. Zwei Räder mit jeweils drei Zuständen ergibt dabei $3^2 = 9$ Bewegungsmuster.
 
 ![[WheelchairStates.PNG|500]]
-(Abb.3, Bewegungszustände eines Rollstuhls)
+(Abb.<mark>?</mark>, Die neun Bewegungszustände eines Rollstuhls)
 
-Werden für das Drehen des Rollstuhls nur die Zustände genutzt, bei denen sich die Räder gegeneinander drehen (in Abb.3 zweite Reihe, erste und dritte Spalte), so bleiben vier Zustände übrig, die mit anderen Interaktionen belegt werden können. Bei diesen vier Mustern handelt es sich, um solche, bei denen ein Rad still steht. Diese können dann beispielsweise für das Drücken einer der vier <mark>Hauptknöpfe des Spielcontrollers</mark> genutzt werden. 
+ Jedoch lassen sich die Bewegungsmuster in folgende Untergruppen teilen:
+- Ruhezustand: kein Rad dreht sich (5)
+- Rotation um die eigene Achse: Räder drehen sich gegeneinander (4, 6)
+- Einzelradbewegung: ein Rad steht still und ein Rad dreht sich (1, 3, 7, 9)
+- Sichtachsenbewegung: Räder drehen sich in dieselbe Richtung (2, 8)
 
-Will man weitere Interaktionen abbilden, so ist dies nur noch möglich über das geziehlte Drehen der Räder in einer bestimmten Geschwindigkeit durch den Nutzer. Wird beispielsweise der Wertebereich der Raddaten geteilt, so könnten schnelle Bewegungen anders interpretiert werden als langsame Bewegungen. In diesem Szenario lässt sich so die Anzahl der Bewegungsmuster verdoppeln.
-Ein Ansatz kann es dann sein, bei langsamen Bewegungen die Rotation nicht auf eine Drehung auf der Stelle zu mappen, sondern stattdessen auf eine Neigung des Kopfes. Somit wäre der Nutzer in der Lage, sich frei im Raum umschauen zu können.
+Im Folgenden wird darauf eingegangen, wie diese Untergruppen-Zustände erkannt werden:
+$$
+\begin{align}
+Bahngeschwindigkeit\ des\ linken\ Rades: vL \\
+Bahngeschwindigkeit\ des\ rechten\ Rades: vR \\
+Schwellwert\ für\ Einzelnel-Rad-Bewegung: s_1 \\
+Schwellwert\ für\ Wertebereich-Teilung: s_2 \\
+\end{align}
+$$
+**Ruhezustand**
+Der _Ruhezustand_ wird erreicht wenn kein anderer Zustand erreicht wird oder sich kein Rad dreht. Da das oben beschriebende Rauschen abgeschnitten wurde, gilt der Ruhezustand wenn:
+$$
+\begin{align}
+(vL = 0) \land (vR = 0) 
+\end{align}
+$$
+**Einzelradbewegung**
+Wie beim Ruhezustand ist es auch hier möglich auf Nullgleichheit zu prüfen, sodass die einfachste Art und Weise zu Prüfen ob sich nur ein Rad dreht folgende Bedingung ist:
+$$
+\begin{align}
+(vL = 0) \oplus (vR = 0) 
+\end{align}
+$$
+Der Nutzer hat jedoch Schwierigkeiten ein Rad vollständig ruhig zu halten. Die Gyroskop-Werte überschreiten selbst bei kleinen Handbewegungen den Schwellenwert. Deshalb ist diese Methode unzureichend. Führt man einen zusätzlichen, höheren Schwellenwert $s_1$ ein, wird eine vom Nutzer unbeabsichtigete _Einzelradbewegung_ zuverlässiger unterdrückt:
+$$
+\begin{align}
+(|vL| < s_1) \oplus (|vR| < s_1) 
+\end{align}
+$$
+**Rotation um die eigene Achse**
+Die Bedingung die gelten muss wenn sich beide Räder gegeneinander drehen ist identisch mit der Bedingung, welche schon im Kapitel _Abbildung auf einen realistisch simulierten Rollstuhl_ aufgestellt wurde. Diese gilt nur wenn _Ruhezustand_ und _Einzelradbewegung_ ausgeschlossen werden konnte:
+$$
+\begin{align}
+(vL > 0) \oplus (vR > 0)
+\end{align}
+$$
+**Sichtachsenbewegung**
+Der Zustand der Sichtachsenbewegung gilt dann, wenn sich die Räder in die selbe Richtung drehen. Damit ist dieser Zustand das logische Gegenteil der Bedingung _Rotation um die eigene Achse_, vorrausgesetzt es wurden _Ruhezustand_ und _Einzelradbewegung_ ausgeschlossen:
+$$
+\begin{align}
+(vL > 0) \Leftrightarrow (vR > 0) 
+\end{align}
+$$
+
+
+### 5.4.5 Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen
+Werden wie oben erläutert die Eingaben ausschließlich auf eine Rollstuhlbewegung abgebildet, so ist der Nutzer eingeschränkt in seinen Interaktionsmöglichkeiten. Aktionen wie einen Knopfdruck sind in diesen Fällen nicht möglich. Jedoch können bestimmte Bewegungsmuster, die nicht zwangsläufig notwendig sind, weggelassen werden, um weitere Interaktionen abzubilden. Werden für das Drehen des Rollstuhls nur die Zustände genutzt, bei denen sich die Räder gegeneinander drehen (in Abb.<mark>?</mark> Zustand 4 und 6), so bleiben vier Zustände übrig, die mit anderen Interaktionen belegt werden können. Bei diesen vier Mustern handelt es sich, um die Einzelradbewegungs-Zustände. Diese können dann beispielsweise für das Drücken einer der vier <mark>Hauptknöpfe des Spielcontrollers</mark> genutzt werden. 
+
+Will man weitere Interaktionen abbilden, so ist dies nur noch möglich über die Kodierung der Radgeschwindigkeit durch den Nutzer. Entweder werden bestimmte Bewegungen der Räder unterschieden oder der Wertebereich wird geteilt mithilfe von Schwellwerten. Aufgrund des zeitlichen Rahmens dieser Arbeit wurde sich auf das Testen der zweiten Methode beschränkt. 
+
+Dazu wurde der Wertebereich zunächst mithilfe des Schwellwertes geteilt. Von einer weiteren Teilung ist abzuraten, da es sonst für den Nutzer schwierig wird, die Räder mit den gewünschten Geschwindigkeiten zu drehen. Die Unterscheidung zwischen langsame Rotation und schnelle Rotation ist jedoch intuitiv von jedem Nutzer verstehbar. Mit der Aufteilung in schnelle Geschwindkeit und langsame Geschwindkeit ist die Anzahl der Bewegungsmuster theoretisch verdoppelt worden. 
+Im Wertebereich der langsamen Bewegungen können nun Bewegungen wie das Neigen des Kamerawinkels zusätzlich abgebildet werden. Dabei wurde sich für die Bewegungszustände 2 (Neigung nach oben) und 8 (Neigung nach unten) entschieden. Unweigerlich geht dabei die Möglichkeit verloren seinen Fortbewegungsvektor feiner einzustellen. Es sind also keine langsamen Bewegungen nach vorne und hinten möglich. Dafür hat der Nutzer nun die Möglichkeit sich frei im Raum umschauen zu können.
+Da sich jedoch rausgestellt hat, dass der Nutzer in vielen Anwendungen, ohnehin die maximale Fortbewegungsgeschwindigkeit anstrebt, ist diese Umbelegung der Interaktion sinnvoll. Aus diesem Grund wird bei dieser Abbildung bei jeder _schnellen Sichtachsenbewegung_ immer der maximale Controllerausschlag abgebildet, um den Nutzer bei der Fortbewegung zu entlasten. Es ist nichtmehr notwendig konstant mit der maximalen Geschwindkeit die Räder zu drehen, damit man sich schnellstmöglicht fortbewegt. 
+
+In der Praxis hat sich gezeigt, dass nicht jeder zusätzliche Bewegungszustand für neue Interaktionen genutzt werden kann, da sonst die Präzision mancher Eingaben sich verschlechtert. Ein Beispiel dafür ist die Rotation um die eigene Achse. Wird die Rotation um die eigene Achse nur noch bei hohen oder niedrigen Geschwindkeiten registriert, so ist es dem Nutzer entweder nicht mehr möglich sich schnell umzudrehen oder kleine Anpassungen seines Blickwinkels zu machen. Die Tatsächliche Anzahl an Bewegungsmustern ist deshalb kleiner. Es muss bei jedem Zustand und jeder Interaktion abgewägt werden, ob eine Teilung des Wertebereichs sinnvoll ist.
+
+<mark>In einer ersten Versuchsreihe wurde getestet ob hierfür der Schwellwert $s_1$ verwendung findet..... HIER WEITER MACHEN</mark>
+
+### 5.4.6 Fehlerhafte Zustandsinterpretation
+Mit zunehmenden Bewegungszuständen wird es schwerer, den richtigen Zustand zu ermitteln. Besonders beim Wechsel von einem Zustand in einen anderen kommt es vermehrt zu unerwünschten Bewegungszuständen. Ein Beispiel ist das fehlerhafte Auslösen eines Knopfdruckes beim Beschleunigen vom Ruhezustand in eine Sichtachsenbewegung. Dabei befindet sich für einen kurzen Moment ein Rad unter und ein Rad über dem Grenzwert $g_1$, was zu einem Wechsel in den Einzelradbewegung
+
+
+Ein Beispiel ist der Übergang vom Ruhezustand in eine Sichtachsenbewegung. Dabei kommt es kurzzeitig bei der Beschleunigung zu einem Wechsel  in den Neigungs-Zustand.
+
+<mark>Abbildung mit Erklärung</mark>
+(Knöpfe werden kurz gedrückt, weil Rad kurz bei 0)
+
+Ein hier getesteter Ansatz, um unerwünschte Eingaben zu minimieren, ist nur dann andere Bewegungszustände außer dem Ruhezustand zuzulassen, wenn die Räder nicht ihre Geschwindigkeit ändern. Somit werden Bewegungs- und Interaktionszustände blockiert, solange sich eins der Räder in einem wechselnden Zustand befindet. Dazu wird die Änderungsrate $a$ benötigt, sowie ein Grenzwert $g$ der, wenn er überschritten wird, dafür sorgt, dass der Rollstuhl in den Ruhezustand (Bewegungszustand 5) geht. Jedoch ist dieses Verfahren nur dann präzise wenn die  
+
+<mark>Abbildung mit Ergebnis</mark>
+
+Zu sehen ist......
+
+In den Messwerten ist darüber hinaus auch zu erkennen
+
 
 ___
 
@@ -234,8 +314,8 @@ Als erstes wird der Frage nach gegangen in welchem Modus das Gyroskop betrieben 
 <mark>Bild einfügen
 (Abb.? Gradzahl pro Sekunde im Verlauf der Zeit bei dem Testperson ein Rad so schnell wie möglich dreht)</mark>
 
-Der Graph zeigt, dass der maximal erreicht Ausschlag um die $800$ beziehungsweise $-800$ herum ist. Daraus folgt dass Gyroskop-Modus 2 für dieses Szenario der ideale ist. Der Nutzer erreicht nicht die maximal Geschwindigkeit und reizt trotzdem den Wertebereich ca. $80\%$ aus. 
-Jedoch hat sich beim Testen herausgestellt, dass es für den Nutzer in bestimmten Szenarien störend sein kann wenn er nicht die maximale mögliche Geschwindkeit mit niedriger Umdrehungszahl erreicht. Dies ist zwar nicht realistisch, da aber in vielen Anwendungen meist der maximale Ausschlag angestrebt wird um sich fortzugebewegen, ist es sehr anstrengend für den Nutzer lange viel Kraft und Energie in die Fortbewegung stecken zu müssen. Denkbar wäre hier eine neue Skaliereung des Wertebereichts während des Mappings, damit schneller der maximale Wert erreicht wird, ohne einen Zahlenüberlauf zu riskieren, wenn man den Gyromodus stattdessen runtersetzt.
+Der Graph zeigt, dass der maximal erreicht Ausschlag um die $800$ beziehungsweise $-800$ herum ist. Daraus folgt dass Gyroskop-Modus 2 für dieses Szenario der Ideale ist. Der Nutzer erreicht nicht die maximal Geschwindigkeit und reizt trotzdem den Wertebereich ca. $80\%$ aus. 
+Jedoch hat sich beim Testen herausgestellt, dass es für den Nutzer in bestimmten Szenarien störend sein kann, wenn er nicht die maximale mögliche Geschwindkeit mit niedriger Umdrehungszahl erreicht. Dies ist zwar nicht realistisch, da aber in vielen Anwendungen meist der maximale Ausschlag angestrebt wird um sich fortzubewegen, ist es sehr anstrengend für den Nutzer lange viel Kraft und Energie in die Fortbewegung stecken zu müssen. Denkbar wäre hier eine neue Skaliereung des Wertebereichts während des Mappings, damit schneller der maximale Wert erreicht wird, ohne einen Zahlenüberlauf zu riskieren, wenn man den Gyromodus stattdessen runtersetzt.
 
 ### 5.5.2 Datenrate der Übertragungsprotokolle
 Zunächst soll der Frage nachgegangen werden ob hektische Bewegungen eines Rades zu einer schlechteren Übertragung der Daten führen, und ob schnellere Bewegungen dazu führen ob weniger Daten-Pakete den Clienten erreichen.
@@ -253,7 +333,10 @@ Bei gewöhnlicher Nutzung des Systems ergeben sich folgende Werte bei der Übert
 Aus der Tabelle ist zu entnehmen das im normalen Betrieb mindestens <mark>Zahl</mark> Daten-Packete pro Sekunde erreicht werden. Es hat sich gezeigt, dass im hier untersuchten Echtzeit-Szenario die Datenrate ausreichen ist um eine angenehme Nutzererfahrung zu generieren. 
 <mark>blablabla</mark>
 
-### 5.5.3 
+### 5.5.3 Bewegungszustände
+
+
+
 - verschiedene Bewegungen plotten 
 	- Knopf drücken im Vergleich zu Bewegung
 	- Neigen und bewegen (Threshold oder filter?)

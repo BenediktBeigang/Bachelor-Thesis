@@ -4,8 +4,27 @@ kanban-plugin: basic
 
 ---
 
-## Mapping
+## Arbeit
 
+- [ ] Rechner kaufen?
+- [ ] themen wie heartbeat, calibration, etc aufnehmen
+- [ ] bewegungszustand abbildung zahlen zu zuständen
+- [ ] zustände erklären
+- [ ] filter um peaks zu zu vermeiden - smooth algorithmus
+- [ ] ruckartige bewegungen besser
+- [ ] key A und D abbilden mit schneller rotation
+
+
+## Messen
+
+- [ ] simpleWheelchair testen
+- [ ] esp Daten sammeln
+- [ ] daten neu erheben wegen bug
+
+
+## refactoring
+
+- [ ] buttonPressed allowed entfernen
 
 
 ## Connection
@@ -21,25 +40,6 @@ kanban-plugin: basic
 
 - [ ] WPF-GUI für Software
 - [ ] ESP DeepSleep wenn er wartet
-
-
-## Arbeit
-
-- [ ] Messwerte messen
-- [ ] coden durchschnitt und sowas
-- [ ] Rechner kaufen?
-- [ ] knöpfe werden ausgelöst bei kleinen bewegungen und am anfang von anderen zuständen
-
-
-## Messen
-
-- [ ] Daten pro Sekunde Messen
-- [ ] neigen testen
-- [ ] smoth rotation | wenn unter threshold keine rotation
-- [ ] buttons werden immer gedrückt wenn man beide räder dreht | exisitert dass problem immer noch?
-- [ ] GyroMax mit terminal ändern können FIXXEN
-- [ ] simpleWheelchair testen
-- [ ] esp Daten sammeln
 
 
 
