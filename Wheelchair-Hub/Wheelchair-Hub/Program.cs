@@ -9,8 +9,9 @@ public static class Program
 {
     public static void Main(string[] args)
     {
+        // Console.Clear();
+        // Console.Write(Templates.Template());
         Start_Loops();
-        // new Benchmark();
         Controller.Start();
         Connection._Connection = Connection.SetConnection(ConnectionType.WIFI);
         Load_Options();

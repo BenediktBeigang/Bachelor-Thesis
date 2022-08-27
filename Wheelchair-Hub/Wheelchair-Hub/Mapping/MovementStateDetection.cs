@@ -49,8 +49,6 @@ public class MovementStateDetection
         return (rotations.RawLeft is 0 && rotations.RawRight is 0 || Is_MovementStateChanging());
     }
 
-
-
     private bool Is_Tilt(Rotations rotations)
     {
         bool b1 = (Math.Abs(rotations.AngularVelocityLeft) <= DualWheel_Threshold) && (Math.Abs(rotations.AngularVelocityRight) <= DualWheel_Threshold);

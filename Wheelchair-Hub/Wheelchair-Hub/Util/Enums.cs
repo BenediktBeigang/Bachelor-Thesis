@@ -44,3 +44,9 @@ public enum MovementState
     DualWheel_Turn,
     Tilt
 }
+
+public enum ValueType
+{
+    Real,
+    Playback
+}

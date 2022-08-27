@@ -25,6 +25,7 @@ public static class Controller
     {
         if (controller is null) return;
         Rotations rotations = Node.Rotations();
+        if (Playback.Is_PlaybackRunning) Playback.Update_Gyro();
         ControllerInput input = Mapping._Mapping!.Values_Next(rotations);
         Terminal.Other = input.ToString();
         ValuesToController(input);

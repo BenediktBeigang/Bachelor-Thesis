@@ -7,8 +7,10 @@ public static class Terminal
     public static string Other { get; set; } = "";
     private static ConcurrentBag<Message> MessageHistory { get; set; } = new();
     private static ConcurrentBag<Message> CommandHistory { get; set; } = new();
-    private static Formatting format = new Formatting(new string[] { "Node", "", "Connection", "Raw Values", "DegreesPerSecond", "Calibration Status", "MessagesPerSecond", "DisconnectionTime" });
     private const int VISIBLE_MESSAGES = 5;
+    private const string FORMAT_STRING_TABLELINE = "|{0,4}|{1,0}|{2,10}|{3,10}|{4,16}|{5,18}|{6,17}|{7,17}|";
+    private const string FORMAT_STRING_INFOHEAD = "|{0,-11}||{1,-24}||{2,-29}||{3,-32}||{4,-18}|";
+    private const string FORMAT_STRING_INFO = "|{0,-11}||{1,-24}||{2,-7}|{3,-10}|{4,-10}||{5,-15}|{6,-16}||{7,-18}|";
 
     public static void Print(object sender, ElapsedEventArgs e)
     {
@@ -69,8 +71,8 @@ public static class Terminal
     {
         string table = "";
         table += "-----------------------------------------------------------------------------------------------------" + "\n";
-        table += String.Format($"{format.FormatString}", "Node", "", "Connection", "Raw Values", "DegreesPerSecond", "Calibration Status", "MessagesPerSecond", "DisconnectionTime") + '\n';
-        table += String.Format($"{format.FormatString}", "----", "", "----------", "----------", "----------------", "------------------", "-----------------", "-----------------") + '\n';
+        table += String.Format($"{FORMAT_STRING_TABLELINE}", "Node", "", "Connection", "Raw Values", "DegreesPerSecond", "Calibration Status", "MessagesPerSecond", "DisconnectionTime") + '\n';
+        table += String.Format($"{FORMAT_STRING_TABLELINE}", "----", "", "----------", "----------", "----------------", "------------------", "-----------------", "-----------------") + '\n';
 
         table += Generate_TableLine(Node.Node_One) + '\n';
         table += Generate_TableLine(Node.Node_Two) + '\n';
@@ -87,11 +89,9 @@ public static class Terminal
     private static string Generate_InfoLine()
     {
         string output = "";
-        string infoHead = "|{0,-11}||{1,-24}||{2,-29}||{3,-32}||{4,-18}|";
-        string info = "|{0,-11}||{1,-24}||{2,-7}|{3,-10}|{4,-10}||{5,-15}|{6,-16}||{7,-18}|";
-        output += String.Format(infoHead, "", "", "         Flipped", "          Threshold", "") + '\n';
-        output += String.Format(info, " GYRO-MODE", " MAPPING-MODE", " Nodes", " Node-One", " Node-Two", " WheelMovement", " ButtonPressing", " WheelMovementMax") + '\n';
-        output += String.Format(info,
+        output += String.Format(FORMAT_STRING_INFOHEAD, "", "", "         Flipped", "          Threshold", "") + '\n';
+        output += String.Format(FORMAT_STRING_INFO, " GYRO-MODE", " MAPPING-MODE", " Nodes", " Node-One", " Node-Two", " WheelMovement", " ButtonPressing", " WheelMovementMax") + '\n';
+        output += String.Format(FORMAT_STRING_INFO,
         $" {Gyro.Mode}", $" {Mapping.Get_Mode().ToString()}",
         $" {Node.NodesFlipped}", $" {Node.Node_One.Gyro.RotationValueFlip}", $" {Node.Node_Two.Gyro.RotationValueFlip}",
         $" {Mapping.Get_WheelMovementThreshold()}", $" {Mapping.Get_ButtonPressingThreshold()}",
@@ -109,12 +109,20 @@ public static class Terminal
             default: return "";
         }
         return (node.ConnectionType is ConnectionType.NOTHING)
-        ? String.Format($"{format.FormatString}", deviceNumber, "", "NOTHING", "", "", "NO GYRO", "", "")
-        : String.Format($"{format.FormatString}",
+        ? String.Format($"{FORMAT_STRING_TABLELINE}",
+        deviceNumber,
+        "",
+        "NOTHING",
+        node.Gyro!.Peek_RawValue(),
+        node.Gyro!.DegreePerSecond_Last().ToString("0.00"),
+        "NO GYRO",
+        "0",
+        "0")
+        : String.Format($"{FORMAT_STRING_TABLELINE}",
         deviceNumber,
         "",
         node.ConnectionType,
-        node.Gyro!.RawValue_Last(),
+        node.Gyro!.Peek_RawValue(),
         node.Gyro!.DegreePerSecond_Last().ToString("0.00"),
         node.Gyro!.CalibrationStatus,
         node.DataPerSecond,

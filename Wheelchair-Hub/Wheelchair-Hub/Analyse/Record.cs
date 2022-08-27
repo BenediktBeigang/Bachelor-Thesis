@@ -3,20 +3,16 @@ using System.Timers;
 
 public class Record
 {
-    private static bool Recording { get; set; }
+    public static bool Is_Recording { get; set; }
+
     private static List<Sample> RecordedSamples = new();
     private const int TIME_BETWEEN_CALLS = 16;
     private static System.Timers.Timer Timer = new System.Timers.Timer(TIME_BETWEEN_CALLS);
 
-    public static bool Is_Recording()
-    {
-        return Recording;
-    }
-
     public static void Switch_Record()
     {
-        Recording = !Recording;
-        if (Recording)
+        Is_Recording = !Is_Recording;
+        if (Is_Recording)
             Start_Record();
         else
             Stop_Record();
@@ -25,7 +21,7 @@ public class Record
     private static void Start_Record()
     {
         RecordedSamples.Clear();
-        Recording = true;
+        Is_Recording = true;
         Start_Timer();
         Terminal.Add_Message("Started recording.");
     }
@@ -34,7 +30,7 @@ public class Record
     {
         Timer.Stop();
         Timer.Close();
-        Recording = false;
+        Is_Recording = false;
         Save_Recording();
         Terminal.Add_Message("Stopped recording.");
     }
@@ -51,8 +47,12 @@ public class Record
     {
         RecordedSamples.Add(new Sample
         {
-            NodeOne_Value = Node.Node_One.Gyro.RawValue_Last() / Gyro.StepsPerDegree,
-            NodeTwo_Value = Node.Node_Two.Gyro.RawValue_Last() / Gyro.StepsPerDegree,
+            NodeOne_RawValue_Clean = Node.Node_One.Gyro.RawValue_Clean,
+            NodeTwo_RawValue_Clean = Node.Node_Two.Gyro.RawValue_Clean,
+            NodeOne_RawValue = Node.Node_One.Gyro.Peek_RawValue(),
+            NodeTwo_RawValue = Node.Node_Two.Gyro.Peek_RawValue(),
+            NodeOne_Value = Node.Node_One.Gyro.Peek_RawValue() / Gyro.StepsPerDegree,
+            NodeTwo_Value = Node.Node_Two.Gyro.Peek_RawValue() / Gyro.StepsPerDegree,
             NodeOne_SmoothedValue = Node.Node_One.Gyro.SmoothedDegreePerSecond_Last(),
             NodeTwo_SmoothedValue = Node.Node_Two.Gyro.SmoothedDegreePerSecond_Last(),
             NodeOne_Datarate = Node.Node_One.DataPerSecond,

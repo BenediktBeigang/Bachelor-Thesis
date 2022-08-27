@@ -13,6 +13,7 @@ kanban-plugin: basic
 - [ ] filter um peaks zu zu vermeiden - smooth algorithmus
 - [ ] ruckartige bewegungen besser
 - [ ] key A und D abbilden mit schneller rotation
+- [ ] aufgezeichnetete daten wieder einspielen
 
 
 ## Messen
@@ -25,6 +26,7 @@ kanban-plugin: basic
 ## refactoring
 
 - [ ] buttonPressed allowed entfernen
+- [ ] abhängigkeit acceleration von gyro entferenen, über Rotations gehen
 
 
 ## Connection

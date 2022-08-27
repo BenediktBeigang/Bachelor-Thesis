@@ -28,6 +28,7 @@ public class Gyro
     // public
     public CalibrationStatus CalibrationStatus { get; set; }
     public bool RotationValueFlip { get; set; }
+    public short RawValue_Clean { get; set; }
 
     // readonly
     public readonly DeviceNumber DeviceNumber;
@@ -59,8 +60,10 @@ public class Gyro
     /// Overides oldest RawValue in Buffer with new RawValue.
     /// </summary>
     /// <param name="newValue"></param>
-    public void RawValue_Next(short newValue)
+    public void Push_RawValue(short newValue, ValueType type)
     {
+        if (ValueAccessDenied(type)) return;
+        RawValue_Clean = newValue;
         BufferPointer++;
         if (BufferPointer >= BUFFER_SIZE)
         {
@@ -73,16 +76,26 @@ public class Gyro
         RawValueBuffer[BufferPointer] = transformedValue;
     }
 
+    private bool ValueAccessDenied(ValueType type)
+    {
+        switch (type)
+        {
+            case ValueType.Real: return Playback.Is_PlaybackRunning;
+            case ValueType.Playback: return Playback.Is_PlaybackRunning is false;
+        }
+        return true;
+    }
+
     /// <summary>
     /// Returns newest RawValue.
     /// </summary>
     /// <returns></returns>
-    public short RawValue_Last()
+    public short Peek_RawValue()
     {
         return RawValueBuffer[BufferPointer];
     }
 
-    public short[] RawValue_Last(int count)
+    public short[] Peek_RawValue(int count)
     {
         short[] result = new short[count];
         int resultCounter = 0;
@@ -118,14 +131,14 @@ public class Gyro
     #region DegreePerSecond Values
     public double DegreePerSecond_Last()
     {
-        return RawValue_Last() / StepsPerDegree;
+        return Peek_RawValue() / StepsPerDegree;
     }
 
     // first is newest, last is oldest
     public double[] DegreePerSecond_Last(int count)
     {
         double[] result = new double[count];
-        short[] rawValues = RawValue_Last(count);
+        short[] rawValues = Peek_RawValue(count);
         for (int i = 0; i < count; i++)
         {
             result[i] = rawValues[i] / StepsPerDegree;
@@ -180,7 +193,7 @@ public class Gyro
     public double Acceleration()
     {
         const int samples = 2;
-        double[] values = SmoothedDegreePerSecond_Last(samples);// DegreePerSecond_Last(samples);
+        double[] values = DegreePerSecond_Last(samples);// SmoothedDegreePerSecond_Last(samples);// 
         double[] accelerations = new double[samples - 1];
         for (int i = 0; i < samples - 1; i++)
         {

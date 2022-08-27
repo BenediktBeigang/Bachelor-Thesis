@@ -14,6 +14,7 @@ public static class UserInput
                 case 'g': Change_GyroMode(); break;
                 case 'r': Switch_Record(); break;
                 case 'm': Change_Mapping(); break;
+                case 'l': Playback.Start_Playback(); break;
                 default: Terminal.Add_Command($"Invalid Input!"); continue;
             }
         }
