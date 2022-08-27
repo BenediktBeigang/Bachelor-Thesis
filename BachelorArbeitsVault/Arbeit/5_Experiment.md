@@ -37,6 +37,7 @@ Das Gyroskop des MPU-6050 kann in vier verschiedenen Konfigurationen betrieben w
 | 1     | 500                           | 65,5            | 1,39                                | 8,73                           | 0,08                                   |
 | 2     | 1000                          | 32,8            | 2,78                                | 17,47                          | 0,16                                   |
 | 3     | 2000                          | 16,4            | 5,56                                | 34,93                          | 0,32                                   |
+
 \*Werte bei einem Raddurchmesser von 60 cm.
 
 An dieser Stelle stellt sich die Frage welcher Modus für das hier entwickelte System das Richtige ist. Auf der einen Seite möchte der Nutzer ein möglichst <mark>ruckelfreies</mark> Erlebnis haben. Um dies zu gewährleisten muss das Gyroskop so senstiv wie möglich eingestellt werden und der Wertebereich möglichst weit ausgereizt ist. Ist der Modus nicht sensitiv genug so bemerkt der Nutzer möglicherweise das Springen der Bitwerte in Form eines Vorspringens der Bewegung. Jedoch soll der Nutzer nicht schneller als die maximale Gradzahl pro Sekunde drehen können, da es sonst zu einem Zahlenüberlauf kommt und zu einer fehlerhaften Weiterverarbeitung der Daten führt. Der gewählte Modus muss also möglichst niedrig sein, sollange der Nutzer nicht in der Lage ist die maximale Gradzahl pro Sekunde zu erreichen. Im Kapitel System-Analyse wird dieser Frage weiter nachgegangen.
@@ -142,6 +143,7 @@ Da das im Rahmen dieser Arbeit entwickelte System darauf abzielt, im virtuellen 
 **Fall 3:** Dreht sich nur ein Rad, so dreht sich dieses um das Stehende.
 
 Im Folgenden wird die Berechnung der Bewegungsanteile aufgezeigt, bestehend aus Bewegung nach vorne/hinten und Rotation um die eigene Achse:
+
 $$
 \begin{align}
 Bahngeschwindigkeit\ des\ linken\ Rades: vL \\
@@ -153,35 +155,48 @@ Fortbewegungsvektor: s \\
 Rotationvektor: r \\
 \end{align}
 $$
+
 ![[WheelchairMath.PNG|500]]
 (Abb.<mark>?</mark> Skizze eines Rollstuhls, mit den relevanten Größen)
 
 Da in der Realität die Bewegung nicht idealisiert ist, ist festzustellen, dass die tatsächliche Bewegung zusammengesetzt ist aus einer der ersten beiden Fälle und dem dritten Fall:
+
 $$
 \begin{align}
 s = s_{1,2} + s_3 \\
 r = r_{1,2} + r_3
 \end{align}
 $$
+
 Um bestimmen zu können, ob es sich um Fall 1 oder Fall 2 handelt, muss folgende Bedingung geprüft werden, die gilt, wenn sich die Räder gegeneinander drehen:
+
 $$
 (vL > 0) \oplus (vR > 0)
 $$
+
 Die Rotation beider Räder lässt sich in zwei Komponenten aufspalten. Zum einen den Minimum-Anteil $m$, den sich beide Räder drehen.
+
 $$m = min(\left| vL \right|-\left| vR\right|)$$
+
 Zum anderen der Overshoot-Anteil $o$ den sich ein Rad schneller dreht als das andere.
+
 $$o = \left|\left| vL \right|-\left| vR\right| \right|$$
+
 **Fall 1:**
 Die Bewegung nach vorne (oder hinten) ergibt sich in diesem Fall aus dem Anteil der Geschwindigkeit, mit denen sich beide Räder drehen.
+
 $$s_1 = m$$
+
 **Fall 2:**
 Um die Rotation um die eigene Achse errechnen zu können, wird zunächst der Wendekreis $w_1$ bestimmt. Dieser Wendekreis ist abhängig vom Abstand der beiden Räder $d$ und dessen Mittelpunkt liegt im Mittelpunkt dieses Abstandes. Anschließend wird mithilfe des RadMinimums $m$, das Verhältnis von $m$ zu $w_1$ errechnet. Dieses Verhältnis muss zum Schluss mit $360$ multipliziert werden, um den resultierenden Winkel $r_{1,2}$ zu berechnen.
+
 $$
 \begin{align}
 w_1 = d \cdot π \\
 r_{1,2} = (\frac {m} {w_1}) \cdot 360
 \end{align}
 $$
+
 **Fall 3:**
 Bei diesem Fall gibt es eine Bewegungs- und eine Rotationskomponente. Da sich nur ein Rad bewegt, hat sich der Wendekreis vergrößert zu $w_2$. Der Durchmesser von $w_2$ ist nun doppelt so groß wie von $w_1$, da das stehende Rad nun der Mittelpunkt des Wendekreises ist. Jetzt wird der Overshoot $o$ (also der Anteil der Bewegung des Rades, das sich mehr als das andere dreht) ins Verhältnis gesetzt mit $w_2$ und erhält dadurch $Θ$. Verrechnet man $Θ$ mit dem inneren Wendekreis $w_1$, so erhält man die Bewegungskomponente $s_3$.
 
@@ -192,29 +207,38 @@ w_2 = 2 \cdot d \cdot π \\
 s_3 = Θ \cdot w_1
 \end{align}
 $$
+
 Um die Rotationskomponente $r_3$ berechnen zu können, muss $Θ$ mit $360$ multipliziert werden.
+
 $$
 \begin{align}
 r_3 = Θ \cdot 360
 \end{align}
 $$
+
 Da die Bewegungskomponenten mit den absoluten Rotationswerten errechnet wurden, ist es notwendig anhand der Drehrichtungen beider Räder zu bestimmen, ob sich der Rollstuhl vor- oder zurückbewegt und ob er sich dabei nach links oder rechts dreht. Die Drehrichtung ist immer dann links, wenn:
+
 $$
 vL < vR
 $$
+
 Es handelt sich um eine Vorwärtsbewegung, wenn:
+
 $$
 vL + vR > 0
 $$
+
 ### 5.4.3 Abbildung auf einen idealisierten simulierten Rollstuhl
 Bei der Verwendung der Abbildung hin zu einem realistischen Rollstuhl hat sich gezeigt, dass ein schnelles Vorankommen gestört wird. Ursache dafür ist, dass die Räder sich in leicht unterschiedlicher Geschwindigkeit drehen und so automatisch die Bewegung nach vorne, <mark>Drall</mark> nach links oder rechts bekommt. 
 
 Dieses Problem kann gelöst werden, wenn mit den Rotationen beider Räder ein Mittelwert $v$ errechnet. Dieser Mittelwert wird dann die Kalkulation von Fall 1 und Fall 2, statt dem Minimum $m$ verwendet. 
+
 $$
 \begin{align}
 v = \frac {(vL + vR)} {2} 
 \end{align}
 $$
+
 Jedoch müssen die Fälle in diesem Fall distinkt sein, da sonst das Wenden mit einem Rad nicht mehr möglich wäre. Grund dafür ist, dass die Geschwindigkeiten des stillstehende Rades und das sich Drehenden zu einem Mittelwert zusammengerechnet werden würde und der Rollstuhl sich nur nach vorne bewegt, statt sich zu drehen. Das Zusammenrechnen von Fall 1 oder Fall 2 mit Fall 3 darf also nicht geschehen. Realisiert man die Bewegung des Rollstuhls, indem der Rollstuhl in verschiedenen Bewegungszuständen sein kann, so kann die Bewegung für jeden Fall einzeln richtig errechnet werden.
 
 ### 5.4.4 Bewegungszustände
@@ -232,6 +256,7 @@ Um alle Bewegungszustand-Permutationen ermitteln zu können, muss die Rotation d
 Im Folgenden wird darauf eingegangen, wie diese Untergruppen-Zustände erkannt werden:
 <mark>Schwellwert\ für\ \textbf{Einzelradbewegung}: s_1 \\
 Schwellwert\ für\ Teilung\ des\ Wertebereichs: s_2 \\</mark>
+
 $$
 \begin{align}
 Bahngeschwindigkeit\ des\ linken\ Rades: vL \\
@@ -239,35 +264,45 @@ Bahngeschwindigkeit\ des\ rechten\ Rades: vR \\
 Schwellenwert : s\\
 \end{align}
 $$
+
 **Ruhezustand**
 Der _Ruhezustand_ wird erreicht, wenn kein anderer Zustand erreicht wird oder sich kein Rad dreht. Da das oben beschriebene Rauschen abgeschnitten wurde, gilt der Ruhezustand wenn:
+
 $$
 \begin{align}
 (vL = 0) \land (vR = 0) 
 \end{align}
 $$
+
 **Einzelradbewegung**
 Wie beim Ruhezustand ist es auch hier möglich darauf zu prüfen, dass ein Wert 0 ist. Die einfachste Art und Weise dies zu prüfen, ist folgende Bedingung:
+
 $$
 \begin{align}
 (vL = 0) \oplus (vR = 0) 
 \end{align}
 $$
+
 Der Nutzer hat jedoch Schwierigkeiten ein Rad vollständig ruhig zu halten. Die Gyroskop-Werte überschreiten selbst bei kleinen Handbewegungen den Schwellenwert. Dies führt zu unbeabsichtigten Eingaben. Deshalb ist diese Methode unzureichend. Führt man einen Schwellenwert $s$ ein, wird eine vom Nutzer unbeabsichtigte _Einzelradbewegung_ zuverlässiger unterdrückt:
+
 $$
 \begin{align}
 (|vL| < s) \oplus (|vR| < s) 
 \end{align}
 $$
+
 **Rotation um die eigene Achse**
 Die Bedingung die gelten muss, wenn sich beide Räder gegeneinander drehen ist identisch mit der Bedingung, welche schon im Kapitel _Abbildung auf einen realistisch simulierten Rollstuhl_ aufgestellt wurde. Diese gilt nur, wenn _Ruhezustand_ und _Einzelradbewegung_ ausgeschlossen werden konnte, da nicht die Fälle abgedeckt werden, wenn $vL$ oder $vR$ 0 sind:
+
 $$
 \begin{align}
 (vL > 0) \oplus (vR > 0)
 \end{align}
 $$
+
 **Sichtachsenbewegung**
 Der Zustand der Sichtachsenbewegung gilt dann, wenn sich die Räder in dieselbe Richtung drehen. Damit ist dieser Zustand das logische Gegenteil der Bedingung _Rotation um die eigene Achse_, vorausgesetzt es wurden _Ruhezustand_ und _Einzelradbewegung_ ausgeschlossen:
+
 $$
 \begin{align}
 (vL > 0) \Leftrightarrow (vR > 0) 
@@ -284,6 +319,7 @@ Dazu wurde der Wertebereich zunächst mithilfe des Schwellenwertes geteilt. Von 
 Im Wertebereich der langsamen Bewegungen können nun Bewegungen wie das Neigen des Kamerawinkels zusätzlich abgebildet werden. Dabei wurde sich für die Bewegungszustände 2 (Neigung nach oben) und 8 (Neigung nach unten) entschieden. Für das Detektieren dieses neuen Untergruppen-Bewegungszustandes wird folgende Bedingung benötigt:
 
 **Neigen**
+
 $$
 \begin{align}
 (|vL| < s) \land (|vR| < s) \land ((vL > 0) \Leftrightarrow (vR > 0))
@@ -340,19 +376,20 @@ Dieses Problem lässt sich über das Einführen eines neuen Schwellenwertes behe
 Durch das Einführen der neuen Schwellenwerte müssen folgende Untergruppen-Bewegungszustände erweitert werden:
 
 **Einzelradbewegung**
+
 $$
 \begin{align}
 ((|vL| < s_1) \oplus (|vR| < s_1)) \land ((|vL| > s_2) \oplus (|vR| > s_2))
 \end{align}
 $$
+
 **Sichtachsenbewegung**
+
 $$
 \begin{align}
 ((vL > 0) \Leftrightarrow (vR > 0)) \land ((vL > s_2) \land (vR > s_2))
 \end{align}
 $$
-
-
 
 **Unbeabsichtigtes Neigen beim Anfahren**
 Beim Anfahren oder Bremsen (_Sichtachsenbewegung_) wurde beobachtet, dass für ein kurzes Zeitintervall der Kamerawinkel unbeabsichtigt geneigt wird. Ähnlich wie beim vorangegangenen Problem wird auch hier beim Übergang von einem Zustand zum Nächsten, ein unerwünschter Zwischenzustand erreicht.
@@ -360,18 +397,20 @@ Beim Anfahren oder Bremsen (_Sichtachsenbewegung_) wurde beobachtet, dass für e
 <mark>Plot mit Problem</mark>
 
 Da die Fehldetektion immer dann auftritt, wenn sich die Geschwindigkeit der Räder ändert, ist ein Lösungsansatz immer dann in den Ruhemodus (Bewegungszustand 5) zu wechseln, wenn die Änderungsrate $a$ der Gyroskop-Werte einen vorher definierten Schwellenwert $s_3$ überschreitet. Somit werden beim Übergang von einem Zustand in den nächsten, im Zeitfenster des Übergangs alle anderen Untergruppen-Bewegungszustände unterdrückt. Haben die Räder ihre Zielgeschwindigkeit erreicht, fällt die Änderungsrate unter den Schwellenwert, sodass der nächste korrekte Zustand detektiert werden kann. Jedoch ist anzumerken, dass diese Methode vor allem bei ruckartigen Bewegungen funktioniert, da besonders dann die Änderungsrate ein gut registrierbaren Ausschlag hat. Für die Berechnung der Änderungsrate wird folgende Berechnung verwendet:
+
 $$
 \begin{align}
 a = |(vL_{[1]} - vL_{[0]})| + |((vR_{[1]} - vR_{[0]})| > s_3
 \end{align}
 $$
+
 Der _Ruhezustand_ muss wie folgt ergänzt werden:
+
 $$
 \begin{align}
 (vL = 0) \land (vR = 0) \land (a > s_3)
 \end{align}
 $$
-
 
 <mark>Plot mit Problem</mark>
 
