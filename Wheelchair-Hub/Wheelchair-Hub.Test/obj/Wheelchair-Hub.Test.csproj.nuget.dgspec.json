@@ -18,15 +18,15 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net6.0-windows"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "net6.0-windows7.0": {
+            "targetAlias": "net6.0-windows",
             "projectReferences": {
               "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\Wheelchair-Hub\\Wheelchair-Hub.csproj": {
                 "projectPath": "C:\\Users\\bened\\Documents\\GitHub\\Bachelorarbeit\\Wheelchair-Hub\\Wheelchair-Hub\\Wheelchair-Hub.csproj"
@@ -41,8 +41,8 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
           "dependencies": {
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
@@ -94,15 +94,15 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net6.0-windows"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "net6.0-windows7.0": {
+            "targetAlias": "net6.0-windows",
             "projectReferences": {}
           }
         },
@@ -113,16 +113,24 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
           "dependencies": {
             "Nefarius.ViGEm.Client": {
               "target": "Package",
               "version": "[1.17.183, )"
             },
+            "ScottPlot": {
+              "target": "Package",
+              "version": "[4.1.27, )"
+            },
+            "ScottPlot.WinForms": {
+              "target": "Package",
+              "version": "[4.1.27, )"
+            },
             "System.IO.Ports": {
               "target": "Package",
-              "version": "[7.0.0-preview.6.22324.4, )"
+              "version": "[6.0.0, )"
             },
             "Websocket.Client": {
               "target": "Package",
