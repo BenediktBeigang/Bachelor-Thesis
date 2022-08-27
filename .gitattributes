@@ -1,2 +1,3 @@
 BachelorArbeitsVault/** linguist-documentation
 *.wlt linguist-vendored
+*.h linguist-language=cpp
