@@ -9,7 +9,7 @@ public class Program
         {
             Console.WriteLine("Enter Name of File:");
             string? input = Console.ReadLine();
-            // string? input = "ohneAcc";
+            // string? input = "mitAcc";
             if (input == "q") break;
 
             string path = @"Files\";
@@ -23,15 +23,19 @@ public class Program
                 string jsonString = File.ReadAllText(path + name + filetype);
                 List<Sample> record = JsonSerializer.Deserialize<List<Sample>>(jsonString) ?? new List<Sample>();
 
-                Stats_Datarate(record);
-                new Plot_Gyro(record);
-                new Plot_Datarate(record);
-                new Plot_GyroWithAcceleration(record);
-                new Plot_NodeOne(record);
-            }
-            catch (Exception)
-            {
+                string movementState = "tilt";
 
+                // new Plot_GyroSignalNodeOne(record);
+                // new Plot_GyroSignalNodeTwo(record);
+                // Stats_Datarate(record);
+                // new Plot_Gyro(record, movementState, name);
+                // new Plot_Datarate(record);
+                new Plot_GyroWithAcceleration(record, movementState, name);
+                // new Plot_NodeOne(record);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
         }
     }

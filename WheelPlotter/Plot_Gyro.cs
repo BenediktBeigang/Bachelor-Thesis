@@ -1,15 +1,15 @@
 public class Plot_Gyro
 {
-    public Plot_Gyro(List<Sample> record)
+    public Plot_Gyro(List<Sample> record, string movementState, string file)
     {
         double[] x_One = record.Select(r => r.NodeOne_Value).ToArray();
         double[] x_Two = record.Select(r => r.NodeTwo_Value).ToArray();
 
         var plt = new ScottPlot.Plot(1600, 900);
         plt.XLabel("Time [s]");
-        plt.Title("AngularVelocity");
+        plt.Title($"AngularVelocity ({movementState}) ({file})");
 
-        Program.DrawMovementStates(record, ref plt, "button");
+        Program.DrawMovementStates(record, ref plt, movementState);
 
         var node_One = plt.AddSignal(x_One, sampleRate: 60);
         node_One.Color = System.Drawing.Color.RoyalBlue;

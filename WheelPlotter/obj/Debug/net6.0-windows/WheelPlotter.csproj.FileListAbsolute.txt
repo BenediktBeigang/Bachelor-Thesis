@@ -2,8 +2,6 @@ C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\bin\Debug\net6.0-win
 C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\bin\Debug\net6.0-windows\WheelPlotter.deps.json
 C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\bin\Debug\net6.0-windows\WheelPlotter.runtimeconfig.json
 C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\bin\Debug\net6.0-windows\WheelPlotter.dll
-C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\bin\Debug\net6.0-windows\ref\WheelPlotter.dll
-C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\bin\Debug\net6.0-windows\WheelPlotter.pdb
 C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\bin\Debug\net6.0-windows\ScottPlot.dll
 C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\bin\Debug\net6.0-windows\ScottPlot.WinForms.dll
 C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\obj\Debug\net6.0-windows\WheelPlotter.csproj.AssemblyReference.cache
@@ -16,3 +14,5 @@ C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\obj\Debug\net6.0-win
 C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\obj\Debug\net6.0-windows\ref\WheelPlotter.dll
 C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\obj\Debug\net6.0-windows\WheelPlotter.pdb
 C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\obj\Debug\net6.0-windows\WheelPlotter.genruntimeconfig.cache
+C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\bin\Debug\net6.0-windows\ref\WheelPlotter.dll
+C:\Users\bened\Documents\GitHub\Bachelorarbeit\WheelPlotter\bin\Debug\net6.0-windows\WheelPlotter.pdb
