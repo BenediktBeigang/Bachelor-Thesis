@@ -31,6 +31,7 @@ public class Gyro
 
     // readonly
     public readonly DeviceNumber DeviceNumber;
+    private readonly double[] scale = new double[] { 0.2, 0.2, 0.15, 0.15, 0.1, 0.1, 0.1 };
 
     // private
     private short BufferPointer;
@@ -53,7 +54,7 @@ public class Gyro
         RotationValueFlip = flipped;
     }
 
-    #region Value_Handling
+    #region Raw Values
     /// <summary>
     /// Overides oldest RawValue in Buffer with new RawValue.
     /// </summary>
@@ -112,12 +113,15 @@ public class Gyro
         Array.Copy(RawValueBuffer, pivot, result, 0, pivot);
         return result.Reverse().ToArray();
     }
+    #endregion
 
+    #region DegreePerSecond Values
     public double DegreePerSecond_Last()
     {
         return RawValue_Last() / StepsPerDegree;
     }
 
+    // first is newest, last is oldest
     public double[] DegreePerSecond_Last(int count)
     {
         double[] result = new double[count];
@@ -128,11 +132,55 @@ public class Gyro
         }
         return result;
     }
+    #endregion
 
+    #region Smoothing Value
+    public double SmoothedDegreePerSecond_Last()
+    {
+        return SmoothedDegreePerSecond_Last(1).First();
+    }
+
+    public double[] SmoothedDegreePerSecond_Last(int count)
+    {
+        if (count < 1) return new double[] { };
+        double[] result = new double[count];
+        double[] unfilteredValues = DegreePerSecond_Last((count - 1) + scale.Length);
+        for (int i = 0; i < count; i++)
+        {
+            result[i] = SmoothValue(unfilteredValues, i);
+        }
+        return result;
+    }
+
+    #region ForTesting
+    public double[] SmoothedDegreePerSecond_Last(int count, double[] unfilteredValues)
+    {
+        if (count < 1) return new double[] { };
+        double[] result = new double[count];
+        for (int i = 0; i < count; i++)
+        {
+            result[i] = SmoothValue(unfilteredValues, i);
+        }
+        return result;
+    }
+    #endregion
+
+    public double SmoothValue(double[] unfilteredValues, int start)
+    {
+        double result = 0;
+        for (int i = 0; i < scale.Length; i++)
+        {
+            result += unfilteredValues[i + start] * scale[i];
+        }
+        return result;
+    }
+    #endregion
+
+    #region Acceleration
     public double Acceleration()
     {
-        const int samples = 10;
-        double[] values = DegreePerSecond_Last(samples);
+        const int samples = 2;
+        double[] values = SmoothedDegreePerSecond_Last(samples);// DegreePerSecond_Last(samples);
         double[] accelerations = new double[samples - 1];
         for (int i = 0; i < samples - 1; i++)
         {
@@ -186,10 +234,10 @@ public class Gyro
     {
         switch (mode)
         {
-            case GyroMode.GYRO_250: return 131.068;
-            case GyroMode.GYRO_500: return 65.534;
-            case GyroMode.GYRO_1000: return 32.767;
-            case GyroMode.GYRO_2000: return 16.3835;
+            case GyroMode.GYRO_250: return 131.072;
+            case GyroMode.GYRO_500: return 65.536;
+            case GyroMode.GYRO_1000: return 32.768;
+            case GyroMode.GYRO_2000: return 16.384;
             default: return 131;
         }
     }

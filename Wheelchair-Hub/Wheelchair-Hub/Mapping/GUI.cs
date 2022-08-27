@@ -5,7 +5,7 @@ public class GUI : Mapping
 
     public override ControllerInput Values_Next(Rotations rotations)
     {
-        switch (Get_MovementState(rotations))
+        switch (StateDetection.Get_MovementState_GUI(rotations))
         {
             case MovementState.StandingStill: return new ControllerInput();
             case MovementState.ViewAxis_Motion: return YAxis(rotations);

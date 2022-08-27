@@ -53,11 +53,13 @@ public class Record
         {
             NodeOne_Value = Node.Node_One.Gyro.RawValue_Last() / Gyro.StepsPerDegree,
             NodeTwo_Value = Node.Node_Two.Gyro.RawValue_Last() / Gyro.StepsPerDegree,
+            NodeOne_SmoothedValue = Node.Node_One.Gyro.SmoothedDegreePerSecond_Last(),
+            NodeTwo_SmoothedValue = Node.Node_Two.Gyro.SmoothedDegreePerSecond_Last(),
             NodeOne_Datarate = Node.Node_One.DataPerSecond,
             NodeTwo_Datarate = Node.Node_Two.DataPerSecond,
             NodeOne_Acceleration = Node.Node_One.Gyro.Acceleration(),
             NodeTwo_Acceleration = Node.Node_Two.Gyro.Acceleration(),
-            MovementState = Mapping._Mapping.Get_MovementState(Node.Rotations())
+            MovementState = Mapping._Mapping.StateDetection.Get_MovementState_WheelchairWithButtons(Node.Rotations())
             // , Timestamp = DateTime.Now
         });
     }

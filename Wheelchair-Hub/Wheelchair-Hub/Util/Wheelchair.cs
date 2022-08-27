@@ -68,7 +68,7 @@ public class Wheelchair
 
     public static bool Is_MovementStateChanging()
     {
-        return false;
+        // return false;
         (double, double) acceleration = Gyro.Acceleration_BothNodes();
         return acceleration.Item1 + acceleration.Item2 >= 15;
     }
@@ -89,7 +89,7 @@ public class Wheelchair
         // double StepsPerDegree = CONTROLLER_MAX / Mapping.Get_WheelMovement_Max();
         // return (short)(value * StepsPerDegree);
         int sign = (value < 0) ? -1 : 1;
-        return (short)((value > Gyro.ModeAsInteger()) ? sign * Gyro.ModeAsInteger() : value * Gyro.StepsPerDegree);
+        return (short)((Math.Abs(value) >= Gyro.ModeAsInteger()) ? sign * short.MaxValue : value * Gyro.StepsPerDegree);
     }
 
     public override string ToString()

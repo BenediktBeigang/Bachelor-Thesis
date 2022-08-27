@@ -5,7 +5,8 @@ public class WheelchairWithButtons : Mapping
 
     public override ControllerInput Values_Next(Rotations rotations)
     {
-        switch (Get_MovementState(rotations))
+        // switch (Get_MovementState(rotations))
+        switch (StateDetection.Get_MovementState_WheelchairWithButtons(rotations))
         {
             case MovementState.StandingStill: return new ControllerInput();
             case MovementState.ViewAxis_Motion: return Move(rotations);
@@ -24,15 +25,16 @@ public class WheelchairWithButtons : Mapping
     /// <returns></returns>
     private ControllerInput Move(Rotations rotations)
     {
-        double resultVector = (Wheelchair.Is_RotationForward(rotations.AngularVelocityLeft)) ? Gyro.ModeAsInteger() : -Gyro.ModeAsInteger();
-        short controllerVector = Wheelchair.AngularVelocityToControllerAxis(resultVector);
-        return new ControllerInput(0, controllerVector, 0, 0, false, false, false, false);
+        double moveVector = (Wheelchair.Is_RotationForward(rotations.AngularVelocityLeft)) ? Gyro.ModeAsInteger() : -Gyro.ModeAsInteger();
+        return new ControllerInput()
+        {
+            LeftThumbY = Wheelchair.AngularVelocityToControllerAxis(moveVector)
+        };
     }
 
     private ControllerInput Turn(Rotations rotations)
     {
         double turnVector = AbsoluteInterpolation(rotations);
-        // turnVector = Wheelchair.RatioToDegree(turnVector, Wheelchair.InnerTurningCircle);
         turnVector = Wheelchair.Is_LeftRotation(rotations) ? -turnVector : turnVector;
         turnVector *= 10;
         return new ControllerInput()

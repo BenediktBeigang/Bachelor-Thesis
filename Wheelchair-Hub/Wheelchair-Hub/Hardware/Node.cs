@@ -104,8 +104,10 @@ public class Node
     {
         short rawOne = Node_One.Gyro.RawValue_Last();
         short rawTwo = Node_Two.Gyro.RawValue_Last();
-        double one = Node_One.Gyro.DegreePerSecond_Last();
-        double two = Node_Two.Gyro.DegreePerSecond_Last();
+        // double one = Node_One.Gyro.DegreePerSecond_Last();
+        // double two = Node_Two.Gyro.DegreePerSecond_Last();
+        double one = Node_One.Gyro.SmoothedDegreePerSecond_Last();
+        double two = Node_Two.Gyro.SmoothedDegreePerSecond_Last();
         switch (NodesFlipped)
         {
             case false: return new Rotations(rawOne, rawTwo, one, two);
