@@ -250,15 +250,13 @@ Um alle Bewegungszustand-Permutationen ermitteln zu können, muss die Rotation d
 ![[WheelchairStates.PNG|500]]
 (Abb.<mark>?</mark>, Die neun Bewegungszustände eines Rollstuhls)
 
- Jedoch lassen sich die Bewegungsmuster in folgende Untergruppen teilen:
+ Jedoch lassen sich die Bewegungsmuster in folgende Teilmengen unterteilen:
 - Ruhezustand: kein Rad dreht sich (5)
 - Rotation um die eigene Achse: Räder drehen sich gegeneinander (4, 6)
 - Einzelradbewegung: ein Rad steht still und ein Rad dreht sich (1, 3, 7, 9)
 - Sichtachsenbewegung: Räder drehen sich in dieselbe Richtung (2, 8)
 
-Im Folgenden wird darauf eingegangen, wie diese Untergruppen-Zustände erkannt werden:
-<mark>Schwellwert\ für\ \textbf{Einzelradbewegung}: s_1 \\
-Schwellwert\ für\ Teilung\ des\ Wertebereichs: s_2 \\</mark>
+Im Folgenden wird darauf eingegangen, wie diese Teilmengen-Zustände erkannt werden:
 
 $$
 \begin{align}
@@ -319,7 +317,7 @@ Werden, wie in Kapitel _Abbildung auf einen realistisch/idealisierten simulierte
 Will man weitere Interaktionen abbilden, so ist dies nur noch möglich über die Kodierung der Radgeschwindigkeit durch den Nutzer. Entweder werden bestimmte Bewegungen der Räder unterschieden <mark>(Rad laufen lassen, Rad ruckartig bewegen und/oder über Bewegungen ähnlich zu Morsecode Information codieren)</mark> oder der Wertebereich wird geteilt mithilfe von Schwellwerten. Aufgrund des zeitlichen Rahmens dieser Arbeit wurde sich auf das Testen der zweiten Methode beschränkt.
 
 Dazu wurde der Wertebereich zunächst mithilfe des Schwellenwertes geteilt. Von einer weiteren Teilung ist abzuraten, da es sonst für den Nutzer schwierig wird, die Räder mit den gewünschten beziehungsweise notwendigen Geschwindigkeiten zu drehen. Die Unterscheidung zwischen langsame Rotation und schnelle Rotation ist jedoch intuitiv von jedem Nutzer umsetzbar und verstehbar. Mit der Aufteilung in schnelle Geschwindigkeit und langsame Geschwindigkeit ist die Anzahl der Bewegungsmuster theoretisch verdoppelt worden. 
-Im Wertebereich der langsamen Bewegungen können nun Bewegungen wie das Neigen des Kamerawinkels zusätzlich abgebildet werden. Dabei wurde sich für die Bewegungszustände 2 (Neigung nach oben) und 8 (Neigung nach unten) entschieden. Für das Detektieren dieses neuen Untergruppen-Bewegungszustandes wird folgende Bedingung benötigt:
+Im Wertebereich der langsamen Bewegungen können nun Bewegungen wie das Neigen des Kamerawinkels abgebildet werden. Dabei wurde sich für die Bewegungszustände 2 (Neigung nach oben) und 8 (Neigung nach unten) entschieden. Für das Detektieren dieses neuen Teilmengen-Bewegungszustandes wird folgende Bedingung benötigt:
 
 **Neigen**
 
@@ -370,13 +368,10 @@ Für den Nutzer ist die korrekte Detektion von Bewegungszuständen entscheidend.
 **Unbeabsichtigtes Betätigen von Interaktionstasten**
 In den ersten Testreihen wurde für die Detektion von einer _Einzelradbewegung_ und dem Teilen des Wertebereichs in schnelle und langsame Bewegungen derselbe Schwellwert verwendet. Unter Verwendung dieser Methode kommt es beim Anfahren oder Bremsen (_Sichtachsenbewegung_) zum unbeabsichtigten Betätigen von Interaktionstasten. Da sich die Räder nicht mit derselben Geschwindigkeit drehen, gibt es ein kurzes Zeitintervall, in dem ein Rad unter dem Schwellwert und ein Rad über dem Schwellwert liegt. Für dieses Zeitintervall gilt die Bedingung der _Einzelradbewegung_, sodass eine Interaktionstaste betätigt wird.
 
-<mark>Plot mit Problem</mark>
-
 Dieses Problem lässt sich über das Einführen eines neuen Schwellenwertes beheben. Wählt man für den Schwellenwert der _Einzelradbewegung_ einen geringeren Schwellwert $s_1$ als für den Schwellwert für das Teilen des Wertebereichs $s_2$, entsteht eine Pufferzone. Beim Beschleunigen überschreiten die Gyroskop-Werte zunächst nacheinander den Schwellenwert $s_1$. Anschließend überschreiten die Werte nacheinander den zweiten Schwellenwert $s_2$. Solange beide Werte in der Pufferzone sind, kann weder eine _Einzelradbewegung_ noch eine _Sichtachsenbewegung_ detektiert werden.
 
-<mark>Plot mit Lösung</mark>
-
-Durch das Einführen der neuen Schwellenwerte müssen folgende Untergruppen-Bewegungszustände erweitert werden:
+![[1threshold.PNG|700]] ![[2threshold.PNG|700]]
+Durch das Einführen der neuen Schwellenwerte müssen folgende Teilmengen-Bewegungszustände erweitert werden:
 
 **Einzelradbewegung**
 
@@ -394,12 +389,16 @@ $$
 \end{align}
 $$
 
+**Neigen**
+
+$$
+\begin{align}
+(|vL| < s_2) \land (|vR| < s_2) \land ((vL > 0) \Leftrightarrow (vR > 0))
+\end{align}
+$$
+
 **Unbeabsichtigtes Neigen beim Anfahren**
-Beim Anfahren oder Bremsen (_Sichtachsenbewegung_) wurde beobachtet, dass für ein kurzes Zeitintervall der Kamerawinkel unbeabsichtigt geneigt wird. Ähnlich wie beim vorangegangenen Problem wird auch hier beim Übergang von einem Zustand zum Nächsten, ein unerwünschter Zwischenzustand erreicht.
-
-<mark>Plot mit Problem</mark>
-
-Da die Fehldetektion immer dann auftritt, wenn sich die Geschwindigkeit der Räder ändert, ist ein Lösungsansatz immer dann in den Ruhemodus (Bewegungszustand 5) zu wechseln, wenn die Änderungsrate $a$ der Gyroskop-Werte einen vorher definierten Schwellenwert $s_3$ überschreitet. Somit werden beim Übergang von einem Zustand in den nächsten, im Zeitfenster des Übergangs alle anderen Untergruppen-Bewegungszustände unterdrückt. Haben die Räder ihre Zielgeschwindigkeit erreicht, fällt die Änderungsrate unter den Schwellenwert, sodass der nächste korrekte Zustand detektiert werden kann. Jedoch ist anzumerken, dass diese Methode vor allem bei ruckartigen Bewegungen funktioniert, da besonders dann die Änderungsrate ein gut registrierbaren Ausschlag hat. Für die Berechnung der Änderungsrate wird folgende Berechnung verwendet:
+Beim Anfahren oder Bremsen (_Sichtachsenbewegung_) wurde beobachtet, dass für ein kurzes Zeitintervall der Kamerawinkel unbeabsichtigt geneigt wird. Ähnlich wie beim vorangegangenen Problem wird auch hier beim Übergang von einem Zustand zum Nächsten, ein unerwünschter Zwischenzustand erreicht. Da die Fehldetektion immer dann auftritt, wenn sich die Geschwindigkeit der Räder ändert, ist der hier verwendete Lösungsansatz, die Bedingung des Neigungs-Zustandes zu erweitern. In dieser wird nun auch abgefragt ob die Summe der Änderungsraten $a$ der Gyroskope unter einem neuen Schwellenwert $s_3$ liegt. Haben die Räder ihre Zielgeschwindigkeit erreicht, fällt die Änderungsrate unter den Schwellenwert, sodass der nächste korrekte Zustand detektiert werden kann. Für die Berechnung der Änderungsrate wird folgende Berechnung verwendet:
 
 $$
 \begin{align}
@@ -407,16 +406,18 @@ a = |(vL_{[1]} - vL_{[0]})| + |((vR_{[1]} - vR_{[0]})| > s_3
 \end{align}
 $$
 
-Der _Ruhezustand_ muss wie folgt ergänzt werden:
+Die Bedingung des Teilmengen-Zustands _Neigen_ muss wie folgt ergänzt werden:
+
+**Neigen**
 
 $$
 \begin{align}
-(vL = 0) \land (vR = 0) \land (a > s_3)
+(|vL| < s_2) \land (|vR| < s_2) \land ((vL > 0) \Leftrightarrow (vR > 0)) \land (a < s_3)
 \end{align}
 $$
 
-<mark>Plot mit Problem</mark>
+![[ohneAcc.PNG|700]] ![[mitAcc.PNG|700]] 
 
-In den Daten ist zu erkennen, dass zwischen dem _Sichtachsenbewegung_-Zustand und dem _Neigen_-Zustand ein kurzer Ruhezustand exisitert. Dieser ist vom Nutzer wahrnehmbar, da diese Methode in eine leichten Verzögerung der Eingabe resultiert. Sie ist jedoch nicht so groß, dass die Verzögerung als zu störend empfunden wird.   
+In den Daten ist zu erkennen, dass zwischen dem _Sichtachsenbewegung_-Zustand und dem _Neigen_-Zustand nun ein kurzer Ruhezustand exisitert. Diese Verzögerung bei der Fortbewegung ist vom Nutzer kaum bis gar nicht wahrnehmbar. Im gezeigten Beispiel beträgt diese nur etwa 70ms. Jedoch ist anzumerken, dass diese Methode vor allem bei ruckartigen Bewegungen funktioniert, da besonders dann die Änderungsrate ein gut registrierbaren Ausschlag hat. 
 
 ___

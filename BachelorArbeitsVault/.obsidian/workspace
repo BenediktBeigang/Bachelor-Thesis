@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "952395d320d9709c",
+        "id": "4d5ad18caa0c508a",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "SprintBerichte/Bericht 4.md",
+            "file": "Arbeit/5_Experiment.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SprintBerichte/Bericht 4.md",
+                "file": "Arbeit/5_Experiment.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -96,11 +96,11 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "952395d320d9709c",
+  "active": "4d5ad18caa0c508a",
   "lastOpenFiles": [
+    "Arbeit/5_Experiment.md",
     "SprintBerichte/Bericht 4.md",
     "SprintBerichte/Bericht 2.md",
-    "Arbeit/5_Experiment.md",
     "Arbeit/2_Einleitung.md",
     "Arbeit/1_Abstract.md",
     "Arbeit/0_Inhaltsverzeichnis.md",
