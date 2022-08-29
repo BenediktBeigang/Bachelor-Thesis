@@ -2,9 +2,9 @@ public class Plot_GyroWithAcceleration
 {
     public Plot_GyroWithAcceleration(List<Sample> record, string movementState, string file)
     {
-        double[] x_One = record.Select(r => r.NodeOne_SmoothedValue).ToArray();
+        double[] x_One = record.Select(r => r.NodeOne_RawValue).ToArray();
         double[] x_Two = record.Select(r => r.NodeOne_Acceleration + r.NodeTwo_Acceleration).ToArray();
-        double[] x_Three = record.Select(r => r.NodeTwo_SmoothedValue).ToArray();
+        double[] x_Three = record.Select(r => r.NodeTwo_RawValue).ToArray();
 
         var plt = new ScottPlot.Plot(1600, 900);
         plt.Title($"AngularVelocity with Acceleration ({movementState}) ({file})");
@@ -32,9 +32,13 @@ public class Plot_GyroWithAcceleration
         node_Two_Axis.Label("Node_Two [°/s]");
         node_Two_Axis.Color(node_Two.Color);
 
-        plt.SetAxisLimits(yMin: -1000, yMax: 1000, yAxisIndex: 0);
+        // plt.SetAxisLimits(yMin: -1000, yMax: 1000, yAxisIndex: 0);
+        // plt.SetAxisLimits(yMin: 0, yMax: 400, yAxisIndex: 1);
+        // plt.SetAxisLimits(yMin: -1000, yMax: 1000, yAxisIndex: 2);
+
+        plt.SetAxisLimits(yMin: -32767, yMax: 32767, yAxisIndex: 0);
         plt.SetAxisLimits(yMin: 0, yMax: 400, yAxisIndex: 1);
-        plt.SetAxisLimits(yMin: -1000, yMax: 1000, yAxisIndex: 2);
+        plt.SetAxisLimits(yMin: -32767, yMax: 32767, yAxisIndex: 2);
 
         plt.AddHorizontalLine(-925, System.Drawing.Color.Red);
 

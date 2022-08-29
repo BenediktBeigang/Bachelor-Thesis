@@ -28,9 +28,9 @@ public class Program
                 // new Plot_GyroSignalNodeOne(record);
                 // new Plot_GyroSignalNodeTwo(record);
                 // Stats_Datarate(record);
-                // new Plot_Gyro(record, movementState, name);
+                new Plot_Gyro(record, movementState, name);
                 // new Plot_Datarate(record);
-                new Plot_GyroWithAcceleration(record, movementState, name);
+                // new Plot_GyroWithAcceleration(record, movementState, name);
                 // new Plot_NodeOne(record);
             }
             catch (Exception e)
