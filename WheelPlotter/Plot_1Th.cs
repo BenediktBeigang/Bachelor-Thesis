@@ -1,6 +1,6 @@
-public class Plot_GyroWithAcceleration
+public class Plot_1Th
 {
-    public Plot_GyroWithAcceleration(List<Sample> record, string movementState, string file)
+    public Plot_1Th(List<Sample> record, string movementState, string file)
     {
         double[] x_One = record.Select(r => r.NodeOne_SmoothedValue).ToArray();
         double[] x_Two = record.Select(r => r.NodeOne_Acceleration + r.NodeTwo_Acceleration).ToArray();
@@ -9,7 +9,7 @@ public class Plot_GyroWithAcceleration
         var plt = new ScottPlot.Plot(5000, 1200);
         var legend = plt.Legend();
         // plt.Title($"AngularVelocity with Acceleration ({movementState}) ({file})");
-        plt.Title("Bewegungs-Zustände ohne unerwünschtem Auslösen einer Interaktionstaste");
+        plt.Title("Bewegungs-Zustände mit unerwünschtem Auslösen einer Interaktionstaste");
         plt.XLabel("Time [s]");
 
         Program.DrawMovementStates(record, ref plt, movementState);
@@ -44,12 +44,12 @@ public class Plot_GyroWithAcceleration
         // plt.SetAxisLimits(yMin: -32767, yMax: 32767, yAxisIndex: 2);
 
         plt.AddHorizontalLine(-100, System.Drawing.Color.Black);
-        plt.AddHorizontalLine(-25, System.Drawing.Color.Black);
-        // plt.AddText("Schwellenwert s", 8.85, -100, 20, System.Drawing.Color.Black);
-        plt.AddText("Schwellenwert s1", 8.85, -100, 20, System.Drawing.Color.Black);
-        plt.AddText("Schwellenwert s2", 8.85, -25, 20, System.Drawing.Color.Black);
+        // plt.AddHorizontalLine(-25, System.Drawing.Color.Black);
+        plt.AddText("Schwellenwert s", 8.85, -100, 20, System.Drawing.Color.Black);
+        // plt.AddText("Schwellenwert s1", 8.85, -100, 20, System.Drawing.Color.Black);
+        // plt.AddText("Schwellenwert s2", 8.85, -25, 20, System.Drawing.Color.Black);
         plt.AddText("Sichtachsenbewegung", 8.27, 125, 20, System.Drawing.Color.Black);
-        // plt.AddText("Einzelradbewegung", 8.6, 125, 20, System.Drawing.Color.Red);
+        plt.AddText("Einzelradbewegung", 8.6, 125, 20, System.Drawing.Color.Red);
 
 
         ScottPlot.FormsPlotViewer win = new(plt);

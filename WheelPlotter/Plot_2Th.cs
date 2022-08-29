@@ -1,6 +1,6 @@
-public class Plot_GyroWithAcceleration
+public class Plot_2Th
 {
-    public Plot_GyroWithAcceleration(List<Sample> record, string movementState, string file)
+    public Plot_2Th(List<Sample> record, string movementState, string file)
     {
         double[] x_One = record.Select(r => r.NodeOne_SmoothedValue).ToArray();
         double[] x_Two = record.Select(r => r.NodeOne_Acceleration + r.NodeTwo_Acceleration).ToArray();

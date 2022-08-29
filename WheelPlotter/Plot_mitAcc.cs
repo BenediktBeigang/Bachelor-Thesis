@@ -1,6 +1,6 @@
-public class Plot_GyroWithAcceleration
+public class Plot_mitAcc
 {
-    public Plot_GyroWithAcceleration(List<Sample> record, string movementState, string file)
+    public Plot_mitAcc(List<Sample> record, string movementState, string file)
     {
         double[] x_One = record.Select(r => r.NodeOne_SmoothedValue).ToArray();
         double[] x_Two = record.Select(r => r.NodeOne_Acceleration + r.NodeTwo_Acceleration).ToArray();
@@ -9,7 +9,7 @@ public class Plot_GyroWithAcceleration
         var plt = new ScottPlot.Plot(5000, 1200);
         var legend = plt.Legend();
         // plt.Title($"AngularVelocity with Acceleration ({movementState}) ({file})");
-        plt.Title("Bewegungs-Zustände ohne unerwünschtem Auslösen einer Interaktionstaste");
+        plt.Title("Bewegungs-Zustände unter Verwendung eines Schwellenwertes für die Änderungsrate");
         plt.XLabel("Time [s]");
 
         Program.DrawMovementStates(record, ref plt, movementState);
@@ -20,12 +20,12 @@ public class Plot_GyroWithAcceleration
         plt.YAxis.Label("Bahngeschwindigkeit vL [°/s]");
         plt.YAxis.Color(node_One.Color);
 
-        // var acceleration = plt.AddSignal(x_Two, sampleRate: 60);
-        // acceleration.Color = System.Drawing.Color.DarkGreen;
-        // acceleration.YAxisIndex = 1;
-        // plt.YAxis2.Ticks(true);
-        // plt.YAxis2.Label("Änderungsrate a [°/s^2]");
-        // plt.YAxis2.Color(acceleration.Color);
+        var acceleration = plt.AddSignal(x_Two, sampleRate: 60);
+        acceleration.Color = System.Drawing.Color.DarkGreen;
+        acceleration.YAxisIndex = 1;
+        plt.YAxis2.Ticks(true);
+        plt.YAxis2.Label("Änderungsrate a [°/s^2]");
+        plt.YAxis2.Color(acceleration.Color);
 
         var node_Two = plt.AddSignal(x_Three, sampleRate: 60);
         node_Two.Color = System.Drawing.Color.Orange;
@@ -34,22 +34,20 @@ public class Plot_GyroWithAcceleration
         node_Two_Axis.Label("Bahngeschwindigkeit vR [°/s]");
         node_Two_Axis.Color(node_Two.Color);
 
-        plt.SetAxisLimitsX(xMin: 8.25, xMax: 9);
-        plt.SetAxisLimits(yMin: -500, yMax: 150, yAxisIndex: 0);
-        // plt.SetAxisLimits(yMin: 0, yMax: 400, yAxisIndex: 1);
-        plt.SetAxisLimits(yMin: -500, yMax: 150, yAxisIndex: 2);
+        plt.SetAxisLimitsX(xMin: 2.1, xMax: 2.6);
+        plt.SetAxisLimits(yMin: -100, yMax: 400, yAxisIndex: 0);
+        plt.SetAxisLimits(yMin: 0, yMax: 400, yAxisIndex: 1);
+        plt.SetAxisLimits(yMin: -100, yMax: 400, yAxisIndex: 2);
 
         // plt.SetAxisLimits(yMin: -32767, yMax: 32767, yAxisIndex: 0);
         // plt.SetAxisLimits(yMin: 0, yMax: 400, yAxisIndex: 1);
         // plt.SetAxisLimits(yMin: -32767, yMax: 32767, yAxisIndex: 2);
 
-        plt.AddHorizontalLine(-100, System.Drawing.Color.Black);
-        plt.AddHorizontalLine(-25, System.Drawing.Color.Black);
-        // plt.AddText("Schwellenwert s", 8.85, -100, 20, System.Drawing.Color.Black);
-        plt.AddText("Schwellenwert s1", 8.85, -100, 20, System.Drawing.Color.Black);
-        plt.AddText("Schwellenwert s2", 8.85, -25, 20, System.Drawing.Color.Black);
-        plt.AddText("Sichtachsenbewegung", 8.27, 125, 20, System.Drawing.Color.Black);
-        // plt.AddText("Einzelradbewegung", 8.6, 125, 20, System.Drawing.Color.Red);
+        plt.AddHorizontalLine(-81.25, System.Drawing.Color.Black);
+        plt.AddText("Schwellenwert s3", 2.3, -50, 20, System.Drawing.Color.Black);
+        plt.AddText("Neigen", 2.125, 400, 20, System.Drawing.Color.Black);
+        plt.AddText("Ruhezustand", 2.248, 400, 20, System.Drawing.Color.Black);
+        plt.AddText("Sichtachsenbewegung", 2.34, 400, 20, System.Drawing.Color.Black);
 
 
         ScottPlot.FormsPlotViewer win = new(plt);

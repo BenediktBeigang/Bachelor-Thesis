@@ -30,6 +30,4 @@ public class Plot_Gyro
         ScottPlot.FormsPlotViewer win = new(plt);
         Task.Run(() => win.ShowDialog());
     }
-
-
 }
