@@ -11,8 +11,14 @@ viel zu Rollstuhl Simulationen um Menschen mit wenig Erfahrung mit Rollstühlen 
 ## Begriffsklärung
 - **Eingebettete Systeme**
 - **Virtueller Raum**
-- **Virtuelle Realität**
 - **Mappen/Abbilden auf Eingaben**
 - **Mobiles System**
 - **Gyroskop**
+- **Navigation**
+- **Eingabegerät**
+- **(Virtuelle Realität)**
+
+
+
+[Suche (mediarep.org)](https://mediarep.org/discover)
 

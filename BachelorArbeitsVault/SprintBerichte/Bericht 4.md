@@ -1,0 +1,10 @@
+Sehr geehrter Professor Hlawitschka
+
+Inzwischen bin ich wieder auf den Beinen und konnte Fortschritte beim Schreiben meiner Arbeit machen. Stand jetzt habe ich ein großen Teil meines praktischen Teils geschrieben (ca. 5000 Wörter) und bin grade dabei diesen von einer zweiten Person Gegenlesen zu lassen. Das Kapitel umfasst zu etwa einem Drittel das entwickelte eingebettete System, in dem ich näher auf die verwendete Hardware und die Verbindungsprotokolle eingehe. Zu zwei Drittel besteht das Kapitel aus der Beschreibung, wie die Bewegung des Rades des Rollstuhls auf eine Eingabe auf einem Spielecontroller abgebildet werden kann. Neben der sprachlichen Verfeinerung, fehlen noch ein paar Grafiken, um das Beschriebene leichter verstehen zu können, sowie das Generieren von ein paar Messdaten. Außerdem habe ich mir die Zeit genommen eine Möglichkeit zu implementieren die Rad-Daten aufzuzeichnen und als Playback wieder abzuspielen, um eine Vergleichbarkeit zwischen zwei zu getesteten Implementierungen zu schaffen.
+
+Leider musste ich feststellen, dass es ein Kapitel zu VR wahrscheinlich nicht in die Arbeit schaffen wird. Schon jetzt reize ich die Größe des praktischen Teil sehr aus und die Zeit wird langsam knapp bis zum Semesterbeginn. Da im Titel  meiner Arbeit ohnehin nur die Rede vom _virtuellen Raum_ war, und nicht von _virtueller Realität_, sehe ich dort aber kein Problem. Bis jetzt habe ich mein System größtenteils in Counter Strike getestet, da dort eine sehr gute Controllerunterstützung vorhanden ist.
+
+Ich hoffe in den kommenden Tagen inhaltlich mit dem praktischen Teil fertig zu sein, um anschließend Kapitel wie Erkenntnis, Begriffsklärung, etc. zu schreiben. Ich habe auch schon einige Literatur herausgesucht, auch wenn die Literaturrecherche noch nicht vollständig ist.
+
+Mit freundlichen Grüßen
+Benedikt Beigang

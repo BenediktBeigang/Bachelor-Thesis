@@ -1,21 +1,24 @@
 # 5. Experiment
 ___
+
 ```toc
 ```
 
 ## 5.1 Eingebettetes System zur Messung der Raddaten
 Damit der Software bekannt ist, mit welcher Geschwindigkeit sich welches Rad in welche Richtung dreht, ist Hardware notwendig, welche die Rotationsdaten misst und an die Software übermittelt. Dazu wurde für das vorliegende Experiment ein eingebettetes System verwendet. Im Folgenden soll näher beleuchtet und erörtert werden, welche Hardware verwendet und wie die Raddaten gemessen und übertragen wurden. Dazu werden im Folgenden verschiedene Kommunikationsprotokolle verglichen.
 
-### 5.1.1 Gyroskop
+### 5.1.1 <mark>Verfahren zur Datenerhebung</mark>
 Um die Rotation der Räder des Rollstuhls messen zu können, wird ein Sensor benötigt. Dabei gibt es verschiedene Herangehensweisen, wie ein Sensor die Rotation messen kann. 
+
+<mark>
 So arbeiten viele Sensoren mit Lichtschranken. Hierbei wird die Lichtschranke in regelmäßigen Abständen durch ein Hindernis blockiert. Daraus kann dann über die Frequenz, in der dies geschieht, eine Geschwindigkeit errechnet werden. Vorteil ist dabei, dass keine Hardware auf dem Rad befestigt werden muss und deshalb kein mobiles System benötigt wird. Es kann auf Technologien wie WiFi und Akkus verzichtet werden.
-Ein großer Nachteil bei diesem Verfahren ist jedoch XYZ, dass für besonders kleine Rotationen die Abstände der Hindernisse sehr klein sein müssen. Angewandt auf den Rollstuhl bedeutet dies, dass eine zusätzliche Konstruktion gebaut werden muss, damit die Lichtschranke unterbrochen wird. Da dies sehr unpraktikabel ist, wurde dieses Verfahren nicht verwendet.
-Die zweite Möglichkeit ist die Verwendung eines Gyroskops. Dieses kommt ohne zusätzliche Konstruktionen aus, erfordert jedoch, dass die Elektronik mobil ist. Die Datenrate wird folglich durch die Bandbreite des drahtlosen Netzwerks begrenzt, da die Übertragung von Daten den Flaschenhals solcher Systeme darstellt.
+Ein großer Nachteil bei diesem Verfahren ist jedoch, dass für besonders kleine Rotationen die Abstände der Hindernisse sehr klein sein müssen. Angewandt auf den Rollstuhl bedeutet dies, dass eine zusätzliche Konstruktion gebaut werden muss, damit die Lichtschranke unterbrochen wird. Da dies sehr unpraktikabel ist, wurde dieses Verfahren nicht verwendet.
+Die zweite Möglichkeit ist die Verwendung eines Gyroskops. Dieses kommt ohne zusätzliche Konstruktionen aus, erfordert jedoch, dass die Elektronik mobil ist. Die Datenrate wird folglich durch die Bandbreite des drahtlosen Netzwerks begrenzt, da die Übertragung von Daten den Flaschenhals solcher Systeme darstellt.</mark>
 
 ### 5.1.2 MPU-6050
-Im Zuge dieser Arbeit habe ich mich für den <mark>MPU-6050</mark> entschieden. 
+Im Zuge dieser Arbeit habe ich mich für das Motion-Tracking-Device MPU-6050 entschieden. 
 Dieser ist klein (mit Pins: 20mm x 15mm x 11mm), kostengünstig zu erwerben (~4€) und verfügt unter anderem über 3-Achsen Gyroskop-Sensoren, mit welchen die Rotation gemessen werden kann. 
-Der Chip besitzt folgende 8 Anschlüsse:
+Der Chip besitzt folgende 8 Anschlüsse: <mark>Literatur!!!</mark> 
 
 | Anschluss | Funktion               | Notwendig für das vorliegende Experiment |
 | --------- | ---------------------- | ---------------------------------------- |
@@ -28,8 +31,8 @@ Der Chip besitzt folgende 8 Anschlüsse:
 | ADO       | I2C Address Select     | Ja                                       |
 | INT       | Interrupt              | Nein                                     |
 
-Die Daten können per <mark>I2C</mark> von einem angeschlossenen <mark>Mikrocontroller ausgelesen</mark> werden. Jede Achse wird auf zwei 8-Bit Register abgebildet. Zusammen ergibt das einen Wertebereich von 65.536 unterscheidbaren Zuständen. Mit der Drehrichtung halbiert sich dieser Wertebereich, <mark>da ein Bit für das Verschieben des Wertebereichs ins Negative benötigt wird.</mark>
-Das Gyroskop des MPU-6050 kann in vier verschiedenen Konfigurationen betrieben werden. Damit wird festgelegt, wie klein der Winkel zwischen zwei verschiedenen Ausgaben ist; mit anderen Worten: wie viele Stufen pro Grad unterschieden werden können. Da der Wertebereich konstant ist, bedeutet eine sensiblere Messung, <mark>dass das Gyroskop früher das Ende des Wertebereichs erreicht.</mark> Angewendet auf den Rollstuhl heißt das, dass das rotierende Rad bei niedrigeren Geschwindigkeiten seine maximal messbare Geschwindigkeit erreicht. In der folgenden Tabelle sind alle Konfigurationen mit ihren resultierenden Eigenschaften aufgelistet.
+Die Daten können per I2C (serieller Datenbus) von einem angeschlossenen Mikrocontroller (ESP32) ausgelesen werden. Jede Achse wird auf zwei 8-Bit Register abgebildet. Zusammen ergibt das einen Wertebereich von 65.536 unterscheidbaren Zuständen <mark>Literatur!!!</mark> . Mit der Drehrichtung rückwärts halbiert sich dieser Wertebereich, da ein Bit für das Verschieben des Wertebereichs ins Negative benötigt wird.
+Das Gyroskop des MPU-6050 kann in vier verschiedenen Konfigurationen betrieben werden <mark>Literatur!!!</mark> . Damit wird festgelegt, wie klein der Winkel zwischen zwei verschiedenen Ausgaben ist; mit anderen Worten, wie viele Stufen pro Grad unterschieden werden können. Da der Wertebereich konstant ist, bedeutet eine sensiblere Messung, <mark>dass das Gyroskop früher das Ende des Wertebereichs erreicht.</mark> Angewendet auf den Rollstuhl heißt das, dass das rotierende Rad bei niedrigeren Geschwindigkeiten seine maximal messbare Geschwindigkeit erreicht. In der folgenden Tabelle sind alle Konfigurationen mit ihren resultierenden Eigenschaften aufgelistet.
 
 | Modus | Maximale Gradzahl pro Sekunde | Stufen pro Grad | Maximale Umdrehungszahl pro Sekunde | Maximale Radianten pro Sekunde | Zurückgelegte Distanz pro Stufe in mm* |
 | ----- | ----------------------------- | --------------- | ----------------------------------- | ------------------------------ | -------------------------------------- |
@@ -38,12 +41,12 @@ Das Gyroskop des MPU-6050 kann in vier verschiedenen Konfigurationen betrieben w
 | 2     | 1000                          | 32,8            | 2,78                                | 17,47                          | 0,16                                   |
 | 3     | 2000                          | 16,4            | 5,56                                | 34,93                          | 0,32                                   |
 
-\*Werte bei einem Raddurchmesser von 60 cm.
+\*Werte bei einem Raddurchmesser von 60 cm - <mark>eigene Messung sowie Literatur!!!</mark> 
 
-An dieser Stelle stellt sich die Frage welcher Modus für das hier entwickelte System das Richtige ist. Auf der einen Seite möchte der Nutzer ein möglichst <mark>ruckelfreies</mark> Erlebnis haben. Um dies zu gewährleisten muss das Gyroskop so senstiv wie möglich eingestellt werden und der Wertebereich möglichst weit ausgereizt ist. Ist der Modus nicht sensitiv genug so bemerkt der Nutzer möglicherweise das Springen der Bitwerte in Form eines Vorspringens der Bewegung. Jedoch soll der Nutzer nicht schneller als die maximale Gradzahl pro Sekunde drehen können, da es sonst zu einem Zahlenüberlauf kommt und zu einer fehlerhaften Weiterverarbeitung der Daten führt. Der gewählte Modus muss also möglichst niedrig sein, sollange der Nutzer nicht in der Lage ist die maximale Gradzahl pro Sekunde zu erreichen. Im Kapitel System-Analyse wird dieser Frage weiter nachgegangen.
+An dieser Stelle stellt sich die Frage, welcher Modus für das hier entwickelte System das Optimale ist. Um dem Nutzer ein möglichst störungsfreies Erlebnis zu bieten, muss gewährleistet sein, dass das Gyroskop so sensitiv wie möglich eingestellt ist. Das bedeutet, dass der Wertebereich maximal ausgereizt werden muss. Ist der Modus nicht sensitiv genug, so bemerkt der Nutzer möglicherweise das Springen der Bitwerte in Form eines Vorspringens in der Bewegung. Allerdings muss ein Modus gewählt werden, welcher dazu führt, dass der Nutzer nicht schneller als die maximale Gradzahl pro Sekunde drehen kann, da es sonst zu einem Zahlenüberlauf kommt und zu einer fehlerhaften Weiterverarbeitung der Daten führt. Der Modus muss also so sensitiv sein, dass der Nutzer nicht den Übergang von einem Zustand in den nächsten registriert. Gleichzeitig darf er nicht in der Lage sein, die Räder schneller als die maximale Gradzahl pro Sekunde zu drehen. Im Kapitel System-Analyse wird dieser Frage weiter nachgegangen.
 
 ### 5.1.3 ESP32
-Um den MPU-6050 betreiben und dessen Daten an eine Software übermitteln zu können, wird ein Mikrocontroller-Board benötigt. Es muss per I2C die entsprechenden Register auslesen und mittels drahtloser Kommunikation versenden. Außerdem muss er das Gyroskop, sowie sich selbst mit Strom versorgen. Auf dem Markt gibt es eine große Anzahl von Produkten, für die verschiedensten Anwendungsgebiete und <mark>mit den verschiedensten Features.</mark> Im Rahmen dieser Arbeit wurde der Mikrocontroller ESP32 verwendet, das aktuellste Modell der Firma _Espressif_. Boards mit diesem Chip sind kostengünstig (~8€) und ermöglichen ein unkompliziertes Arbeiten mit der Hardware, da der Chip verbreitet ist und viel Literatur und Anleitungen existieren. Ausgestattet ist der ESP32 mit WiFi und Bluetooth Unterstützung, Espressif bietet aber auch ein eigenes Verbindungsprotokoll an: _ESP-Now_. Verbaut wurde ein Xtensa® 32-bit LX6 Mikroprozessor, mit 240MHz Taktfrequenz, 448 KB ROM und 520 KB SRAM. [[@ESP32Datasheet2022]]
+Um den MPU-6050 betreiben und dessen Daten an eine Software übermitteln zu können, wird ein Mikrocontroller-Board benötigt. Es muss per I2C die entsprechenden Register auslesen und mittels drahtloser Kommunikation versenden. Außerdem muss er das Gyroskop, sowie sich selbst mit Strom versorgen. Auf dem Markt gibt es eine große Anzahl von Produkten für die verschiedensten Anwendungsgebiete. Im Rahmen dieser Arbeit wurde der Mikrocontroller ESP32 verwendet, das aktuellste Modell der Firma _Espressif_. Boards mit diesem Chip sind kostengünstig (~8€) und zudem ist der ESP32 mit WiFi, Bluetooth und _ESP-Now_ Unterstützung ausgestattet <mark>Literatur!!!</mark>  . Verbaut wurde ein Xtensa® 32-bit LX6 Mikroprozessor, mit 240MHz Taktfrequenz, 448 KB ROM und 520 KB SRAM. [[@ESP32Datasheet2022]] <mark>Literatur!!!</mark> 
 Als Entwicklungsboard wurde das ESP32 Dev Kit C V4 verwendet.
 
 Der MPU-6050 muss wie folgt an das Entwicklungsboard angeschlossen werden:
@@ -100,40 +103,36 @@ ESP-Now ist ein vom Unternehmen _Espressif_ selbst entwickeltes Übertragungspro
 ___
 
 ## 5.3 Interface für Nutzung in Spielen und Software
-Damit das bis hier entwickelte System die transformierten Raddaten beziehungsweise Interaktionen in externer Software nutzen kann, ist eine Verbindung zwischen Rollstuhl-Software und der externen Software notwendig. Da man nicht davon ausgehen kann, dass jede externe Software eine Schnittstelle implementiert, mit der die beiden Softwares kommunizieren können, müssen die Daten des Rollstuhls auf herkömmliche Eingabegeräte gemappt/abgebildet werden. 
+Damit das im Rahmen dieser Arbeit entwickelte System die transformierten Raddaten beziehungsweise Interaktionen in externer Software, zum Beispiel XYZ...  nutzen kann, ist eine Verbindung zwischen Rollstuhl-Software und der externen Software notwendig. Da nicht davon ausgegangen werden kann, dass jede externe Software eine Schnittstelle implementiert, mit der die beiden Softwares kommunizieren können, müssen die Daten des Rollstuhls auf herkömmliche Eingabegeräte, wie zum Beispiel XYZ ... gemappt/abgebildet werden. 
 
 ### 5.3.1 Tastatur oder Spielcontroller
 Dabei kommen zwei Möglichkeiten infrage: eine Tastatureingabe und eine Spielcontrollereingabe. Beide Eingaben werden von den meisten Anwendungen unterstützt und eigenen sich unterschiedlich gut für die Zwecke des hier entwickelten Systems. Tastatureingaben bieten den Vorteil, dass sie von fast jeder erdenklichen Software unterstützt werden. Jedoch lassen sich damit nur binäre Eingaben tätigen, sprich es lassen sich nur Tasten drücken. Da die Rollstuhl-Eingaben jedoch unterschiedliche Werte innerhalb eines Wertebereichs darstellen, wird bei einer Tastatureingabe die Interaktionsmöglichkeit stark eingeschränkt. 
 Die Alternative ist eine Spielcontroller-Eingabe. Hier gibt es ebenfalls Knöpfe, beziehungsweise binäre Eingaben, jedoch auch Eingaben entlang von Achsen innerhalb eines Wertebereichs. Überwiegend werden die Achsen in Form eines Thumb-Sticks oder Knopfes mit mehreren Stufen realisiert. Rollstuhl-Eingaben wie das Fortbewegen könnte so einfacher auf das Gerät abgebildet werden. Allerdings unterstützt nicht jede Software Eingaben mittels eines Spielcontrollers. Da jedoch die meiste Software in der Fortbewegung eine Rolle spielt, Spielcontroller unterstützt, wurde sich im Rahmen dieser Arbeit für diese Eingabeform entschieden.
 
 ### 5.3.2 Virtual Gamepad Emulation Framework
-Um die Eingaben des Rollstuhls in tatsächliche Spielcontroller-Eingaben umzuwandeln, die von einem <mark>Rechner</mark> auch als Controller-Eingabe verstanden werden, ist eine Emulation eines Controllers notwendig. Ziel ist es, programmatisch Controller-Eingaben an den Rechner zu senden. Um sich den Aufwand des Schreibens eines neuen Treibers zu ersparen, wird an dieser Stelle auf das _Virtual Gamepad Emulation Framework_ zurückgegriffen. Dies ist eine Bibliothek, welche in bestehende Software integriert werden kann und einen virtuellen Controller mit dem Rechner verbindet. Über Befehle lassen sich anschließend Controller-Eingaben tätigen. Das Framework unterstützt Xbox 360-, sowie DualShock 4-Controller.
+Um die Eingaben des Rollstuhls in tatsächliche Spielcontroller-Eingaben umzuwandeln, die von einem <mark>Rechner</mark> auch als Controller-Eingabe verstanden werden, ist eine Emulation eines Controllers notwendig. Ziel ist es, programmgesteuert Controller-Eingaben an den Rechner zu senden. Um sich den Aufwand des Schreibens eines neuen Treibers zu ersparen, wird an dieser Stelle auf das _Virtual Gamepad Emulation Framework_ zurückgegriffen. Dies ist eine Bibliothek, welche in bestehende Software integriert werden kann und einen virtuellen Controller mit dem Rechner verbindet. Über Befehle lassen sich anschließend Controller-Eingaben tätigen. Das Framework unterstützt Xbox 360-, sowie DualShock 4-Controller.
 
-Eine von der Internet-Vertriebsplattform Steam, welche hauptsächlich Computerspiele vertreibt, veröffentlichte Umfrage hat ergeben, dass $45\%$ der Nutzer auf ihrer Plattform über einen Xbox 360 Controller verfügen, sowie $19\%$ über das neuere Xbox One Modell, welches seinem Vorgänger sehr ähnlich ist. 
+Eine von der Internet-Vertriebsplattform Steam, welche hauptsächlich Computerspiele vertreibt, veröffentlichte Umfrage hat ergeben, dass $45\%$ der Nutzer auf ihrer Plattform über einen Xbox 360 Controller verfügen, sowie $19\%$ über das neuere Xbox One Modell, welches seinem Vorgänger sehr ähnlich ist. Damit sind Xbox Controller mit großem Abstand am verbreitetsten. Aufgrund dieser Annahme wurde sich im Rahmen der vorliegenden Arbeit für die Emulation eines Xbox 360 Controllers entschieden.
 
 ![[steamControllerStatistik.jpg|600]]
 (Abb.<mark>?</mark>, Verteilung von Besitz von verschiedenen Spielcontrollern auf der Plattform Steam)
 
-Damit sind Xbox Controller mit großem Abstand am verbreitetsten. Es ist davon auszugehen, dass Software im Allgemeinen am wahrscheinlichsten einen Xbox Controller unterstützt, um möglichst vielen Kunden das Nutzen eines Controllers zu ermöglichen. <mark>Quelle</mark>
-Aufgrund dieser Annahme wurde sich für die Emulation eines Xbox 360 Controllers entschieden.
+
 
 <mark>Xbox360 Grafik mit Tastenbeschriftung</mark>
 
 ___
 
-## 5.4 Algorithmen zur Abbildung der Raddaten in Eingaben
-Die Sensor-Daten der Gyroskope liefern die Winkelgeschwindigkeiten der Räder des Rollstuhls. Es sollen <mark>verschiedene Abbildungen auf Eingaben</mark> getestet werden, um sich im virtuellen Raum bewegen zu können oder andere Eingaben tätigen zu können. Die Abbildung erfolgt dabei, wie im vorangegangenen Kapitel evaluiert auf einen Xbox360 Controller. Somit sind die abgebildeten Eingaben von jeder Software lesbar, die eine Controllerunterstützung dieses Controllers implementiert hat.
+## 5.4 Algorithmen zur Abbildung der Raddaten in Controller-Eingaben
+Die Sensor-Daten der Gyroskope liefern die Winkelgeschwindigkeiten der Räder des Rollstuhls. Diese sollen – wie bereits in Kapitel 5.3.1 beschrieben – auf die Eingabemöglichkeiten eines Spielcontrollers abgebildet werden, um sich im virtuellen Raum bewegen oder andere Eingaben tätigen zu können. Die Abbildung erfolgt dabei auf einen Xbox360 Controller. Somit sind die abgebildeten Eingaben von jeder Software lesbar, die eine Xbox360 Controllerunterstützung implementiert hat. <mark>was bedeutet abbildung hääää???</mark>
 
 ### 5.4.1 Gyroskop-Werte bereinigen
-Die ausgelesenen Werte des Gyroskops sind nicht automatisch kalibriert. Sie besitzen einen konstanten Offset. Deshalb wird nach dem Verbindungsaufbau zwischen Node und Software eine Kalibrierungssequenz gestartet. Diese errechnet aus einer Reihe ausgelesener Werte einen Mittelwert, der anschließend von allen zukünftigen Werten abgezogen wird. Dazu dürfen die Räder nicht bewegt werden, da dies das Ergebnis der Kalibrierung unbrauchbar machen würde.
+Die ausgelesenen Werte des Gyroskops sind nicht automatisch kalibriert. Sie besitzen einen konstanten Offset. Aus diesem Grund wird nach dem Verbindungsaufbau zwischen Node und Software eine Kalibrierungssequenz gestartet. Diese errechnet aus einer Reihe ausgelesener Werte einen Mittelwert, der anschließend von allen zukünftigen Werten abgezogen wird. Dazu dürfen die Räder nicht bewegt werden, da dies das Ergebnis der Kalibrierung unbrauchbar machen würde.
 
-Darüber hinaus besitzen die rauscht das Gyroskop-Signal. Dreht sich das Rad, fällt dieses Rauschen nicht weiter ins Gewicht, da es nur einen kleinen Anteil an der 
-Gesamtrotation hat. Jedoch ist es später notwendig, zu erkennen, ob ein Rad still steht. Deshalb wird ein Schwellenwert bestimmt, den ein Gyroskop-Wert überschreiten muss, damit der Wert nicht abgeschnitten wird. Damit ist sichergestellt, dass es sich tatsächlich um eine Rotation handelt, die vom Nutzer ausgelöst wurde.
+Darüber hinaus hat das Gyroskop-Signal ein Rauschen. Bei hoher Umdrehungszahl ist das Rauschen irrelevant, da es nur einen kleinen Anteil der Gesamtrotation ausmacht. Bei geringer Umdrehungszahl ist das Rauschen jedoch störend, da in diesem Fall nicht erkennbar ist, ob ein Rad still steht oder eine geringe Rotation gegeben ist. Aus diesem Grund wird ein Schwellenwert bestimmt, welcher der Gyroskop-Wert überschreiten muss, um als tatsächliche Bewegung erkannt werden zu können. Damit ist sichergestellt, dass es sich um eine tatsächliche Rotation handelt.
 
-### 5.4.1 Abbildung auf einen Cursor
-Die einfachste Art und Weise, wie die Raddaten in Eingaben abgebildet werden können, ist die Steuerung eines Cursors. Dabei wird ein Rad genutzt, um die x-Achse abzubilden und das andere Rad bildet die y-Achse ab. Vorteil dabei ist, dass beide Achsen gleichzeitig angesprochen werden können. <mark>Jedoch ist es schwieriger, die x-Achse zu bewegen, da diese anders ausgerichtet ist als das Rad, das gedreht wird.</mark> 
-
-<mark>Eine Alternative ist, dass jede Achse von beiden Rädern gesteuert wird. Die x-Achse wird dabei dann angesprochen, wenn sich die Räder gegeneinander drehen. Drehen sich die Räder miteinander, so wird die y-Achse angesprochen. Jedoch ist es dabei nicht mehr möglich, gleichzeitig den Cursor entlang beider Achsen zu bewegen, da sich die Räder nicht gleichzeitig mit und gegeneinander drehen können.</mark>
+### 5.4.1 Abbildung auf einen Thumb-Stick
+Die einfachste Art und Weise der Abbildung von Raddaten auf eine Eingabe, ist die Steuerung durch einen Thumb-Stick. Dabei wird die x-Achse mit dem einen, die y-Achse mit dem anderen Rad dargestellt. Vorteilig ist dabei, dass beide Achsen gleichzeitig angesprochen werden können. Jedoch ist es schwieriger, die x-Achse zu bewegen, da diese anders ausgerichtet ist als das Rad, das gedreht wird. Alternativ kann das Ansprechen einer Achse auch durch beide Räder passieren. Dabei wird die x-Achse dann angesprochen, wenn sich die Räder gegeneinander drehen und die y-Achse, wenn sich die Räder miteinander drehen. Damit wird eine intuitive Nutzung angestrebt. Jedoch ist es dabei nicht mehr möglich, gleichzeitig den Cursor entlang beider Achsen zu bewegen, da sich die Räder nicht gleichzeitig mit und gegeneinander drehen können.
 
 ### 5.4.2 Abbildung auf einen realistisch simulierten Rollstuhl
 Da das im Rahmen dieser Arbeit entwickelte System darauf abzielt, im virtuellen Raum zu navigieren, wird eine Abbildung benötigt, die die Position des Nutzers im virtuellen Raum verändert. Die naheliegendste Methode ist dabei die Abbildung auf einen simulierten Rollstuhl, da die Daten ursprünglich von einem realen Rollstuhl gekommen sind und die Bewegungsmuster einfach aufeinander abgebildet werden können. Um die Raddaten der zwei Räder auf eine Bewegung und Rotation eines Rollstuhls umzurechnen, muss erst festgestellt werden, welche Radbewegungen zu welchen Rollstuhlbewegungen führt. Dabei können drei idealisierte Fälle unterschieden werden:
@@ -142,8 +141,11 @@ Da das im Rahmen dieser Arbeit entwickelte System darauf abzielt, im virtuellen 
 **Fall 2:** Drehen sich die Räder mit gleicher Geschwindigkeit gegeneinander, so ruft dies eine Rotation um die eigene Achse hervor.
 **Fall 3:** Dreht sich nur ein Rad, so dreht sich dieses um das Stehende.
 
+<mark>fall 4 einfügen von unten und idealisisert rausnehmen</mark>
+
 Im Folgenden wird die Berechnung der Bewegungsanteile aufgezeigt, bestehend aus Bewegung nach vorne/hinten und Rotation um die eigene Achse:
 
+<mark>alle variablen hier einfügen</mark>
 $$
 \begin{align}
 Bahngeschwindigkeit\ des\ linken\ Rades: vL \\
@@ -157,7 +159,7 @@ Rotationvektor: r \\
 $$
 
 ![[WheelchairMath.PNG|500]]
-(Abb.<mark>?</mark> Skizze eines Rollstuhls, mit den relevanten Größen)
+(Abb.<mark>?</mark> Skizze des Rollstuhls aus der Vogelperspektive)
 
 Da in der Realität die Bewegung nicht idealisiert ist, ist festzustellen, dass die tatsächliche Bewegung zusammengesetzt ist aus einer der ersten beiden Fälle und dem dritten Fall:
 
@@ -176,7 +178,7 @@ $$
 
 Die Rotation beider Räder lässt sich in zwei Komponenten aufspalten. Zum einen den Minimum-Anteil $m$, den sich beide Räder drehen.
 
-$$m = min(\left| vL \right|-\left| vR\right|)$$
+$$m = min(\left| vL \right|,\left| vR\right|)$$
 
 Zum anderen der Overshoot-Anteil $o$ den sich ein Rad schneller dreht als das andere.
 
@@ -229,7 +231,8 @@ vL + vR > 0
 $$
 
 ### 5.4.3 Abbildung auf einen idealisierten simulierten Rollstuhl
-Bei der Verwendung der Abbildung hin zu einem realistischen Rollstuhl hat sich gezeigt, dass ein schnelles Vorankommen gestört wird. Ursache dafür ist, dass die Räder sich in leicht unterschiedlicher Geschwindigkeit drehen und so automatisch die Bewegung nach vorne, <mark>Drall</mark> nach links oder rechts bekommt. 
+<mark>eventuell reinziehen in oberes kapitel</mark>
+Bei der Verwendung der Abbildung hin zu einem realistischen Rollstuhl hat sich im vorangegangenen Abschnitt gezeigt, dass ein zielgerichtetes Vorankommen gestört wird. Ursache dafür ist, dass die Räder sich in leicht unterschiedlicher Geschwindigkeit drehen und so automatisch die Bewegung nach vorne, eine Ablenkung nach links oder rechts erfährt.
 
 Dieses Problem kann gelöst werden, wenn mit den Rotationen beider Räder ein Mittelwert $v$ errechnet. Dieser Mittelwert wird dann die Kalkulation von Fall 1 und Fall 2, statt dem Minimum $m$ verwendet. 
 
@@ -361,7 +364,7 @@ Bei gewöhnlicher Nutzung des Systems ergeben sich folgende Werte bei der Übert
 Aus der Tabelle ist zu entnehme, dass im normalen Betrieb mindestens <mark>Zahl</mark> Daten-Pakete pro Sekunde erreicht werden. Es hat sich gezeigt, dass im hier untersuchten Echtzeit-Szenario die Datenrate ausreichen ist, um eine angenehme Nutzererfahrung zu generieren. 
 <mark>blablabla</mark>
 
-### 5.5.3 Detektion von Bewegungszuständen
+### 5.5.3 Detektieren von Bewegungszuständen
 Für den Nutzer ist die korrekte Detektion von Bewegungszuständen entscheidend. Werden ungewünschte Zustände detektiert, führt dies zu fehlerhaften Eingaben, welche der Nutzer als störend empfindet. Beim Testen der _Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen_ haben sich zwei primäre Probleme herausgestellt, bei denen fehlerhafte Eingaben getätigt werden. 
 
 **Unbeabsichtigtes Betätigen von Interaktionstasten**

@@ -55,7 +55,8 @@
     "WebSocket-Server",
     "WiFi-Netzwerk",
     "WiFi-Kommunikation",
-    "WiFi-Alternative"
+    "WiFi-Alternative",
+    "Vorteilig"
   ],
   "vimMode": false,
   "foldIndent": true,
