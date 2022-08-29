@@ -46,11 +46,11 @@ public class ESP_Now : Connection
             {
                 case (byte)'1':
                     Node.Node_One.DataCount++;
-                    Node.Node_One.Gyro.Push_RawValue(value, ValueType.Real);
+                    Node.Node_One.Gyro.Push_RawValue(value, ValueSource.CONNECTION);
                     break;
                 case (byte)'2':
                     Node.Node_Two.DataCount++;
-                    Node.Node_Two.Gyro.Push_RawValue(value, ValueType.Real);
+                    Node.Node_Two.Gyro.Push_RawValue(value, ValueSource.CONNECTION);
                     break;
             }
 

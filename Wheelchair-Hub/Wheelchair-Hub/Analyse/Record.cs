@@ -5,7 +5,7 @@ public class Record
 {
     public static bool Is_Recording { get; set; }
 
-    private static List<Sample> RecordedSamples = new();
+    public static List<Sample> RecordedSamples { get; set; } = new();
     private const int TIME_BETWEEN_CALLS = 16;
     private static System.Timers.Timer Timer = new System.Timers.Timer(TIME_BETWEEN_CALLS);
 
@@ -22,46 +22,19 @@ public class Record
     {
         RecordedSamples.Clear();
         Is_Recording = true;
-        Start_Timer();
         Terminal.Add_Message("Started recording.");
     }
 
     private static void Stop_Record()
     {
-        Timer.Stop();
-        Timer.Close();
         Is_Recording = false;
         Save_Recording();
         Terminal.Add_Message("Stopped recording.");
     }
 
-    private static void Start_Timer()
+    public static void TakeSample(GyroSnapshot nodeOne, GyroSnapshot nodeTwo, MovementState movementState)
     {
-        Timer = new System.Timers.Timer(TIME_BETWEEN_CALLS);
-        Timer.Elapsed += TakeSample!;
-        Timer.AutoReset = true;
-        Timer.Enabled = true;
-    }
-
-    private static void TakeSample(object sender, ElapsedEventArgs e)
-    {
-        RecordedSamples.Add(new Sample
-        {
-            NodeOne_RawValue_Clean = Node.Node_One.Gyro.RawValue_Clean,
-            NodeTwo_RawValue_Clean = Node.Node_Two.Gyro.RawValue_Clean,
-            NodeOne_RawValue = Node.Node_One.Gyro.Peek_RawValue(),
-            NodeTwo_RawValue = Node.Node_Two.Gyro.Peek_RawValue(),
-            NodeOne_Value = Node.Node_One.Gyro.Peek_RawValue() / Gyro.StepsPerDegree,
-            NodeTwo_Value = Node.Node_Two.Gyro.Peek_RawValue() / Gyro.StepsPerDegree,
-            NodeOne_SmoothedValue = Node.Node_One.Gyro.SmoothedDegreePerSecond_Last(),
-            NodeTwo_SmoothedValue = Node.Node_Two.Gyro.SmoothedDegreePerSecond_Last(),
-            NodeOne_Datarate = Node.Node_One.DataPerSecond,
-            NodeTwo_Datarate = Node.Node_Two.DataPerSecond,
-            NodeOne_Acceleration = Node.Node_One.Gyro.Acceleration(),
-            NodeTwo_Acceleration = Node.Node_Two.Gyro.Acceleration(),
-            MovementState = Mapping._Mapping.StateDetection.Get_MovementState_WheelchairWithButtons(Node.Rotations())
-            // , Timestamp = DateTime.Now
-        });
+        RecordedSamples.Add(Sample.newSample(nodeOne, nodeTwo, movementState));
     }
 
     private static void Save_Recording()

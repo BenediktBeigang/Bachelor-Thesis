@@ -2,6 +2,7 @@ public class MovementStateDetection
 {
     public readonly int DualWheel_Threshold;
     public readonly int SingleWheel_Threshold; // gyro value
+    private const int ACCELERATION_THRESHOLD = 15;
 
     public MovementStateDetection(int dualWheel_Threshold, int singleWheel_Threshold)
     {
@@ -46,14 +47,15 @@ public class MovementStateDetection
     #region State-Checks
     private bool Is_StandingStill(Rotations rotations)
     {
-        return (rotations.RawLeft is 0 && rotations.RawRight is 0 || Is_MovementStateChanging());
+        return (rotations.Left.RawValue is 0 && rotations.Right.RawValue is 0);
     }
 
     private bool Is_Tilt(Rotations rotations)
     {
-        bool b1 = (Math.Abs(rotations.AngularVelocityLeft) <= DualWheel_Threshold) && (Math.Abs(rotations.AngularVelocityRight) <= DualWheel_Threshold);
-        bool b2 = (Is_RotationAgainstEachOther(rotations) is false);
-        return b1 && b2;
+        bool b1 = (Math.Abs(rotations.Left.AngularVelocity_Smoothed) <= DualWheel_Threshold) && (Math.Abs(rotations.Right.AngularVelocity_Smoothed) <= DualWheel_Threshold);
+        bool b2 = Is_RotationAgainstEachOther(rotations) is false;
+        bool b3 = Is_MovementStateChanging() is false;
+        return b1 && b2 && b3;
     }
 
     private bool Is_ViewAxisMotion(Rotations rotations)
@@ -63,27 +65,27 @@ public class MovementStateDetection
 
     private bool Is_ViewAxisMotion_WithThreshold(Rotations rotations)
     {
-        bool b1 = (Math.Abs(rotations.AngularVelocityLeft) > DualWheel_Threshold) && (Math.Abs(rotations.AngularVelocityRight) > DualWheel_Threshold);
+        bool b1 = (Math.Abs(rotations.Left.AngularVelocity_Smoothed) > DualWheel_Threshold) && (Math.Abs(rotations.Right.AngularVelocity_Smoothed) > DualWheel_Threshold);
         bool b2 = (Is_RotationAgainstEachOther(rotations) is false);
         return b1 && b2;
     }
 
     private bool Is_DualWheelTurn(Rotations rotations)
     {
-        return ((rotations.RawLeft > 0) ^ (rotations.RawRight > 0));
+        return ((rotations.Left.AngularVelocity_Smoothed > 0) ^ (rotations.Right.AngularVelocity_Smoothed > 0));
     }
 
     private bool Is_SingleWheel(Rotations rotations)
     {
-        bool b1 = Math.Abs(rotations.AngularVelocityLeft) < DualWheel_Threshold;
-        bool b2 = Math.Abs(rotations.AngularVelocityRight) < DualWheel_Threshold;
+        bool b1 = Math.Abs(rotations.Left.AngularVelocity_Smoothed) < DualWheel_Threshold;
+        bool b2 = Math.Abs(rotations.Right.AngularVelocity_Smoothed) < DualWheel_Threshold;
         return b1 ^ b2;
     }
 
     private bool Is_ButtonPressed(Rotations rotations)
     {
-        bool b1 = (Math.Abs(rotations.AngularVelocityLeft) < SingleWheel_Threshold) ^ (Math.Abs(rotations.AngularVelocityRight) < SingleWheel_Threshold);
-        bool b2 = (Math.Abs(rotations.AngularVelocityLeft) > DualWheel_Threshold) ^ (Math.Abs(rotations.AngularVelocityRight) > DualWheel_Threshold);
+        bool b1 = (Math.Abs(rotations.Left.AngularVelocity_Smoothed) < SingleWheel_Threshold) ^ (Math.Abs(rotations.Right.AngularVelocity_Smoothed) < SingleWheel_Threshold);
+        bool b2 = (Math.Abs(rotations.Left.AngularVelocity_Smoothed) > DualWheel_Threshold) ^ (Math.Abs(rotations.Right.AngularVelocity_Smoothed) > DualWheel_Threshold);
         return b1 && b2;
     }
     #endregion
@@ -91,13 +93,14 @@ public class MovementStateDetection
     #region Helper
     private static bool Is_MovementStateChanging()
     {
+        // return false;
         (double, double) acceleration = Gyro.Acceleration_BothNodes();
-        return acceleration.Item1 + acceleration.Item2 >= 15;
+        return acceleration.Item1 + acceleration.Item2 >= ACCELERATION_THRESHOLD;
     }
 
     private static bool Is_RotationAgainstEachOther(Rotations rotations)
     {
-        return ((rotations.RawLeft > 0) ^ (rotations.RawRight > 0));
+        return ((rotations.Left.AngularVelocity_Smoothed > 0) ^ (rotations.Right.AngularVelocity_Smoothed > 0));
     }
     #endregion
 }

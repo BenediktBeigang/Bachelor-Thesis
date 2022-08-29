@@ -29,30 +29,30 @@ public class Wheelchair
     #region Checks
     public static bool Is_LeftRotation(Rotations rotations)
     {
-        return (rotations.RawLeft < rotations.RawRight);
+        return (rotations.Left.RawValue < rotations.Right.RawValue);
     }
 
     public static bool Is_RotationSumForeward(Rotations rotations)
     {
-        return (rotations.RawLeft + rotations.RawRight) >= 0;
+        return (rotations.Left.RawValue + rotations.Right.RawValue) >= 0;
     }
 
     public static bool Is_RotationAgainstEachOther(Rotations rotations)
     {
-        return ((rotations.RawLeft > 0) ^ (rotations.RawRight > 0));
+        return ((rotations.Left.RawValue > 0) ^ (rotations.Right.RawValue > 0));
     }
 
     public static bool Is_ExactlyOneRotationUnderThreshold(Rotations rotations, int threshold)
     {
-        bool b1 = Math.Abs(rotations.AngularVelocityLeft) < threshold;
-        bool b2 = Math.Abs(rotations.AngularVelocityRight) < threshold;
+        bool b1 = Math.Abs(rotations.Left.AngularVelocity) < threshold;
+        bool b2 = Math.Abs(rotations.Right.AngularVelocity) < threshold;
         return b1 ^ b2;
     }
 
     public static bool Are_BothRotationsUnderThreshold(Rotations rotations, int threshold)
     {
-        bool b1 = Math.Abs(rotations.AngularVelocityLeft) < threshold;
-        bool b2 = Math.Abs(rotations.AngularVelocityRight) < threshold;
+        bool b1 = Math.Abs(rotations.Left.AngularVelocity) < threshold;
+        bool b2 = Math.Abs(rotations.Right.AngularVelocity) < threshold;
         return b1 && b2;
     }
 

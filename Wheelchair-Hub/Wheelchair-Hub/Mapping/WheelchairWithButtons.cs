@@ -5,7 +5,6 @@ public class WheelchairWithButtons : Mapping
 
     public override ControllerInput Values_Next(Rotations rotations)
     {
-        // switch (Get_MovementState(rotations))
         switch (StateDetection.Get_MovementState_WheelchairWithButtons(rotations))
         {
             case MovementState.StandingStill: return new ControllerInput();
@@ -17,6 +16,11 @@ public class WheelchairWithButtons : Mapping
         return new ControllerInput();
     }
 
+    public override MovementState Get_MovementState(Rotations rotations)
+    {
+        return StateDetection.Get_MovementState_WheelchairWithButtons(rotations);
+    }
+
     /// <summary>
     /// The Output is the max- or min-value of the angularVelocity, so the controller-ThumbStick is at max deflection.
     /// </summary>
@@ -25,7 +29,7 @@ public class WheelchairWithButtons : Mapping
     /// <returns></returns>
     private ControllerInput Move(Rotations rotations)
     {
-        double moveVector = (Wheelchair.Is_RotationForward(rotations.AngularVelocityLeft)) ? Gyro.ModeAsInteger() : -Gyro.ModeAsInteger();
+        double moveVector = (Wheelchair.Is_RotationForward(rotations.Left.AngularVelocity)) ? Gyro.ModeAsInteger() : -Gyro.ModeAsInteger();
         return new ControllerInput()
         {
             LeftThumbY = Wheelchair.AngularVelocityToControllerAxis(moveVector)

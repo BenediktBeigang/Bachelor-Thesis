@@ -177,11 +177,11 @@ public class WiFi : Connection
             {
                 case "ONE":
                     Node.Node_One.DataCount++;
-                    Node.Node_One.Gyro.Push_RawValue(short.Parse(message), ValueType.Real);
+                    Node.Node_One.Gyro.Push_RawValue(short.Parse(message), ValueSource.CONNECTION);
                     break;
                 case "TWO":
                     Node.Node_Two.DataCount++;
-                    Node.Node_Two.Gyro.Push_RawValue(short.Parse(message), ValueType.Real);
+                    Node.Node_Two.Gyro.Push_RawValue(short.Parse(message), ValueSource.CONNECTION);
                     break;
                 default:
                     Terminal.Add_Message(message);

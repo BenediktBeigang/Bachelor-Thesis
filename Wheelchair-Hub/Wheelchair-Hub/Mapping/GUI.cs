@@ -15,6 +15,11 @@ public class GUI : Mapping
         return new ControllerInput();
     }
 
+    public override MovementState Get_MovementState(Rotations rotations)
+    {
+        return StateDetection.Get_MovementState_GUI(rotations);
+    }
+
     private ControllerInput YAxis(Rotations rotations)
     {
         double moveVector = AbsoluteInterpolation(rotations);

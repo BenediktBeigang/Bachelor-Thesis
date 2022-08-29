@@ -60,7 +60,7 @@ public class Gyro
     /// Overides oldest RawValue in Buffer with new RawValue.
     /// </summary>
     /// <param name="newValue"></param>
-    public void Push_RawValue(short newValue, ValueType type)
+    public void Push_RawValue(short newValue, ValueSource type)
     {
         if (ValueAccessDenied(type)) return;
         RawValue_Clean = newValue;
@@ -76,12 +76,12 @@ public class Gyro
         RawValueBuffer[BufferPointer] = transformedValue;
     }
 
-    private bool ValueAccessDenied(ValueType type)
+    private bool ValueAccessDenied(ValueSource type)
     {
         switch (type)
         {
-            case ValueType.Real: return Playback.Is_PlaybackRunning;
-            case ValueType.Playback: return Playback.Is_PlaybackRunning is false;
+            case ValueSource.CONNECTION: return Playback.Is_PlaybackRunning;
+            case ValueSource.PLAYBACK: return Playback.Is_PlaybackRunning is false;
         }
         return true;
     }
@@ -193,7 +193,8 @@ public class Gyro
     public double Acceleration()
     {
         const int samples = 2;
-        double[] values = DegreePerSecond_Last(samples);// SmoothedDegreePerSecond_Last(samples);// 
+        double[] values = SmoothedDegreePerSecond_Last(samples);
+        // double[] values = DegreePerSecond_Last(samples);
         double[] accelerations = new double[samples - 1];
         for (int i = 0; i < samples - 1; i++)
         {
@@ -267,4 +268,21 @@ public class Gyro
         }
     }
     #endregion
+
+    public GyroSnapshot Snapshot()
+    {
+        return new GyroSnapshot()
+        {
+            RawValue_Clean = RawValue_Clean,
+            RawValue = Peek_RawValue(),
+            AngularVelocity = DegreePerSecond_Last(),
+            AngularVelocity_Smoothed = SmoothedDegreePerSecond_Last(),
+            Acceleration = Acceleration()
+        };
+    }
+
+    public static (GyroSnapshot gyroOne, GyroSnapshot gyroTwo) Get_GyroSnapshots()
+    {
+        return (Node.Node_One.Gyro.Snapshot(), Node.Node_Two.Gyro.Snapshot());
+    }
 }

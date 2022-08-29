@@ -15,29 +15,18 @@ public struct Message
 
 public struct Rotations
 {
-    public short RawLeft { get; set; }
-    public short RawRight { get; set; }
-    public double AngularVelocityLeft { get; set; }
-    public double AngularVelocityRight { get; set; }
+    public GyroSnapshot Left { get; set; }
+    public GyroSnapshot Right { get; set; }
+    public bool NodesFlipped;
 
-    public Rotations(short rL, short rR, double aVL, double aVR)
+    public Rotations(GyroSnapshot gyroOne, GyroSnapshot gyroTwo, bool nodesFlipped)
     {
-        RawLeft = rL;
-        RawRight = rR;
-        AngularVelocityLeft = aVL;
-        AngularVelocityRight = aVR;
-    }
-
-    public void MuteLeft()
-    {
-        RawLeft = 0;
-        AngularVelocityLeft = 0;
-    }
-
-    public void MuteRight()
-    {
-        RawRight = 0;
-        AngularVelocityRight = 0;
+        switch (nodesFlipped)
+        {
+            case false: Left = gyroOne; Right = gyroTwo; break;
+            case true: Left = gyroTwo; Right = gyroOne; break;
+        }
+        NodesFlipped = nodesFlipped;
     }
 }
 

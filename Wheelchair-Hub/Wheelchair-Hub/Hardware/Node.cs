@@ -100,31 +100,6 @@ public class Node
     }
     #endregion
 
-    public static Rotations Rotations()
-    {
-        short rawOne = Node_One.Gyro.Peek_RawValue();
-        short rawTwo = Node_Two.Gyro.Peek_RawValue();
-        double one = Node_One.Gyro.DegreePerSecond_Last();
-        double two = Node_Two.Gyro.DegreePerSecond_Last();
-        // double one = Node_One.Gyro.SmoothedDegreePerSecond_Last();
-        // double two = Node_Two.Gyro.SmoothedDegreePerSecond_Last();
-        switch (NodesFlipped)
-        {
-            case false: return new Rotations(rawOne, rawTwo, one, two);
-            case true: return new Rotations(rawTwo, rawOne, two, one);
-        }
-
-        // short[] rawOne = Node_One.Gyro.Peek_RawValue(2);
-        // short[] rawTwo = Node_Two.Gyro.Peek_RawValue(2);
-        // // double one = Node_One.Gyro.SmoothedDegreePerSecond_Last();
-        // // double two = Node_Two.Gyro.SmoothedDegreePerSecond_Last();
-        // switch (NodesFlipped)
-        // {
-        //     case false: return new Rotations(rawOne, rawTwo, Gyro.StepsPerDegree);
-        //     case true: return new Rotations(rawTwo, rawOne, Gyro.StepsPerDegree);
-        // }
-    }
-
     public static Node? Get_Node(DeviceNumber device)
     {
         switch (device)

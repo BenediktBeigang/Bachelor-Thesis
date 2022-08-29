@@ -16,8 +16,8 @@ public class Playback
             Stop_Playback();
             return;
         }
-        Node.Node_One.Gyro.Push_RawValue(Buffer_One[Buffer_Pointer], ValueType.Playback);
-        Node.Node_Two.Gyro.Push_RawValue(Buffer_Two[Buffer_Pointer], ValueType.Playback);
+        Node.Node_One.Gyro.Push_RawValue(Buffer_One[Buffer_Pointer], ValueSource.PLAYBACK);
+        Node.Node_Two.Gyro.Push_RawValue(Buffer_Two[Buffer_Pointer], ValueSource.PLAYBACK);
         Buffer_Pointer++;
     }
 
@@ -48,10 +48,10 @@ public class Playback
             Is_PlaybackRunning = true;
             Terminal.Add_Message("Playback started!");
         }
-        catch (Exception)
+        catch (Exception e)
         {
             Is_PlaybackRunning = false;
-            Terminal.Add_Message("Playback could NOT be started!");
+            Terminal.Add_Message("Playback could NOT be started, because: " + e.Message);
         }
     }
 

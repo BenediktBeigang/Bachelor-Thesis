@@ -90,11 +90,11 @@ public static class Terminal
     {
         string output = "";
         output += String.Format(FORMAT_STRING_INFOHEAD, "", "", "         Flipped", "          Threshold", "") + '\n';
-        output += String.Format(FORMAT_STRING_INFO, " GYRO-MODE", " MAPPING-MODE", " Nodes", " Node-One", " Node-Two", " WheelMovement", " ButtonPressing", " WheelMovementMax") + '\n';
+        output += String.Format(FORMAT_STRING_INFO, " GYRO-MODE", " MAPPING-MODE", " Nodes", " Node-One", " Node-Two", " DualWheel", " SingleWheel", " WheelMovementMax") + '\n';
         output += String.Format(FORMAT_STRING_INFO,
         $" {Gyro.Mode}", $" {Mapping.Get_Mode().ToString()}",
         $" {Node.NodesFlipped}", $" {Node.Node_One.Gyro.RotationValueFlip}", $" {Node.Node_Two.Gyro.RotationValueFlip}",
-        $" {Mapping.Get_WheelMovementThreshold()}", $" {Mapping.Get_ButtonPressingThreshold()}",
+        $" {Mapping.Get_MovementStateDetection().DualWheel_Threshold}", $" {Mapping.Get_MovementStateDetection().SingleWheel_Threshold}",
         $" {Mapping.Get_WheelMovement_Max()}");
         return output;
     }

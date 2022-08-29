@@ -26,4 +26,9 @@ public class RealisticWheelchair : Mapping
             RightThumbX = Wheelchair.AngularVelocityToControllerAxis(turningVector)
         };
     }
+
+    public override MovementState Get_MovementState(Rotations rotations)
+    {
+        return MovementState.NoStateMovement;
+    }
 }

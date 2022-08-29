@@ -24,9 +24,13 @@ public static class Controller
     public static void Refresh_Controller(object sender, ElapsedEventArgs e)
     {
         if (controller is null) return;
-        Rotations rotations = Node.Rotations();
+        (GyroSnapshot gyroOne, GyroSnapshot gyroTwo) snapshots = Gyro.Get_GyroSnapshots();
+        Rotations rotations = new Rotations(snapshots.gyroOne, snapshots.gyroTwo, Node.NodesFlipped);
+
         if (Playback.Is_PlaybackRunning) Playback.Update_Gyro();
+        if (Record.Is_Recording) Record.TakeSample(snapshots.gyroOne, snapshots.gyroTwo, Mapping._Mapping!.Get_MovementState(rotations));
         ControllerInput input = Mapping._Mapping!.Values_Next(rotations);
+
         Terminal.Other = input.ToString();
         ValuesToController(input);
     }

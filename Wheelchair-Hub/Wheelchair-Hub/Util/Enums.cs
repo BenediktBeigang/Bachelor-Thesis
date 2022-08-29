@@ -38,6 +38,7 @@ public enum MappingMode
 
 public enum MovementState
 {
+    NoStateMovement,
     StandingStill,
     ViewAxis_Motion,
     SingleWheel_Turn,
@@ -45,8 +46,8 @@ public enum MovementState
     Tilt
 }
 
-public enum ValueType
+public enum ValueSource
 {
-    Real,
-    Playback
+    CONNECTION,
+    PLAYBACK
 }

@@ -47,8 +47,8 @@ public static class Terminal2
             Node.NodesFlipped.ToString(),
             Node.Node_One.Gyro.RotationValueFlip.ToString(),
             Node.Node_Two.Gyro.RotationValueFlip.ToString(),
-            Mapping.Get_WheelMovementThreshold().ToString(),
-            Mapping.Get_ButtonPressingThreshold().ToString(),
+            Mapping.Get_MovementStateDetection().DualWheel_Threshold.ToString(),
+            Mapping.Get_MovementStateDetection().SingleWheel_Threshold.ToString(),
             Mapping.Get_WheelMovement_Max().ToString()
         };
     }

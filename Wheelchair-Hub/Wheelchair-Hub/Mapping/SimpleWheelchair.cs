@@ -15,6 +15,11 @@ public class SimpleWheelchair : Mapping
         return new ControllerInput();
     }
 
+    public override MovementState Get_MovementState(Rotations rotations)
+    {
+        return StateDetection.Get_MovementState_SimpleWheelchair(rotations);
+    }
+
     private ControllerInput Handle_ViewAxisMotion(Rotations rotations)
     {
         double moveVector = AbsoluteInterpolation(rotations);
@@ -38,8 +43,8 @@ public class SimpleWheelchair : Mapping
 
     private ControllerInput Handle_SingleWheelTurn(Rotations rotations)
     {
-        if (Wheelchair.Is_RotationUnderThreshold(rotations.AngularVelocityLeft, WheelMovement_Threshold)) rotations.MuteLeft();
-        if (Wheelchair.Is_RotationUnderThreshold(rotations.AngularVelocityRight, WheelMovement_Threshold)) rotations.MuteRight();
+        if (Wheelchair.Is_RotationUnderThreshold(rotations.Left.AngularVelocity, StateDetection.DualWheel_Threshold)) rotations.Left.Mute();
+        if (Wheelchair.Is_RotationUnderThreshold(rotations.Right.AngularVelocity, StateDetection.DualWheel_Threshold)) rotations.Right.Mute();
         (double moveVector, double turnVector) vectors = DualWheel(rotations);
         return new ControllerInput()
         {
