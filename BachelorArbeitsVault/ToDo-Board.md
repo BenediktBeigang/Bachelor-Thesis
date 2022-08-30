@@ -8,11 +8,7 @@ kanban-plugin: basic
 
 - [ ] Rechner kaufen?
 - [ ] themen wie heartbeat, calibration, etc aufnehmen
-- [ ] ruckartige bewegungen besser
 - [ ] key A und D abbilden mit schneller rotation
-- [ ] aufgezeichnetete daten wieder einspielen
-- [ ] aufzeichnung auf basis wirklich verwendeter daten und nicht von daten abgefragt zu anderen zeitpunkten
-- [ ] leute fragen ob "abbilden von eingaben" gute wortwahl
 
 
 ## Messen
