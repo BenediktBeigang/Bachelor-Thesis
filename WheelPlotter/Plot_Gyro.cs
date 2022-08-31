@@ -2,8 +2,8 @@ public class Plot_Gyro
 {
     public Plot_Gyro(List<Sample> record, string movementState, string file)
     {
-        double[] x_One = record.Select(r => r.NodeOne_Value).ToArray();
-        double[] x_Two = record.Select(r => r.NodeTwo_Value).ToArray();
+        double[] x_One = record.Select(r => r.NodeOne_SmoothedValue).ToArray();
+        double[] x_Two = record.Select(r => r.NodeTwo_SmoothedValue).ToArray();
 
         var plt = new ScottPlot.Plot(1600, 900);
         plt.XLabel("Time [s]");
