@@ -7,7 +7,7 @@ ___
 In diesem Kapitel werden die Mittel und Wege beleuchtet wie das zu entwickelnde System dieser Arbeit entworfen wurde. Dazu wird zunächst darauf eingegangen wie das bennötigte eigebettete System (im folgenden auch Node genannt) designed wurde und widmet sich dann der Frage wie die gemessenen Daten mithilfe einer Software, weiterverarbeitet beziehungsweise abgebildet wurden, zu Eingaben auf einem Spielcontroller. Zu letzt wird untersucht wie gut die entwickelten Systeme funktionieren und wie diese verbessert werden können.
 
 ## 5.1 Eingebettetes System zur Messung der Raddaten
-Damit der Software bekannt ist, mit welcher Geschwindigkeit sich welches Rad in welche Richtung dreht, ist Hardware notwendig, welche die Rotationsdaten misst und an die Software übermittelt. Dazu wurde für das vorliegende Experiment ein eingebettetes System verwendet. Im Folgenden soll näher beleuchtet und erörtert werden, welche Hardware verwendet und wie die Raddaten gemessen und übertragen wurden. Dazu werden verschiedene Kommunikationsprotokolle verglichen.
+Damit der Software bekannt ist, mit welcher Geschwindigkeit sich welches Rad in welche Richtung dreht, ist Hardware notwendig, welche die Rotationsdaten misst und an die Software übermittelt. Dazu wurde für das vorliegende Experiment ein eingebettetes System verwendet. Es soll näher beleuchtet und erörtert werden, welche Hardware verwendet und wie die Raddaten gemessen und übertragen wurden. Dazu werden verschiedene Kommunikationsprotokolle verglichen. Im Folgenden wird das eingebettete System, welches die Daten an die überträgt als Node bezeichnet.
 
 ### 5.1.1 Messtechniken und Sensoren
 Um die Rotation der Räder des Rollstuhls messen zu können, wird ein Sensor benötigt. Dabei gibt es verschiedene Herangehensweisen, wie ein Sensor die Rotation messen kann. 
@@ -69,7 +69,6 @@ Der MPU-6050 muss wie folgt an das Entwicklungsboard angeschlossen werden:
 | ADO              | GND      |
 
 <mark> Eventuell schmeiße ich 5.1.4 und 5.1.5 raus</mark>
-
 ### 5.1.4 PlatformIO
 Zur Entwicklung der Software, die auf den Mikrocontrollern läuft, wurde PlatformIO verwendet. Dies ist eine Erweiterung für Visual Studio Code, bei der die benötigten Bibliotheken, die für jeden Mikrocontroller und jedes Board notwendig sind, automatisch heruntergeladen und eingerichtet werden. Ebenfalls lassen sich über das UI Bibliotheken, die für das jeweilige Projekt notwendig sind, hinzufügen. Zusätzlich zur Entwicklungsumgebung von Visual Studio Code gibt es Funktionalitäten einen Chip zu flashen und anschließend im seriellen Monitor die Ausführung zu beobachten. Im Gegensatz zu Umgebungen wie der Arduino IDE wird Zeit gespart, da dort zunächst manuell Treiber heruntergeladen werden müssen und man nicht von den Vorteilen einer moderneren IDE profitiert.
 
@@ -148,17 +147,17 @@ Bahngeschwindigkeit\ des\ rechten\ Rades: vR \\
 Bahngeschwindigkeit\ Minimum: m \\
 Overshoot: o \\
 Abstand\ Der\ Räder: d \\
-Fortbewegungsvektor: \vec{s} \\
+Fortbewegungsvektor: \vec{f} \\
 Rotationvektor: \vec{r} \\
-Fortbewegungsvektor\ Fall1\ oder\ Fall2: \vec{s_{1,2}} \\
+Fortbewegungsvektor\ Fall1\ oder\ Fall2: \vec{f_{1,2}} \\
 Rotationvektor\ Fall1\ oder\ Fall2: \vec{r_{1,2}} \\
-Fortbewegungsvektor\ Fall3: \vec{s_{3}} \\
+Fortbewegungsvektor\ Fall3: \vec{f_{3}} \\
 Rotationvektor\ Fall3: \vec{r_{3}} \\
 \end{align}
 $$
 
 ![[WheelchairMath.PNG|500]]
-(Abb.<mark>?</mark> Skizze des Rollstuhls aus der Vogelperspektive)
+(Abb.<mark>?</mark> Skizze des Rollstuhls aus der Vogelperspektive)<mark>s durch f tauschen</mark>
 
 Zunächst müssen die Rotationen der Räder dekonstruiert werden. Dabei lässt sich die Rotation eines Rades in zwei Komponenten aufspalten. Zum einen den Minimum-Anteil $m$, den sich beide Räder drehen.
 
@@ -169,11 +168,11 @@ Zum anderen der Overshoot-Anteil $o$ den sich ein Rad schneller dreht als das an
 $$o = \left|\left| vL \right|-\left| vR\right| \right|$$
 
 **Fall 1:**
-Die Bewegung nach vorne oder hinten ($Fortbewegungsvektor\ Fall1\ oder\ Fall2\ s_{1,2}$) ergibt sich in diesem Fall aus dem Anteil der Geschwindigkeit, mit denen sich beide Räder drehen. Dabei dreht sich jedoch der Rollstuhl nicht.
+Die Bewegung nach vorne oder hinten ($Fortbewegungsvektor\ Fall1\ oder\ Fall2\ f_{1,2}$) ergibt sich in diesem Fall aus dem Anteil der Geschwindigkeit, mit denen sich beide Räder drehen. Dabei dreht sich jedoch der Rollstuhl nicht.
 
 $$
 \begin{align}
-\vec{s_{1,2}} = m \\
+\vec{f_{1,2}} = m \\
 \vec{r_{1,2}} = 0
 \end{align}
 $$
@@ -185,18 +184,18 @@ $$
 \begin{align}
 w_1 = d \cdot π \\
 \vec{r_{1,2}} = (\frac {m} {w_1}) \cdot 360 \\
-\vec{s_{1,2}} = 0
+\vec{f_{1,2}} = 0
 \end{align}
 $$
 
 **Fall 3:**
-Bei diesem Fall gibt es eine $Fortbewegungsvektor$ und einen $Rotationsvektor$ ungleich null. Da sich nur ein Rad bewegt, hat sich der Wendekreis vergrößert zu $w_2$. Der Durchmesser von $w_2$ ist nun doppelt so groß wie von $w_1$, da das stehende Rad nun der Mittelpunkt des Wendekreises ist. Jetzt wird der $Overshoot\ o$ (also der Anteil der Bewegung des Rades, das sich mehr als das andere dreht) ins Verhältnis gesetzt mit $w_2$ und erhält dadurch $Θ$. Verrechnet man $Θ$ mit dem inneren Wendekreis $w_1$, so erhält man den $Fortbewegungsvektor\ Fall3\ s_3$.
+Bei diesem Fall gibt es einen $Fortbewegungsvektor$ und einen $Rotationsvektor$ ungleich null. Da sich nur ein Rad bewegt, hat sich der Wendekreis vergrößert zu $w_2$. Der Durchmesser von $w_2$ ist nun doppelt so groß wie von $w_1$, da das stehende Rad nun der Mittelpunkt des Wendekreises ist. Jetzt wird der $Overshoot\ o$ (also der Anteil der Bewegung des Rades, das sich mehr als das andere dreht) ins Verhältnis gesetzt mit $w_2$ und erhält dadurch $Θ$. Verrechnet man $Θ$ mit dem inneren Wendekreis $w_1$, so erhält man den $Fortbewegungsvektor\ Fall3\ f_3$.
 
 $$
 \begin{align}
 w_2 = 2 \cdot d \cdot π \\
 Θ = \frac {o} {w_2} \\
-\vec{s_3} = Θ \cdot w_1
+\vec{f_3} = Θ \cdot w_1
 \end{align}
 $$
 
@@ -230,7 +229,7 @@ Anschließend können die Bewegungskomponenten addiert werden:
 
 $$
 \begin{align}
-\vec{s} = \vec{s_{1,2}} + \vec{s_3} \\
+\vec{s} = \vec{f_{1,2}} + \vec{f_3} \\
 \vec{r} = \vec{r_{1,2}} + \vec{r_3}
 \end{align}
 $$
@@ -285,7 +284,7 @@ $$
 \end{align}
 $$
 
-Der Nutzer hat jedoch Schwierigkeiten ein Rad vollständig ruhig zu halten. Die Gyroskop-Werte überschreiten selbst bei kleinen Handbewegungen den Schwellenwert. Dies führt zu unbeabsichtigten Eingaben. Deshalb ist diese Methode unzureichend. Führt man einen Schwellenwert $s$ ein, wird eine vom Nutzer unbeabsichtigte _Einzelradbewegung_ zuverlässiger unterdrückt:
+Der Nutzer hat jedoch Schwierigkeiten ein Rad vollständig ruhig zu halten. Die Gyroskop-Werte überschreiten selbst bei kleinen Handbewegungen den Schwellenwert für die Rauschunterdrückung. Dies führt zu unbeabsichtigten Eingaben. Deshalb ist diese Methode unzureichend. Führt man einen Schwellenwert $t$ ein, wird eine vom Nutzer unbeabsichtigte _Einzelradbewegung_ zuverlässiger unterdrückt:
 
 $$
 \begin{align}
@@ -328,47 +327,45 @@ $$
 \end{align}
 $$
 
-Unweigerlich geht dabei die Möglichkeit verloren, seinen $Fortbewegungsvektor\ s$ feiner einzustellen. Es sind also keine langsamen Bewegungen nach vorne und hinten möglich. Dafür hat der Nutzer jetzt die Möglichkeit, sich frei im Raum umschauen zu können. Da sich jedoch herausgestellt hat, dass der Nutzer in vielen Anwendungen, ohnehin die maximale Fortbewegungsgeschwindigkeit anstrebt, ist diese Umbelegung der Interaktion sinnvoll. Aus diesem Grund wird bei dieser Abbildung bei jeder _schnellen Sichtachsenbewegung_ immer der maximale ThumbStick-Ausschlag abgebildet, um den Nutzer bei der Fortbewegung zu entlasten. Es ist nicht mehr notwendig, konstant mit der maximalen Geschwindigkeit die Räder zu drehen, damit man sich schnellstmöglich fortbewegt. 
-
-In der Praxis hat sich gezeigt, dass nicht jeder zusätzliche Bewegungszustand für neue Interaktionen genutzt werden kann, da sonst die Präzision der Eingaben sich verschlechtert. Ein Beispiel dafür ist die Rotation um die eigene Achse. Wird die Rotation um die eigene Achse nur noch bei hohen oder niedrigen Geschwindigkeiten registriert, so ist es dem Nutzer entweder nicht mehr möglich sich schnell umzudrehen oder kleine Anpassungen seines Blickwinkels zu machen. Die tatsächlich sinnvolle Anzahl an Bewegungsmustern ist deshalb kleiner. Es muss bei jedem Zustand und jeder Interaktion abgewägt werden, ob eine Teilung des Wertebereichs sinnvoll ist.
+Unweigerlich geht dabei die Möglichkeit verloren, seinen $Fortbewegungsvektor\ s$ feiner einzustellen. Es sind also keine langsamen Bewegungen nach vorne und hinten möglich. Dafür hat der Nutzer jetzt die Möglichkeit, sich frei im Raum umschauen zu können. 
 
 ___
 
 ## 5.5 System-Analyse
-Um das vorher beschriebene System zu testen, wurden verschiedene Datenreihen gemessen. Im Folgenden sollen diese analysiert werden. 
+Um das vorher beschriebene System zu testen, wurden verschiedene Datenreihen gemessen und Beobachtungen gemacht. Im Folgenden sollen diese analysiert werden. 
 
-### 5.5.1 Idealer Gyroskop-Modus
+### 5.5.1 Idealer Gyroskop-Modus und Fortbewegung
 Als Erstes wird der Frage nach gegangen, in welchem Modus das Gyroskop betrieben werden sollte. Hierfür wurde eine Datenreihe gemessen, mit der Gradzahl pro Sekunde im Verlauf der Zeit. Eine Testperson hat dabei versucht, ein Rad so schnell wie möglich zu drehen. 
 
-<mark>Bild einfügen
-(Abb.? Gradzahl pro Sekunde im Verlauf der Zeit bei dem Testperson ein Rad so schnell wie möglich dreht)</mark>
+![[gyroMax.PNG|700]]
+(Abb.<mark>?</mark> Bahngeschwindigkeiten im Verlauf der Zeit, bei dem die Testperson ein Rad so schnell wie möglich dreht)
 
-Der Graph zeigt, dass der maximal erreicht Ausschlag um die $800$ beziehungsweise $-800$ herum ist. Daraus folgt, dass Gyroskop-Modus 2 für dieses Szenario der Ideale ist. Der Nutzer erreicht nicht die maximal Geschwindigkeit und reizt trotzdem den Wertebereich ca. $80\%$ aus. 
-Jedoch hat sich beim Testen herausgestellt, dass es für den Nutzer in bestimmten Szenarien störend sein kann, wenn er nicht die maximale mögliche Geschwindigkeit mit niedriger Umdrehungszahl erreicht. Dies ist zwar nicht realistisch, da aber in vielen Anwendungen meist der maximale Ausschlag angestrebt wird, um sich fortzubewegen, ist es sehr anstrengend für den Nutzer lange viel Kraft und Energie in die Fortbewegung stecken zu müssen. Denkbar wäre hier eine neue Skalierung des Wertebereichs während des Mappings, damit schneller der maximale Wert erreicht wird, ohne einen Zahlenüberlauf zu riskieren, wenn man den Gyroskop-Modus stattdessen heruntersetzt.
+Der Graph zeigt, dass der maximal erreicht Ausschlag um die $800$ beziehungsweise $-800$ herum ist bei Rotationen nach vorne. Bei Rotationen nach hinten ist der Ausschlag etwas höher übersteigt jedoch nicht -900. Daraus folgt, dass Gyroskop-Modus 2 für dieses Szenario der Ideale ist. Bei diesem Modus ist die $Maximale\ Gradzahl\ pro\ Sekunde=1000\ °/s$. Der Nutzer erreicht nicht die maximal Geschwindigkeit und reizt trotzdem den Wertebereich ca. $80\%-90\%$ aus. Deshalb wir dieser Modus im System verwendet.
+
+In vielen Anwendungen ist es von Vorteil oder angenehmer für den Nutzer sich schnellstmöglich mit der maximalen Fortbewegungsgeschwindigkeit zu bewegen. Auf Dauer ist es ermüdend die Räder möglichst schnell  drehen zu müssen um schnell voranzukommen. Um den Nutzer zu entlasten kann entweder der $Fortbewegungsvektor\ f$ immer auf einen maximalen ThumbStick-Ausschlag abgebildet werden oder es wird ein weiterer Schwellenwert eingeführt, ab dem alle Eingaben als maximaler ThumbStick-Ausschlag abgebildet werden.
 
 ### 5.5.2 Datenrate der Übertragungsprotokolle
-Zunächst soll der Frage nachgegangen werden, ob hektische Bewegungen eines Rades zu einer schlechteren Übertragung der Daten führen, und ob schnellere Bewegungen dazu führe, obb weniger Daten-Pakete den Clienten erreichen.
+Damit der Nutzer eine bestmögliche Eingabe tätigen kann, ist es notwendig, dass möglichst viele Pakete möglichst schnell empfangen werden. Um die Datenrate zu ermitteln, mit der beide Nodes die Gyroskop-Werte verschicken, wird Client-Seitig alle 250ms die derzeitige Datenrate errechnet. Dazu zählt die Software seit der letzten Messung die eingegangenen Pakete und multipliziert diese mit 4, um die Datenrate pro Sekunde zu erhalten. Auf eine Messung der Latenz wird aufgrund von Zeitgründen und nicht aussagekräftiger Methodik verzichtet. In den Tests wurde jedoch keine Latenz wahrgenommen. 
 
-<mark>Geplotteter Graph</mark>
-<mark>Blablabal zu graph</mark>
+![[wifiDatenrate.PNG|700]]
 
-Bei gewöhnlicher Nutzung des Systems ergeben sich folgende Werte bei der Übertragung: 
+Datenraten beider Übertragungsprotokolle:
+| Pakete pro Sekunde         | Durchschnitt | Minimum | Maximum |
+| -------------------------- | ------------ | ------- | ------- |
+| WiFi mit WebSocket         | 71,48        | 64      | 80      |
+| ESP-Now mit seriellem Port |              |         |         |
 
-| Pakete pro Sekunde         | Durchschnitt | Minimum | Maximum | Delay |
-| -------------------------- | ------------ | ------- | ------- | ----- |
-| WiFi mit WebSocket         |              |         |         |       |
-| ESP-Now mit seriellem Port |              |         |         |       |
-
-Aus der Tabelle ist zu entnehme, dass im normalen Betrieb mindestens <mark>Zahl</mark> Daten-Pakete pro Sekunde erreicht werden. Es hat sich gezeigt, dass im hier untersuchten Echtzeit-Szenario die Datenrate ausreichen ist, um eine angenehme Nutzererfahrung zu generieren. 
+Aus der Tabelle ist zu entnehmen, dass im normalen Betrieb mindestens <mark>Zahl</mark> Daten-Pakete pro Sekunde erreicht werden. Es hat sich gezeigt, dass im hier untersuchten Echtzeit-Szenario die Datenrate ausreichen ist, um eine angenehme Nutzererfahrung zu generieren. 
 <mark>blablabla</mark>
 
 ### 5.5.3 Detektieren von Bewegungszuständen
-Für den Nutzer ist die korrekte Detektion von Bewegungszuständen entscheidend. Werden ungewünschte Zustände detektiert, führt dies zu fehlerhaften Eingaben, welche der Nutzer als störend empfindet. Beim Testen der _Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen_ haben sich zwei primäre Probleme herausgestellt, bei denen fehlerhafte Eingaben getätigt werden. 
+Für den Nutzer ist die korrekte Detektion von Bewegungszuständen entscheidend. Werden ungewünschte Zustände detektiert, führt dies zu fehlerhaften Eingaben, welche der Nutzer als störend empfindet. Je mehr verschiedene Bewegungszustände voneinander unterschieden werden müssen, desto höher ist die Gefahr der Missinterpretation. Abgesehen davon ist es nicht immer sinnvoll für alle Bewegungsmuster den Wertebereich zu teilen (wie in Kapitel _5.4.5 Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen_). Bewegungen wie die _Rotation um die eigene Achse_ wollen vom Nutzer entweder langsam und präzise, oder schnell durchgeführt werden. Nur in bestimmten Fällen, wie bei der Fortbewegung, kann es sinnvoll sein den Wertebereich zu teilen. So ist die Anzahl der tatsächlich sinnvollen Bewegungsmuster kleiner als die theoretisch denkbare. Es muss bei jedem Zustand und jeder Interaktion abgewogen werden, ob eine Teilung des Wertebereichs sinnvoll ist, oder den Nutzer behindert. 
+Trotz der veringerten Anzahl an Bewegungsmustern, sind beim Testen der _Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen_ zwei primäre Probleme beobachtet worden, bei denen fehlerhafte Eingaben getätigt werden. 
 
 **Unbeabsichtigtes Betätigen von Interaktionstasten**
 In den ersten Testreihen wurde für die Detektion von einer _Einzelradbewegung_ und dem Teilen des Wertebereichs in schnelle und langsame Bewegungen derselbe $Schwellwert\ s = 100$ verwendet. Unter Verwendung dieser Methode kommt es beim Anfahren oder Bremsen (_Sichtachsenbewegung_) zum unbeabsichtigten Betätigen von Interaktionstasten. Da sich die Räder nicht mit derselben Geschwindigkeit drehen, gibt es ein kurzes Zeitintervall, in dem ein Rad unter dem Schwellwert und ein Rad über dem Schwellwert liegt. Für dieses Zeitintervall gilt die Bedingung der _Einzelradbewegung_, sodass eine Interaktionstaste betätigt wird.
 
-Dieses Problem lässt sich über das Einführen eines neuen Schwellenwertes beheben. Wählt man für den Schwellenwert der _Einzelradbewegung_ einen geringeren Schwellwert $s_1$ als für den Schwellwert für das Teilen des Wertebereichs $s_2$, entsteht eine Pufferzone. Beim Beschleunigen überschreiten die Gyroskop-Werte zunächst nacheinander den Schwellenwert $s_1$. Anschließend überschreiten die Werte nacheinander den zweiten Schwellenwert $s_2$. Solange beide Werte in der Pufferzone sind, kann weder eine _Einzelradbewegung_ noch eine _Sichtachsenbewegung_ detektiert werden.
+Dieses Problem lässt sich über das Einführen eines neuen Schwellenwertes beheben. Wählt man für den Schwellenwert der _Einzelradbewegung_ einen geringeren Schwellwert $s_1$ als für den Schwellwert für das Teilen des Wertebereichs $s_2$, entsteht eine Pufferzone. Beim Beschleunigen überschreiten die Gyroskop-Werte zunächst nacheinander den Schwellenwert $s_1$. Anschließend überschreiten die Werte nacheinander den zweiten Schwellenwert $t_2$. Solange beide Werte in der Pufferzone sind, kann weder eine _Einzelradbewegung_ noch eine _Sichtachsenbewegung_ detektiert werden.
 
 ![[1threshold.PNG|700]] ![[2threshold.PNG|700]]
 Durch das Einführen der neuen Schwellenwerte müssen folgende Teilmengen-Bewegungszustände erweitert werden:

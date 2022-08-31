@@ -7,9 +7,11 @@
         "id": "ec5d791fd1002a76",
         "type": "leaf",
         "state": {
-          "type": "kanban",
+          "type": "markdown",
           "state": {
-            "file": "ToDo-Board.md"
+            "file": "Arbeit/5_Experiment.md",
+            "mode": "source",
+            "source": false
           }
         }
       }
@@ -67,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ToDo-Board.md",
+                "file": "Arbeit/5_Experiment.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -96,6 +98,7 @@
   },
   "active": "ec5d791fd1002a76",
   "lastOpenFiles": [
+    "ToDo-Board.md",
     "Arbeit/5_Experiment.md",
     "Quellen/Citation/@VirtualGamepadEmulation.md",
     "Quellen/Citation/@markusWebSocketServerClient2022.md",
@@ -104,7 +107,6 @@
     "Arbeit/1_Abstract.md",
     "Arbeit/0_Inhaltsverzeichnis.md",
     "Quellen/Citation/@invensenseinc.MPU6000MPU6050Product2012.md",
-    "Arbeit/4_Theorie.md",
-    "Quellen/General.md"
+    "Arbeit/4_Theorie.md"
   ]
 }
