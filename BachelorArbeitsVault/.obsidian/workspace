@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Arbeit/9_Literaturverzeichnis.md",
+            "file": "Arbeit/5_Experiment.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/9_Literaturverzeichnis.md",
+                "file": "Arbeit/5_Experiment.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -98,6 +98,7 @@
   },
   "active": "b0ce2d88ac73f330",
   "lastOpenFiles": [
+    "Arbeit/9_Literaturverzeichnis.md",
     "Arbeit/7_Ausblick.md",
     "Arbeit/8_Abkürzungsverzeichnis.md",
     "Arbeit/6_Erkenntnis.md",
@@ -106,7 +107,6 @@
     "Arbeit/3_Methode.md",
     "Arbeit/2_Einleitung.md",
     "Arbeit/1_Abstract.md",
-    "Arbeit/0_Inhaltsverzeichnis.md",
-    "SprintBerichte/Bericht 1.md"
+    "Arbeit/0_Inhaltsverzeichnis.md"
   ]
 }

@@ -9,6 +9,7 @@ public static class Program
 {
     public static void Main(string[] args)
     {
+        // Console.WriteLine(ProjectStats.LinesOfCode());
         // Console.Clear();
         // Console.Write(Templates.Template());
         Start_Loops();

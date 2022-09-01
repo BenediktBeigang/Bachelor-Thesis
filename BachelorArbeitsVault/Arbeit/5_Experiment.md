@@ -217,6 +217,7 @@ Es handelt sich um eine Vorwärtsbewegung, wenn:
 $$
 vL + vR > 0
 $$
+
 **Fall 4:**
 Bevor die zusammengehörenden Vektoren zusammengerechnet werden können, muss überprüft werden, ob $s_{1,2}$ und $r_{1,2}$ mithilfe des ersten oder zweiten Falls berechnet werden müssen. Gilt folgende Bedingung drehen sich die Räder gegeneinander und es wird Fall 2 benötigt. Andernfalls gilt Fall 1.
 

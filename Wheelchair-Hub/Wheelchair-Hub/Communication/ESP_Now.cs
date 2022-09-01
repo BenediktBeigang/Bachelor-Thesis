@@ -2,7 +2,7 @@ using System.IO.Ports;
 
 public class ESP_Now : Connection
 {
-    private readonly SerialPort serialPort;
+    private SerialPort? serialPort;
     private readonly string Com;
     private readonly int Baudrate;
 
@@ -13,24 +13,44 @@ public class ESP_Now : Connection
     {
         Com = com;
         Baudrate = baudrate;
-        serialPort = new SerialPort(com, baudrate);
-        serialPort.ReceivedBytesThreshold = 3; // Gets or sets the number of bytes in the internal input buffer before a DataReceived event occurs.
         Connect_ToHost();
     }
 
     protected override void Connect_ToHost()
     {
-        Initialize_Node(ConnectionType.ESP_NOW, DeviceNumber.ONE);
-        Initialize_Node(ConnectionType.ESP_NOW, DeviceNumber.TWO);
-        serialPort.DataReceived += Handle_Message;
-        serialPort.Open();
-        Terminal.Add_Message($"Listening to Serial Port:\nCom: {Com}\nBaudrate: {Baudrate}");
+        Task.Run(() => Open_SerialPort());
+    }
+
+    private void Open_SerialPort()
+    {
+        bool first = true;
+        while (true)
+        {
+            try
+            {
+                serialPort = new SerialPort(Com, Baudrate);
+                serialPort.ReceivedBytesThreshold = 3; // Gets or sets the number of bytes in the internal input buffer before a DataReceived event occurs.
+                serialPort.DataReceived += Handle_Message;
+                Initialize_Node(ConnectionType.ESP_NOW, DeviceNumber.ONE);
+                Initialize_Node(ConnectionType.ESP_NOW, DeviceNumber.TWO);
+                serialPort.Open();
+                Terminal.Add_Message($"Listening to Serial Port:\nCom: {Com}\nBaudrate: {Baudrate}");
+                return;
+            }
+            catch (Exception)
+            {
+                if (first) Terminal.Add_Message($"Serial Port (Com{Com}) is not existing.");
+                first = false;
+                Thread.Sleep(1000);
+            }
+        }
     }
 
     private void Handle_Message(object sender, SerialDataReceivedEventArgs e)
     {
         try
         {
+            if (serialPort is null) return;
             int bytes = serialPort.BytesToRead;
             byte[] data = new byte[bytes];
 
@@ -83,6 +103,7 @@ public class ESP_Now : Connection
     #region Disconnect
     public override void Disconnect_AllNodes()
     {
+        if (serialPort is null) return;
         serialPort.Close();
         Node.Reset_AllNodes();
         Connect_ToHost();
@@ -90,6 +111,7 @@ public class ESP_Now : Connection
 
     protected override void Disconnect_Node(Node node)
     {
+        if (serialPort is null) return;
         serialPort.Close();
         node.Reset();
         Connect_ToHost();

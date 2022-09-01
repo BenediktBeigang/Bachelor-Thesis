@@ -1,0 +1,16 @@
+/// <summary>
+/// Switches between WheelchairWithButtons and GUI
+/// </summary>
+private static void Switch_MovementState()
+{
+    SwitchButtonPressed = true;
+    if (Mapping.Get_Mode() == MappingMode.GUI) Mapping._Mapping.Change_Mapping(MappingMode.Wheelchair_WithButtons);
+    if (Mapping.Get_Mode() == MappingMode.Wheelchair_WithButtons) Mapping._Mapping.Change_Mapping(MappingMode.GUI);
+    Task.Run(() => Click_Switch());
+}
+
+private static void Click_Switch()
+{
+    Thread.Sleep(CLICK_DELAY);
+    SwitchButtonPressed = false;
+}

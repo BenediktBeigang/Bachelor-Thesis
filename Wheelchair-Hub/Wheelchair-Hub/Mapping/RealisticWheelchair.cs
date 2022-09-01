@@ -22,8 +22,8 @@ public class RealisticWheelchair : Mapping
 
         return new ControllerInput()
         {
-            LeftThumbY = Wheelchair.AngularVelocityToControllerAxis(moveVector),
-            RightThumbX = Wheelchair.AngularVelocityToControllerAxis(turningVector)
+            LeftThumbY = AngularVelocityToControllerAxis(moveVector),
+            RightThumbX = AngularVelocityToControllerAxis(turningVector)
         };
     }
 

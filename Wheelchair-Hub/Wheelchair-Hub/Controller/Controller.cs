@@ -9,12 +9,10 @@ public static class Controller
     private const int CONTROLLER_MAX = 32768;
     private static ViGEmClient? client;
     private static IXbox360Controller? controller;
-    private static bool SwitchButtonPressed;
 
     #region Controller API
     public static void Start()
     {
-        SwitchButtonPressed = false;
         client = new ViGEmClient();
         controller = client.CreateXbox360Controller();
         controller.Connect();
@@ -50,24 +48,8 @@ public static class Controller
             controller.SetButtonState(Xbox360Button.Y, input.Y);
         }
     }
-    /// <summary>
-    /// Switches between WheelchairWithButtons and GUI
-    /// </summary>
-    private static void Switch_MovementState()
-    {
-        SwitchButtonPressed = true;
-        if (Mapping.Get_Mode() == MappingMode.GUI) Mapping._Mapping.Change_Mapping(MappingMode.Wheelchair_WithButtons);
-        if (Mapping.Get_Mode() == MappingMode.Wheelchair_WithButtons) Mapping._Mapping.Change_Mapping(MappingMode.GUI);
-        Task.Run(() => Click_Switch());
-    }
 
-    private static void Click_Switch()
-    {
-        Thread.Sleep(CLICK_DELAY);
-        SwitchButtonPressed = false;
-    }
-
-    public static void Reset_Controller()
+    public static void Clear_Controller()
     {
         controller!.SetAxisValue(Xbox360Axis.LeftThumbX, 0);
         controller!.SetAxisValue(Xbox360Axis.LeftThumbY, 0);

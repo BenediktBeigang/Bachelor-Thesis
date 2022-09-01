@@ -26,22 +26,12 @@ public class Wheelchair
         LengthOfOneDegree = Wheel_Circumference / 360;
     }
 
-    #region Conversions
     /// <summary>
     /// The ratio of the covered distance, to his corresponding full circle, is calculated to a rotation in degree. 
     /// </summary>
     public static double RatioToDegree(double length, double circumference)
     {
         return (length / circumference) * 360;
-    }
-
-    public static short AngularVelocityToControllerAxis(double value)
-    {
-        // const int CONTROLLER_MAX = 35767;
-        // double StepsPerDegree = CONTROLLER_MAX / Mapping.Get_WheelMovement_Max();
-        // return (short)(value * StepsPerDegree);
-        int sign = (value < 0) ? -1 : 1;
-        return (short)((Math.Abs(value) >= Gyro.ModeAsInteger()) ? sign * short.MaxValue : value * Gyro.StepsPerDegree);
     }
 
     public override string ToString()
@@ -51,5 +41,4 @@ public class Wheelchair
     + $"ChairWidth(Half): {Chair_Width} | {Chair_HalfWidth}\n"
     + $"(Inner)TurningCircle: {InnerTurningCircle} | {OuterTurningCircle}"
     + "\n========================================";
-    #endregion
 }

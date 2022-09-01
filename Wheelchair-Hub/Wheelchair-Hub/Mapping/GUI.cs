@@ -26,7 +26,7 @@ public class GUI : Mapping
         moveVector = _Mapping.Is_RotationSumForeward(rotations) ? moveVector : -moveVector;
         return new ControllerInput()
         {
-            LeftThumbY = Wheelchair.AngularVelocityToControllerAxis(moveVector)
+            LeftThumbY = AngularVelocityToControllerAxis(moveVector)
         };
     }
 
@@ -36,7 +36,7 @@ public class GUI : Mapping
         turnVector = _Mapping.Is_LeftRotation(rotations) ? -turnVector : turnVector;
         return new ControllerInput()
         {
-            LeftThumbX = Wheelchair.AngularVelocityToControllerAxis(turnVector)
+            LeftThumbX = AngularVelocityToControllerAxis(turnVector)
         };
     }
 }

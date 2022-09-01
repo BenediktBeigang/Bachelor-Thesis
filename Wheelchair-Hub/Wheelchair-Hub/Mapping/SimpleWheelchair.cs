@@ -26,7 +26,7 @@ public class SimpleWheelchair : Mapping
         moveVector = _Mapping.Is_RotationSumForeward(rotations) ? moveVector : -moveVector;
         return new ControllerInput()
         {
-            LeftThumbY = Wheelchair.AngularVelocityToControllerAxis(moveVector)
+            LeftThumbY = AngularVelocityToControllerAxis_Move(moveVector)
         };
     }
 
@@ -37,7 +37,7 @@ public class SimpleWheelchair : Mapping
         turnVector = _Mapping.Is_LeftRotation(rotations) ? -turnVector : turnVector;
         return new ControllerInput()
         {
-            RightThumbX = Wheelchair.AngularVelocityToControllerAxis(turnVector)
+            RightThumbX = AngularVelocityToControllerAxis(turnVector)
         };
     }
 
@@ -46,8 +46,8 @@ public class SimpleWheelchair : Mapping
         (double moveVector, double turnVector) vectors = DualWheel(rotations);
         return new ControllerInput()
         {
-            LeftThumbY = Wheelchair.AngularVelocityToControllerAxis(vectors.moveVector),
-            RightThumbX = Wheelchair.AngularVelocityToControllerAxis(vectors.turnVector)
+            LeftThumbY = AngularVelocityToControllerAxis(vectors.moveVector),
+            RightThumbX = AngularVelocityToControllerAxis(vectors.turnVector)
         };
     }
 }
