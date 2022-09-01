@@ -1,7 +1,0 @@
-@startuml
-class WheelchairWithButtons {
-    + WheelchairWithButtons(wheelRadius:double, chairWidth:double, wheelMovement_Threshold:int, buttonPressingThreshold:int)
-    + <<override>> Values_Next(rotations:Rotations) : ControllerInput
-}
-Mapping <|-- WheelchairWithButtons
-@enduml

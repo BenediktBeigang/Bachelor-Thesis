@@ -1,0 +1,42 @@
+@startuml
+enum GyroMode {
+    GYRO_250= 0,
+    GYRO_500= 1,
+    GYRO_1000= 2,
+    GYRO_2000= 3,
+}
+enum ConnectionType {
+    NOTHING,
+    WIFI,
+    ESP_NOW,
+    BLUETOOTH,
+}
+enum DeviceNumber {
+    ONE,
+    TWO,
+}
+enum CalibrationStatus {
+    NOT_CALIBRATED,
+    REQUESTED,
+    CALIBRATING,
+    CALIBRATED,
+}
+enum MappingMode {
+    Wheelchair_Simple,
+    Wheelchair_Realistic,
+    GUI,
+    Wheelchair_WithButtons,
+}
+enum MovementState {
+    NoStateMovement,
+    StandingStill,
+    ViewAxis_Motion,
+    SingleWheel_Turn,
+    DualWheel_Turn,
+    Tilt,
+}
+enum ValueSource {
+    CONNECTION,
+    PLAYBACK,
+}
+@enduml

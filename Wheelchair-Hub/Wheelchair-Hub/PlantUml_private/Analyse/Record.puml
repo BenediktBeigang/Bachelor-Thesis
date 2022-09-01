@@ -1,6 +1,0 @@
-@startuml
-class Record {
-    + {static} Is_Recording() : bool
-    + {static} Switch_Record() : void
-}
-@enduml

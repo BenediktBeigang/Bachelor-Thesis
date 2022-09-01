@@ -1,5 +1,0 @@
-@startuml
-class Benchmark {
-    + Benchmark()
-}
-@enduml

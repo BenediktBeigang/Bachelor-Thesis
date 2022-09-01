@@ -1,0 +1,13 @@
+@startuml
+class Templates <<static>> {
+    - <<const>> FORMAT_STRING_TABLELINE : string = "|{0,4&#125;|{1,0&#125;|{2,10&#125;|{3,10&#125;|{4,16&#125;|{5,18&#125;|{6,17&#125;|{7,17&#125;|"
+    - <<const>> FORMAT_STRING_INFOHEAD : string = "|{0,-11&#125;||{1,-24&#125;||{2,-29&#125;||{3,-32&#125;||{4,-18&#125;|"
+    - <<const>> FORMAT_STRING_INFO : string = "|{0,-11&#125;||{1,-24&#125;||{2,-7&#125;|{3,-10&#125;|{4,-10&#125;||{5,-15&#125;|{6,-16&#125;||{7,-18&#125;|"
+    - <<const>> VISIBLE_MESSAGES : int = 5
+    + {static} Template() : string
+    - {static} Generate_Table() : string
+    - {static} Generate_InfoLine() : string
+    - {static} Generate_TableLine(node:Node) : string
+    - {static} LegendToStringFlat() : string
+}
+@enduml

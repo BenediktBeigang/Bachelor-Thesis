@@ -1,0 +1,16 @@
+@startuml
+class Wheelchair {
+    + <<readonly>> Wheel_Radius : double
+    + <<readonly>> Chair_Width : double
+    + <<readonly>> Wheel_Diameter : double
+    + <<readonly>> Wheel_Circumference : double
+    + <<readonly>> Chair_HalfWidth : double
+    + <<readonly>> OuterTurningCircle : double
+    + <<readonly>> InnerTurningCircle : double
+    + <<readonly>> LengthOfOneDegree : double
+    + Wheelchair(wheelRadius:double, chairWidth:double)
+    + {static} RatioToDegree(length:double, circumference:double) : double
+    + {static} AngularVelocityToControllerAxis(value:double) : short
+    + <<override>> ToString() : string
+}
+@enduml

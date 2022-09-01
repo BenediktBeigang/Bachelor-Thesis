@@ -1,0 +1,14 @@
+@startuml
+class Record {
+    + {static} Is_Recording : bool <<get>> <<set>>
+    - <<const>> TIME_BETWEEN_CALLS : int = 16
+    + {static} Switch_Record() : void
+    - {static} Start_Record() : void
+    - {static} Stop_Record() : void
+    + {static} TakeSample(nodeOne:GyroSnapshot, nodeTwo:GyroSnapshot, movementState:MovementState) : void
+    - {static} Save_Recording() : void
+}
+class "List`1"<T> {
+}
+Record o-> "RecordedSamples<Sample>" "List`1"
+@enduml

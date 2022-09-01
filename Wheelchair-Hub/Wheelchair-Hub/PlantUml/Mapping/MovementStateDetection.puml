@@ -1,0 +1,23 @@
+@startuml
+class MovementStateDetection {
+    + <<readonly>> DualWheel_Threshold : int
+    + <<readonly>> SingleWheel_Threshold : int
+    - <<const>> ACCELERATION_THRESHOLD : int = 15
+    + MovementStateDetection(dualWheel_Threshold:int, singleWheel_Threshold:int)
+    + Get_MovementState_GUI(rotations:Rotations) : MovementState
+    + Get_MovementState_SimpleWheelchair(rotations:Rotations) : MovementState
+    + Get_MovementState_WheelchairWithButtons(rotations:Rotations) : MovementState
+    - Is_StandingStill(rotations:Rotations) : bool
+    - Is_Tilt(rotations:Rotations) : bool
+    - Is_ViewAxisMotion(rotations:Rotations) : bool
+    - Is_ViewAxisMotion_WithThreshold(rotations:Rotations) : bool
+    - Is_DualWheelTurn(rotations:Rotations) : bool
+    - Is_SingleWheel(rotations:Rotations) : bool
+    - Is_SingleWheel_WithMute(rotations:Rotations) : bool
+    - Is_ButtonPressed(rotations:Rotations) : bool
+    + Is_LeftPositive(rotations:Rotations) : bool
+    + Is_LeftNegative(rotations:Rotations) : bool
+    + Is_RightPositive(rotations:Rotations) : bool
+    + Is_RightNegative(rotations:Rotations) : bool
+}
+@enduml

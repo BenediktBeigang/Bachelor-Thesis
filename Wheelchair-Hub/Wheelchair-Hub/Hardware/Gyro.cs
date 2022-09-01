@@ -28,13 +28,13 @@ public class Gyro
     // public
     public CalibrationStatus CalibrationStatus { get; set; }
     public bool RotationValueFlip { get; set; }
-    public short RawValue_Clean { get; set; }
 
     // readonly
     public readonly DeviceNumber DeviceNumber;
-    private readonly double[] scale = new double[] { 0.2, 0.2, 0.15, 0.15, 0.1, 0.1, 0.1 };
+    private readonly double[] SmoothingFilter = new double[] { 0.2, 0.2, 0.15, 0.15, 0.1, 0.1, 0.1 };
 
     // private
+    private short RawValue_Clean { get; set; }
     private short BufferPointer;
     private short[] RawValueBuffer;
     private List<int> CalibrationValues;
@@ -157,7 +157,7 @@ public class Gyro
     {
         if (count < 1) return new double[] { };
         double[] result = new double[count];
-        double[] unfilteredValues = DegreePerSecond_Last((count - 1) + scale.Length);
+        double[] unfilteredValues = DegreePerSecond_Last((count - 1) + SmoothingFilter.Length);
         for (int i = 0; i < count; i++)
         {
             result[i] = SmoothValue(unfilteredValues, i);
@@ -181,9 +181,9 @@ public class Gyro
     public double SmoothValue(double[] unfilteredValues, int start)
     {
         double result = 0;
-        for (int i = 0; i < scale.Length; i++)
+        for (int i = 0; i < SmoothingFilter.Length; i++)
         {
-            result += unfilteredValues[i + start] * scale[i];
+            result += unfilteredValues[i + start] * SmoothingFilter[i];
         }
         return result;
     }

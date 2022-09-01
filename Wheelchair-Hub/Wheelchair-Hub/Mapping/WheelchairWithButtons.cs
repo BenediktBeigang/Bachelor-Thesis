@@ -29,7 +29,7 @@ public class WheelchairWithButtons : Mapping
     /// <returns></returns>
     private ControllerInput Move(Rotations rotations)
     {
-        double moveVector = (Wheelchair.Is_RotationForward(rotations.Left.AngularVelocity)) ? Gyro.ModeAsInteger() : -Gyro.ModeAsInteger();
+        double moveVector = (_Mapping.Is_RotationSumForeward(rotations)) ? Gyro.ModeAsInteger() : -Gyro.ModeAsInteger();
         return new ControllerInput()
         {
             LeftThumbY = Wheelchair.AngularVelocityToControllerAxis(moveVector)
@@ -39,7 +39,7 @@ public class WheelchairWithButtons : Mapping
     private ControllerInput Turn(Rotations rotations)
     {
         double turnVector = AbsoluteInterpolation(rotations);
-        turnVector = Wheelchair.Is_LeftRotation(rotations) ? -turnVector : turnVector;
+        turnVector = _Mapping.Is_LeftRotation(rotations) ? -turnVector : turnVector;
         turnVector *= 10;
         return new ControllerInput()
         {
@@ -50,7 +50,7 @@ public class WheelchairWithButtons : Mapping
     private ControllerInput Tilt(Rotations rotations)
     {
         double tiltVector = AbsoluteInterpolation(rotations);
-        tiltVector = Wheelchair.Is_RotationSumForeward(rotations) ? tiltVector : -tiltVector;
+        tiltVector = _Mapping.Is_RotationSumForeward(rotations) ? tiltVector : -tiltVector;
         tiltVector *= 10;
         return new ControllerInput()
         {

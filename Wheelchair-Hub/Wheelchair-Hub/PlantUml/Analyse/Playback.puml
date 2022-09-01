@@ -1,0 +1,12 @@
+@startuml
+class Playback {
+    + {static} Is_PlaybackRunning : bool <<get>> <<set>>
+    - {static} Buffer_Length : int = 0
+    - {static} Buffer_Pointer : int = 1
+    - {static} <<readonly>> FOLDER : string = @"Playback/"
+    + {static} Update_Gyro() : void
+    - {static} Stop_Playback() : void
+    + {static} Start_Playback() : void
+    - {static} Extract_Buffer(record:List<Sample>) : (short[] bufferOne, short[] bufferTwo)
+}
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class ControllerInput {
+    + LeftThumbX : short
+    + LeftThumbY : short
+    + RightThumbX : short
+    + RightThumbY : short
+    + A : bool
+    + B : bool
+    + X : bool
+    + Y : bool
+    + ControllerInput()
+    + ControllerInput(leftThumbX:short, leftThumbY:short, rightThumbX:short, rightThumbY:short, a:bool, b:bool, x:bool, y:bool)
+    + <<override>> ToString() : string
+}
+@enduml

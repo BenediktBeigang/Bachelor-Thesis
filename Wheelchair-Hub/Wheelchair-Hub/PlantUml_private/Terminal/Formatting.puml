@@ -1,6 +1,0 @@
-@startuml
-class Formatting {
-    + <<readonly>> FormatString : string
-    + Formatting(header:string[])
-}
-@enduml

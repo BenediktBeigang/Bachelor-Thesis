@@ -1,0 +1,10 @@
+@startuml
+class GUI {
+    + GUI(wheelRadius:double, chairWidth:double, wheelMovement_Threshold:int, buttonPressingThreshold:int, wheelMovementMax:int)
+    + <<override>> Values_Next(rotations:Rotations) : ControllerInput
+    + <<override>> Get_MovementState(rotations:Rotations) : MovementState
+    - YAxis(rotations:Rotations) : ControllerInput
+    - XAxis(rotations:Rotations) : ControllerInput
+}
+Mapping <|-- GUI
+@enduml

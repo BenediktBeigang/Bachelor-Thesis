@@ -1,0 +1,7 @@
+@startuml
+class Plot {
+    + Plot(record:List<(double, double)>)
+    + Plot(record:List<Sample>)
+    - PlotSignal(title:string, x_One:double[], x_Two:double[]) : void
+}
+@enduml

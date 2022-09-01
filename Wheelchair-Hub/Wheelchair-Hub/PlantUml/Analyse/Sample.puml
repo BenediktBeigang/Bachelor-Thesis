@@ -1,0 +1,18 @@
+@startuml
+class Sample {
+    + NodeOne_RawValue_Clean : double <<get>> <<set>>
+    + NodeTwo_RawValue_Clean : double <<get>> <<set>>
+    + NodeOne_RawValue : double <<get>> <<set>>
+    + NodeTwo_RawValue : double <<get>> <<set>>
+    + NodeOne_Value : double <<get>> <<set>>
+    + NodeTwo_Value : double <<get>> <<set>>
+    + NodeOne_SmoothedValue : double <<get>> <<set>>
+    + NodeTwo_SmoothedValue : double <<get>> <<set>>
+    + NodeOne_Acceleration : double <<get>> <<set>>
+    + NodeTwo_Acceleration : double <<get>> <<set>>
+    + NodeOne_Datarate : double <<get>> <<set>>
+    + NodeTwo_Datarate : double <<get>> <<set>>
+    + {static} newSample(gyroOne:GyroSnapshot, gyroTwo:GyroSnapshot, movementState:MovementState) : Sample
+}
+Sample --> "MovementState" MovementState
+@enduml

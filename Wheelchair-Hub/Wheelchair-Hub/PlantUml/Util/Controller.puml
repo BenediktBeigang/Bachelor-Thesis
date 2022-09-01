@@ -1,0 +1,15 @@
+@startuml
+class Controller <<static>> {
+    - <<const>> CLICK_DELAY : int = 500
+    - <<const>> CONTROLLER_MAX : int = 32768
+    - {static} client : ViGEmClient?
+    - {static} controller : IXbox360Controller?
+    - {static} SwitchButtonPressed : bool
+    + {static} Start() : void
+    + {static} Refresh_Controller(sender:object, e:ElapsedEventArgs) : void
+    - {static} ValuesToController(input:ControllerInput) : void
+    - {static} Switch_MovementState() : void
+    - {static} Click_Switch() : void
+    + {static} Reset_Controller() : void
+}
+@enduml

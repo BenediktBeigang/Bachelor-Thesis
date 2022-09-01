@@ -23,7 +23,7 @@ public class GUI : Mapping
     private ControllerInput YAxis(Rotations rotations)
     {
         double moveVector = AbsoluteInterpolation(rotations);
-        moveVector = Wheelchair.Is_RotationSumForeward(rotations) ? moveVector : -moveVector;
+        moveVector = _Mapping.Is_RotationSumForeward(rotations) ? moveVector : -moveVector;
         return new ControllerInput()
         {
             LeftThumbY = Wheelchair.AngularVelocityToControllerAxis(moveVector)
@@ -33,7 +33,7 @@ public class GUI : Mapping
     private ControllerInput XAxis(Rotations rotations)
     {
         double turnVector = AbsoluteInterpolation(rotations);
-        turnVector = Wheelchair.Is_LeftRotation(rotations) ? -turnVector : turnVector;
+        turnVector = _Mapping.Is_LeftRotation(rotations) ? -turnVector : turnVector;
         return new ControllerInput()
         {
             LeftThumbX = Wheelchair.AngularVelocityToControllerAxis(turnVector)

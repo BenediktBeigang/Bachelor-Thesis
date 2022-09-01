@@ -26,54 +26,6 @@ public class Wheelchair
         LengthOfOneDegree = Wheel_Circumference / 360;
     }
 
-    #region Checks
-    public static bool Is_LeftRotation(Rotations rotations)
-    {
-        return (rotations.Left.RawValue < rotations.Right.RawValue);
-    }
-
-    public static bool Is_RotationSumForeward(Rotations rotations)
-    {
-        return (rotations.Left.RawValue + rotations.Right.RawValue) >= 0;
-    }
-
-    public static bool Is_RotationAgainstEachOther(Rotations rotations)
-    {
-        return ((rotations.Left.RawValue > 0) ^ (rotations.Right.RawValue > 0));
-    }
-
-    public static bool Is_ExactlyOneRotationUnderThreshold(Rotations rotations, int threshold)
-    {
-        bool b1 = Math.Abs(rotations.Left.AngularVelocity) < threshold;
-        bool b2 = Math.Abs(rotations.Right.AngularVelocity) < threshold;
-        return b1 ^ b2;
-    }
-
-    public static bool Are_BothRotationsUnderThreshold(Rotations rotations, int threshold)
-    {
-        bool b1 = Math.Abs(rotations.Left.AngularVelocity) < threshold;
-        bool b2 = Math.Abs(rotations.Right.AngularVelocity) < threshold;
-        return b1 && b2;
-    }
-
-    public static bool Is_RotationForward(double rotation)
-    {
-        return rotation > 0;
-    }
-
-    public static bool Is_RotationUnderThreshold(double rotation, int threshold)
-    {
-        return Math.Abs(rotation) < threshold;
-    }
-
-    public static bool Is_MovementStateChanging()
-    {
-        // return false;
-        (double, double) acceleration = Gyro.Acceleration_BothNodes();
-        return acceleration.Item1 + acceleration.Item2 >= 15;
-    }
-    #endregion
-
     #region Conversions
     /// <summary>
     /// The ratio of the covered distance, to his corresponding full circle, is calculated to a rotation in degree. 

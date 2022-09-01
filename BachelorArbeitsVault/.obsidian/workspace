@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Arbeit/5_Experiment.md",
+            "file": "Arbeit/9_Literaturverzeichnis.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/5_Experiment.md",
+                "file": "Arbeit/9_Literaturverzeichnis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -98,15 +98,15 @@
   },
   "active": "b0ce2d88ac73f330",
   "lastOpenFiles": [
+    "Arbeit/7_Ausblick.md",
+    "Arbeit/8_Abkürzungsverzeichnis.md",
+    "Arbeit/6_Erkenntnis.md",
     "Arbeit/5_Experiment.md",
-    "ToDo-Board.md",
-    "Quellen/Citation/@VirtualGamepadEmulation.md",
-    "Quellen/Citation/@markusWebSocketServerClient2022.md",
-    "Quellen/Citation/@DiscoverWiFiWiFi.md",
-    "Quellen/Citation/@EspressifIoTDevelopment2022.md",
+    "Arbeit/4_Theorie.md",
+    "Arbeit/3_Methode.md",
+    "Arbeit/2_Einleitung.md",
     "Arbeit/1_Abstract.md",
     "Arbeit/0_Inhaltsverzeichnis.md",
-    "Quellen/Citation/@invensenseinc.MPU6000MPU6050Product2012.md",
-    "Arbeit/4_Theorie.md"
+    "SprintBerichte/Bericht 1.md"
   ]
 }

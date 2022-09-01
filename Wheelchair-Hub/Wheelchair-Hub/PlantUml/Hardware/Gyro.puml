@@ -1,0 +1,41 @@
+@startuml
+class Gyro {
+    - {static} stepsPerDegree : double
+    + {static} StepsPerDegree : double <<get>>
+    + RotationValueFlip : bool <<get>> <<set>>
+    - RawValue_Clean : short <<get>> <<set>>
+    - BufferPointer : short
+    - Offset : short <<get>> <<set>>
+    - <<const>> BUFFER_SIZE : short = 100
+    - <<const>> CALIBRATION_TIME : int = 3
+    + Gyro(mode:GyroMode, device:DeviceNumber, flipped:bool)
+    + Push_RawValue(newValue:short, type:ValueSource) : void
+    - ValueAccessDenied(type:ValueSource) : bool
+    + Peek_RawValue() : short
+    + Peek_RawValue(count:int) : short[]
+    + RawValues_Buffer() : short[]
+    + DegreePerSecond_Last() : double
+    + DegreePerSecond_Last(count:int) : double[]
+    + SmoothedDegreePerSecond_Last() : double
+    + SmoothedDegreePerSecond_Last(count:int) : double[]
+    + SmoothedDegreePerSecond_Last(count:int, unfilteredValues:double[]) : double[]
+    + SmoothValue(unfilteredValues:double[], start:int) : double
+    + Acceleration() : double
+    + {static} Acceleration_BothNodes() : (double, double)
+    + {static} Check_Calibration(sender:object, e:ElapsedEventArgs) : void
+    + {static} Request_Calibration() : void
+    + Start_Calibration(seconds:int) : void
+    - Stop_Calibration(seconds:int) : void
+    - {static} GyroModeToStepsPerDegree(mode:GyroMode) : double
+    + {static} ModeAsInteger() : int
+    + Snapshot() : GyroSnapshot
+    + {static} Get_GyroSnapshots() : (GyroSnapshot gyroOne, GyroSnapshot gyroTwo)
+}
+class "List`1"<T> {
+}
+Gyro --> "mode" GyroMode
+Gyro --> "Mode" GyroMode
+Gyro --> "CalibrationStatus" CalibrationStatus
+Gyro --> "DeviceNumber" DeviceNumber
+Gyro --> "CalibrationValues<int>" "List`1"
+@enduml

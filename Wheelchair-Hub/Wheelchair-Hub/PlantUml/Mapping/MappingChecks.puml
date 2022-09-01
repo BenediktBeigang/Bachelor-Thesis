@@ -1,0 +1,9 @@
+@startuml
+class MappingChecks <<static>> {
+    - {static} <<readonly>> ACCELERATION_THRESHOLD : int = 15
+    + {static} Is_MovementStateChanging(mapping:Mapping, rotations:Rotations) : bool
+    + {static} Is_RotationAgainstEachOther(mapping:Mapping, rotations:Rotations) : bool
+    + {static} Is_LeftRotation(mapping:Mapping, rotations:Rotations) : bool
+    + {static} Is_RotationSumForeward(mapping:Mapping, rotations:Rotations) : bool
+}
+@enduml

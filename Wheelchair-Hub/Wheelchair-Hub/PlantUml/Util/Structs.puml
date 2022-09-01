@@ -1,0 +1,26 @@
+@startuml
+class Received <<struct>> {
+    + Message : string
+    + <<override>> ToString() : string
+}
+class Message <<struct>> {
+    + Text : string
+}
+class Rotations <<struct>> {
+    + NodesFlipped : bool
+    + Rotations(gyroOne:GyroSnapshot, gyroTwo:GyroSnapshot, nodesFlipped:bool)
+}
+class GyroSnapshot <<struct>> {
+    + RawValue_Clean : short <<get>> <<set>>
+    + RawValue : short <<get>> <<set>>
+    + AngularVelocity : double <<get>> <<set>>
+    + AngularVelocity_Smoothed : double <<get>> <<set>>
+    + Acceleration : double <<get>> <<set>>
+    + GyroSnapshot(rawValue_Clean:short, rawValue:short, angularVelocity:double, angularVelocity_Smoothed:double, acceleration:double)
+    + Mute() : void
+}
+Received --> "Sender" IPEndPoint
+Message --> "Time" DateTime
+Rotations --> "Left" GyroSnapshot
+Rotations --> "Right" GyroSnapshot
+@enduml

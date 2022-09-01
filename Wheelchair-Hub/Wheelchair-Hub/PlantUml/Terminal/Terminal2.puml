@@ -1,0 +1,23 @@
+@startuml
+class Terminal2 <<static>> {
+    + {static} Other : string <<get>> <<set>> = ""
+    - <<const>> VISIBLE_MESSAGES : int = 5
+    + {static} Print(sender:object, e:ElapsedEventArgs) : void
+    - {static} Print_InfoLine() : void
+    - {static} Print_TableLines(line:int, node:Node) : void
+    - {static} Get_InfoLineInput() : string[]
+    - {static} Get_TableLineInput(node:Node) : string[]
+    - {static} Print_Other() : void
+    - {static} Reset_Cursor() : void
+    + {static} PrintTemplate() : void
+    + {static} Add_Message(message:string) : void
+    + {static} Add_Command(message:string) : void
+    + {static} Get_MessageHistory() : List<string>
+    + {static} Get_CommandHistory() : List<string>
+    - {static} HistoryToString(messages:List<string>, flip:bool) : string
+}
+class "ConcurrentBag`1"<T> {
+}
+Terminal2 o-> "MessageHistory<Message>" "ConcurrentBag`1"
+Terminal2 o-> "CommandHistory<Message>" "ConcurrentBag`1"
+@enduml

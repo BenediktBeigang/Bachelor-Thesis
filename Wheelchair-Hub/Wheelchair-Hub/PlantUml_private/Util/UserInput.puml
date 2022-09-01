@@ -1,6 +1,0 @@
-@startuml
-class UserInput <<static>> {
-    + {static} Input() : void
-    + {static} Change_Mapping() : void
-}
-@enduml

@@ -1,0 +1,17 @@
+@startuml
+class UserInput <<static>> {
+    + {static} Input() : void
+    - {static} Switch_Record() : void
+    - {static} Flip_Nodes() : void
+    - {static} Flip_NodeOne_WheelDirection() : void
+    - {static} Flip_NodeTwo_WheelDirection() : void
+    - {static} Request_Calibration() : void
+    + {static} Change_Mapping() : void
+    - {static} Enter_MappingOptions(mode:MappingMode) : void
+    - {static} Flip() : void
+    - {static} Change_Wheelchair() : void
+    - {static} Change_GyroMode() : void
+    - {static} Enter_Number(message:string) : (double Double, int Integer)
+    - {static} Question(message:string) : bool
+}
+@enduml

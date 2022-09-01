@@ -1,9 +1,0 @@
-@startuml
-class Benchmark {
-    - {static} Timer_EverySecond : System.Timers.Timer?
-    - <<const>> TIME_BETWEEN_CALLS : int = 1000
-    + Benchmark()
-    - Timer() : void
-    - {static} Datarate(sender:object, e:ElapsedEventArgs) : void
-}
-@enduml

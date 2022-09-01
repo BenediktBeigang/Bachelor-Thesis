@@ -1,9 +1,0 @@
-@startuml
-class Terminal <<static>> {
-    + {static} Other : string <<get>> <<set>> = ""
-    + {static} Print(sender:object, e:ElapsedEventArgs) : void
-    + {static} InterfaceToString() : string
-    + {static} Add_Message(message:string) : void
-    + {static} Get_MessageHistory() : List<string>
-}
-@enduml

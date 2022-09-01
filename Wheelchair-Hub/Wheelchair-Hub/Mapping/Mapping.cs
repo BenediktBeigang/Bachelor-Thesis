@@ -60,8 +60,8 @@ public abstract class Mapping
         double turningVector = theta * 360;
 
         // set directions
-        moveVector = Wheelchair.Is_RotationSumForeward(rotations) ? moveVector : -moveVector;
-        turningVector = Wheelchair.Is_LeftRotation(rotations) ? -turningVector : turningVector;
+        moveVector = _Mapping.Is_RotationSumForeward(rotations) ? moveVector : -moveVector;
+        turningVector = _Mapping.Is_LeftRotation(rotations) ? -turningVector : turningVector;
 
         return (moveVector, turningVector);
     }
@@ -71,15 +71,15 @@ public abstract class Mapping
         double moveVector = 0;
         double turningVector = 0;
 
-        if (Wheelchair.Is_RotationAgainstEachOther(rotations))
+        if (_Mapping.Is_RotationAgainstEachOther(rotations))
         {
             turningVector = Wheelchair.RatioToDegree(WheelMinimum(rotations), Wheelchair.InnerTurningCircle);
-            turningVector = Wheelchair.Is_LeftRotation(rotations) ? -turningVector : turningVector;
+            turningVector = _Mapping.Is_LeftRotation(rotations) ? -turningVector : turningVector;
         }
         else
         {
             moveVector = WheelMinimum(rotations);
-            moveVector = Wheelchair.Is_RotationSumForeward(rotations) ? moveVector : -moveVector;
+            moveVector = _Mapping.Is_RotationSumForeward(rotations) ? moveVector : -moveVector;
         }
 
         return (moveVector, turningVector);
@@ -103,47 +103,14 @@ public abstract class Mapping
 
     protected ControllerInput What_ButtonPressed(Rotations rotations)
     {
-        if (Is_ButtonPressAllowed() is false) return new ControllerInput();
-        bool leftPositive = false;
-        bool leftNegative = false;
-        bool rightPositive = false;
-        bool rightNegative = false;
-        if (Math.Abs(rotations.Left.AngularVelocity) > StateDetection.DualWheel_Threshold)
-        {
-            if (Wheelchair.Is_RotationForward(rotations.Left.AngularVelocity))
-                leftPositive = true;
-            else
-                leftNegative = true;
-        }
-        if (Math.Abs(rotations.Right.AngularVelocity) > StateDetection.DualWheel_Threshold)
-        {
-            if (Wheelchair.Is_RotationForward(rotations.Right.AngularVelocity))
-                rightPositive = true;
-            else
-                rightNegative = true;
-        }
         return new ControllerInput()
         {
-            A = rightPositive,
-            B = rightNegative,
-            X = leftPositive,
-            Y = leftNegative
+            A = StateDetection.Is_RightPositive(rotations),
+            B = StateDetection.Is_RightNegative(rotations),
+            X = StateDetection.Is_LeftPositive(rotations),
+            Y = StateDetection.Is_LeftNegative(rotations)
         };
     }
-
-    #region Button_Delay
-    protected bool Is_ButtonPressAllowed()
-    {
-        long now = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-        long timeBetween = now - LastMovement_Timestamp;
-        return (timeBetween > StateDetection.SingleWheel_Threshold);
-    }
-
-    private void Reset_LastMovement_Timestamp()
-    {
-        LastMovement_Timestamp = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-    }
-    #endregion
 
     #region Getter
     public static MappingMode Get_Mode()

@@ -1,9 +1,0 @@
-@startuml
-abstract class Connection {
-    + {static} _Connection : Connection? <<get>> <<set>>
-    + {static} SetConnection(connection:ConnectionType) : Connection?
-    + {static} Heartbeat(sender:object, e:ElapsedEventArgs) : void
-    + {abstract} Disconnect_AllNodes() : void
-    + {abstract} Change_GyroMode(mode:GyroMode) : void
-}
-@enduml

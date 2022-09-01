@@ -1,0 +1,25 @@
+@startuml
+abstract class Mapping {
+    + <<readonly>> WheelMovement_Max : int
+    - LastMovement_Timestamp : long
+    + Mapping(mode:MappingMode, dualWheel_Threshold:int, singleWheel_Threshold:int, wheelRadius:double, chairWidth:double, wheelMovementMax:int)
+    + Change_Mapping(mode:MappingMode) : void
+    + Change_Mapping(mode:MappingMode, wheelRadius:double, chairWidth:double, wheelMovementThreshold:int, buttonPressingThreshold:int, wheelMovementMax:int) : void
+    + {abstract} Values_Next(rotations:Rotations) : ControllerInput
+    + {abstract} Get_MovementState(rotations:Rotations) : MovementState
+    # SingleWheel(rotations:Rotations) : (double moveVector, double turningVector)
+    # DualWheel(rotations:Rotations) : (double moveVector, double turningVector)
+    - WheelOvershoot(rotations:Rotations) : double
+    - WheelMinimum(rotations:Rotations) : double
+    # AbsoluteInterpolation(rotations:Rotations) : double
+    # What_ButtonPressed(rotations:Rotations) : ControllerInput
+    + {static} Get_Mode() : MappingMode
+    + {static} Get_Wheelchair() : Wheelchair
+    + {static} Get_WheelMovement_Max() : int
+    + {static} Get_MovementStateDetection() : MovementStateDetection
+}
+Mapping o-> "_Mapping" Mapping
+Mapping --> "Mode" MappingMode
+Mapping --> "Wheelchair" Wheelchair
+Mapping --> "StateDetection" MovementStateDetection
+@enduml
