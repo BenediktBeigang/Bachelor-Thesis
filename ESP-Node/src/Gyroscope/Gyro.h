@@ -17,7 +17,7 @@ float DEGREE_STEPS = 131;
 
 int16_t accX, accY, accZ, gyroX, gyroY, gyroZ, tRaw; // Raw register values (accelaration, gyroscope, temperature)
 char result[7];
-uint8_t gyroZ_Hi, gyroZ_Lo;
+uint8_t gyroX_Hi, gyroX_Lo;
 
 void writeRegister(uint16_t reg, byte value)
 {
@@ -56,7 +56,7 @@ void Gyro_Update()
     Wire.requestFrom(MPU6050_ADDR, 2, true); // request a total of 1*2=2 registers
 
     // "Wire.read()<<8 | Wire.read();" means two registers are read and stored in the same variable
-    gyroX = Wire.read() << 8 | Wire.read(); // reading registers: 0x43 (GYRO_XOUT_H) and 0x44 (GYRO_XOUT_L)
+    // gyroX = Wire.read() << 8 | Wire.read(); // reading registers: 0x43 (GYRO_XOUT_H) and 0x44 (GYRO_XOUT_L)
 
     // ----------------------------------
     // Wire.requestFrom(MPU6050_ADDR, 6, true); // request a total of 3*2=6 registers
@@ -66,9 +66,10 @@ void Gyro_Update()
     // gyroY = Wire.read() << 8 | Wire.read(); // reading registers: 0x45 (GYRO_YOUT_H) and 0x46 (GYRO_YOUT_L)
     // // gyroZ = Wire.read() << 8 | Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
 
-    // gyroZ_Hi = Wire.read();
-    // gyroZ_Lo = Wire.read(); // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
-    // gyroZ = gyroZ_Lo | gyroZ_Hi << 8;
+    // reading registers: 0x43 (GYRO_XOUT_H) and 0x44 (GYRO_XOUT_L)
+    gyroX_Hi = Wire.read();
+    gyroX_Lo = Wire.read();
+    gyroX = gyroX_Hi << 8 | gyroX_Lo;
 }
 
 void Gyro_ChangeMode(char mode)

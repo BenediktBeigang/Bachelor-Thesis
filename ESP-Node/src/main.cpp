@@ -22,10 +22,11 @@ void setup()
 
   // Gyro
   // MPU6050_GYR_RANGE_250 | MPU6050_GYR_RANGE_2000
-  Gyro_Setup(MPU6050_GYR_RANGE_250);
+  Gyro_Setup(MPU6050_GYR_RANGE_1000);
 
   // Connection
-  connection = WIFI;
+  // connection = WIFI;
+  connection = ESPNOW;
 
   // Timing
   TIME_BETWEEN_CALLS = (int)(1000 / DATA_PER_SECOND);
@@ -47,7 +48,7 @@ void WebSocket_Loop()
   {
     WebSocket_ConnectToClient();
   }
-  else if (millis() - SendingTimer > TIME_BETWEEN_CALLS)
+  else if (millis() - SendingTimer > TIME_BETWEEN_CALLS) // unnötig?
   {
     Gyro_Update();
     WebSocket_SendGyroData(gyroX);
@@ -55,7 +56,23 @@ void WebSocket_Loop()
   }
 }
 
+void ESPNow_Loop()
+{
+  if (!ESPNow_Connected)
+  {
+    ESPNow_ConnectToClient();
+    delay(1000);
+  }
+  else // if (millis() - SendingTimer > TIME_BETWEEN_CALLS)
+  {
+    Gyro_Update();
+    ESPNow_SendGyroData(gyroX_Hi, gyroX_Lo, DEVICE_NUMBER);
+    SendingTimer = millis();
+  }
+}
+
 void loop()
 {
-  WebSocket_Loop();
+  // WebSocket_Loop();
+  ESPNow_Loop();
 }
