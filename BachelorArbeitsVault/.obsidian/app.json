@@ -56,7 +56,9 @@
     "WiFi-Netzwerk",
     "WiFi-Kommunikation",
     "WiFi-Alternative",
-    "Vorteilig"
+    "Vorteilig",
+    "WiFi-Alliance",
+    "WebSocket-Protokoll"
   ],
   "vimMode": false,
   "foldIndent": true,
