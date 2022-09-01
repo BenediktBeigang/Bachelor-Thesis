@@ -139,7 +139,6 @@ Da das im Rahmen dieser Arbeit entwickelte System darauf abzielt, in einem dreid
 
 Im Folgenden wird die Berechnung der Bewegungsanteile aufgezeigt, bestehend aus Bewegung nach vorne/hinten und Rotation um die eigene Achse:
 
-<mark>alle variablen hier einfügen</mark>
 $$
 \begin{align}
 Bahngeschwindigkeit\ des\ linken\ Rades: vL \\
@@ -157,7 +156,7 @@ Rotationvektor\ Fall3: \vec{r_{3}} \\
 $$
 
 ![[WheelchairMath.PNG|500]]
-(Abb.<mark>?</mark> Skizze des Rollstuhls aus der Vogelperspektive)<mark>s durch f tauschen</mark>
+(Abb.<mark>?</mark> Skizze des Rollstuhls aus der Vogelperspektive)
 
 Zunächst müssen die Rotationen der Räder dekonstruiert werden. Dabei lässt sich die Rotation eines Rades in zwei Komponenten aufspalten. Zum einen den Minimum-Anteil $m$, den sich beide Räder drehen.
 
@@ -347,16 +346,13 @@ In vielen Anwendungen ist es von Vorteil oder angenehmer für den Nutzer sich sc
 ### 5.5.2 Datenrate der Übertragungsprotokolle
 Damit der Nutzer eine bestmögliche Eingabe tätigen kann, ist es notwendig, dass möglichst viele Pakete möglichst schnell empfangen werden. Um die Datenrate zu ermitteln, mit der beide Nodes die Gyroskop-Werte verschicken, wird Client-Seitig alle 250ms die derzeitige Datenrate errechnet. Dazu zählt die Software seit der letzten Messung die eingegangenen Pakete und multipliziert diese mit 4, um die Datenrate pro Sekunde zu erhalten. Auf eine Messung der Latenz wird aufgrund von Zeitgründen und nicht aussagekräftiger Methodik verzichtet. In den Tests wurde jedoch keine Latenz wahrgenommen. 
 
-![[wifiDatenrate.PNG|700]]
-
 Datenraten beider Übertragungsprotokolle:
 | Pakete pro Sekunde         | Durchschnitt | Minimum | Maximum |
 | -------------------------- | ------------ | ------- | ------- |
 | WiFi mit WebSocket         | 71,48        | 64      | 80      |
-| ESP-Now mit seriellem Port |              |         |         |
+| ESP-Now mit seriellem Port | 293,68       | 184     | 384     |
 
-Aus der Tabelle ist zu entnehmen, dass im normalen Betrieb mindestens <mark>Zahl</mark> Daten-Pakete pro Sekunde erreicht werden. Es hat sich gezeigt, dass im hier untersuchten Echtzeit-Szenario die Datenrate ausreichen ist, um eine angenehme Nutzererfahrung zu generieren. 
-<mark>blablabla</mark>
+Es hat sich gezeigt, dass bei der einer ESP-Now Verbindung deutlich mehr Daten versendet werden, als über einen WebSocket und WiFi. Bei beiden Verbindungen ist der Flaschenhals die Übertragung per Funk. Da jedoch die Übertragungsraten stark abhängig davon sind welche USB Anschlüsse und WiFi-Protokolle verwendet wurden, sowie welche Datenraten der Router unterstützt und über welchen Weg der Client mit dem Router verbunden ist, ist die Aussagekraft der erhobenen Messwerte nicht aussagekräfitg. Trotzdem lässt sich erkennen, dass beide Methoden genug Pakete verschicken können um eine flüssige Bewegung nativ aus den Daten berechnen zu können. Es sind keine Interpolationstechniken notwendig um die Bewegung flüssig erscheinen zu lassen.
 
 ### 5.5.3 Detektieren von Bewegungszuständen
 Für den Nutzer ist die korrekte Detektion von Bewegungszuständen entscheidend. Werden ungewünschte Zustände detektiert, führt dies zu fehlerhaften Eingaben, welche der Nutzer als störend empfindet. Je mehr verschiedene Bewegungszustände voneinander unterschieden werden müssen, desto höher ist die Gefahr der Missinterpretation. Abgesehen davon ist es nicht immer sinnvoll für alle Bewegungsmuster den Wertebereich zu teilen (wie in Kapitel _5.4.5 Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen_). Bewegungen wie die _Rotation um die eigene Achse_ wollen vom Nutzer entweder langsam und präzise, oder schnell durchgeführt werden. Nur in bestimmten Fällen, wie bei der Fortbewegung, kann es sinnvoll sein den Wertebereich zu teilen. So ist die Anzahl der tatsächlich sinnvollen Bewegungsmuster kleiner als die theoretisch denkbare. Es muss bei jedem Zustand und jeder Interaktion abgewogen werden, ob eine Teilung des Wertebereichs sinnvoll ist, oder den Nutzer behindert. 
