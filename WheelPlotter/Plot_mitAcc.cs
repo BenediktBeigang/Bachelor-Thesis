@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 public class Plot_mitAcc
 {
     public Plot_mitAcc(List<Sample> record, string movementState, string file)

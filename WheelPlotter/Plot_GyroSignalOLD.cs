@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
 public class Plot_GyroSignalOld
 {
     public Plot_GyroSignalOld(List<Sample> record)

@@ -1,4 +1,8 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
 
 public class Program
 {
@@ -27,10 +31,10 @@ public class Program
 
                 // new Plot_GyroSignalNodeOne(record);
                 // new Plot_GyroSignalNodeTwo(record);
-                // Stats_Datarate(record);
+                Stats_Datarate(record);
                 // new Plot_Gyro(record, movementState, name);
-                // new Plot_Datarate(record);
-                new Plot_GyroWithAcceleration(record, movementState, name);
+                // new Plot_Datarate();
+                // new Plot_GyroWithAcceleration(record, movementState, name);
                 // new Plot_NodeOne(record);
                 // new Plot_mitAcc(record, movementState, name);
                 // new Plot_ohneAcc(record, movementState, name);

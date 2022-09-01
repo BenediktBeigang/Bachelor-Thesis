@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 public class Plot_2Th
 {
     public Plot_2Th(List<Sample> record, string movementState, string file)

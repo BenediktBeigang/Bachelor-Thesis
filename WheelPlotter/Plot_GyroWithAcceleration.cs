@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 public class Plot_GyroWithAcceleration
 {
     public Plot_GyroWithAcceleration(List<Sample> record, string movementState, string file)
