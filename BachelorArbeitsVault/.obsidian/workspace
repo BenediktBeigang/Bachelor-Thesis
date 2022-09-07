@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "b0ce2d88ac73f330",
+        "id": "5d890e99ca288a4c",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Arbeit/5_Experiment.md",
+            "file": "Arbeit/5_Implementierung.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/5_Experiment.md",
+                "file": "Arbeit/5_Implementierung.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -96,17 +96,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "b0ce2d88ac73f330",
+  "active": "5d890e99ca288a4c",
   "lastOpenFiles": [
-    "Arbeit/9_Literaturverzeichnis.md",
-    "Arbeit/7_Ausblick.md",
-    "Arbeit/8_Abkürzungsverzeichnis.md",
-    "Arbeit/6_Erkenntnis.md",
-    "Arbeit/5_Experiment.md",
+    "Arbeit/2_Einleitung.md",
+    "Arbeit/4_Begriffsklärung.md",
+    "Arbeit/5_Implementierung.md",
+    "ToDo-Board.md",
+    "Arbeit/1_Abstract.md",
+    "Arbeit/0_Inhaltsverzeichnis.md",
     "Arbeit/4_Theorie.md",
     "Arbeit/3_Methode.md",
-    "Arbeit/2_Einleitung.md",
-    "Arbeit/1_Abstract.md",
-    "Arbeit/0_Inhaltsverzeichnis.md"
+    "Arbeit/Notizen.md",
+    "Arbeit/6_Erkenntnis.md"
   ]
 }

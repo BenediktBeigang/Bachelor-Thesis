@@ -1,4 +1,4 @@
-# 1. Theorie
+# 4. Theorie
 ___
 
 ## Behindertengerechte Eingabesysteme
@@ -7,16 +7,6 @@ viel zu Rollstuhl Simulationen um Menschen mit wenig Erfahrung mit Rollstühlen 
 ## Eingabesysteme für die Virtual Reality
 
 ## Vergleichbare Arbeiten
-
-## Begriffsklärung
-- **Eingebettete Systeme**
-- **Virtueller Raum**
-- **Mappen/Abbilden auf Eingaben**
-- **Mobiles System**
-- **Gyroskop**
-- **Navigation**
-- **Eingabegerät**
-- **(Virtuelle Realität)**
 
 
 

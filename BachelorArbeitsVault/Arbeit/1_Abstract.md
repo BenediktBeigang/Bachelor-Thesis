@@ -1,6 +1,6 @@
 # Bachelor-Thesis
-In my Bachelor-Thesis I want to use the rotating wheels of a wheelchair to do controller-inputs. For my embedded-system I use an ESP32 (Board: DevKit C V4) and the MPU6050 Gyroscope. They are held together by an 3D-Printed Box that also contains a power bank for power-supply.
-On the other end is a .Net 6.0 Console Application receiving the data and using it to map the gyro-data to different controller-inputs. For example I simulated differently realistic wheelchairs or used the data to control one full controller-joy-stick and four controller-buttons. The goal is to use the wheelchair as a new method to move in Virtual-Reality without limitations and cause less motion-sickness.
+Entwicklung und Untersuchungen zur Nutzbarkeit eines Rollstuhls als Eingabegerät zur Navigation im virtuellen Raum.
+
 
 ## Languages
 - C/C++
