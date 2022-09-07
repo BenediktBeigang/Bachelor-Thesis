@@ -14,13 +14,19 @@ kanban-plugin: basic
 - [ ] Begriffsklärung
 - [ ] Einleitung
 - [ ] Methode
+- [ ] system in cs testen, gibt es einen flaschenhals?
+- [ ] diagramme mit max und durschnitt beschriften
+- [ ] daten auswerten weiterschreiben
+
+
+## Latex
+
+- [ ] latex mk compiler
+- [ ] latex einrichten vsc
 
 
 ## Messen
 
-- [ ] simpleWheelchair testen
-- [ ] esp Daten sammeln
-- [ ] daten neu erheben wegen bug
 
 
 ## refactoring

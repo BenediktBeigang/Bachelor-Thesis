@@ -12,9 +12,11 @@ public class Sample
     public double NodeTwo_Acceleration { get; set; }
     public double NodeOne_Datarate { get; set; }
     public double NodeTwo_Datarate { get; set; }
+    public double NodeOne_PacketInterval { get; set; }
+    public double NodeTwo_PacketInterval { get; set; }
     public MovementState MovementState { get; set; }
 
-    public static Sample newSample(GyroSnapshot gyroOne, GyroSnapshot gyroTwo, MovementState movementState)
+    public static Sample NewSample(GyroSnapshot gyroOne, GyroSnapshot gyroTwo, MovementState movementState)
     {
         return new Sample()
         {
@@ -28,6 +30,8 @@ public class Sample
             NodeTwo_SmoothedValue = gyroTwo.AngularVelocity_Smoothed,
             NodeOne_Acceleration = gyroOne.Acceleration,
             NodeTwo_Acceleration = gyroTwo.Acceleration,
+            NodeOne_PacketInterval = gyroOne.PacketInterval,
+            NodeTwo_PacketInterval = gyroTwo.PacketInterval,
             NodeOne_Datarate = Node.Node_One.DataPerSecond,
             NodeTwo_Datarate = Node.Node_Two.DataPerSecond,
             MovementState = movementState

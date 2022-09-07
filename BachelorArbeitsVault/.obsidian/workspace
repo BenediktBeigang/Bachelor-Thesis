@@ -6,12 +6,24 @@
       {
         "id": "5d890e99ca288a4c",
         "type": "leaf",
+        "dimension": 80.62659846547314,
         "state": {
           "type": "markdown",
           "state": {
             "file": "Arbeit/5_Implementierung.md",
             "mode": "source",
             "source": false
+          }
+        }
+      },
+      {
+        "id": "4ba49a0d9806cb3a",
+        "type": "leaf",
+        "dimension": 19.373401534526856,
+        "state": {
+          "type": "kanban",
+          "state": {
+            "file": "ToDo-Board.md"
           }
         }
       }
@@ -98,15 +110,15 @@
   },
   "active": "5d890e99ca288a4c",
   "lastOpenFiles": [
-    "Arbeit/2_Einleitung.md",
-    "Arbeit/4_Begriffsklärung.md",
-    "Arbeit/5_Implementierung.md",
     "ToDo-Board.md",
+    "Arbeit/5_Implementierung.md",
+    "Arbeit/4_Theorie.md",
+    "Arbeit/4_Begriffsklärung.md",
+    "Arbeit/3_Methode.md",
+    "Arbeit/2_Einleitung.md",
+    "Arbeit/6_Erkenntnis.md",
     "Arbeit/1_Abstract.md",
     "Arbeit/0_Inhaltsverzeichnis.md",
-    "Arbeit/4_Theorie.md",
-    "Arbeit/3_Methode.md",
-    "Arbeit/Notizen.md",
-    "Arbeit/6_Erkenntnis.md"
+    "Arbeit/Notizen.md"
   ]
 }

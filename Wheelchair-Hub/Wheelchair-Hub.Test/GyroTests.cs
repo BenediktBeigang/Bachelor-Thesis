@@ -4,7 +4,7 @@ namespace Wheelchair_Hub.Test;
 
 public class GyroTests
 {
-    private Gyro _Gyro;
+    private Gyro? _Gyro;
     [SetUp]
     public void Setup()
     {
@@ -16,7 +16,7 @@ public class GyroTests
     {
         double[] unfilteredValues = new double[] { 7, 6, 5, 4, 3, 2, 1 };
 
-        double result = _Gyro.SmoothValue(unfilteredValues, 0);
+        double result = _Gyro!.SmoothValue(unfilteredValues, 0);
 
         Assert.That(result, Is.AtLeast(4.54));
         Assert.That(result, Is.AtMost(4.56));
@@ -30,7 +30,7 @@ public class GyroTests
     {
         double[] unfilteredValues = new double[] { 1, 2, 3, 4, 5, 6, 7, 8 };
 
-        double[] result = _Gyro.SmoothedDegreePerSecond_Last(2, unfilteredValues);
+        double[] result = _Gyro!.SmoothedDegreePerSecond_Last(2, unfilteredValues);
 
         Assert.That(result[0], Is.AtLeast(3.44));
         Assert.That(result[0], Is.AtMost(3.46));

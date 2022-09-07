@@ -1,6 +1,5 @@
 # 5. Implementierung
 ___
-
 ```toc
 ```
 
@@ -118,7 +117,7 @@ Die Alternative ist ein Mapping auf eine Spielcontroller-Eingabe. Hier gibt es e
 ### 5.3.2 Virtual Gamepad Emulation Framework
 Um die Eingaben des Rollstuhls in tatsächliche Spielcontroller-Eingaben umzuwandeln, die vom Betriebssystem auch als Controller-Eingabe verstanden werden, ist eine Emulation eines Controllers notwendig. Ziel ist es, programmgesteuert Controller-Eingaben an den Rechner zu senden. Um sich den Aufwand des Schreibens eines neuen Treibers zu ersparen, wird an dieser Stelle auf das _Virtual Gamepad Emulation Framework_ zurückgegriffen. Dies ist eine Bibliothek, welche in bestehende Software integriert werden kann und einen virtuellen Controller mit dem Rechner verbindet. Über Befehle lassen sich anschließend Controller-Eingaben tätigen. Das Framework unterstützt Xbox 360-, sowie DualShock 4-Controller [[@VirtualGamepadEmulationa]].
 
-Eine von der Internet-Vertriebsplattform Steam, welche hauptsächlich Computerspiele vertreibt, veröffentlichte Umfrage hat ergeben, dass $45\%$ der Nutzer auf ihrer Plattform über einen Xbox 360 Controller verfügen, sowie $19\%$ über das neuere Xbox One Modell, welches seinem Vorgänger sehr ähnlich ist. Damit sind Xbox Controller mit großem Abstand am verbreitetsten. Aufgrund dieser Annahme wurde sich im Rahmen der vorliegenden Arbeit für die Emulation eines Xbox 360 Controllers entschieden.
+Eine von der Internet-Vertriebsplattform Steam, welche hauptsächlich Computerspiele vertreibt, veröffentlichte Umfrage hat ergeben, dass $45\ \%$ der Nutzer auf ihrer Plattform über einen Xbox 360 Controller verfügen, sowie $19\ \%$ über das neuere Xbox One Modell, welches seinem Vorgänger sehr ähnlich ist. Damit sind Xbox Controller mit großem Abstand am verbreitetsten. Aufgrund dieser Annahme wurde sich im Rahmen der vorliegenden Arbeit für die Emulation eines Xbox 360 Controllers entschieden.
 
 ![[steamControllerStatistik.jpg|600]]
 (Abb.<mark>?</mark>, Verteilung von Besitz von verschiedenen Spielcontrollern auf der Plattform Steam)
@@ -143,17 +142,17 @@ Im Folgenden wird die Berechnung der Bewegungsanteile aufgezeigt, bestehend aus 
 
 $$
 \begin{align}
-Bahngeschwindigkeit\ des\ linken\ Rades: vL \\
-Bahngeschwindigkeit\ des\ rechten\ Rades: vR \\
-Bahngeschwindigkeit\ Minimum: m \\
-Overshoot: o \\
-Abstand\ Der\ Räder: d \\
-Fortbewegungsvektor: \vec{f} \\
-Rotationsvektor: \vec{r} \\
-Fortbewegungsvektor\ Fall1\ oder\ Fall2: \vec{f_{1,2}} \\
-Rotationsvektor\ Fall1\ oder\ Fall2: \vec{r_{1,2}} \\
-Fortbewegungsvektor\ Fall3: \vec{f_{3}} \\
-Rotationsvektor\ Fall3: \vec{r_{3}} \\
+vl :&\ \mathrm{Bahngeschwindigkeit\ des\ linken\ Rades}\\
+vR :&\ \mathrm{Bahngeschwindigkeit\ des\ rechten\ Rades}\\
+m :&\ \mathrm{Bahngeschwindigkeit\ Minimum}\\
+o :&\ \mathrm{Overshoot}\\
+d :&\ \mathrm{Abstand\ Der\ Räder}\\
+\vec{f} :&\ \mathrm{Fortbewegungsvektor}\\
+\vec{r} :&\ \mathrm{Rotationsvektor}\\
+\vec{f_{1,2}} :&\ \mathrm{Fortbewegungsvektor\ Fall1\ oder\ Fall2}\\
+\vec{r_{1,2}} :&\ \mathrm{Rotationsvektor\ Fall1\ oder\ Fall2}\\
+\vec{f_{3}} :&\ \mathrm{Fortbewegungsvektor\ Fall3}\\
+\vec{r_{3}} :&\ \mathrm{Rotationsvektor\ Fall3}\\
 \end{align}
 $$
 
@@ -162,7 +161,7 @@ $$
 
 Zunächst müssen die Rotationen der Räder dekonstruiert werden. Dabei lässt sich die Rotation eines Rades in zwei Komponenten aufspalten. Zum einen den Minimum-Anteil $m$, den sich beide Räder drehen.
 
-$$m = min(\left| vL \right|,\left| vR\right|)$$
+$$m = \mathrm{min}(\left| vL \right|,\left| vR\right|)$$
 
 Zum anderen der Overshoot-Anteil $o$, den sich ein Rad schneller dreht als das andere.
 
@@ -184,7 +183,7 @@ Um die Rotation um die eigene Achse berechnen zu können, wird zunächst der $We
 $$
 \begin{align}
 w_1 = d \cdot π \\
-\vec{r_{1,2}} = (\frac {m} {w_1}) \cdot 360 \\
+\vec{r_{1,2}} = \left(\frac {m} {w_1}\right) \cdot 360 \\
 \vec{f_{1,2}} = 0
 \end{align}
 $$
@@ -262,9 +261,9 @@ Im Folgenden wird darauf eingegangen, wie diese Teilmengen-Zustände erkannt wer
 
 $$
 \begin{align}
-Bahngeschwindigkeit\ des\ linken\ Rades: vL \\
-Bahngeschwindigkeit\ des\ rechten\ Rades: vR \\
-Schwellenwert : s\\
+vl :&\ \mathrm{Bahngeschwindigkeit\ des\ linken\ Rades}\\
+vR :&\ \mathrm{Bahngeschwindigkeit\ des\ rechten\ Rades} \\
+s :&\ \mathrm{Schwellenwert}\\
 \end{align}
 $$
 
@@ -342,21 +341,31 @@ Als Erstes wird der Frage nachgegangen, in welchem Modus das Gyroskop betrieben 
 ![[gyroMax.PNG|700]]
 (Abb.<mark>?</mark> Bahngeschwindigkeiten im Verlauf der Zeit, bei dem die Testperson ein Rad so schnell wie möglich dreht)
 
-Der Graph zeigt, dass der maximal erreicht Ausschlag um die $800$ beziehungsweise $-800$ herum ist bei Rotationen nach vorne. Bei Rotationen nach hinten ist der Ausschlag etwas höher, übersteigt jedoch nicht -900. Daraus folgt, dass Gyroskop-Modus 2 für dieses Szenario der Ideale ist. Bei diesem Modus ist die $Maximale\ Gradzahl\ pro\ Sekunde=1000\ °/s$. Der Nutzer erreicht nicht die maximal Geschwindigkeit und reizt trotzdem den Wertebereich ca. $80\%-90\%$ aus. Deshalb wird dieser Modus im System verwendet.
+Der Graph zeigt, dass der maximal erreicht Ausschlag um die $800$ beziehungsweise $-800$ herum ist bei Rotationen nach vorne. Bei Rotationen nach hinten ist der Ausschlag etwas höher, übersteigt jedoch nicht -900. Daraus folgt, dass Gyroskop-Modus 2 für dieses Szenario der Ideale ist. Bei diesem Modus ist die $Maximale\ Gradzahl\ pro\ Sekunde=1000\ °/s$. Der Nutzer erreicht nicht die maximal Geschwindigkeit und reizt trotzdem den Wertebereich ca. $80\ \%-90\ \%$ aus. Deshalb wird dieser Modus im System verwendet.
 
 In vielen Anwendungen ist es von Vorteil oder angenehmer für den Nutzer, sich schnellstmöglich mit der maximalen Fortbewegungsgeschwindigkeit zu bewegen. Auf Dauer ist es ermüdend, die Räder möglichst schnell  drehen zu müssen, um schnell voranzukommen. Um den Nutzer zu entlasten kann entweder der $Fortbewegungsvektor\ f$ immer auf einen maximalen Thumbstick-Ausschlag abgebildet werden oder es wird ein weiterer Schwellenwert eingeführt, ab dem alle Eingaben als maximaler Thumbstick-Ausschlag abgebildet werden.
 
 ### 5.5.2 Datenrate der Übertragungsprotokolle
-Damit der Nutzer eine bestmögliche Eingabe tätigen kann, ist es notwendig, dass möglichst viele Pakete möglichst schnell empfangen werden. Um die Datenrate zu ermitteln, mit der beide Nodes die Gyroskop-Werte verschicken, wird Clientseitig alle 250ms die derzeitige Datenrate errechnet. Dazu zählt die Software seit der letzten Messung die eingegangenen Pakete und multipliziert diese mit 4, um die Datenrate pro Sekunde zu erhalten. Auf eine Messung der Latenz wird aufgrund von Zeitgründen und nicht aussagekräftiger Methodik verzichtet. In den Tests wurde jedoch keine Latenz wahrgenommen. 
+Damit der Nutzer eine präzise Eingabe tätigen kann, ist es notwendig, dass möglichst schnell und kontinuierlich neue Pakete empfangen werden. Um die Datenrate zu ermitteln, mit der beide Nodes die Gyroskop-Werte verschicken, wird clientseitig alle 250ms die derzeitige Datenrate errechnet. Dazu zählt die Software seit der letzten Messung die eingegangenen Pakete und multipliziert diese mit 4, um die Datenrate pro Sekunde zu erhalten. Zusätzlich wird bei jedem Datensatz ermittelt, wie viel Zeit zwischen den letzten beiden Paketen vergangen ist. Aus dieser Latenz kann dann die durchschnittliche Latenz berechnet werden. 
 
-Datenraten beider Übertragungsprotokolle:
+![[wifiStats.PNG|600]]
+(Abb.<mark>?</mark> Bahngeschwindigkeiten im Verlauf der Zeit, bei dem die Testperson ein Rad so schnell wie möglich dreht)
+![[espnowStats.PNG|600]]
+(Abb.<mark>?</mark> Bahngeschwindigkeiten im Verlauf der Zeit, bei dem die Testperson ein Rad so schnell wie möglich dreht)
 
-| Pakete pro Sekunde         | Durchschnitt | Minimum | Maximum |
-| -------------------------- | ------------ | ------- | ------- |
-| WiFi mit WebSocket         | 71,48        | 64      | 80      |
-| ESP-Now mit seriellem Port | 293,68       | 184     | 384     |
+Messungen der getesteten Verbindungsprotokolle:
 
-Es hat sich gezeigt, dass bei einer ESP-Now Verbindung deutlich mehr Daten versendet werden, als über einen WebSocket und WiFi. Bei beiden Verbindungen ist der Flaschenhals die Übertragung per Funk. Da jedoch die Übertragungsraten stark abhängig davon sind welche USB Anschlüsse und WiFi-Protokolle verwendet wurden, sowie welche Datenraten der Router unterstützt und über welchen Weg der Client mit dem Router verbunden ist, ist die Aussagekraft der erhobenen Messwerte nicht aussagekräftig. Trotzdem lässt sich erkennen, dass beide Methoden genug Pakete verschicken können, um eine flüssige Bewegung nativ aus den Daten berechnen zu können. Es sind keine Interpolationstechniken notwendig, um die Bewegung flüssig erscheinen zu lassen.
+|                                   | Pakete pro Sekunde</br>Durchschnitt | Pakete pro Sekunde</br>Minimum | Pakete pro Sekunde</br>Maximum | Latenz in Millisekunden</br>Durchschnitt | Latenz in Millisekunden</br>Minimum | Latenz in Millisekunden</br>Maximum |
+| --------------------------------- | ----------------------------------- | ------------------------------ | ------------------------------ | ---------------------------------------- | ----------------------------------- | ----------------------------------- |
+| WiFi </br>(mit WebSocket)         | 250,16                              | 220                            | 284                            | 3,09                                     | < 1                                 | 26                                  |
+| ESP-Now </br>(mit seriellem Port) | 330,43                              | 204                            | 440                            | 2,52                                     | < 1                                 | 30                                  |
+
+Die Messungen haben ergeben, dass beide Methoden beim Versenden eines Pakets eine Latenz von niedrigen einstelligen Millisekunden haben. _ESP-Now_ mit seriellem Port schafft dabei im Durchschnitt 80 Pakete mehr als WiFi mit einem WebSocket. Die Verbindung mit WiFi ist jedoch deutlich zuverlässiger. So ist aus dem Diagramm <mark>2</mark> abzulesen, dass entweder _ESP-Now_ oder der serielle Port regelmäßiger und höhere Ausreißer erzeugt, bei denen die Latenz über 15 Millisekunden ist. WiFi hingegen hat im kompletten Datensatz nur einen deutlichen Ausreißer und hat ansonsten selten Latenzen über 15 Millisekunden.
+
+<mark>anpassen wegen neuen daten und ergebnis formulieren => wann welche variante verwenden?</mark>
+Es hat sich gezeigt, dass bei einer ESP-Now Verbindung deutlich mehr Daten versendet werden, als über einen WebSocket und WiFi. Bei beiden Verbindungen ist der Flaschenhals die Übertragung per Funk. 
+
+Da jedoch die Übertragungsraten stark abhängig davon sind welche USB Anschlüsse und WiFi-Protokolle verwendet wurden, sowie welche Datenraten der Router unterstützt und über welchen Weg der Client mit dem Router verbunden ist, ist die Aussagekraft der erhobenen Messwerte nicht aussagekräftig. Trotzdem lässt sich erkennen, dass beide Methoden genug Pakete verschicken können, um eine flüssige Bewegung nativ aus den Daten berechnen zu können. Es sind keine Interpolationstechniken notwendig, um die Bewegung flüssig erscheinen zu lassen.
 
 ### 5.5.3 Detektieren von Bewegungszuständen
 Für den Nutzer ist die korrekte Detektion von Bewegungszuständen entscheidend. Werden unerwünschte Zustände detektiert, führt dies zu fehlerhaften Eingaben, welche der Nutzer als störend empfindet. Je mehr verschiedene Bewegungszustände voneinander unterschieden werden müssen, desto höher ist die Gefahr der Missinterpretation. Abgesehen davon ist es nicht immer sinnvoll für alle Bewegungsmuster den Wertebereich zu teilen (wie in Kapitel _5.4.5 Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen_). Bewegungen wie die _Rotation um die eigene Achse_ wollen vom Nutzer entweder langsam und präzise oder schnell durchgeführt werden. Nur in bestimmten Fällen, wie bei der Fortbewegung, kann es sinnvoll sein, den Wertebereich zu teilen. So ist die Anzahl der tatsächlich sinnvollen Bewegungsmuster kleiner als die theoretisch denkbaren. Es muss bei jedem Zustand und jeder Interaktion abgewogen werden, ob eine Teilung des Wertebereichs sinnvoll ist, oder den Nutzer behindert. Trotz der verringerten Anzahl an Bewegungsmustern, sind beim Testen der _Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen_ zwei primäre Probleme beobachtet worden, bei denen fehlerhafte Eingaben getätigt werden. 
@@ -366,7 +375,12 @@ In den ersten Testreihen wurde für die Detektion von einer _Einzelradbewegung_ 
 
 Dieses Problem lässt sich über das Einführen eines neuen Schwellenwertes beheben. Wählt man für den Schwellenwert der _Einzelradbewegung_ einen geringeren Schwellwert $s_1 = 25$ als für den Schwellwert für das Teilen des Wertebereichs $s_2$, entsteht eine Pufferzone. Beim Beschleunigen überschreiten die Gyroskop-Werte zunächst nacheinander den Schwellenwert $s_1$. Anschließend überschreiten die Werte nacheinander den zweiten Schwellenwert $s_2$. Solange beide Werte in der Pufferzone sind, kann weder eine _Einzelradbewegung_ noch eine _Sichtachsenbewegung_ detektiert werden.
 
-![[1threshold.PNG|700]] ![[2threshold.PNG|700]]
+![[1threshold.PNG|700]] 
+(Abb.<mark>?</mark> Bahngeschwindigkeiten im Verlauf der Zeit, bei dem die Testperson ein Rad so schnell wie möglich dreht)
+![[2threshold.PNG|700]]
+(Abb.<mark>?</mark> Bahngeschwindigkeiten im Verlauf der Zeit, bei dem die Testperson ein Rad so schnell wie möglich dreht)
+
+
 Durch das Einführen der neuen Schwellenwerte müssen folgende Teilmengen-Bewegungszustände erweitert werden:
 
 **Einzelradbewegung**

@@ -48,7 +48,7 @@ void WebSocket_Loop()
   {
     WebSocket_ConnectToClient();
   }
-  else if (millis() - SendingTimer > TIME_BETWEEN_CALLS) // unnötig?
+  else // if (millis() - SendingTimer > TIME_BETWEEN_CALLS)
   {
     Gyro_Update();
     WebSocket_SendGyroData(gyroX);
@@ -73,6 +73,6 @@ void ESPNow_Loop()
 
 void loop()
 {
-  // WebSocket_Loop();
-  ESPNow_Loop();
+  WebSocket_Loop();
+  // ESPNow_Loop();
 }

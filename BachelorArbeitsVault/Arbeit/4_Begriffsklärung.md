@@ -42,4 +42,9 @@ Ein Gyroskop ist ein Sensor, der genutzt wird, um „_die Winkelgeschwindigkeit 
 
 ___
 ## Eingabegerät
-Im Buch _Virtual und Augmented Reality (VR/AR)_ von 2013 wird 
+Im Buch _Virtual und Augmented Reality (VR/AR)_ von 2013 werden Eingabegeräte wie folgt beschrieben:
+
+>„_Eingabegeräte dienen der sensorischen Erfassung von Nutzerinteraktionen._“
+>(S. 97)[[@doernerVirtualUndAugmented2013]]
+
+Das heißt, dass Eingabegeräte eine Schnittstelle von Mensch zu Maschine darstellen. 

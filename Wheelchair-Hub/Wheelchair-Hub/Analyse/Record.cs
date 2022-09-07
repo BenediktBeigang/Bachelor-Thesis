@@ -34,7 +34,7 @@ public class Record
 
     public static void TakeSample(GyroSnapshot nodeOne, GyroSnapshot nodeTwo, MovementState movementState)
     {
-        RecordedSamples.Add(Sample.newSample(nodeOne, nodeTwo, movementState));
+        RecordedSamples.Add(Sample.NewSample(nodeOne, nodeTwo, movementState));
     }
 
     private static void Save_Recording()

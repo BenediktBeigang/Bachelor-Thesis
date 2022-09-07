@@ -1,1 +1,1 @@
-{"GyroMode":2,"NodesFlipped":false,"WheelFlipped_One":false,"WheelFlipped_Two":false,"MappingMode":3,"Wheel_Radius":30,"Chair_Width":55.5,"SingleWheel_Threshold":25,"DualWheel_Threshold":100,"WheelMovement_Max":-1}
+{"GyroMode":2,"NodesFlipped":false,"WheelFlipped_One":true,"WheelFlipped_Two":false,"MappingMode":3,"Wheel_Radius":30,"Chair_Width":55.5,"SingleWheel_Threshold":25,"DualWheel_Threshold":100,"WheelMovement_Max":-1}

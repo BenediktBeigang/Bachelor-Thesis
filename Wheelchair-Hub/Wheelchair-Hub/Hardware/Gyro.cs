@@ -39,6 +39,7 @@ public class Gyro
     private short[] RawValueBuffer;
     private List<int> CalibrationValues;
     private short Offset { get; set; }
+    private List<DateTime> ReceiveTime { get; set; } = new();
 
     // Constants
     private const short BUFFER_SIZE = 100;
@@ -63,6 +64,7 @@ public class Gyro
     public void Push_RawValue(short newValue, ValueSource type)
     {
         if (ValueAccessDenied(type)) return;
+        ReceiveTime.Add(DateTime.Now);
         RawValue_Clean = newValue;
         BufferPointer++;
         if (BufferPointer >= BUFFER_SIZE)
@@ -165,7 +167,7 @@ public class Gyro
         return result;
     }
 
-    #region ForTesting
+    #region Smoothing
     public double[] SmoothedDegreePerSecond_Last(int count, double[] unfilteredValues)
     {
         if (count < 1) return new double[] { };
@@ -277,12 +279,19 @@ public class Gyro
             RawValue = Peek_RawValue(),
             AngularVelocity = DegreePerSecond_Last(),
             AngularVelocity_Smoothed = SmoothedDegreePerSecond_Last(),
-            Acceleration = Acceleration()
+            Acceleration = Acceleration(),
+            PacketInterval = (ReceiveTime.Count < 2) ? 0 : Get_PacketInterval()
         };
     }
 
     public static (GyroSnapshot gyroOne, GyroSnapshot gyroTwo) Get_GyroSnapshots()
     {
         return (Node.Node_One.Gyro.Snapshot(), Node.Node_Two.Gyro.Snapshot());
+    }
+
+    private int Get_PacketInterval()
+    {
+        TimeSpan interval = ReceiveTime[ReceiveTime.Count - 1].Subtract(ReceiveTime[ReceiveTime.Count - 2]);
+        return interval.Milliseconds;
     }
 }

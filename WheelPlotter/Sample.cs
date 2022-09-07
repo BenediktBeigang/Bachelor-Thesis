@@ -12,6 +12,8 @@ public class Sample
     public double NodeTwo_Acceleration { get; set; }
     public double NodeOne_Datarate { get; set; }
     public double NodeTwo_Datarate { get; set; }
+    public double NodeOne_PacketInterval { get; set; }
+    public double NodeTwo_PacketInterval { get; set; }
     public MovementState MovementState { get; set; }
 }
 

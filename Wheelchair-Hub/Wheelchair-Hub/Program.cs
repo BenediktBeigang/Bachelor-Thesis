@@ -14,8 +14,8 @@ public static class Program
         // Console.Write(Templates.Template());
         Start_Loops();
         Controller.Start();
-        // Connection._Connection = Connection.SetConnection(ConnectionType.WIFI);
-        Connection._Connection = Connection.SetConnection(ConnectionType.ESP_NOW);
+        Connection._Connection = Connection.SetConnection(ConnectionType.WIFI);
+        // Connection._Connection = Connection.SetConnection(ConnectionType.ESP_NOW);
         Load_Options();
         Exit_Code();
     }

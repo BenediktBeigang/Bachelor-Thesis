@@ -29,13 +29,14 @@ public class Program
 
                 string movementState = "button";
 
+                new Plot_PacketInterval(record, name);
                 // new Plot_GyroSignalNodeOne(record);
                 // new Plot_GyroSignalNodeTwo(record);
                 // Stats_Datarate(record);
                 // new Plot_Gyro(record, movementState, name);
                 // new Plot_Datarate();
                 // new Plot_GyroWithAcceleration(record, movementState, name);
-                new Plot_Datarate2(record, movementState, name);
+                // new Plot_Datarate2(record, movementState, name);
                 // new Plot_NodeOne(record);
                 // new Plot_mitAcc(record, movementState, name);
                 // new Plot_ohneAcc(record, movementState, name);
@@ -49,12 +50,32 @@ public class Program
 
     private static void Stats_Datarate(List<Sample> record)
     {
-        List<double> datarates = record.Select(r => r.NodeOne_Datarate).ToList();
-        datarates.AddRange(record.Select(r => r.NodeTwo_Datarate));
-        double average = Math.Round(datarates.Average(), 2);
-        double minimum = datarates.Min();
-        double maximum = datarates.Max();
-        Console.WriteLine($"Pakets per second\nAverage: {average}\nMinimum: {minimum}\nMaximum: {maximum}");
+        (double average, double max, double min) datarate = Datarate(record);
+        (double average, double max, double min) interval = Interval(record);
+        Console.WriteLine($"Pakets per second       =>  Average: {datarate.average}    Minimum: {datarate.min}    Maximum: {datarate.max}");
+        Console.WriteLine($"Latency in milliseconds =>  Average: {interval.average}    Minimum: {interval.min}    Maximum: {interval.max}");
+    }
+
+    private static (double average, double max, double min) Interval(List<Sample> record)
+    {
+        var one = record.Select(r => r.NodeOne_PacketInterval);
+        var two = record.Select(r => r.NodeTwo_PacketInterval);
+        var concat = one.Concat(two);
+        double average = concat.Average();
+        double max = concat.Max();
+        double min = concat.Min();
+        return (average, max, min);
+    }
+
+    private static (double average, double max, double min) Datarate(List<Sample> record)
+    {
+        var one = record.Select(r => r.NodeOne_Datarate);
+        var two = record.Select(r => r.NodeTwo_Datarate);
+        var concat = one.Concat(two);
+        double average = concat.Average();
+        double max = concat.Max();
+        double min = concat.Min();
+        return (average, max, min);
     }
 
     public static System.Drawing.Color GetMovementStateColor_Default(MovementState state)
