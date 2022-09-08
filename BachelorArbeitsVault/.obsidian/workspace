@@ -110,15 +110,15 @@
   },
   "active": "5d890e99ca288a4c",
   "lastOpenFiles": [
-    "ToDo-Board.md",
+    "Software/Maus Emulation.md",
+    "Software/Eingabe Schnittstellen.md",
+    "Software/Controller Emulation.md",
+    "Software/Mappen der Eingaben.md",
     "Arbeit/5_Implementierung.md",
+    "ToDo-Board.md",
     "Arbeit/4_Theorie.md",
     "Arbeit/4_Begriffsklärung.md",
     "Arbeit/3_Methode.md",
-    "Arbeit/2_Einleitung.md",
-    "Arbeit/6_Erkenntnis.md",
-    "Arbeit/1_Abstract.md",
-    "Arbeit/0_Inhaltsverzeichnis.md",
-    "Arbeit/Notizen.md"
+    "Arbeit/2_Einleitung.md"
   ]
 }

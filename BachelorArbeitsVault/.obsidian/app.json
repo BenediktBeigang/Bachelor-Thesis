@@ -60,7 +60,8 @@
     "WiFi-Alliance",
     "WebSocket-Protokoll",
     "Marwedel",
-    "Trägheitssensoren"
+    "Trägheitssensoren",
+    "Interpolationstechniken"
   ],
   "vimMode": false,
   "foldIndent": true,

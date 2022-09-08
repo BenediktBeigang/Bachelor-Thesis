@@ -9,14 +9,10 @@ kanban-plugin: basic
 - [ ] Rechner kaufen?
 - [ ] themen wie heartbeat, calibration, etc aufnehmen
 - [ ] key A und D abbilden mit schneller rotation
-- [ ] erkenntnis
 - [ ] ähnliche Arbeiten
 - [ ] Begriffsklärung
-- [ ] Einleitung
-- [ ] Methode
 - [ ] system in cs testen, gibt es einen flaschenhals?
 - [ ] diagramme mit max und durschnitt beschriften
-- [ ] daten auswerten weiterschreiben
 
 
 ## Latex
