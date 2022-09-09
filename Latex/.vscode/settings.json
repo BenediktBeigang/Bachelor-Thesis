@@ -1,0 +1,28 @@
+{
+    "vim.handleKeys": {
+        "<C-c>": false,
+        "<C-v>": false,
+        "<C-y>": false,
+        "<C-z>": false,
+        "<C-x>": false,
+        "<C-a>": false
+    },
+    // Control how the vim reflow key combo wraps text for comments.
+    // Set it to something less than the code length but not too short.
+    "vim.textwidth": 120,
+    "editor.rulers": [120],
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.chktex.run": "onSave",
+    "latex-workshop.chktex.delay": 2000,
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "latex-workshop.intellisense.package.enabled": true,
+    "latex-workshop.intellisense.unimathsymbols.enabled": true,
+    "[latex]": {
+        "editor.quickSuggestionsDelay": 0,
+        "editor.wordBasedSuggestions": false,
+        "editor.wordWrapColumn": 120,
+        //"editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrap": "off",
+        "files.trimTrailingWhitespace": false
+    }
+}

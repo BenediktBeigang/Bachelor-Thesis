@@ -1,0 +1,35 @@
+{
+    "name": "latex-project-container",
+    "extensions": [
+        "editorconfig.editorconfig",
+        "tecosaur.latex-utilities",
+        "james-yu.latex-workshop",
+        "torn4dom4n.latex-support",
+        "streetsidesoftware.code-spell-checker",
+        "ms-vsliveshare.vsliveshare"
+    ],
+    "build": {
+        "dockerfile": "Dockerfile",
+        "cacheFrom": [
+            //"latex-project-container",
+            "dockershelf/latex:full"
+        ],
+        "args": {
+            // The user to create in the container.
+            // Make sure to change its name below as well if you change this.
+            "CONTAINER_USER": "codespaces",
+            // The uid/gid to create that container user as. Should match your local uid/gid.
+            "CONTAINER_UID": "1000",
+            "CONTAINER_GID": "1000"
+        }
+    },
+    //"image": "dockershelf/latex:full",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/src,type=bind,consistency=cached",
+    "workspaceFolder": "/src",
+    "remoteUser" : "codespaces",
+    "mounts" : [
+        "source=latex-project-container-bash-history,target=/home/codespaces/.histvol,type=volume",
+        "source=latex-project-container-vscode-exts,target=/home/codespaces/.vscode-server/extensions,type=volume",
+        "source=latex-project-container-vscode-exts,target=/home/codespaces/.vscode-server-insiders/extensions,type=volume"
+    ]
+}

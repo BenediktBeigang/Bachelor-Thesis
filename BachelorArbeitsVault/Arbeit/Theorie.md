@@ -1,4 +1,4 @@
-# 4. Theorie
+# Theorie
 ___
 
 ## Behindertengerechte Eingabesysteme

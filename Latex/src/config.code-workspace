@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../../../Meine Ablage/Desktop/test-latex-project-main/.devcontainer"
+		},
+		{
+			"path": "../../../../../Meine Ablage/Desktop/test-latex-project-main/.vscode"
+		},
+		{
+			"path": "../../../../../Meine Ablage/Desktop/test-latex-project-main/src"
+		}
+	],
+	"settings": {}
+}

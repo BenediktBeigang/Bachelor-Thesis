@@ -6,12 +6,24 @@
       {
         "id": "1811a1f8ea61ebdb",
         "type": "leaf",
+        "dimension": 81.29272840273461,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Arbeit/5_Implementierung.md",
+            "file": "Arbeit/4_Entwicklung des eingebetteten Systems.md",
             "mode": "source",
             "source": false
+          }
+        }
+      },
+      {
+        "id": "365c3a828a53c002",
+        "type": "leaf",
+        "dimension": 18.707271597265382,
+        "state": {
+          "type": "kanban",
+          "state": {
+            "file": "ToDo-Board.md"
           }
         }
       }
@@ -53,7 +65,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 296
+    "width": 379.5
   },
   "right": {
     "id": "4e931f97d5574494",
@@ -69,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/5_Implementierung.md",
+                "file": "Arbeit/4_Entwicklung des eingebetteten Systems.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -98,15 +110,15 @@
   },
   "active": "1811a1f8ea61ebdb",
   "lastOpenFiles": [
-    "Arbeit/4_Begriffsklärung.md",
-    "Arbeit/5_Implementierung.md",
+    "Arbeit/5_Implementierung der Mapping-Software.md",
+    "Arbeit/4_Entwicklung des eingebetteten Systems.md",
     "ToDo-Board.md",
+    "Arbeit/Theorie.md",
+    "Arbeit/3_Begriffsklärung.md",
+    "Arbeit/2_Einleitung.md",
+    "Arbeit/3_Methode.md",
     "Software/Maus Emulation.md",
     "Software/Eingabe Schnittstellen.md",
-    "Software/Controller Emulation.md",
-    "Software/Mappen der Eingaben.md",
-    "Arbeit/4_Theorie.md",
-    "Arbeit/3_Methode.md",
-    "Arbeit/2_Einleitung.md"
+    "Software/Controller Emulation.md"
   ]
 }

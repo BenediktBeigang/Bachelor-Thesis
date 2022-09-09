@@ -1,4 +1,4 @@
-# 4. Begriffsklärung
+# 3. Begriffsklärung
 ___
 Im Folgenden sollen nicht triviale Begriffe erklärt werden die für das Verständis dieser Arbeit notwendig sind.
 
