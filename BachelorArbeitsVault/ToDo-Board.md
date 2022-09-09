@@ -13,6 +13,8 @@ kanban-plugin: basic
 - [ ] Begriffsklärung
 - [ ] system in cs testen, gibt es einen flaschenhals?
 - [ ] diagramme mit max und durschnitt beschriften
+- [ ] miro für fälle
+- [ ] miro wendekreis
 
 
 ## Latex

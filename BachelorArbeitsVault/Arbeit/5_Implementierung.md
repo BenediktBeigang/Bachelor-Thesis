@@ -7,7 +7,7 @@ In diesem Kapitel werden die Mittel und Wege erörtert, wie das zu entwickelnde 
 <mark>Zuletzt wird untersucht, wie gut die entwickelten Systeme funktionieren und wie diese verbessert werden können.</mark>
 
 ## 5.1 Eingebettetes System zur Messung der Raddaten
-Damit der Software bekannt ist, mit welcher Geschwindigkeit sich welches Rad in welche Richtung dreht, ist Hardware notwendig, welche die Rotationsdaten misst und an die Software übermittelt. Dazu wurde ein eingebettetes System entwicklet. Es soll näher beleuchtet werden, welche Hardware verwendet wird und wie die Raddaten gemessen und übertragen werden. Dazu werden verschiedene Kommunikationsprotokolle verglichen. Im Folgenden wird das eingebettete System, welches die Daten <mark>an einen Clienten der Software</mark> überträgt, als Node bezeichnet. <mark>vielleicht ganz raus und unten wo es vorkommt anders formulieren?</mark>
+Damit der Software bekannt ist, mit welcher Geschwindigkeit sich welches Rad in welche Richtung dreht, ist Hardware notwendig. Diese muss die Rotationsdaten messen und an die Software übermitteln. Um dies zu bewerkstelligen wurde ein eingebettetes System entwicklet. Es soll näher beleuchtet werden, welche Hardware verwendet wird und wie die Raddaten gemessen und übertragen werden. Dazu werden verschiedene Kommunikationsprotokolle verglichen. Im Folgenden wird das eingebettete System, welches die Daten <mark>an einen Clienten der Software</mark> überträgt, als Node bezeichnet. <mark>Node vielleicht ganz raus und unten wo es vorkommt anders formulieren?</mark>
 
 ### 5.1.1 Messtechniken und Sensoren
 Um die Rotation der Räder des Rollstuhls messen zu können, wird ein Sensor benötigt. Dabei gibt es verschiedene Herangehensweisen, wie dieser die Rotation messen kann. 
@@ -50,7 +50,9 @@ Einstellbare Modi des Gyroskops mit ihren resultierenden Eigenschaften:
 
 \*Werte bei einem Raddurchmesser von 60 cm – (S. 31) [[@MPU6000MPU6050Register2013]] ergänzt um eigene Werte
 
-Es stellt sich die Frage, welcher der optimale Modus für das hier entwickelte System ist. Um dem Nutzer ein möglichst störungsfreies Erlebnis zu bieten, muss gewährleistet sein, dass das Gyroskop so empfindlich wie möglich eingestellt ist. Das bedeutet, dass der Wertebereich maximal ausgereizt werden muss. Ist der Modus nicht empfindlich genug, so bemerkt der Nutzer möglicherweise das Springen der Bitwerte in Form eines Vorspringens in der Bewegung. Allerdings muss ein Modus gewählt werden, welcher dazu führt, dass der Nutzer nicht schneller als die maximale Gradzahl pro Sekunde drehen kann, da es sonst zu einem Zahlenüberlauf kommt und zu einer fehlerhaften Weiterverarbeitung der Daten führt. Der Modus muss also so empfindlich sein, dass der Nutzer nicht den Übergang von einem Zustand in den nächsten registriert. Gleichzeitig darf er nicht in der Lage sein, die Räder schneller als die maximale Gradzahl pro Sekunde zu drehen. Im Kapitel System-Analyse wird dieser Frage weiter nachgegangen.
+Es stellt sich die Frage, welcher der optimale Modus für das hier entwickelte System ist. Um dem Nutzer ein möglichst störungsfreies Erlebnis zu bieten, muss gewährleistet sein, dass das Gyroskop so empfindlich wie möglich eingestellt ist. Das bedeutet, dass der Wertebereich maximal ausgereizt werden muss. Ist der Modus nicht empfindlich genug, so bemerkt der Nutzer möglicherweise das Springen der Bitwerte in Form eines Vorspringens in der Bewegung. 
+Allerdings muss ein Modus gewählt werden, welcher dazu führt, dass der Nutzer nicht schneller als die maximale Gradzahl pro Sekunde drehen kann, da es sonst zu einem Zahlenüberlauf kommt und zu einer fehlerhaften Weiterverarbeitung der Daten führt. Der Zahlenüberlauf kann zwar abgefangen werden, jedoch sollte bei Bedarf einer maximale Geschwindigkeit diese programmgesteurert festgelegt werden. Dies birgt den Vorteil den maximalen Wert flexibler setzen zu können. 
+Der Modus muss also so empfindlich sein, dass der Nutzer nicht den Übergang von einem Zustand in den nächsten registriert. Gleichzeitig darf er nicht in der Lage sein, die Räder schneller als die maximale Gradzahl pro Sekunde zu drehen. Im Kapitel System-Analyse wird dieser Frage weiter nachgegangen.
 
 Die ausgelesenen Werte des Gyroskops sind nicht automatisch kalibriert. Sie besitzen einen konstanten Offset. Deshalb muss beim Start des Systems eine Kalibrierungssequenz gestartet werden. Diese errechnet aus einer Reihe ausgelesener Werte einen Mittelwert, der anschließend von allen zukünftigen Werten abgezogen wird. Dazu dürfen die Räder nicht bewegt werden, da dies das Ergebnis der Kalibrierung unbrauchbar machen würde.
 
@@ -131,7 +133,10 @@ Die Sensor-Daten der Gyroskope liefern die Winkelgeschwindigkeiten der Räder de
 Der direkte Weg die Raddaten in eine Eingabe umzuwandeln, ist diese auf jeweils eine Achse eines Thumbsticks abzubilden. Dabei wird die x-Achse mit dem einen, die y-Achse mit dem anderen Rad dargestellt. Vorteilig ist dabei, dass beide Achsen gleichzeitig angesprochen werden können. Jedoch ist es schwieriger, die x-Achse zu bewegen, da sie anders ausgerichtet ist als das Rad, das gedreht wird. Alternativ kann das Ansprechen einer Achse auch durch beide Räder passieren. Dabei wird die x-Achse dann angesprochen, wenn sich die Räder gegeneinander drehen und die y-Achse, wenn sich die Räder miteinander drehen. Damit wird eine intuitive Nutzung angestrebt. Jedoch ist es dabei nicht mehr möglich, gleichzeitig den Cursor entlang beider Achsen zu bewegen, da sich die Räder nicht gleichzeitig mit- und gegeneinander drehen können.
 
 ### 5.4.2 Abbildung auf einen simulierten Rollstuhl
-Da das im Rahmen dieser Arbeit entwickelte System darauf abzielt, in einem dreidimensionalen virtuellen Raum zu navigieren, wird eine Abbildung benötigt, die die Position des Nutzers im virtuellen Raum verändert. Da die Daten ohnehin von einem Rollstuhl kommen, liegt die Abbildung auf einen simulierten Rollstuhl nahe. Um die Raddaten der zwei Räder auf eine Bewegung und Rotation eines Rollstuhls umzurechnen, muss erst festgestellt werden, welche Drehbewegungen zu welchen Rollstuhlbewegungen führt. Dabei können vier vereinfachte Fälle unterschieden werden:
+Da das im Rahmen dieser Arbeit entwickelte System darauf abzielt, in einem dreidimensionalen virtuellen Raum, auf einer Ebene zu navigieren, wird eine Abbildung benötigt, die die Position des Nutzers im virtuellen Raum verändert. Da die Daten ohnehin von einem Rollstuhl kommen, liegt die Abbildung auf einen simulierten Rollstuhl nahe. Um die Raddaten der zwei Räder auf eine Bewegung und Rotation eines Rollstuhls umzurechnen, muss erst festgestellt werden, welche Drehbewegungen zu welchen Rollstuhlbewegungen führt. Dabei können vier vereinfachte Fälle unterschieden werden:
+
+![[wheelchairCases.PNG|600]]
+(Abb.<mark>?</mark> Die Bewegungs-Fälle des Rollstuhl aus der Vogelperspektive)
 
 **Fall 1:** Drehen sich die Räder mit gleicher Geschwindigkeit in dieselbe Richtung, so ruft dies eine Bewegung nach vorne oder hinten aus.
 **Fall 2:** Drehen sich die Räder mit gleicher Geschwindigkeit gegeneinander, so ruft dies eine Rotation um die eigene Achse hervor.
@@ -156,7 +161,7 @@ d :&\ \mathrm{Abstand\ Der\ Räder}\\
 \end{align}
 $$
 
-![[WheelchairMath.PNG|500]]
+![[WheelchairMath.PNG|400]]
 (Abb.<mark>?</mark> Skizze des Rollstuhls aus der Vogelperspektive)
 
 Zunächst müssen die Rotationen der Räder dekonstruiert werden. Dabei lässt sich die Rotation eines Rades in zwei Komponenten aufspalten. Zum einen in den Minimum-Anteil $m$, den sich beide Räder drehen,
@@ -176,6 +181,9 @@ $$
 \vec{r_{1,2}} = 0
 \end{align}
 $$
+
+![[wendekreis.PNG|300]]
+(Abb.<mark>?</mark> Skizze des Rollstuhls aus der Vogelperspektive mit Wendekreisen)
 
 **Fall 2:**
 Zur Berechnung der Rotation um die eigene Achse wird zunächst der $Wendekreis\ w_1$ benötigt. Dieser Wendekreis ist abhängig vom $Abstand\ der\ Räder\ d$ und dessen Mittelpunkt liegt im Mittelpunkt zwischen den Rädern. Anschließend wird mithilfe des $Minimums\ m$, das Verhältnis von $m$ zu $w_1$ errechnet, also wie viel vom Wendekreis gedreht wird. Dieses Verhältnis muss zum Schluss mit $360$ multipliziert werden, um den resultierenden Winkel, beziehungsweise $Rotationsvektor\ Fall1\ oder\ Fall2\ r_{1,2}$, zu berechnen. Bei dieser Bewegung verändert der Rollstuhl jedoch nicht seine Position.
@@ -251,7 +259,7 @@ Um alle Bewegungszustand-Permutationen ermitteln zu können, muss die Rotation d
 ![[WheelchairStates.PNG|500]]
 (Abb.<mark>?</mark>, Die neun Bewegungszustände eines Rollstuhls)
 
- Jedoch lassen sich die Bewegungsmuster in folgende Teilmengen unterteilen:
+ Jedoch lassen sich die Bewegungsmuster in folgende disjunkten Teilmengen unterteilen:
 - _Ruhezustand_: kein Rad dreht sich (5)
 - _Rotation um die eigene Achse_: Räder drehen sich gegeneinander (4, 6)
 - _Einzelradbewegung_: ein Rad steht still und ein Rad dreht sich (1, 3, 7, 9)
@@ -344,6 +352,7 @@ Das Diagramm zeigt bei einer Roation nach vorne einen maximal erreichten Ausschl
 In vielen Anwendungen ist es von Vorteil oder angenehmer für den Nutzer, sich schnellstmöglich mit der maximalen Fortbewegungsgeschwindigkeit zu bewegen. Auf Dauer ist es ermüdend, die Räder möglichst schnell drehen zu müssen. Um den Nutzer zu entlasten, kann entweder der $Fortbewegungsvektor\ f$ immer auf einen maximalen Thumbstick-Ausschlag abgebildet werden oder es wird ein weiterer Schwellenwert eingeführt, ab dem alle Eingaben als maximaler Thumbstick-Ausschlag abgebildet werden.
 
 ### 5.5.2 Datenrate der Übertragungsprotokolle
+<mark>specs hinzufügen (router etc.)</mark>
 Damit der Nutzer eine präzise Eingabe tätigen kann, ist es notwendig, dass möglichst schnell und kontinuierlich neue Pakete empfangen werden. Um die Datenrate zu ermitteln, mit der beide Nodes die Gyroskop-Werte verschicken, wird clientseitig alle 250ms die derzeitige Datenrate errechnet. Dazu zählt die Software seit der letzten Messung die eingegangenen Pakete und multipliziert diese mit 4, um die Datenrate pro Sekunde zu erhalten. Zusätzlich wird bei jedem Datensatz ermittelt, wie viel Zeit zwischen den letzten beiden Paketen vergangen ist. Auf die Messung der Latenz wurde aus Zeitgründen verzichtet, da dies erfodert hätte beide Seiten der Verbindung zu synchronisieren.
 
 ![[wifiStats.PNG|600]]
@@ -358,7 +367,7 @@ Messungen der getesteten Verbindungsprotokolle:
 | WiFi </br>(mit WebSocket)         | 250,16                              | 220                            | 284                            | 3,09                                     | < 1                                 | 26                                  |
 | ESP-Now </br>(mit seriellem Port) | 330,43                              | 204                            | 440                            | 2,52                                     | < 1                                 | 30                                  |
 
-Die Messungen haben ergeben, dass die Zeit zwischen zwei Paketen im Schnitt im niedrigen einstelligen Millisekundenbereich sind. _ESP-Now_ mit seriellem Port schafft dabei im Durchschnitt 80 Pakete mehr als WiFi mit einem WebSocket. Die Verbindung mit WiFi ist jedoch deutlich störungsfreier. So ist aus dem Diagramm <mark>2</mark> abzulesen, dass entweder _ESP-Now_ oder der serielle Port regelmäßiger und höhere Ausreißer erzeugt, bei denen die Zeit zwischen zwei Paketen über 15 Millisekunden ist. WiFi hingegen hat im kompletten Datensatz nur einen deutlichen Ausreißer und hat ansonsten selten Zeiten über 15 Millisekunden. Es kann geschlussfolgert werden, dass WiFi vorzuziehen ist. Jedoch kann ohne Bedenken auf _ESP-Now_ mit seriellem Port zurückgegriffen werden, wenn nur ein USB-Anschluss und kein WiFi Netzwerk verfügbar ist.
+Die Messungen haben ergeben, dass die Zeit zwischen zwei Paketen im Schnitt im niedrigen einstelligen Millisekundenbereich sind. _ESP-Now_ mit seriellem Port schafft dabei im Durchschnitt 80 Pakete mehr als WiFi mit einem WebSocket. Die Verbindung mit WiFi ist jedoch deutlich störungsfreier. So ist aus dem Diagramm <mark>2</mark> abzulesen, dass entweder _ESP-Now_ oder der serielle Port regelmäßiger und höhere Ausreißer erzeugt, bei denen die Zeit zwischen zwei Paketen über 15 Millisekunden ist. WiFi hingegen hat im kompletten Datensatz nur einen deutlichen Ausreißer und hat ansonsten selten Zeiten über 15 Millisekunden. Es kann geschlussfolgert werden, dass WiFi vorzuziehen ist. Jedoch kann auf _ESP-Now_ mit seriellem Port zurückgegriffen werden, wenn nur ein USB-Anschluss und kein WiFi Netzwerk verfügbar ist.
 Anzumerken ist jedoch, dass die Messungen stark abhängig davon sind, welche USB-Anschlüsse und -Protokolle verwendet wurden, sowie welche Datenraten der Router unterstützt. Ein weiterer Einflussfaktor ist die Verbindung zwischen Client und dem Router. Sind diese kabellos verbunden, erhöht sich zusätzlich die Zeit, die ein Paket zur Übertragung benötigt, im Gegensatz zur kabelgebundener Übertragung. Deshalb sind die erhobenen Messwerte nur begrenzt aussagekräftig. Trotzdem lässt sich erkennen, dass beide Methoden genug Pakete verschicken können, um eine flüssige Bewegung nativ aus den Daten berechnen zu können. Es sind keine Interpolationstechniken notwendig, um die Bewegung flüssig erscheinen zu lassen.
 
 ### 5.5.3 Detektieren von Bewegungszuständen
