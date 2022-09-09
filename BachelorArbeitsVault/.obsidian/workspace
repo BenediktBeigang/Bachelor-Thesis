@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Arbeit/4_Begriffsklärung.md",
+            "file": "Arbeit/5_Implementierung.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/4_Begriffsklärung.md",
+                "file": "Arbeit/5_Implementierung.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -98,6 +98,7 @@
   },
   "active": "1811a1f8ea61ebdb",
   "lastOpenFiles": [
+    "Arbeit/4_Begriffsklärung.md",
     "Arbeit/5_Implementierung.md",
     "ToDo-Board.md",
     "Software/Maus Emulation.md",
@@ -105,7 +106,6 @@
     "Software/Controller Emulation.md",
     "Software/Mappen der Eingaben.md",
     "Arbeit/4_Theorie.md",
-    "Arbeit/4_Begriffsklärung.md",
     "Arbeit/3_Methode.md",
     "Arbeit/2_Einleitung.md"
   ]

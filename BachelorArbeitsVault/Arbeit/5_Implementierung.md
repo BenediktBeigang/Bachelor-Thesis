@@ -177,8 +177,8 @@ Die Bewegung nach vorne oder hinten ($Fortbewegungsvektor\ Fall1\ oder\ Fall2\ f
 
 $$
 \begin{align}
-\vec{f_{1,2}} = m \\
-\vec{r_{1,2}} = 0
+\vec{f_{1,2}} =&\ m \\
+\vec{r_{1,2}} =&\ 0
 \end{align}
 $$
 
@@ -190,9 +190,9 @@ Zur Berechnung der Rotation um die eigene Achse wird zunächst der $Wendekreis\ 
 
 $$
 \begin{align}
-w_1 = d \cdot π \\
-\vec{r_{1,2}} = \left(\frac {m} {w_1}\right) \cdot 360 \\
-\vec{f_{1,2}} = 0
+w_1 =&\ d \cdot π \\
+\vec{r_{1,2}} =&\ \left(\frac {m} {w_1}\right) \cdot 360 \\
+\vec{f_{1,2}} =&\ 0
 \end{align}
 $$
 
@@ -201,9 +201,9 @@ Bei diesem Fall gibt es einen $Fortbewegungs-$ und einen $Rotationsvektor$ ungle
 
 $$
 \begin{align}
-w_2 = 2 \cdot d \cdot π \\
-Θ = \frac {o} {w_2} \\
-\vec{f_3} = Θ \cdot w_1
+w_2 =&\ 2 \cdot d \cdot π \\
+Θ =&\ \frac {o} {w_2} \\
+\vec{f_3} =&\ Θ \cdot w_1
 \end{align}
 $$
 
@@ -238,8 +238,8 @@ Anschließend können die Bewegungskomponenten addiert werden:
 
 $$
 \begin{align}
-\vec{s} = \vec{f_{1,2}} + \vec{f_3} \\
-\vec{r} = \vec{r_{1,2}} + \vec{r_3}
+\vec{s} =&\ \vec{f_{1,2}} + \vec{f_3} \\
+\vec{r} =&\ \vec{r_{1,2}} + \vec{r_3}
 \end{align}
 $$
 
