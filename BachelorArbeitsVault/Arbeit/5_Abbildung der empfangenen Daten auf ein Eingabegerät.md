@@ -23,6 +23,8 @@ Eine von der Internet-Vertriebsplattform Steam, welche hauptsächlich Computersp
 ## 5.2 Algorithmen zur Abbildung der Rad-Daten in Controller-Eingaben
 Die Sensor-Daten der Gyroskope liefern die Winkelgeschwindigkeiten der Räder des Rollstuhls. Diese sollen – wie bereits in Kapitel 5.3.1 beschrieben – auf die Eingabemöglichkeiten eines Spielcontrollers abgebildet werden, um sich im virtuellen Raum bewegen oder andere Eingaben tätigen zu können. Die Abbildung erfolgt dabei auf einen Xbox360 Controller. Somit sind die abgebildeten Eingaben von jeder Software lesbar, die eine Xbox360 Controllerunterstützung implementiert haben.
 
+<mark>Methode bzw kritisch weil nur ich</mark>
+
 ### 5.2.1 Abbildung auf einen Thumbstick
 Der direkte Weg die Raddaten in eine Eingabe umzuwandeln ist, diese auf jeweils eine Achse eines Thumbsticks abzubilden. Dabei wird die x-Achse mit dem einen, die y-Achse mit dem anderen Rad dargestellt. Vorteilig ist dabei, dass beide Achsen gleichzeitig angesprochen werden können. Jedoch ist es schwieriger, die x-Achse zu bewegen, da sie anders ausgerichtet ist als das Rad, das gedreht wird. Alternativ kann das Ansprechen einer Achse auch durch beide Räder passieren. Dabei wird die x-Achse dann angesprochen, wenn sich die Räder gegeneinander drehen und die y-Achse, wenn sich die Räder miteinander drehen. Damit wird eine intuitive Nutzung angestrebt. Jedoch ist es dabei nicht mehr möglich, gleichzeitig den Cursor entlang beider Achsen zu bewegen, da sich die Räder nicht gleichzeitig mit- und gegeneinander drehen können.
 
@@ -115,10 +117,18 @@ $$
 vL < vR
 $$
 
-Es handelt sich um eine Vorwärtsbewegung, wenn:
+sonst ist sie rechts. Es handelt sich um eine Vorwärtsbewegung, wenn:
 
 $$
 vL + vR > 0
+$$
+sonst ist es eine Rückwärtsbewegung. Folgende Bedingungen können vernachlässigt werden, da sie in der Realität nur Auftreten wenn der Overshoot $o = 0$ ist und damit $\vec{f_3} = 0$ und $\vec{r_3} = 0$:
+
+$$
+\begin{align}
+vL =&\ vR \\
+vL + vR =&\ 0 
+\end{align}
 $$
 
 **Fall 4:**
@@ -137,7 +147,7 @@ $$
 \end{align}
 $$
 
-Berechnet man auf Grundlage der oben genannten Formeln die Bewegung des Rollstuhls, so stößt man auf folgendes Problem: Da die Räder bei einer beabsichtigten Bewegung nach vorne meist mit leicht unterschiedlicher Geschwindkeit drehen, erfährt der simulierte Rollstuhl eine Ablenkung nach rechts oder links. Eine Ausrichtung des Rollstuhls, die der Nutzer geziehlt vorgenommen hat, um ein bestimmtes Ziel im virtuellen Raum zu erreichen, ist damit nichtig, da der Rollstuhl sein Ziel verfehlt. Bildet man den $Durchschnitt\ v$ der Rotationen beider Räder und nutzt ihn anstelle vom $Minimum\ m$, so verhindert man die unbeabsichtigte Ablenkung. 
+Berechnet man auf Grundlage der oben genannten Formeln die Bewegung des Rollstuhls, so stößt man auf folgendes Problem: Da die Räder bei einer beabsichtigten Bewegung nach vorne meist mit leicht unterschiedlicher Geschwindkeit drehen, erfährt der simulierte Rollstuhl eine Ablenkung nach rechts oder links. Eine Ausrichtung des Rollstuhls, die der Nutzer gezielt vorgenommen hat, um ein bestimmtes Ziel im virtuellen Raum zu erreichen, ist damit nichtig, da der Rollstuhl sein Ziel verfehlt. Bildet man den $Durchschnitt\ v$ der Rotationen beider Räder und nutzt ihn anstelle vom $Minimum\ m$, so verhindert man die unbeabsichtigte Ablenkung. 
 
 $$
 \begin{align}
@@ -145,15 +155,15 @@ $$
 \end{align}
 $$
 
-Verwendet man den $Durchschnitt\ v$ müssen die verschiedenen Fälle distinkt sein, da sonst das Wenden mit einem Rad nicht mehr möglich wäre. Grund dafür ist der zusammenaddierter Mittelwert der Geschwindigkeiten des stillstehenden und des sich drehenden Rades. Dieser würde anstelle einer Drehung zu einer Vorwärtsbegung führen. Das Zusammenrechnen von Fall 1 oder Fall 2, mit Fall 3 darf also nicht geschehen. Um dies zu realisieren, sind Bewegungszustände notwendig. Auf Basis dieser kann entschieden werden, welcher Fall genutzt werden muss, um die resultierende Bewegung zu errechnen. Im nächsten Kapitel wird darauf eingegangen welche Bewegungszustände es gibt und wie diese erkannt werden können.
+Verwendet man den $Durchschnitt\ v$ müssen die verschiedenen Fälle <mark>distinkt</mark> sein, da sonst das Wenden mit einem Rad nicht mehr möglich wäre. Grund dafür ist der zusammenaddierter Mittelwert der Geschwindigkeiten des stillstehenden und des sich drehenden Rades. Dieser würde anstelle einer Drehung zu einer Vorwärtsbegung führen. Das Zusammenrechnen von Fall 1 oder Fall 2, mit Fall 3 darf also nicht geschehen. Um dies zu realisieren, sind Bewegungszustände notwendig. Auf Basis dieser kann entschieden werden, welcher Fall genutzt werden muss, um die resultierende Bewegung zu errechnen. Im nächsten Kapitel wird darauf eingegangen, welche Bewegungszustände existieren und wie diese erkannt werden können.
 
 ### 5.2.4 Bewegungszustände
-Um alle Bewegungszustand-Permutationen ermitteln zu können, muss die Rotation der Räder als diskret und nicht als kontinuierliche Bewegung verstanden werden. So kann sich ein Rad in drei Zuständen befinden: Still stehend, nach vorne drehend und nach hinten drehend. Zwei Räder mit jeweils drei Zuständen ergeben dabei neun Bewegungsmuster ($3^2 = 9$).
+Um alle Bewegungszustand-Permutationen ermitteln zu können, muss festegestellt werden, dass sich ein Rad in drei Zuständen befinden kann: Still stehend, nach vorne drehend und nach hinten drehend. Zwei Räder mit jeweils drei Zuständen ergeben dabei neun Bewegungsmuster ($3^2 = 9$).
 
 ![[WheelchairStates.PNG|500]]
 (Abb.<mark>?</mark>, Die neun Bewegungszustände eines Rollstuhls)
 
- Jedoch lassen sich die Bewegungsmuster in folgende disjunkten Teilmengen unterteilen:
+ Jedoch lassen sich die Bewegungsmuster in folgende disjunkte Teilmengen unterteilen:
 - _Ruhezustand_: kein Rad dreht sich (5)
 - _Rotation um die eigene Achse_: Räder drehen sich gegeneinander (4, 6)
 - _Einzelradbewegung_: ein Rad steht still und ein Rad dreht sich (1, 3, 7, 9)
@@ -217,10 +227,8 @@ $$
 ### 5.2.5 Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen
 Werden, wie in Kapitel _Abbildung auf einen simulierten Rollstuhl_ erläutert, die Eingaben ausschließlich auf eine Rollstuhlbewegung abgebildet, so ist der Nutzer eingeschränkt in seinen Interaktionsmöglichkeiten. Aktionen, wie ein Tastendruck auf dem emulierten Spielcontroller sind in diesen Fällen nicht möglich. Jedoch können bestimmte Bewegungsmuster, die nicht zwangsläufig notwendig sind, genutzt werden, um weitere Interaktionen abzubilden. Werden für das Drehen des Rollstuhls nur die Zustände genutzt, bei denen sich die Räder gegeneinander drehen (in Abb.<mark>?</mark> Zustand 4 und 6), so bleiben vier Zustände übrig, die mit anderen Interaktionen belegt werden können (in Abb.<mark>?</mark> Zustand 1, 3, 7, 9). Bei diesen vier Mustern handelt es sich, um die Einzelradbewegungs-Zustände. Diese können dann beispielsweise für das <mark>Drücken eines Knopfes</mark> genutzt werden.
 
-Will man weitere Interaktionen abbilden, so ist dies nur noch möglich über die Kodierung der Radgeschwindigkeit durch den Nutzer. Entweder werden bestimmte Bewegungen der Räder unterschieden <mark>(Rad laufen lassen, Rad ruckartig bewegen und/oder über Bewegungen ähnlich zu Morsecode Information codieren)</mark> oder der Wertebereich wird geteilt mithilfe von Schwellwerten. Aufgrund des zeitlichen Rahmens dieser Arbeit wurde sich auf das Testen der zweiten Methode beschränkt.
-
-Dazu wurde der Wertebereich zunächst mithilfe des Schwellenwertes geteilt. Von einer weiteren Teilung ist abzuraten, da es sonst für den Nutzer schwierig wird, die Räder mit den gewünschten beziehungsweise notwendigen Geschwindigkeiten zu drehen. Die Unterscheidung zwischen langsamer und schneller Rotation ist jedoch intuitiv von jedem Nutzer umsetzbar und verstehbar. Mit der Aufteilung in schneller und langsamer Geschwindigkeit ist die Anzahl der Bewegungsmuster theoretisch verdoppelt worden. 
-Im Wertebereich der langsamen Bewegungen können nun Bewegungen, wie das Neigen des Kamerawinkels, abgebildet werden. Dabei wurde sich für die Bewegungszustände 2 (Neigung nach oben) und 8 (Neigung nach unten) entschieden. Für das Detektieren dieses neuen Teilmengen-Bewegungszustandes wird folgende Bedingung benötigt:
+Bislang wurde die Anzahl der möglichen Interaktionen, durch die Anzahl der Bewegungszustände begrenzt. Will man weitere Interaktionen abbilden, so bleibt nur die Geschwindigkeit mit der sich die Räder drehen oder die Zeit, um Anweisungen zu kodieren. Bezieht man die Zeit in der sich Räder drehen mit ein, so könnte man das Morse-Alphabet abbilden. Dazu wäre nötig zwei Zustände zu definieren, wie zum Beispiel ein Rad kurz oder lange drehen. Jedoch verkompliziert dies die Eingabe erheblich für den Nutzer, sodass diese Methode nicht weiter verfolgt wird.
+Eine Alternative dazu ist die Geschwindigkeit mit einzubeziehen. Teilt man den Wertebereich der Geschwindigkeiten eines Rades, so lässt sich in der Theorie die Anzahl der Bewegungszustände verdoppeln. Dazu wird der Wertebereich zunächst mithilfe des Schwellenwertes $s$ geteilt. <mark>fußnote: Von einer weiteren Teilung ist abzuraten, da es sonst für den Nutzer schwierig wird, die Räder mit den gewünschten beziehungsweise notwendigen Geschwindigkeiten zu drehen.</mark> Die Unterscheidung zwischen langsamer und schneller Rotation ist jedoch intuitiv von jedem Nutzer begreifbar und umsetzbar. Im Wertebereich der langsamen Bewegungen können nun Bewegungen, wie das Neigen des Kamerawinkels, abgebildet werden. Dabei wurde sich für die Bewegungszustände 2 (Neigung nach oben) und 8 (Neigung nach unten) entschieden. Für das Detektieren dieses neuen Teilmengen-Bewegungszustandes wird folgende Bedingung benötigt:
 
 **Neigen**
 
@@ -233,7 +241,7 @@ $$
 Unweigerlich geht dabei die Möglichkeit verloren, seinen $Fortbewegungsvektor\ s$ feiner einzustellen. Es sind also keine langsamen Bewegungen nach vorne und hinten möglich. Dafür hat der Nutzer die Möglichkeit, sich frei im Raum umschauen zu können. 
 
 ## 5.3 Optimierung der Detektion von Bewegungszuständen
-Für den Nutzer ist die korrekte Detektion von Bewegungszuständen entscheidend. Werden unerwünschte Zustände ermittelt, führt dies zu fehlerhaften Eingaben, welche der Nutzer als störend empfindet. Je mehr verschiedene Bewegungszustände voneinander unterschieden werden müssen, desto höher ist die Gefahr der Missinterpretation. Abgesehen davon ist es nicht immer sinnvoll für alle Bewegungsmuster den Wertebereich zu teilen (wie in Kapitel _5.4.5 Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen_). Bewegungen, wie die _Rotation um die eigene Achse_, wollen vom Nutzer entweder langsam und präzise oder schnell durchgeführt werden. Nur in bestimmten Fällen, wie bei der Fortbewegung, kann es sinnvoll sein, den Wertebereich zu teilen. So ist die Anzahl der tatsächlich sinnvollen Bewegungsmuster kleiner als die theoretisch denkbaren. Es muss bei jedem Zustand und jeder Interaktion abgewogen werden, ob eine Teilung des Wertebereichs sinnvoll ist, oder den Nutzer behindert. Trotz der verringerten Anzahl an Bewegungsmustern, sind beim Testen der _Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen_ zwei primäre Probleme beobachtet worden, bei denen fehlerhafte Eingaben getätigt werden. Zum Testen des Systems und Aufnehmen der Daten wurde _Counter-Strike: Global Offensive_ verwendet.
+Für den Nutzer ist die korrekte Detektion von Bewegungszuständen entscheidend. Werden unerwünschte Zustände ermittelt, führt dies zu fehlerhaften Eingaben, welche der Nutzer als störend empfindet. Je mehr verschiedene Bewegungszustände voneinander unterschieden werden müssen, desto höher ist die Gefahr der Missinterpretation. Abgesehen davon ist es nicht immer sinnvoll für alle Bewegungsmuster den Wertebereich zu teilen (wie in Kapitel _5.4.5 Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen_). Bewegungen, wie die _Rotation um die eigene Achse_, wollen vom Nutzer entweder langsam und präzise oder schnell durchgeführt werden. Nur in bestimmten Fällen, wie bei der Fortbewegung, kann es sinnvoll sein, den Wertebereich zu teilen. So ist die Anzahl der tatsächlich sinnvollen Bewegungsmuster kleiner als die theoretisch denkbaren. Es muss bei jedem Zustand und jeder Interaktion abgewogen werden, ob eine Teilung des Wertebereichs sinnvoll erscheint, oder den Nutzer behindert. Trotz der verringerten Anzahl an Bewegungsmustern, sind beim Testen der _Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen_ zwei primäre Probleme beobachtet worden, bei denen fehlerhafte Eingaben getätigt werden. Zum Testen des Systems und Aufnehmen der Daten wurde _Counter-Strike: Global Offensive_ verwendet.
 
 ### 5.3.1 Unbeabsichtigtes Betätigen von Interaktionstasten
 In den ersten Testreihen wurde für die Detektion von einer _Einzelradbewegung_ und dem Teilen des Wertebereichs in schnelle und langsame Bewegungen derselbe $Schwellwert\ s = 100$ verwendet. Unter Verwendung dieser Methode kommt es beim Anfahren oder Bremsen (_Sichtachsenbewegung_) zum unbeabsichtigten Betätigen von Interaktionstasten. Da sich die Räder nicht mit derselben Geschwindigkeit drehen, gibt es ein kurzes Zeitintervall, in dem ein Rad unter dem Schwellwert und ein Rad über dem Schwellenwert liegt. Für dieses Zeitintervall gilt die Bedingung der _Einzelradbewegung_, sodass eine Interaktionstaste betätigt wird.
@@ -273,7 +281,7 @@ $$
 $$
 
 ### 5.3.2 Unbeabsichtigtes Neigen beim Anfahren
-Beim Anfahren oder Bremsen (_Sichtachsenbewegung_) wurde beobachtet, dass für ein kurzes Zeitintervall der Kamerawinkel unbeabsichtigt geneigt wird. Ähnlich wie beim vorangegangenen Problem wird auch hier beim Übergang von einem Zustand zum Nächsten ein unerwünschter Zwischenzustand erreicht. Da die Fehldetektion immer dann auftritt, wenn sich die Geschwindigkeit der Räder ändert, ist der hier verwendete Lösungsansatz, die Bedingung des Neigungs-Zustandes zu erweitern. In dieser wird nun auch abgefragt, ob die Summe der Änderungsraten $a$ der Gyroskope unter einem neuen Schwellenwert $s_3$ liegt. Haben die Räder ihre Zielgeschwindigkeit erreicht, fällt die Änderungsrate unter $s_3$, sodass der nächste korrekte Zustand detektiert werden kann. In den Tests hat sich $s_3 = 15$ als ein akzeptabler Wert herausgestellt. Für die Berechnung der Änderungsrate wird folgende Berechnung verwendet:
+Beim Anfahren oder Bremsen (_Sichtachsenbewegung_) wurde beobachtet, dass für ein kurzes Zeitintervall der Kamerawinkel unbeabsichtigt geneigt wird. Ähnlich wie beim vorangegangenen Problem wird auch hier beim Übergang von einem Zustand zum Nächsten ein unerwünschter Zwischenzustand erreicht. Da die Fehldetektion immer dann auftritt, wenn sich die Geschwindigkeit der Räder ändert, ist der hier verwendete Lösungsansatz, die Bedingung des Neigungs-Zustandes zu erweitern. In dieser wird nun auch abgefragt, ob die Summe der Änderungsraten $a$ der Gyroskope unter einem neuen Schwellenwert $s_3$ liegt. Haben die Räder ihre Zielgeschwindigkeit erreicht, fällt die Änderungsrate unter $s_3$, sodass der nächste korrekte Zustand detektiert werden kann. In den Tests hat sich $s_3 = 15$ als ein akzeptabler Wert herausgestellt, wie aus den Diagrammen abzulesen ist. Für die Berechnung der Änderungsrate wird folgende Berechnung verwendet:
 
 $$
 \begin{align}
