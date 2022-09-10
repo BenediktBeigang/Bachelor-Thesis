@@ -13,8 +13,6 @@ kanban-plugin: basic
 - [ ] Begriffsklärung
 - [ ] system in cs testen, gibt es einen flaschenhals?
 - [ ] diagramme mit max und durschnitt beschriften
-- [ ] gyro kapitel umbauen
-- [ ] kapitel 4 (eS) umbauen
 
 
 ## Latex
