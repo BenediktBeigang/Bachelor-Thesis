@@ -18,3 +18,12 @@
 \contentsline {subsection}{\numberline {3.5.1}WiFi und WebSockets}{13}{}%
 \contentsline {subsection}{\numberline {3.5.2}ESP-Now und Serieller Port}{14}{}%
 \contentsline {section}{\numberline {3.6}Analyse der Messungen}{14}{}%
+\contentsline {chapter}{\numberline {4}Abbildung der empfangenen Daten auf ein Eingabegerät}{17}{}%
+\contentsline {section}{\numberline {4.1}Interface zur Nutzung der Rad-Daten in externer Software}{17}{}%
+\contentsline {subsection}{\numberline {4.1.1}Vergleich zwischen Tastatur und Spielcontroller}{17}{}%
+\contentsline {subsection}{\numberline {4.1.2}Emulation des Spielcontrollers}{18}{}%
+\contentsline {section}{\numberline {4.2}Algorithmen zur Abbildung der Rad-Daten in Controller-Eingaben}{18}{}%
+\contentsline {subsection}{\numberline {4.2.1}Abbildung auf einen Thumbstick}{19}{}%
+\contentsline {subsection}{\numberline {4.2.2}Abbildung auf einen simulierten Rollstuhl}{19}{}%
+\contentsline {subsection}{\numberline {4.2.3}Bewegungszustände}{24}{}%
+\contentsline {subsection}{\numberline {4.2.4}Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen}{26}{}%
