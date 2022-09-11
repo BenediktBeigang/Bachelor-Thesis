@@ -11,7 +11,7 @@
           "state": {
             "file": "Arbeit/4_Entwicklung des eingebetteten Systems.md",
             "mode": "source",
-            "source": false
+            "source": true
           }
         }
       }
@@ -98,12 +98,12 @@
   },
   "active": "1811a1f8ea61ebdb",
   "lastOpenFiles": [
-    "Arbeit/3_Begriffsklärung.md",
-    "Arbeit/2_Einleitung.md",
-    "Arbeit/OLD.md",
-    "Arbeit/6_Erkenntnis.md",
     "Arbeit/5_Abbildung der empfangenen Daten auf ein Eingabegerät.md",
     "Arbeit/4_Entwicklung des eingebetteten Systems.md",
+    "Arbeit/3_Begriffsklärung.md",
+    "Arbeit/2_Einleitung.md",
+    "Arbeit/6_Erkenntnis.md",
+    "Arbeit/OLD.md",
     "ToDo-Board.md",
     "Arbeit/0_Inhaltsverzeichnis.md",
     "Arbeit/Theorie.md",

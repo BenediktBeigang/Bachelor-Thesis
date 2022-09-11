@@ -5,7 +5,7 @@ ___
 Damit der Rollstuhl-Software bekannt ist, mit welcher Geschwindigkeit sich welches Rad in welche Richtung dreht, ist Hardware notwendig. Um dies zu bewerkstelligen wurde ein eingebettetes System entwicklet. Dieses muss die Rotationsdaten messen und an die Software übermitteln. Dabei kommt ein ESP32-Mikrocontroller zum Einsatz der ein Gyroskop ausliest und anschließend die Daten mithilfe eines Funkprotokolls an die Rollstuhl-Software überträgt. Näher soll in einem Vergleich beleuchtet werden, ob WiFi und ESP-Now das geeignetere Übertragungsprotokoll ist.
 
 ## 4.1 PlatformIO
-Zur Entwicklung der Software, die auf den Mikrocontrollern läuft, wurde PlatformIO verwendet. Dies ist eine Framework-Erweiterung für Visual Studio Code, bei der die benötigten Bibliotheken, die für jeden Mikrocontroller und jedes Board notwendig sind, automatisch heruntergeladen und eingerichtet werden. Ebenfalls lassen sich über das UI, Bibliotheken, die für das jeweilige Projekt notwendig sind, hinzufügen. Zusätzlich zur Entwicklungsumgebung von Visual Studio Code gibt es Funktionalitäten einen Chip zu flashen und anschließend im seriellen Monitor die Ausführung zu beobachten. Im Gegensatz zu Umgebungen wie der Arduino IDE wird Zeit gespart, da dort zunächst manuell Treiber heruntergeladen werden müssen. Zusätzlich kann man nicht von den Vorteilen einer modernen IDE profitieren.
+Zur Entwicklung der eingebetteten Software, die auf den Mikrocontrollern läuft, wurde PlatformIO verwendet. Dies ist eine Framework-Erweiterung für Visual Studio Code, bei der die benötigten Bibliotheken, die für jeden Mikrocontroller und jedes Board notwendig sind, automatisch heruntergeladen und eingerichtet werden. Ebenfalls lassen sich über das UI, Bibliotheken, die für das jeweilige Projekt notwendig sind, hinzufügen. Zusätzlich zur Entwicklungsumgebung von Visual Studio Code gibt es Funktionalitäten einen Chip zu flashen und anschließend im seriellen Monitor die Ausführung zu beobachten. Im Gegensatz zu Umgebungen wie der Arduino IDE wird Zeit gespart, da dort zunächst manuell Treiber heruntergeladen werden müssen. Zusätzlich kann man nicht von den Vorteilen einer modernen IDE profitieren.
 
 ## 4.2 Messung der Rad-Daten
 Um die Rotation der Räder des Rollstuhls messen zu können, wird ein Sensor benötigt. Dabei wurde sich für ein Gyroskop entschieden, da diese verfügbar, kostengünstig und leicht integrierbar sind. <mark>fußnote: warum keine lichtschranke</mark> Jedoch erfordert die Verwendung eines Gyroskops eine Voreinstellung und Kalibrierung, welche in diesem Unterkapitel erörtert werden.
@@ -36,6 +36,17 @@ Einstellbare Modi des Gyroskops mit ihren resultierenden Eigenschaften:
 | 3     | 2000                          | 16,4            | 5,56                                | 34,93                          | 0,32                                   |
 
 \*Werte bei einem Raddurchmesser von 60 cm – (S. 31) [[@MPU6000MPU6050Register2013]] ergänzt um eigene Werte
+
+
+|                                                 | Modus 0 | Modus 1 | Modus 2 | Modus 3 |
+| ----------------------------------------------- | ------- | ------- | ------- | ------- |
+| Maximale Gradzahl pro Sekunde                   | 250     | 500     | 1000    | 2000    |
+| Stufen pro Grad                                 | 131     | 65,5    | 32,8    | 16,4    |
+| Maximale Umdrehungszahl pro Sekunde             | 0,69    | 1,39    | 2,78    | 5,56    |
+| Maximale Radianten pro Sekunde                  | 4,36    | 8,73    | 17,47   | 34,93   |
+| Zurückgelegte Distanz pro Stufe in Millimetern* | 0,04    | 0,08    | 0,16    | 0,32    |
+
+
 
 Es stellt sich die Frage, welcher der optimale Modus für das hier entwickelte System ist. Um dem Nutzer ein möglichst störungsfreies Erlebnis zu bieten, muss gewährleistet sein, dass das Gyroskop so empfindlich wie möglich eingestellt ist. Das bedeutet, dass der Wertebereich maximal ausgereizt werden muss. Ist der Modus nicht empfindlich genug, so bemerkt der Nutzer möglicherweise das Springen der Bitwerte in Form eines Vorspringens in der Bewegung. 
 Allerdings muss ein Modus gewählt werden, welcher dazu führt, dass der Nutzer nicht schneller als die maximale Gradzahl pro Sekunde drehen kann, da es sonst zu einem Zahlenüberlauf kommt und zu einer fehlerhaften Weiterverarbeitung der Daten führt. Der Zahlenüberlauf kann zwar abgefangen werden, jedoch sollte bei Bedarf einer maximale Geschwindigkeit diese programmgesteurert festgelegt werden. Dies birgt den Vorteil den maximalen Wert flexibler setzen zu können. 
@@ -118,6 +129,16 @@ Messungen der getesteten Verbindungsmethoden:
 | WiFi </br>(mit WebSocket)         | 250,16                              | 220                            | 284                            | 3,09                                     | < 1                                 | 26                                  |
 | ESP-Now </br>(mit seriellem Port) | 330,43                              | 204                            | 440                            | 2,52                                     | < 1                                 | 30                                  |
 
+|                                      | WiFi (mit WebSocket) | ESP-Now (mit seriellem Port) |
+| ------------------------------------ | -------------------- | ---------------------------- |
+| Pakete pro Sekunde Durchschnitt      | 250,16               | 330,43                       |
+| Pakete pro Sekunde Minimum           | 220                  | 204                          |
+| Pakete pro Sekunde Maximum           | 284                  | 440                          |
+| Paketintervall in Millisekunden Durchschnitt | 3,09                 | 2,52                         |
+| Paketintervall in Millisekunden Minimum      | <1                   | <1                           |
+| Paketintervall in Millisekunden Maximum      | 26                   | 30                           |
+
+
 Die Messungen haben ergeben, dass die Zeit zwischen zwei Paketen im Schnitt im niedrigen einstelligen Millisekundenbereich sind. _ESP-Now_ mit seriellem Port schafft dabei im Durchschnitt 80 Pakete mehr als WiFi mit einem WebSocket. Die Verbindung mit WiFi ist jedoch deutlich störungsfreier. So ist aus dem Diagramm <mark>2</mark> abzulesen, dass entweder _ESP-Now_ oder der serielle Port regelmäßiger und höhere Ausreißer erzeugt, bei denen die Zeit zwischen zwei Paketen über 15 Millisekunden ist. WiFi hingegen hat im kompletten Datensatz nur einen deutlichen Ausreißer und hat ansonsten selten Zeiten über 15 Millisekunden. Es kann geschlussfolgert werden, dass WiFi vorzuziehen ist. Jedoch kann auf _ESP-Now_ mit seriellem Port zurückgegriffen werden, wenn nur ein USB-Anschluss und kein WiFi Netzwerk verfügbar ist.
 Anzumerken ist jedoch, dass die Messungen stark abhängig davon sind, welche USB-Anschlüsse und -Protokolle verwendet wurden, sowie welche Datenraten der Router unterstützt. Ein weiterer Einflussfaktor ist die Verbindung zwischen Client und dem Router. Sind diese kabellos verbunden, erhöht sich zusätzlich die Zeit, die ein Paket zur Übertragung benötigt, im Gegensatz zur kabelgebundener Übertragung. Deshalb sind die erhobenen Messwerte nur begrenzt aussagekräftig. Trotzdem lässt sich erkennen, dass beide Methoden genug Pakete verschicken können, um eine flüssige Bewegung nativ aus den Daten berechnen zu können. Es sind keine Interpolationstechniken notwendig, um die Bewegung flüssig erscheinen zu lassen.
 
@@ -127,4 +148,12 @@ Die Verbindungsmethoden im Vergleich:
  | --------------------------------- | ---------------------- | ------------------------------------------------------ | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
  | WiFi </br>(mit WebSocket)         | 2                      | ESP32 -> Router -> Rollstuhl-Software                  | nicht notwendig                           | Stabilere Verbindung</br>Nur eine Übertragungstechnologie notwendig                                              |
  | ESP-Now </br>(mit seriellem Port) | 3                      | ESP32 -> ESP32 -> Serieller-Port -> Rollstuhl-Software | Ziel-MAC-Adressen                         | Kein Verbindungsaufbau mit lokalem Netzwerk notwendig</br>Kein WiFi-Netzwerk notwendig, ein USB-Anschluss genügt |
+
+|                                           | WiFi (mit WebSocket)                                            | ESP-Now (mit seriellem Port)                                                                                 |
+| ----------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Anzahl Mikrocontroller                    | 2                                                               | 3                                                                                                            |
+| Daten-Pfad                                | ESP32 -> Router -> Rollstuhl-Software                           | ESP32 -> ESP32 -> Serieller-Port -> Rollstuhl-Software                                                       |
+| "Hardcoding" von Verbindungsinformationen | nicht notwendig                                                 | Ziel-MAC-Adressen                                                                                            |
+| Vorteile                                  | Stabilere Verbindung Nur eine Übertragungstechnologie notwendig | Kein Verbindungsaufbau mit lokalem Netzwerk notwendig Kein WiFi-Netzwerk notwendig, ein USB-Anschluss genügt |
+
 
