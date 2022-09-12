@@ -24,12 +24,12 @@ Grund dafür ist, dass die meiste Software in der Fortbewegung eine Rolle spielt
 \subsection{Emulation des Spielcontrollers}
 Um die Eingaben des Rollstuhls in tatsächliche Spielcontroller-Eingaben umzuwandeln, die vom Betriebssystem auch als Controller-Eingabe verstanden werden, ist eine Emulation eines Controllers notwendig.
 Ziel ist es, programmgesteuert Controller-Eingaben an den Rechner zu senden.
-Um sich den Aufwand des Schreibens eines neuen Treibers zu ersparen, wird an dieser Stelle auf das \textit{Virtual Gamepad Emulation Framework} zurückgegriffen.
+Um sich den Aufwand des Schreibens eines neuen Treibers zu ersparen, wird an dieser Stelle auf das \textit{Virtual Gamepad Emulation Framework}\cite{VirtualGamepadEmulation} zurückgegriffen.
 Dies ist eine Bibliothek, welche in bestehende Software integriert werden kann und einen virtuellen Controller mit dem Rechner verbindet.
 Über Befehle lassen sich anschließend Controller-Eingaben tätigen.
-Das Framework unterstützt Xbox 360-, sowie DualShock 4-Controller [[@VirtualGamepadEmulationa]].
+Das Framework unterstützt Xbox 360-, sowie DualShock 4-Controller\cite{VirtualGamepadEmulationa}.
 
-Eine von der Internet-Vertriebsplattform Steam, welche hauptsächlich Computerspiele vertreibt, veröffentlichte Umfrage hat ergeben, dass $45\ \%$ der Nutzer auf ihrer Plattform über einen Xbox 360 Controller verfügen, sowie $19\ \%$ über das neuere Xbox One Modell, welches seinem Vorgänger sehr ähnlich ist [[@SteamSteamNews2018]].
+Eine von der Internet-Vertriebsplattform Steam, welche hauptsächlich Computerspiele vertreibt, veröffentlichte Umfrage hat ergeben, dass $45\ \%$ der Nutzer auf ihrer Plattform über einen Xbox 360 Controller verfügen, sowie $19\ \%$ über das neuere Xbox One Modell, welches seinem Vorgänger sehr ähnlich ist\cite{SteamSteamNews2018}.
 Damit sind Xbox Controller mit großem Abstand am verbreitetsten.
 Aufgrund dieser Annahme wurde sich im Rahmen der vorliegenden Arbeit für die Emulation eines Xbox 360 Controllers entschieden.
 
@@ -64,8 +64,10 @@ Um die Raddaten der zwei Räder auf eine Bewegung und Rotation eines Rollstuhls 
 Dabei können vier vereinfachte Fälle unterschieden werden:
 
 \begin{figure}[h]
+    \centering
     \includegraphics[width=\textwidth]{wheelchairCases.PNG}
     \caption{Die Bewegungs-Fälle des Rollstuhl aus der Vogelperspektive}
+    \label{fig:wheelchairCases}
 \end{figure}
 
 \textbf{Fall 1:} Drehen sich die Räder mit gleicher Geschwindigkeit in dieselbe Richtung, so ruft dies eine Bewegung nach vorne oder hinten aus.
@@ -93,20 +95,20 @@ Im Folgenden wird die Berechnung der Bewegungsanteile aufgezeigt, bestehend aus 
 \end{align}
 
 \begin{figure}[h]
-    \includegraphics[width=\textwidth]{WheelchairMath.PNG}
-    \caption{Skizze des Rollstuhls aus der Vogelperspektive}
+    \centering
+    \includegraphics[width=0.75\textwidth]{WheelchairMath.PNG}
+    \caption{Skizze des Rollstuhls aus der Vogelperspektive mit Bewegungsvektoren}
+    \label{fig:wheelchairMath}
 \end{figure}
 
 Zunächst müssen die Rotationen der Räder dekonstruiert werden.
 Dabei lässt sich die Rotation eines Rades in zwei Komponenten aufspalten.
 Zum einen in den Minimum-Anteil $m$, den sich beide Räder drehen,
-
 \begin{align}
     m = \min{(\left| vL \right|,\left| vR\right|)}
 \end{align}
 
 zum anderen in den Overshoot-Anteil $o$, den sich ein Rad schneller dreht als das andere.
-
 \begin{align}
     o = \left|\left| vL \right|-\left| vR\right| \right|
 \end{align}
@@ -114,7 +116,6 @@ zum anderen in den Overshoot-Anteil $o$, den sich ein Rad schneller dreht als da
 \textbf{Fall 1:}
 Die Bewegung nach vorne oder hinten (Fortbewegungsvektor Fall1 oder Fall2 $f_{1,2}$) ergibt sich in diesem Fall aus dem Anteil der Geschwindigkeit, mit denen sich beide Räder drehen.
 Dabei dreht sich jedoch der Rollstuhl nicht.
-
 \begin{align}
     \vec{f_{1,2}} = & \ m \\
     \vec{r_{1,2}} = & \ 0
@@ -132,7 +133,6 @@ Dieser Wendekreis ist abhängig vom Abstand der Räder $d$ und dessen Mittelpunk
 Anschließend wird mithilfe des Minimums $m$, das Verhältnis von $m$ zu $w_1$ errechnet, also wie viel vom Wendekreis gedreht wird.
 Dieses Verhältnis muss zum Schluss mit $360$ multipliziert werden, um den resultierenden Winkel, beziehungsweise Rotationsvektor Fall1 oder Fall2 $r_{1,2}$, zu berechnen.
 Bei dieser Bewegung verändert der Rollstuhl jedoch nicht seine Position.
-
 \begin{align}
     w_1           & =            \ d \cdot \pi                  \\
     \vec{r_{1,2}} & =  \ \left(\frac {m} {w_1}\right) \cdot 360 \\
@@ -145,7 +145,6 @@ Da sich nur ein Rad bewegt, hat sich der Wendekreis vergrößert zu $w_2$.
 Der Durchmesser von $w_2$ ist nun doppelt so groß wie von $w_1$, da das stehende Rad nun der Mittelpunkt des Wendekreises ist.
 Jetzt wird der Overshoot $o$ (also der Anteil der Bewegung des Rades, das sich mehr als das andere dreht) ins Verhältnis gesetzt mit $w_2$ und erhält dadurch $\Theta$.
 Verrechnet man $\Theta$ mit dem inneren Wendekreis $w_1$, so erhält man den Fortbewegungsvektor Fall3 $f_3$.
-
 \begin{align}
     w_2 =       & \ 2 \cdot d \cdot \pi \\
     \Theta =    & \ \frac {o} {w_2}     \\
@@ -153,28 +152,24 @@ Verrechnet man $\Theta$ mit dem inneren Wendekreis $w_1$, so erhält man den For
 \end{align}
 
 Um den Rotationsvektor Fall3 $r_3$ berechnen zu können, muss $\Theta$ mit $360$ multipliziert werden.
-
 \begin{align}
     \vec{r_3} = \Theta \cdot 360
 \end{align}
 
 Da die Berechnungen mit den absoluten Rotationswerten errechnet wurden, ist es notwendig anhand der Drehrichtungen beider Räder zu bestimmen, ob sich der Rollstuhl vor- oder zurückbewegt und ob er sich dabei nach links oder rechts dreht.
 Die Drehrichtung ist immer dann links, wenn:
-
 \begin{align}
     vL < vR
 \end{align}
 
 sonst ist sie rechts.
 Es handelt sich um eine Vorwärtsbewegung, wenn:
-
 \begin{align}
     vL + vR > 0
 \end{align}
 
 sonst ist es eine Rückwärtsbewegung.
 Folgende Bedingungen können vernachlässigt werden, da sie in der Realität nur Auftreten wenn der Overshoot $o = 0$ ist und damit $\vec{f_3} = 0$ und $\vec{r_3} = 0$:
-
 \begin{align}
     vL =      & \ vR \\
     vL + vR = & \ 0
@@ -184,13 +179,11 @@ Folgende Bedingungen können vernachlässigt werden, da sie in der Realität nur
 Bevor die zusammengehörenden Vektoren zusammengerechnet werden können, muss überprüft werden, ob $s_{1,2}$ und $r_{1,2}$ mithilfe des ersten oder zweiten Falls berechnet werden müssen.
 Gilt folgende Bedingung, drehen sich die Räder gegeneinander und es wird Fall 2 benötigt.
 Andernfalls gilt Fall 1.
-
 \begin{align}
     (vL > 0) \oplus (vR > 0)
 \end{align}
 
 Anschließend können die Bewegungskomponenten addiert werden:
-
 \begin{align}
     \vec{s} = & \ \vec{f_{1,2}} + \vec{f_3} \\
     \vec{r} = & \ \vec{r_{1,2}} + \vec{r_3}
@@ -204,7 +197,6 @@ Berechnet man auf Grundlage der oben genannten Formeln die Bewegung des Rollstuh
 Da die Räder bei einer beabsichtigten Bewegung nach vorne meist mit leicht unterschiedlicher Geschwindkeit drehen, erfährt der simulierte Rollstuhl eine Ablenkung nach rechts oder links.
 Eine Ausrichtung des Rollstuhls, die der Nutzer gezielt vorgenommen hat, um ein bestimmtes Ziel im virtuellen Raum zu erreichen, ist damit nichtig, da der Rollstuhl sein Ziel verfehlt.
 Bildet man den Durchschnitt $v$ der Rotationen beider Räder und nutzt ihn anstelle vom $Minimum\ m$, so verhindert man die unbeabsichtigte Ablenkung.
-
 \begin{align}
     \vec{v} = \frac {(vL + vR)} {2}
 \end{align}
@@ -308,3 +300,97 @@ Für das Detektieren dieses neuen Teilmengen-Bewegungszustandes wird folgende Be
 Unweigerlich geht dabei die Möglichkeit verloren, seinen Fortbewegungsvektor $s$ feiner einzustellen.
 Es sind also keine langsamen Bewegungen nach vorne und hinten möglich.
 Dafür hat der Nutzer die Möglichkeit, sich frei im Raum umschauen zu können.
+
+\section{Optimierung der Detektion von Bewegungszuständen}
+Für den Nutzer ist die korrekte Detektion von Bewegungszuständen entscheidend.
+Werden unerwünschte Zustände ermittelt, führt dies zu fehlerhaften Eingaben, welche der Nutzer als störend empfindet.
+Je mehr verschiedene Bewegungszustände voneinander unterschieden werden müssen, desto höher ist die Gefahr der Missinterpretation.
+Abgesehen davon ist es nicht immer sinnvoll für alle Bewegungsmuster den Wertebereich zu teilen (wie in Kapitel \textit{Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen}).
+Bewegungen, wie die \textit{Rotation um die eigene Achse}, wollen vom Nutzer entweder langsam und präzise oder schnell durchgeführt werden.
+Nur in bestimmten Fällen, wie bei der Fortbewegung, kann es sinnvoll sein, den Wertebereich zu teilen.
+So ist die Anzahl der tatsächlich sinnvollen Bewegungsmuster kleiner als die theoretisch denkbaren.
+Es muss bei jedem Zustand und jeder Interaktion abgewogen werden, ob eine Teilung des Wertebereichs sinnvoll erscheint, oder den Nutzer behindert.
+Trotz der verringerten Anzahl an Bewegungsmustern, sind beim Testen der \textit{Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen} zwei primäre Probleme beobachtet worden, bei denen fehlerhafte Eingaben getätigt werden.
+Zum Testen des Systems und Aufnehmen der Daten wurde \textit{Counter-Strike: Global Offensive} verwendet.
+
+\subsection{Unbeabsichtigtes Betätigen von Interaktionstasten}
+In den ersten Testreihen wurde für die Detektion von einer \textit{Einzelradbewegung} und dem Teilen des Wertebereichs in schnelle und langsame Bewegungen derselbe Schwellwert $s = 100$ verwendet.
+Unter Verwendung dieser Methode kommt es beim Anfahren oder Bremsen (\textit{Sichtachsenbewegung}) zum unbeabsichtigten Betätigen von Interaktionstasten.
+Da sich die Räder nicht mit derselben Geschwindigkeit drehen, gibt es ein kurzes Zeitintervall, in dem ein Rad unter dem Schwellwert und ein Rad über dem Schwellenwert liegt.
+Für dieses Zeitintervall gilt die Bedingung der \textit{Einzelradbewegung}, sodass eine Interaktionstaste betätigt wird.
+
+Dieses Problem lässt sich über das Einführen eines neuen \textit{Einzelradbewegung} Schwellenwertes beheben.
+Wählt man für diesen einen geringeren Wert $s_1 = 25$ als für den Schwellwert für das Teilen des Wertebereichs $s_2$, entsteht eine Pufferzone.
+Beim Beschleunigen überschreiten die Gyroskop-Werte zunächst nacheinander $s_1$. Anschließend überschreiten die Werte nacheinander $s_2$.
+Solange beide Werte in der Pufferzone sind, kann weder eine \textit{Einzelradbewegung} noch eine \textit{Sichtachsenbewegung} detektiert werden.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{1threshold.PNG}
+    \caption{Bewegungs-Zustände mit unerwünschter \textit{Sichtachsenbewegung}}
+    \label{fig:1_threshold}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{2threshold.PNG}
+    \caption{Bewegungs-Zustände ohne unerwünschter \textit{Sichtachsenbewegung}}
+    \label{fig:2_threshold}
+\end{figure}
+
+Durch das Einführen der neuen Schwellenwerte müssen folgende Teilmengen-Bewegungszustände erweitert werden:
+
+\textbf{\textit{Einzelradbewegung}}
+\begin{align}
+    ((|vL| < s_1) \oplus (|vR| < s_1)) \land ((|vL| > s_2) \oplus (|vR| > s_2))
+\end{align}
+
+\textbf{\textit{Sichtachsenbewegung}}
+\begin{align}
+    ((vL > 0) \Leftrightarrow (vR > 0)) \land ((|vL| \geq s_2) \land (|vR| \geq s_2))
+\end{align}
+
+\textbf{\textit{Neigen}}
+\begin{align}
+    ((vL > 0) \Leftrightarrow (vR > 0)) \land (|vL| < s_2) \land (|vR| < s_2)
+\end{align}
+
+\subsection{Unbeabsichtigtes Neigen beim Anfahren}
+Beim Anfahren oder Bremsen (\textit{Sichtachsenbewegung}) wurde beobachtet, dass für ein kurzes Zeitintervall der Kamerawinkel unbeabsichtigt geneigt wird.
+Ähnlich wie beim vorangegangenen Problem wird auch hier beim Übergang von einem Zustand zum Nächsten ein unerwünschter Zwischenzustand erreicht.
+Da die Fehldetektion immer dann auftritt, wenn sich die Geschwindigkeit der Räder ändert, ist der hier verwendete Lösungsansatz, die Bedingung des Neigungs-Zustandes zu erweitern.
+In dieser wird nun auch abgefragt, ob die Summe der Änderungsraten $a$ der Gyroskope unter einem neuen Schwellenwert $s_3$ liegt.
+Haben die Räder ihre Zielgeschwindigkeit erreicht, fällt die Änderungsrate unter $s_3$, sodass der nächste korrekte Zustand detektiert werden kann.
+In den Tests hat sich $s_3 = 15$ als ein akzeptabler Wert herausgestellt, wie aus den Diagrammen abzulesen ist.
+Für die Berechnung der Änderungsrate wird folgende Berechnung verwendet:
+\begin{align}
+    a = |(vL_{[1]} - vL_{[0]})| + |((vR_{[1]} - vR_{[0]})|
+\end{align}
+
+Die Bedingung des Teilmengen-Zustands \textit{Neigen} muss wie folgt ergänzt werden:
+
+\textbf{\textit{Neigen}}
+\begin{align}
+    ((vL > 0) \Leftrightarrow (vR > 0)) \land (|vL| < s_2) \land (|vR| < s_2) \land (a < s_3)
+\end{align}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{ohneAcc.PNG}
+    \caption{Bewegungs-Zustände mit unerwünschtem \textit{Neigen}}
+    \label{fig:ohneAcc}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{mitAcc.PNG}
+    \caption{Bewegungs-Zustände unter Verwendung eines Schwellenwertes für die Änderungsrate ohne unerwünschtem \textit{Neigen}}
+    \label{fig:mitAcc}
+\end{figure}
+
+In den Daten ist zu erkennen, dass zwischen dem \textit{Sichtachsenbewegung}-Zustand und dem \textit{Neigen}-Zustand nun ein kurzer Ruhezustand existiert.
+Diese Verzögerung bei der Fortbewegung ist vom Nutzer kaum bis gar nicht wahrnehmbar.
+Im gezeigten Beispiel beträgt diese nur etwa 70ms.
+Jedoch ist anzumerken, dass diese Methode vor allem bei ruckartigen Bewegungen funktioniert, da besonders dann die Änderungsrate schnell einen registrierbaren Ausschlag hat.
+Verändert sich die Geschwindigkeit nicht schnell genug, kann es immer noch zu registrierbaren Neigungen kommen.
+

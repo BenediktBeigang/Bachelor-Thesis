@@ -13,18 +13,31 @@
 %\setmainfont{lato}
 
 %\renewcommand{\familydefault}{\sfdefault}
+
+%degree
 \usepackage{siunitx}
 
 \usepackage{booktabs,caption}
 \usepackage[flushleft]{threeparttable}
 \usepackage[T1]{fontenc}
 
+%german support
 \usepackage[ngerman]{babel}
 %\usepackage[ansinew]{inputenc}
 
+%images
 \usepackage{graphicx}
 \graphicspath{ {./images/Software/}{./images/Hardware/} }
 
+%absätze
 \usepackage{parskip}
 
+%mathsections
 \usepackage{amsmath}
+
+\usepackage[backend=biber,
+    style=numeric,
+    autocite=plain,
+    sorting=none]{biblatex}
+%citestyle=authoryear]{biblatex}
+\addbibresource{CitationDB.bib}

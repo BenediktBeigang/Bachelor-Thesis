@@ -9,9 +9,9 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Arbeit/5_Abbildung der empfangenen Daten auf ein Eingabegerät.md",
+            "file": "Arbeit/3_Begriffsklärung.md",
             "mode": "source",
-            "source": false
+            "source": true
           }
         }
       }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/5_Abbildung der empfangenen Daten auf ein Eingabegerät.md",
+                "file": "Arbeit/3_Begriffsklärung.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
