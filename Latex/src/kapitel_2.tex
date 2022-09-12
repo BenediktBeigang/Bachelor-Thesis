@@ -1,8 +1,8 @@
 \chapter{Entwicklung des eingebetteten Systems}
 Damit der Rollstuhl-Software bekannt ist, mit welcher Geschwindigkeit sich welches Rad in welche Richtung dreht, ist Hardware notwendig.
 Um dies zu bewerkstelligen wurde ein eingebettetes System entwicklet. Dieses muss die Rotationsdaten messen und an die Software übermitteln.
-Dabei kommt ein ESP32-Mikrocontroller zum Einsatz der ein Gyroskop ausliest und anschließend die Daten mithilfe eines Funkprotokolls an die Rollstuhl-Software überträgt.
-Näher soll in einem Vergleich beleuchtet werden, ob WiFi und ESP-Now das geeignetere Übertragungsprotokoll ist.
+Dabei kommt ein ESP32-Mikrocontroller zum Einsatz der ein Gyroskop ausliest und anschließend die Daten mithilfe eines Übertragungsprotokolls an die Rollstuhl-Software überträgt.
+Näher soll in einem Vergleich beleuchtet werden, ob WiFi und ESP-Now das geeignetere Protokoll ist.
 
 \section{PlatformIO}
 Zur Entwicklung der eingebetteten Software, die auf den Mikrocontrollern läuft, wurde PlatformIO verwendet.
@@ -14,8 +14,8 @@ Zusätzlich kann man nicht von den Vorteilen einer modernen IDE profitieren.
 
 \section{Messung der Raddaten}
 Um die Rotation der Räder des Rollstuhls messen zu können, wird ein Sensor benötigt.
-Dabei wurde sich für ein Gyroskop entschieden, da diese verfügbar, kostengünstig und leicht integrierbar sind.
-\footnote{warum keine lichtschranke} Jedoch erfordert die Verwendung eines Gyroskops eine Voreinstellung und Kalibrierung, welche in diesem Unterkapitel erörtert werden.
+Dabei wurde sich für ein Gyroskop entschieden, da diese verfügbar, kostengünstig und leicht integrierbar sind\footnote{Es wurde sich gegen die Verwendung einer Lichtschranke entschieden, da bei dieser Art von Messung keine kleinen Geschwindigkeiten möglich sind.}.
+Jedoch erfordert die Verwendung eines Gyroskops eine Voreinstellung und Kalibrierung, welche in diesem Unterkapitel erörtert werden.
 
 \subsection{Gyroskop}
 Im Zuge dieser Arbeit habe ich mich für das Motion-Tracking-Device GY-521 MPU-6050 entschieden.
@@ -79,22 +79,9 @@ Der Zahlenüberlauf kann zwar abgefangen werden, jedoch sollte bei Bedarf einer 
 Dies birgt den Vorteil den maximalen Wert flexibler setzen zu können.
 Der Modus muss also so empfindlich sein, dass der Nutzer nicht den Übergang von einem Zustand in den nächsten registriert.
 Gleichzeitig darf er nicht in der Lage sein, die Räder schneller als die maximale Gradzahl pro Sekunde zu drehen.
-Im Kapitel System-Analyse wird dieser Frage weiter nachgegangen.
-
-\subsection{Verbesserung der Rohdaten}
-Die ausgelesenen Werte des Gyroskops sind nicht automatisch kalibriert.
-Sie besitzen einen konstanten Offset. Deshalb muss beim Start des Systems eine Kalibrierungssequenz gestartet werden.
-Diese errechnet aus einer Reihe ausgelesener Werte einen Mittelwert, der anschließend von allen zukünftigen Werten abgezogen wird.
-Dazu dürfen die Räder nicht bewegt werden, da dies das Ergebnis der Kalibrierung unbrauchbar machen würde.
-
-Darüber hinaus hat das Gyroskop-Signal ein Rauschen.
-Bei hoher Umdrehungszahl ist das Rauschen irrelevant, da es nur einen kleinen Anteil der Gesamtrotation ausmacht.
-Steht das Rad still, ist das Rauschen jedoch störend, da in diesem Fall nicht erkennbar ist, ob es tatsächlich stillsteht oder eine geringe Rotation gegeben ist.
-Aus diesem Grund wird ein Schwellenwert bestimmt, welcher der Gyroskop-Wert überschreiten muss, um als Bewegung erkannt werden zu können.
-Damit ist sichergestellt, dass es sich um eine tatsächliche Rotation handelt.
 
 \subsection{Idealer Gyroskop-Modus}
-Als Erstes wird der Frage nachgegangen, in welchem Modus das Gyroskop betrieben werden sollte.
+Wie zuvor beschrieben, muss der Frage nachgegangen werden, in welchem Modus das Gyroskop betrieben werden sollte.
 Hierfür wurde eine Datenreihe gemessen, mit der Gradzahl pro Sekunde im Verlauf der Zeit.
 Eine Testperson hat dabei versucht, ein Rad so schnell wie möglich zu drehen.
 
@@ -112,6 +99,18 @@ Der Nutzer erreicht nicht die maximal Geschwindigkeit und reizt trotzdem den Wer
 In vielen Anwendungen ist es von Vorteil oder angenehmer für den Nutzer, sich schnellstmöglich mit der maximalen Fortbewegungsgeschwindigkeit zu bewegen.
 Auf Dauer ist es ermüdend, die Räder möglichst schnell drehen zu müssen.
 Um den Nutzer zu entlasten, kann entweder der Fortbewegungsvektor $\vec{f}$ immer auf einen maximalen Thumbstick-Ausschlag abgebildet werden oder es wird ein weiterer Schwellenwert eingeführt, ab dem alle Eingaben als maximaler Thumbstick-Ausschlag abgebildet werden.
+
+\subsection{Verbesserung der Rohdaten}
+Die ausgelesenen Werte des Gyroskops sind nicht automatisch kalibriert.
+Sie besitzen einen konstanten Offset. Deshalb muss beim Start des Systems eine Kalibrierungssequenz gestartet werden.
+Diese errechnet aus einer Reihe ausgelesener Werte einen Mittelwert, der anschließend von allen zukünftigen Werten abgezogen wird.
+Dazu dürfen die Räder nicht bewegt werden, da dies das Ergebnis der Kalibrierung unbrauchbar machen würde.
+
+Darüber hinaus hat das Gyroskop-Signal ein Rauschen.
+Bei hoher Umdrehungszahl ist das Rauschen irrelevant, da es nur einen kleinen Anteil der Gesamtrotation ausmacht.
+Steht das Rad still, ist das Rauschen jedoch störend, da in diesem Fall nicht erkennbar ist, ob es tatsächlich stillsteht oder eine geringe Rotation gegeben ist.
+Aus diesem Grund wird ein Schwellenwert bestimmt, welcher der Gyroskop-Wert überschreiten muss, um als Bewegung erkannt werden zu können.
+Damit ist sichergestellt, dass es sich um eine tatsächliche Rotation handelt.
 
 \section{ESP32}
 Um den MPU-6050 betreiben und dessen Daten an eine Software übermitteln zu können, wird ein Mikrocontroller-Board benötigt.

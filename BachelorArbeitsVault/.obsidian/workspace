@@ -7,11 +7,9 @@
         "id": "1811a1f8ea61ebdb",
         "type": "leaf",
         "state": {
-          "type": "markdown",
+          "type": "kanban",
           "state": {
-            "file": "Arbeit/3_Begriffsklärung.md",
-            "mode": "source",
-            "source": true
+            "file": "ToDo-Board.md"
           }
         }
       }
@@ -69,7 +67,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/3_Begriffsklärung.md",
+                "file": "ToDo-Board.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -98,12 +96,12 @@
   },
   "active": "1811a1f8ea61ebdb",
   "lastOpenFiles": [
+    "Arbeit/OLD.md",
+    "Arbeit/3_Begriffsklärung.md",
     "Arbeit/4_Entwicklung des eingebetteten Systems.md",
     "Arbeit/5_Abbildung der empfangenen Daten auf ein Eingabegerät.md",
-    "Arbeit/3_Begriffsklärung.md",
     "Arbeit/2_Einleitung.md",
     "Arbeit/6_Erkenntnis.md",
-    "Arbeit/OLD.md",
     "ToDo-Board.md",
     "Arbeit/0_Inhaltsverzeichnis.md",
     "Arbeit/Theorie.md",

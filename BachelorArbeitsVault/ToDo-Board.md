@@ -10,15 +10,13 @@ kanban-plugin: basic
 - [ ] themen wie heartbeat, calibration, etc aufnehmen
 - [ ] key A und D abbilden mit schneller rotation
 - [ ] ähnliche Arbeiten
-- [ ] Begriffsklärung
 - [ ] system in cs testen, gibt es einen flaschenhals?
 - [ ] diagramme mit max und durschnitt beschriften
+- [ ] espnow quellen
 
 
 ## Latex
 
-- [ ] latex mk compiler
-- [ ] latex einrichten vsc
 
 
 ## Messen

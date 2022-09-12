@@ -1,34 +1,34 @@
 \babel@toc {ngerman}{}\relax 
-\contentsline {chapter}{\numberline {1}Einleitung}{3}{}%
-\contentsline {chapter}{\numberline {2}Begriffsklärung}{5}{}%
-\contentsline {section}{\numberline {2.1}Eingebettetes System}{5}{}%
-\contentsline {section}{\numberline {2.2}Virtueller Raum}{6}{}%
-\contentsline {section}{\numberline {2.3}Navigation}{6}{}%
-\contentsline {section}{\numberline {2.4}Gyroskop}{7}{}%
-\contentsline {section}{\numberline {2.5}Eingabegerät}{7}{}%
-\contentsline {chapter}{\numberline {3}Stand der Forschung}{8}{}%
-\contentsline {chapter}{\numberline {4}Entwicklung des eingebetteten Systems}{9}{}%
-\contentsline {section}{\numberline {4.1}PlatformIO}{9}{}%
-\contentsline {section}{\numberline {4.2}Messung der Raddaten}{10}{}%
-\contentsline {subsection}{\numberline {4.2.1}Gyroskop}{10}{}%
-\contentsline {subsection}{\numberline {4.2.2}Verbesserung der Rohdaten}{11}{}%
-\contentsline {subsection}{\numberline {4.2.3}Idealer Gyroskop-Modus}{12}{}%
-\contentsline {section}{\numberline {4.3}ESP32}{13}{}%
-\contentsline {section}{\numberline {4.4}3D gedruckte Box}{13}{}%
-\contentsline {section}{\numberline {4.5}Vergleich zwischen WiFi und ESP-Now}{13}{}%
-\contentsline {subsection}{\numberline {4.5.1}WiFi und WebSockets}{14}{}%
-\contentsline {subsection}{\numberline {4.5.2}ESP-Now und Serieller Port}{15}{}%
-\contentsline {section}{\numberline {4.6}Analyse der Messungen}{15}{}%
-\contentsline {chapter}{\numberline {5}Abbildung der empfangenen Daten auf ein Eingabegerät}{19}{}%
-\contentsline {section}{\numberline {5.1}Interface zur Nutzung der Rad-Daten in externer Software}{19}{}%
-\contentsline {subsection}{\numberline {5.1.1}Vergleich zwischen Tastatur und Spielcontroller}{19}{}%
-\contentsline {subsection}{\numberline {5.1.2}Emulation des Spielcontrollers}{20}{}%
-\contentsline {section}{\numberline {5.2}Algorithmen zur Abbildung der Rad-Daten in Controller-Eingaben}{20}{}%
-\contentsline {subsection}{\numberline {5.2.1}Abbildung auf einen Thumbstick}{21}{}%
-\contentsline {subsection}{\numberline {5.2.2}Abbildung auf einen simulierten Rollstuhl}{21}{}%
-\contentsline {subsection}{\numberline {5.2.3}Bewegungszustände}{26}{}%
-\contentsline {subsection}{\numberline {5.2.4}Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen}{28}{}%
-\contentsline {section}{\numberline {5.3}Optimierung der Detektion von Bewegungszuständen}{29}{}%
-\contentsline {subsection}{\numberline {5.3.1}Unbeabsichtigtes Betätigen von Interaktionstasten}{29}{}%
-\contentsline {subsection}{\numberline {5.3.2}Unbeabsichtigtes Neigen beim Anfahren}{31}{}%
-\contentsline {chapter}{\numberline {6}Fazit}{33}{}%
+\contentsline {chapter}{\numberline {1}Einleitung}{3}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Begriffsklärung}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Eingebettetes System}{5}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Virtueller Raum}{6}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Navigation}{6}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Gyroskop}{7}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Eingabegerät}{7}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Stand der Forschung}{8}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Entwicklung des eingebetteten Systems}{9}{chapter.4}%
+\contentsline {section}{\numberline {4.1}PlatformIO}{9}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Messung der Raddaten}{10}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Gyroskop}{10}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Idealer Gyroskop-Modus}{11}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Verbesserung der Rohdaten}{12}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}ESP32}{13}{section.4.3}%
+\contentsline {section}{\numberline {4.4}3D gedruckte Box}{13}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Vergleich zwischen WiFi und ESP-Now}{13}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}WiFi und WebSockets}{14}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}ESP-Now und Serieller Port}{15}{subsection.4.5.2}%
+\contentsline {section}{\numberline {4.6}Analyse der Messungen}{15}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Abbildung der empfangenen Daten auf ein Eingabegerät}{19}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Interface zur Nutzung der Rad-Daten in externer Software}{19}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Vergleich zwischen Tastatur und Spielcontroller}{19}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Emulation des Spielcontrollers}{20}{subsection.5.1.2}%
+\contentsline {section}{\numberline {5.2}Algorithmen zur Abbildung der Rad-Daten in Controller-Eingaben}{20}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Abbildung auf einen Thumbstick}{21}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Abbildung auf einen simulierten Rollstuhl}{21}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Bewegungszustände}{26}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen}{28}{subsection.5.2.4}%
+\contentsline {section}{\numberline {5.3}Optimierung der Detektion von Bewegungszuständen}{29}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Unbeabsichtigtes Betätigen von Interaktionstasten}{29}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Unbeabsichtigtes Neigen beim Anfahren}{31}{subsection.5.3.2}%
+\contentsline {chapter}{\numberline {6}Fazit}{33}{chapter.6}%
