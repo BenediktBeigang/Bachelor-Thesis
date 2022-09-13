@@ -1,34 +1,39 @@
 \babel@toc {ngerman}{}\relax 
-\contentsline {chapter}{\numberline {1}Einleitung}{3}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Begriffsklärung}{5}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Eingebettetes System}{5}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Virtueller Raum}{6}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Navigation}{6}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Gyroskop}{7}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Eingabegerät}{7}{section.2.5}%
-\contentsline {chapter}{\numberline {3}Stand der Forschung}{8}{chapter.3}%
-\contentsline {chapter}{\numberline {4}Entwicklung des eingebetteten Systems}{9}{chapter.4}%
-\contentsline {section}{\numberline {4.1}PlatformIO}{9}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Messung der Raddaten}{10}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Gyroskop}{10}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Idealer Gyroskop-Modus}{11}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Verbesserung der Rohdaten}{12}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}ESP32}{13}{section.4.3}%
-\contentsline {section}{\numberline {4.4}3D gedruckte Box}{13}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Vergleich zwischen WiFi und ESP-Now}{13}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}WiFi und WebSockets}{14}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}ESP-Now und Serieller Port}{15}{subsection.4.5.2}%
-\contentsline {section}{\numberline {4.6}Analyse der Messungen}{15}{section.4.6}%
-\contentsline {chapter}{\numberline {5}Abbildung der empfangenen Daten auf ein Eingabegerät}{19}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Interface zur Nutzung der Rad-Daten in externer Software}{19}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Vergleich zwischen Tastatur und Spielcontroller}{19}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Emulation des Spielcontrollers}{20}{subsection.5.1.2}%
-\contentsline {section}{\numberline {5.2}Algorithmen zur Abbildung der Rad-Daten in Controller-Eingaben}{20}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Abbildung auf einen Thumbstick}{21}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Abbildung auf einen simulierten Rollstuhl}{21}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Bewegungszustände}{26}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen}{28}{subsection.5.2.4}%
-\contentsline {section}{\numberline {5.3}Optimierung der Detektion von Bewegungszuständen}{29}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Unbeabsichtigtes Betätigen von Interaktionstasten}{29}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Unbeabsichtigtes Neigen beim Anfahren}{31}{subsection.5.3.2}%
-\contentsline {chapter}{\numberline {6}Fazit}{33}{chapter.6}%
+\contentsline {chapter}{Abstract}{1}{Doc-Start}%
+\contentsline {chapter}{\numberline {1}Einleitung}{4}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Begriffsklärung}{6}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Eingebettetes System}{6}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Virtueller Raum}{7}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Navigation}{7}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Gyroskop}{8}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Eingabegerät}{8}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Stand der Forschung}{9}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Entwicklung des eingebetteten Systems}{10}{chapter.4}%
+\contentsline {section}{\numberline {4.1}PlatformIO}{10}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Messung der Raddaten}{11}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Gyroskop}{11}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Idealer Gyroskop-Modus}{13}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Verbesserung der Rohdaten}{14}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}ESP32}{14}{section.4.3}%
+\contentsline {section}{\numberline {4.4}3D gedruckte Box}{14}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Vergleich zwischen WiFi und ESP-Now}{15}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}WiFi und WebSockets}{15}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}ESP-Now und Serieller Port}{16}{subsection.4.5.2}%
+\contentsline {section}{\numberline {4.6}Analyse der Messungen}{17}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Abbildung der empfangenen Daten auf ein Eingabegerät}{20}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Interface zur Nutzung der Rad-Daten in externer Software}{20}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Vergleich zwischen Tastatur und Spielcontroller}{20}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Emulation des Spielcontrollers}{21}{subsection.5.1.2}%
+\contentsline {section}{\numberline {5.2}Algorithmen zur Abbildung der Rad-Daten in Controller-Eingaben}{21}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Abbildung auf einen Thumbstick}{22}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Abbildung auf einen simulierten Rollstuhl}{22}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Bewegungszustände}{27}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen}{29}{subsection.5.2.4}%
+\contentsline {section}{\numberline {5.3}Optimierung der Detektion von Bewegungszuständen}{30}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Unbeabsichtigtes Betätigen von Interaktionstasten}{31}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Unbeabsichtigtes Neigen beim Anfahren}{32}{subsection.5.3.2}%
+\contentsline {chapter}{\numberline {6}Ausblick}{34}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Fazit}{35}{chapter.7}%
+\contentsline {chapter}{Literaturverzeichnis}{35}{chapter.7}%
+\contentsline {chapter}{Abbildungsverzeichnis}{37}{chapter*.37}%
+\contentsline {chapter}{Abkürzungsverzeichnis}{38}{chapter*.38}%

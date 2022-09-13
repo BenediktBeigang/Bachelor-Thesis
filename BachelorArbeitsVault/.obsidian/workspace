@@ -51,7 +51,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 205.5
+    "width": 339.5
   },
   "right": {
     "id": "4e931f97d5574494",
@@ -96,15 +96,15 @@
   },
   "active": "1811a1f8ea61ebdb",
   "lastOpenFiles": [
-    "Arbeit/OLD.md",
-    "Arbeit/3_Begriffsklärung.md",
-    "Arbeit/4_Entwicklung des eingebetteten Systems.md",
-    "Arbeit/5_Abbildung der empfangenen Daten auf ein Eingabegerät.md",
-    "Arbeit/2_Einleitung.md",
-    "Arbeit/6_Erkenntnis.md",
+    "SprintBerichte/Bericht 1.md",
+    "Arbeit/Stand der Forschung.md",
     "ToDo-Board.md",
-    "Arbeit/0_Inhaltsverzeichnis.md",
-    "Arbeit/Theorie.md",
-    "Arbeit/3_Methode.md"
+    "Arbeit/5_Abbildung der empfangenen Daten auf ein Eingabegerät.md",
+    "Arbeit/4_Entwicklung des eingebetteten Systems.md",
+    "Arbeit/6_Erkenntnis.md",
+    "Quellen/WissenschArbeiten.pdf",
+    "SprintBerichte/Bericht 5.md",
+    "SprintBerichte/Bericht 4.md",
+    "Arbeit/OLD.md"
   ]
 }

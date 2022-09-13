@@ -2357,31 +2357,34 @@
     <bcf:citekey order="6" intorder="1">DudenNavigierenRechtschreibung</bcf:citekey>
     <bcf:citekey order="7" intorder="1">wolfschmidtNavigareNecesseEst2008</bcf:citekey>
     <bcf:citekey order="8" intorder="1">sprengerNavigationenUndRelationen2022</bcf:citekey>
-    <bcf:citekey order="9" intorder="1">armeniseAdvancesGyroscopeTechnologies2010</bcf:citekey>
-    <bcf:citekey order="10" intorder="1">maenakaMEMSInertialSensors2008</bcf:citekey>
-    <bcf:citekey order="11" intorder="1">utmelMPU6050ModuleDatasheet</bcf:citekey>
-    <bcf:citekey order="12" intorder="1">armeniseAdvancesGyroscopeTechnologies2010</bcf:citekey>
-    <bcf:citekey order="13" intorder="1">doernerVirtualUndAugmented2013</bcf:citekey>
-    <bcf:citekey order="14" intorder="1">GY5216AchsenGyroskop</bcf:citekey>
-    <bcf:citekey order="15" intorder="1">MPU6000MPU6050Register2013</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">sprengerNavigationenUndRelationen2022</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">armeniseAdvancesGyroscopeTechnologies2010</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">maenakaMEMSInertialSensors2008</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">utmelMPU6050ModuleDatasheet</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">armeniseAdvancesGyroscopeTechnologies2010</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">doernerVirtualUndAugmented2013</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">GY5216AchsenGyroskop</bcf:citekey>
     <bcf:citekey order="16" intorder="1">MPU6000MPU6050Register2013</bcf:citekey>
     <bcf:citekey order="17" intorder="1">MPU6000MPU6050Register2013</bcf:citekey>
-    <bcf:citekey order="18" intorder="1">ESP32Datasheet2022</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">MPU6000MPU6050Register2013</bcf:citekey>
     <bcf:citekey order="19" intorder="1">ESP32Datasheet2022</bcf:citekey>
-    <bcf:citekey order="20" intorder="1">WiFiArduinoReference</bcf:citekey>
-    <bcf:citekey order="21" intorder="1">EspressifIoTDevelopment2022</bcf:citekey>
-    <bcf:citekey order="22" intorder="1">WhoWeAre</bcf:citekey>
-    <bcf:citekey order="23" intorder="1">DiscoverWiFiWiFi</bcf:citekey>
-    <bcf:citekey order="24" intorder="1">tzapuWiFiManager2022</bcf:citekey>
-    <bcf:citekey order="25" intorder="1">ietfRFC6455WebSocket</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">ESP32Datasheet2022</bcf:citekey>
+    <bcf:citekey order="21" intorder="1">WiFiArduinoReference</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">EspressifIoTDevelopment2022</bcf:citekey>
+    <bcf:citekey order="23" intorder="1">WhoWeAre</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">DiscoverWiFiWiFi</bcf:citekey>
+    <bcf:citekey order="25" intorder="1">tzapuWiFiManager2022</bcf:citekey>
     <bcf:citekey order="26" intorder="1">ietfRFC6455WebSocket</bcf:citekey>
     <bcf:citekey order="27" intorder="1">ietfRFC6455WebSocket</bcf:citekey>
     <bcf:citekey order="28" intorder="1">ietfRFC6455WebSocket</bcf:citekey>
-    <bcf:citekey order="29" intorder="1">markusWebSocketServerClient2022</bcf:citekey>
-    <bcf:citekey order="30" intorder="1">kotasWebsocketclient2022</bcf:citekey>
-    <bcf:citekey order="31" intorder="1">VirtualGamepadEmulation</bcf:citekey>
-    <bcf:citekey order="32" intorder="1">VirtualGamepadEmulationa</bcf:citekey>
-    <bcf:citekey order="33" intorder="1">SteamSteamNews2018</bcf:citekey>
+    <bcf:citekey order="29" intorder="1">ietfRFC6455WebSocket</bcf:citekey>
+    <bcf:citekey order="30" intorder="1">markusWebSocketServerClient2022</bcf:citekey>
+    <bcf:citekey order="31" intorder="1">kotasWebsocketclient2022</bcf:citekey>
+    <bcf:citekey order="32" intorder="1">VirtualGamepadEmulation</bcf:citekey>
+    <bcf:citekey order="33" intorder="1">VirtualGamepadEmulationa</bcf:citekey>
+    <bcf:citekey order="34" intorder="1">SteamSteamNews2018</bcf:citekey>
+    <bcf:citekey order="35" intorder="1">SteamSteamNews2018</bcf:citekey>
+    <bcf:citekey order="36" intorder="1">SteamSteamNews2018</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

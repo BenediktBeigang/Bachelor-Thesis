@@ -14,6 +14,9 @@
 \begin{document}
 \maketitle
 
+\addcontentsline{toc}{chapter}{Abstract}
+\input{abstract.tex}
+
 \tableofcontents{}
 
 \input{einleitung.tex}
@@ -21,10 +24,22 @@
 \input{standDerForschung.tex}
 \input{kapitel_2.tex}
 \input{kapitel_3.tex}
+\input{ausblick.tex}
 \input{fazit.tex}
 
+
+%Literaturverzeichnis
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+\printbibliography
 % \bibliographystyle{acm}
 % \bibliography{CitationDB}
-\printbibliography
+
+%Abbildungsverzeichnis
+\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+\listoffigures
+
+%Abkürzungsverzeichnis
+\addcontentsline{toc}{chapter}{Abkürzungsverzeichnis}
+\input{abkuerzungen.tex}
 
 \end{document}

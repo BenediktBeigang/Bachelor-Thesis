@@ -13,14 +13,17 @@ kanban-plugin: basic
 - [ ] system in cs testen, gibt es einen flaschenhals?
 - [ ] diagramme mit max und durschnitt beschriften
 - [ ] espnow quellen
-
-
-## Latex
-
-
-
-## Messen
-
+- [ ] literaturverzeichnis überarbeiten
+- [ ] ein satz unter überschrift vermeiden
+- [ ] ziele besser definieren
+- [ ] wifi bessere quellen
+- [ ] mpu6050 bessere quelle in bib?
+- [ ] zitate prüfen auf richtig zitiert
+- [ ] aublick
+- [ ] abstract
+- [ ] umrechnung omega zu v, bzw genauer aufschreiben
+- [ ] ist nicht bahngeschwindigkeit sondern winkelgeschwindigkeit
+- [ ] einheiten
 
 
 ## refactoring

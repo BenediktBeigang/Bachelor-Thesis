@@ -7,10 +7,10 @@ Näher soll in einem Vergleich beleuchtet werden, ob WiFi und ESP-Now das geeign
 \section{PlatformIO}
 Zur Entwicklung der eingebetteten Software, die auf den Mikrocontrollern läuft, wurde PlatformIO verwendet.
 Dies ist eine Framework-Erweiterung für Visual Studio Code, bei der die benötigten Bibliotheken, die für jeden Mikrocontroller und jedes Board notwendig sind, automatisch heruntergeladen und eingerichtet werden.
-Ebenfalls lassen sich über das UI, Bibliotheken, die für das jeweilige Projekt notwendig sind, hinzufügen.
+Ebenfalls lassen sich über das \ac{ui}, Bibliotheken, die für das jeweilige Projekt notwendig sind, hinzufügen.
 Zusätzlich zur Entwicklungsumgebung von Visual Studio Code gibt es Funktionalitäten einen Chip zu flashen und anschließend im seriellen Monitor die Ausführung zu beobachten.
-Im Gegensatz zu Umgebungen wie der Arduino IDE wird Zeit gespart, da dort zunächst manuell Treiber heruntergeladen werden müssen.
-Zusätzlich kann man nicht von den Vorteilen einer modernen IDE profitieren.
+Im Gegensatz zu Umgebungen wie der Arduino \ac{ide} wird Zeit gespart, da dort zunächst manuell Treiber heruntergeladen werden müssen.
+Zusätzlich kann man nicht von den Vorteilen einer modernen \ac{ide} profitieren.
 
 \section{Messung der Raddaten}
 Um die Rotation der Räder des Rollstuhls messen zu können, wird ein Sensor benötigt.
@@ -18,7 +18,7 @@ Dabei wurde sich für ein Gyroskop entschieden, da diese verfügbar, kostengüns
 Jedoch erfordert die Verwendung eines Gyroskops eine Voreinstellung und Kalibrierung, welche in diesem Unterkapitel erörtert werden.
 
 \subsection{Gyroskop}
-Im Zuge dieser Arbeit habe ich mich für das Motion-Tracking-Device GY-521 MPU-6050 entschieden.
+Im Zuge dieser Arbeit wurde sich für das Motion-Tracking-Device GY-521 MPU-6050 entschieden.
 Dieses ist klein (mit Pins: 20mm x 15mm x 11mm), kostengünstig zu erwerben (ca. 4 Euro) und verfügt unter anderem über 3-Achsen-Gyroskop-Sensoren, mit denen die Rotation gemessen werden kann.
 Der Chip besitzt folgende 8 Anschlüsse (S.7)\cite{GY5216AchsenGyroskop}:
 
@@ -49,6 +49,21 @@ Das Gyroskop des MPU-6050 kann in vier verschiedenen Konfigurationen betrieben w
 Damit wird festgelegt, wie klein der Winkel zwischen zwei verschiedenen Zuständen ist; mit anderen Worten, wie viele Stufen pro Grad unterschieden werden können.
 Da der Wertebereich konstant ist, bedeutet eine empfindlichere Messung, dass das Gyroskop bei einer geringeren Geschwindigkeit das Ende des Wertebereichs erreicht.
 Angewendet auf den Rollstuhl hat das zur Folge, dass das rotierende Rad bei niedrigeren Geschwindigkeiten seine maximal messbare Geschwindigkeit erreicht.
+Es gilt folgender Zusammenhang mit welchem die aktuelle Winkelgeschwindigkeit errechnet werden kann:
+
+\begin{align}
+    z        & : \ \mathrm{Gemessene\ Stufen}                                          \\
+    z_m      & : \ \mathrm{Maximale\ Anzahl\ von\ Stufen}                              \\
+    p        & : \ \mathrm{Stufen\ pro\ Grad} [s/\si{\degree}]                         \\
+    \omega   & : \ \mathrm{Aktuelle\ Winkelgeschwindigkeit} [\si{\degree}/s]           \\
+    \omega_m & : \ \mathrm{Maximal\ messbarere\ Winkelgeschwindigkeit}[\si{\degree}/s]
+\end{align}
+
+\begin{align}
+    z_m    & = 32768                      \\
+    z      & = \omega_m \cdot p           \\
+    \omega & = \left(\frac {z} {p}\right)
+\end{align}
 
 \begin{table}[h]
     \centering
@@ -57,15 +72,16 @@ Angewendet auf den Rollstuhl hat das zur Folge, dass das rotierende Rad bei nied
         \begin{tabular}{|l|l|l|l|l|}
             \hline
             ~ & \textbf{Modus 0} & \textbf{Modus 1} & \textbf{Modus 2} & \textbf{Modus 3} \\ \hline
-            \parbox[c][1cm]{4cm}{\textbf{Maximale Gradzahl                                \\pro Sekunde}}                   & 250     & 500     & 1000    & 2000    \\ \hline
-            \parbox[c][1cm]{4cm}{\textbf{Stufen                                           \\pro Grad }}                                & 131     & 65,5    & 32,8    & 16,4    \\ \hline
-            \parbox[c][1.5cm]{4cm}{\textbf{Maximale                                       \\Umdrehungszahl \\pro Sekunde }  }          & 0,69    & 1,39    & 2,78    & 5,56    \\ \hline
-            \parbox[c][1cm]{4cm}{\textbf{Maximale Radianten                               \\pro Sekunde     }  }           & 4,36    & 8,73    & 17,47   & 34,93   \\ \hline
-            \parbox[c][1.5cm]{4cm}{\textbf{Zurückgelegte Distanz                          \\pro Stufe\\in Millimetern*}} & 0,04    & 0,08    & 0,16    & 0,32    \\ \hline
+            \parbox[c][1.5cm]{4cm}{\textbf{Maximal messbarere                             \\Winkel-\\geschwindigkeit [\si{\degree}/s]*}}                   & 250     & 500     & 1000    & 2000    \\ \hline
+            \parbox[c][1cm]{4cm}{\textbf{Stufen                                           \\pro Grad [1/\si{\degree}]*}}                                & 131     & 65,5    & 32,8    & 16,4    \\ \hline
+            \parbox[c][1.5cm]{4cm}{\textbf{Maximale                                       \\Umdrehungszahl \\pro Sekunde [1/s]}  }          & 0,69    & 1,39    & 2,78    & 5,56    \\ \hline
+            \parbox[c][1cm]{4cm}{\textbf{Maximale Radianten                               \\pro Sekunde [rad/s]    }  }           & 4,36    & 8,73    & 17,47   & 34,93   \\ \hline
+            \parbox[c][1cm]{4cm}{\textbf{Zurückgelegte Distanz                            \\pro Stufe [mm]**}} & 0,04    & 0,08    & 0,16    & 0,32    \\ \hline
         \end{tabular}
         \begin{tablenotes}
             \small
-            \item Werte bei einem Raddurchmesser von 60 cm – (S. 31) \cite{MPU6000MPU6050Register2013} ergänzt um eigene Werte
+            \item
+                  *(S. 31)\cite{MPU6000MPU6050Register2013}\\ **Werte bei einem Raddurchmesser von 60 cm
         \end{tablenotes}
     \end{threeparttable}
 \end{table}
@@ -86,11 +102,13 @@ Hierfür wurde eine Datenreihe gemessen, mit der Gradzahl pro Sekunde im Verlauf
 Eine Testperson hat dabei versucht, ein Rad so schnell wie möglich zu drehen.
 
 \begin{figure}[h]
+    \centering
     \includegraphics[width=\textwidth]{gyroMax.PNG}
     \caption{Bahngeschwindigkeiten im Verlauf der Zeit, bei dem die Testperson ein Rad, mit der dominanten Hand, so schnell wie möglich dreht}
+    \label{fig:gyroMax}
 \end{figure}
 
-Das Diagramm zeigt bei einer Roation nach vorne einen maximal erreichten Ausschlag um $800\ \si{\degree}/s$.
+Abbildung \ref{fig:gyroMax} zeigt bei einer Roation nach vorne einen maximal erreichten Ausschlag um $800\ \si{\degree}/s$.
 Bei Rotationen nach hinten ist der Ausschlag etwas höher, übersteigt jedoch nicht $-900\ \si{\degree}/s$.
 Daraus folgt, dass Gyroskop-Modus 2 für dieses Szenario der Ideale ist.
 Bei diesem Modus ist die Maximale Gradzahl pro Sekunde $1000\ \si{\degree}/s$.
@@ -113,13 +131,13 @@ Aus diesem Grund wird ein Schwellenwert bestimmt, welcher der Gyroskop-Wert übe
 Damit ist sichergestellt, dass es sich um eine tatsächliche Rotation handelt.
 
 \section{ESP32}
-Um den MPU-6050 betreiben und dessen Daten an eine Software übermitteln zu können, wird ein Mikrocontroller-Board benötigt.
+Um den MPU-6050 betreiben und dessen Daten an die Rollstuhl-Software übermitteln zu können, wird ein Mikrocontroller-Board benötigt.
 Es muss die entsprechenden Register auslesen und mittels drahtloser Kommunikation versenden.
 Auf dem Markt ist eine große Anzahl von Produkten für die verschiedensten Anwendungsgebiete erhältlich.
 Im Rahmen dieser Arbeit wurde der Mikrocontroller ESP32 verwendet, das aktuelle Modell der Firma \textit{Espressif}.
 Boards mit diesem Chip sind kostengünstig (ca. 8 Euro).
 Zudem ist der ESP32 mit WiFi (802.11 b/g/n), Bluetooth (v4.2) und ESP-Now Unterstützung ausgestattet (S. 8-9)\cite{ESP32Datasheet2022}.
-Verbaut wurde ein Xtensa® 32-bit LX6 Mikroprozessor, mit 240MHz Taktfrequenz, 448 KB ROM und 520 KB SRAM. (S. 32)\cite{ESP32Datasheet2022}
+Verbaut wurde ein Xtensa® 32-bit LX6 Mikroprozessor, mit 240MHz Taktfrequenz, 448 KB \ac{rom} und 520 KB \ac{sram}. (S. 32)\cite{ESP32Datasheet2022}
 Als Entwicklungsboard wurde das ESP32 Dev Kit C V4 verwendet.
 
 Der MPU-6050 muss wie folgt an das Entwicklungsboard angeschlossen werden:
@@ -145,7 +163,7 @@ Damit Entwicklungsboard, Gyroskop und Akku zusammengehalten werden, geschützt s
 Aufgrund dessen wurde – mithilfe von Blender – eine entsprechend seinen Anforderungen konstruierte Box entworfen und mittels 3D-Druckers gedrucht.
 
 \section{Vergleich zwischen WiFi und ESP-Now}
-Für die Übermittlung der Sensordaten an eine Software auf einem PC stehen, verschiedene Möglichkeiten zur Verfügung.
+Für die Übermittlung der Sensordaten an die Rollstuhl-Software auf einem \ac{pc}, stehen verschiedene Möglichkeiten zur Verfügung.
 In dieser Arbeit sind zwei verschiedene Protokolle getestet worden: WiFi und ESP-Now. Die Protokolle müssen dabei leicht in das System integrierbar sein.
 WiFi ist ein weit verbreiteter Standard, sodass entsprechende Bibliotheken schon existieren, um das Protokoll einbinden zu können\cite{WiFiArduinoReference}.
 ESP-Now ist weniger verbreitet, da aber der Chip vom selben Hersteller kommt, existieren auch hier schon Bibliotheken, beziehungsweise ist die benötigte Bibliothek schon im Entwicklungspaket des Chips schon enthalten\cite{EspressifIoTDevelopment2022}.
@@ -164,45 +182,44 @@ Diese baut selbstständig eine Verbindung mit einem Netzwerk auf, nachdem die Zu
 Dazu wird ein Web-Konfigurations-Portal auf dem ESP32 gehostet, auf das ein nahes WiFi-fähiges Gerät zugreifen kann.
 
 Für die eigentliche Übertragung der Daten können verschiedene Protokolle verwendet werden.
-Ein klassischer Vertreter ist HTTP(S).
+Ein klassischer Vertreter ist \ac{https}.
 Dieses wurde für die vorliegende Arbeit jedoch nicht verwendet, da das Protokoll auf Hypertext ausgelegt ist.
-Es wird für jede Abfrage von Daten eine neue TCP-Verbindung mit dem Server aufgebaut, der die Daten nach Eingang der Anfrage zurückschickt.
-Will der Client neue Daten empfangen, so muss dieser erneut eine TCP-Verbindung mit dem Server aufbauen (S. 4)\cite{ietfRFC6455WebSocket}.
-Zusätzlich enthält jedes Paket, welches vom Clienten kommt, viel Overhead, da jede dieser Nachrichten einen HTTP-Header besitzt (S. 4)\cite{ietfRFC6455WebSocket}.
+Es wird für jede Abfrage von Daten eine neue \ac{tcp}-Verbindung mit dem Server aufgebaut, der die Daten nach Eingang der Anfrage zurückschickt.
+Will der Client neue Daten empfangen, so muss dieser erneut eine \ac{tcp}-Verbindung mit dem Server aufbauen (S. 4)\cite{ietfRFC6455WebSocket}.
+Zusätzlich enthält jedes Paket, welches vom Clienten kommt, viel Overhead, da jede dieser Nachrichten einen \ac{https}-Header besitzt (S. 4)\cite{ietfRFC6455WebSocket}.
 Da es sich bei den Gyroskop-Daten jedoch um Echtzeitdaten handelt, wäre dieses Vorgehen ineffizient.
 Viel Zeit und Bandbreite würde für das Übertragen von nicht benötigte Daten verwendet werden.
 
 Eine Alternative ist die Verwendung von einem WebSocket.
-Das Protokoll wurde entwickelt, um die Nachteile von HTTP(s) bei Echtzeitdaten zu umgehen und wird heute breit unterstützt.
+Das Protokoll wurde entwickelt, um die Nachteile von \ac{https} bei Echtzeitdaten zu umgehen und wird heute breit unterstützt.
 Das WebSocket-Protokoll wurde in seiner finalen Form 2011 von der Internet Engineering Task Force entwickelt und veröffentlicht\cite{ietfRFC6455WebSocket}.
-Dabei wird analog zu HTTP zu Beginn ein TCP Handshake durchgeführt. Der Client stellt an den Server eine Verbindungsanfrage, welcher dieser bestätigt.
+Dabei wird analog zu \ac{https} zu Beginn ein \ac{tcp} Handshake durchgeführt. Der Client stellt an den Server eine Verbindungsanfrage, welcher dieser bestätigt.
 Ab diesem Zeitpunkt sendet der Server unaufgefordert die vom Client abonnierten Daten, bis die Verbindung vom Client beendet wird (S. 5)\cite{ietfRFC6455WebSocket}.
 Somit lassen sich höhere Datenraten erzielen, die für Echtzeitanwendungen notwendig sind.
-Das für die vorliegende Bachelor-Thesis entwickelte System setzt auf einen vom ESP32 gehosteten WebSocket-Server, der von der Software auf dem PC abonniert wird.
+Das für die vorliegende Bachelor-Thesis entwickelte System setzt auf einen vom ESP32 gehosteten WebSocket-Server, der von der Rollstuhl-Software auf dem \ac{pc} abonniert wird.
 Dabei kommt aufseiten des ESP die Bibliothek \textit{arduinoWebSockets}\cite{markusWebSocketServerClient2022} zum Einsatz, und auf der Client Seite die Bibliothek \textit{websocket-client}\cite{kotasWebsocketclient2022}.
 
-Zusätzlich zur eigentlichen Übertragung der Daten ist es notwendig, dass die Software auf dem PC den IP-Endpunkt des WebSockets auf dem ESP32 kennt.
-Dazu sendet der Mikrocontroller ebenfalls über WiFi einen UDP-Broadcast ins Netzwerk.
-Neben dem IP-Endpunkt werden auch Informationen über das Gerät mitgesendet, damit die Software auf dem PC weiß, um welches Gerät es sich handelt.
+Zusätzlich zur eigentlichen Übertragung der Daten ist es notwendig, dass die Software auf dem \ac{pc} den \ac{ip}-Endpunkt des WebSockets auf dem ESP32 kennt.
+Dazu sendet der Mikrocontroller ebenfalls über WiFi einen \ac{udp}-Broadcast ins Netzwerk.
+Neben dem \ac{ip}-Endpunkt werden auch Informationen über das Gerät mitgesendet, damit die Rollstuhl-Software weiß, um welches Gerät es sich handelt.
 Nach dieser Bekanntmachung kann der WebSocket abonniert und die Daten übertragen werden.
 
 \subsection{ESP-Now und Serieller Port}
 ESP-Now ist ein vom Unternehmen \textit{Espressif} selbst entwickeltes Übertragungsprotokoll, mit dem Mikrocontroller von \textit{Espressif} wie zum Beispiel der ESP8266 (Vorgänger des ESP32) und der ESP32 direkt miteinander Daten austauschen können.
-Dabei verwendet das Protokoll die MAC-Adressen zur Identifikation der Geräte.
+Dabei verwendet das Protokoll die \ac{mac}-Adressen zur Identifikation der Geräte.
 Es wird jedoch nur eine Verbindung in eine Richtung aufgebaut.
 Ein großer Vorteil dieses Protokolls ist die unkomplizierte Einbindung in das System.
-Anders als WiFi muss nicht zunächst eine Verbindung zu einem Netzwerk aufgebaut werden, sondern dem Gerät muss lediglich die MAC-Adresse des Zielgeräts vorliegen.
-Da die Kommunikation jedoch nur unter Mikrocontrollern stattfindet, muss das Gerät, welches die Sensor-Daten entgegennimmt, diese Daten mittels seriellen Ports an die Software auf dem PC übertragen.
+Anders als WiFi muss nicht zunächst eine Verbindung zu einem Netzwerk aufgebaut werden, sondern dem Gerät muss lediglich die \ac{mac}-Adresse des Zielgeräts vorliegen.
+Da die Kommunikation jedoch nur unter Mikrocontrollern stattfindet, muss das Gerät, welches die Sensor-Daten entgegennimmt, diese Daten mittels seriellen Ports an die Rollstuhl-Software übertragen.
 Damit steigt die Anzahl der Verbindungen, an denen die Übertragung scheitern kann.
-Jedoch erleichtert es die Verwendung für den Endbenutzer, da dieser kein WiFi-Netzwerk benötigt, um die Geräte mit der Software auf dem PC zu verbinden.
-Eine Verbindung per USB-Kabel ist ausreichend.
+Jedoch erleichtert es die Verwendung für den Endbenutzer, da dieser kein WiFi-Netzwerk benötigt, um die Geräte mit der Software auf dem \ac{pc} zu verbinden.
+Eine Verbindung per \ac{usb}-Kabel ist ausreichend.
 
 \section{Analyse der Messungen}
 Damit der Nutzer eine präzise Eingabe tätigen kann, ist es notwendig, dass möglichst schnell und kontinuierlich neue Pakete empfangen werden.
 Um die Datenrate zu ermitteln, mit der beide Nodes (eingebettete Systeme an den Rädern) die Gyroskop-Werte verschicken, wird clientseitig alle 250ms die aktuelle Datenrate errechnet.
 Dazu zählt die Software seit der letzten Messung die eingegangenen Pakete und multipliziert diese mit 4, um die Datenrate pro Sekunde zu erhalten.
-Zusätzlich wird bei jedem Datensatz ermittelt, wie viel Zeit zwischen den letzten beiden Paketen vergangen ist.
-Auf die Messung der Latenz wird im Hinblick auf den Umfang der Arbeit verzichtet, da dies erfodert hätte beide Seiten der Verbindung zu synchronisieren.
+Zusätzlich wird bei jedem Datensatz ermittelt, wie viel Zeit zwischen den letzten beiden Paketen vergangen ist\footnote{Auf die Messung der Latenz wird im Hinblick auf den Umfang der Arbeit verzichtet, da dies erfodert hätte beide Seiten der Verbindung zu synchronisieren.}.
 
 \begin{figure}[h]
     \centering
@@ -231,16 +248,17 @@ Auf die Messung der Latenz wird im Hinblick auf den Umfang der Arbeit verzichtet
             \parbox[c][0.5cm]{6cm}{\textbf{Paketintervall Minimum [ms]}     } & <1                                  & <1     \\ \hline
             \parbox[c][0.5cm]{6cm}{\textbf{Paketintervall Maximum [ms]}     } & 26                                  & 30     \\ \hline
         \end{tabular}
+        \label{tab:connectionStats}
     \end{threeparttable}
 \end{table}
 
-Die Messungen haben ergeben, dass die Zeit zwischen zwei Paketen im Schnitt im niedrigen einstelligen Millisekundenbereich sind.
+Den Abbildungen \ref{fig:wifiStats} und \ref{fig:espnowStats}, sowie der Tabelle \ref{tab:connectionStats} ist zu entnehmen, dass das Interval zwischen zwei Paketen, bei beiden Mehtoden, im Schnitt im niedrigen einstelligen Millisekundenbereich ist.
 ESP-Now mit seriellem Port schafft dabei im Durchschnitt 80 Pakete mehr als WiFi mit einem WebSocket.
 Die Verbindung mit WiFi ist jedoch deutlich störungsfreier.
 So ist aus Abbildung \ref{fig:espnowStats} abzulesen, dass entweder ESP-Now oder der serielle Port regelmäßiger und höhere Ausreißer erzeugt, bei denen die Zeit zwischen zwei Paketen über 15 Millisekunden ist.
-WiFi hingegen hat im kompletten Datensatz nur einen deutlichen Ausreißer und hat ansonsten selten Zeiten über 15 Millisekunden. Es kann geschlussfolgert werden, dass WiFi vorzuziehen ist.
-Jedoch kann auf ESP-Now mit seriellem Port zurückgegriffen werden, wenn nur ein USB-Anschluss und kein WiFi Netzwerk verfügbar ist.
-Anzumerken ist jedoch, dass die Messungen stark abhängig davon sind, welche USB-Anschlüsse und -Protokolle verwendet wurden, sowie welche Datenraten der Router unterstützt.
+WiFi hingegen hat im kompletten Datensatz nur einen deutlichen Ausreißer (Abbildung \ref*{fig:wifiStats}) und hat ansonsten selten Zeiten über 15 Millisekunden. Es kann geschlussfolgert werden, dass WiFi vorzuziehen ist.
+Jedoch kann auf ESP-Now mit seriellem Port zurückgegriffen werden, wenn nur ein \ac{usb}-Anschluss und kein WiFi Netzwerk verfügbar ist.
+Anzumerken ist jedoch, dass die Messungen stark abhängig davon sind, welche \ac{usb}-Anschlüsse und -Protokolle verwendet wurden, sowie welche Datenraten der Router unterstützt.
 Ein weiterer Einflussfaktor ist die Verbindung zwischen Client und dem Router.
 Sind diese kabellos verbunden, erhöht sich zusätzlich die Zeit, die ein Paket zur Übertragung benötigt, im Gegensatz zur kabelgebundener Übertragung.
 Deshalb sind die erhobenen Messwerte nur begrenzt aussagekräftig.
@@ -258,7 +276,7 @@ Es sind keine Interpolationstechniken notwendig, um die Bewegung flüssig ersche
             ~                                                     & \parbox[c][1cm]{3cm}{\textbf{WiFi \\mit WebSocket}} & \parbox[c][1cm]{4cm}{\textbf{ESP-Now\\mit seriellem Port}} \\ \hline
             \parbox[c][1cm]{2.8cm}{\textbf{Anzahl                                                     \\Mikrocontroller}} & 2                                                     & 3 \\ \hline
             \parbox[c][3cm]{2.8cm}{\textbf{Daten-Pfad}}           & \parbox[c]{3cm}{\shortstack{ESP32 \\$\downarrow$     \\Router\\$\downarrow$ \\Rollstuhl-Software}}                            & \parbox[c]{3cm}{\shortstack{ESP32\\$\downarrow$\\ ESP32\\$\downarrow$\\ Serieller-Port\\$\downarrow$\\ Rollstuhl-Software}}   \\ \hline
-            \parbox[c][2cm]{2.8cm}{\textbf{"Hardcoding"                                               \\von\\Verbindungs-\\Informationen}} & nicht notwendig & Ziel-MAC-Adressen \\ \hline
+            \parbox[c][2cm]{2.8cm}{\textbf{"Hardcoding"                                               \\von\\Verbindungs-\\Informationen}} & nicht notwendig & Ziel-\ac{mac}-Adressen \\ \hline
             \parbox[c][3.5cm]{2.8cm}{\textbf{Vorteile}}
                                                                   &
             \parbox[c][3cm]{4cm}{
@@ -269,8 +287,8 @@ Es sind keine Interpolationstechniken notwendig, um die Bewegung flüssig ersche
             \parbox[c][3.5cm]{4cm}{
             \begin{itemize}
                     \item Kein Verbindungsaufbau mit lokalem Netzwerk notwendig
-                    \item Kein WiFi-Netzwerk notwendig, ein USB-Anschluss genügt
-                \end{itemize}}                               \\ \hline
+                    \item Kein WiFi-Netzwerk notwendig, ein \ac{usb}-Anschluss genügt
+                \end{itemize}}                          \\ \hline
         \end{tabular}
     \end{threeparttable}
 \end{table}

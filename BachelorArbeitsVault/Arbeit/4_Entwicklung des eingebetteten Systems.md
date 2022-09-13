@@ -11,7 +11,7 @@ Zur Entwicklung der eingebetteten Software, die auf den Mikrocontrollern läuft,
 Um die Rotation der Räder des Rollstuhls messen zu können, wird ein Sensor benötigt. Dabei wurde sich für ein Gyroskop entschieden, da diese verfügbar, kostengünstig und leicht integrierbar sind. <mark>fußnote: warum keine lichtschranke</mark> Jedoch erfordert die Verwendung eines Gyroskops eine Voreinstellung und Kalibrierung, welche in diesem Unterkapitel erörtert werden.
 
 ### 4.2.1 Gyroskop
-Im Zuge dieser Arbeit habe ich mich für das Motion-Tracking-Device GY-521 MPU-6050 entschieden. Dieses ist klein (mit Pins: 20mm x 15mm x 11mm), kostengünstig zu erwerben (ca. 4 Euro) und verfügt unter anderem über 3-Achsen-Gyroskop-Sensoren, mit denen die Rotation gemessen werden kann. Der Chip besitzt folgende 8 Anschlüsse: [[@GY5216AchsenGyroskop]]
+Im Zuge dieser Arbeit wurde sich für das Motion-Tracking-Device GY-521 MPU-6050 entschieden. Dieses ist klein (mit Pins: 20mm x 15mm x 11mm), kostengünstig zu erwerben (ca. 4 Euro) und verfügt unter anderem über 3-Achsen-Gyroskop-Sensoren, mit denen die Rotation gemessen werden kann. Der Chip besitzt folgende 8 Anschlüsse: [[@GY5216AchsenGyroskop]]
 
 | Anschluss | Funktion               | Notwendig für das vorliegende Experiment |
 | --------- | ---------------------- | ---------------------------------------- |
