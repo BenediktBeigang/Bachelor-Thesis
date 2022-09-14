@@ -85,17 +85,17 @@ Dabei können vier vereinfachte Fälle unterschieden werden:
 Im Folgenden wird die Berechnung der Bewegungsanteile aufgezeigt, bestehend aus Bewegung nach vorne/hinten und der Rotation um die eigene Achse:
 
 \begin{align}
-    vl            & : \ \mathrm{Bahngeschwindigkeit\ des\ linken\ Rades}  \\
-    vR            & : \ \mathrm{Bahngeschwindigkeit\ des\ rechten\ Rades} \\
-    m             & : \ \mathrm{Bahngeschwindigkeit\ Minimum}             \\
-    o             & : \ \mathrm{Overshoot}                                \\
-    d             & : \ \mathrm{Abstand\ Der\ R\ddot{a}der}               \\
-    \vec{f}       & : \ \mathrm{Fortbewegungsvektor}                      \\
-    \vec{r}       & : \ \mathrm{Rotationsvektor}                          \\
-    \vec{f_{1,2}} & : \ \mathrm{Fortbewegungsvektor\ Fall1\ oder\ Fall2}  \\
-    \vec{r_{1,2}} & : \ \mathrm{Rotationsvektor\ Fall1\ oder\ Fall2}      \\
-    \vec{f_{3}}   & : \ \mathrm{Fortbewegungsvektor\ Fall3}               \\
-    \vec{r_{3}}   & : \ \mathrm{Rotationsvektor\ Fall3}
+    \omega_L      & : \ \mathrm{Winkelgeschwindigkeit\ des\ linken\ Rades}\ [\si{\degree/\second}]  \\
+    \omega_R      & : \ \mathrm{Winkelgeschwindigkeit\ des\ rechten\ Rades}\ [\si{\degree/\second}] \\
+    m             & : \ \mathrm{Winkelgeschwindigkeit\ Minimum}\ [\si{\degree/\second}]             \\
+    o             & : \ \mathrm{Overshoot}\ [\si{\degree/\second}]                                  \\
+    d             & : \ \mathrm{Abstand\ Der\ R\ddot{a}der}\ [\si{\metre}]                          \\
+    \vec{f}       & : \ \mathrm{Fortbewegungsvektor}\ [\si{\metre/\second}]                         \\
+    \vec{r}       & : \ \mathrm{Rotationsvektor}\ [\si{\metre/\second}]                             \\
+    \vec{f_{1,2}} & : \ \mathrm{Fortbewegungsvektor\ Fall1\ oder\ Fall2}\ [\si{\metre/\second}]     \\
+    \vec{r_{1,2}} & : \ \mathrm{Rotationsvektor\ Fall1\ oder\ Fall2}\ [\si{\metre/\second}]         \\
+    \vec{f_{3}}   & : \ \mathrm{Fortbewegungsvektor\ Fall3}\ [\si{\metre/\second}]                  \\
+    \vec{r_{3}}   & : \ \mathrm{Rotationsvektor\ Fall3}\ [\si{\metre/\second}]
 \end{align}
 
 \begin{figure}[h]
@@ -109,12 +109,12 @@ Zunächst müssen die Rotationen der Räder dekonstruiert werden.
 Dabei lässt sich die Rotation eines Rades in zwei Komponenten aufspalten (siehe Abbildung \ref{fig:wheelchairMath}).
 Zum einen in den Minimum-Anteil $m$, den sich beide Räder drehen,
 \begin{align}
-    m = \min{(\left| vL \right|,\left| vR\right|)}
+    m = \min{(\left| \omega_L \right|,\left| \omega_R\right|)}
 \end{align}
 
 zum anderen in den Overshoot-Anteil $o$, den sich ein Rad schneller dreht als das andere.
 \begin{align}
-    o = \left|\left| vL \right|-\left| vR\right| \right|
+    o = \left|\left| \omega_L \right|-\left| \omega_R\right| \right|
 \end{align}
 
 \textbf{Fall 1:}
@@ -164,20 +164,20 @@ Um den Rotationsvektor Fall3 $r_3$ berechnen zu können, muss $\Theta$ mit $360$
 Da die Berechnungen mit den absoluten Rotationswerten errechnet wurden, ist es notwendig anhand der Drehrichtungen beider Räder zu bestimmen, ob sich der Rollstuhl vor- oder zurückbewegt und ob er sich dabei nach links oder rechts dreht.
 Die Drehrichtung ist immer dann links, wenn:
 \begin{align}
-    vL < vR
+    \omega_L < \omega_R
 \end{align}
 
 sonst ist sie rechts.
 Es handelt sich um eine Vorwärtsbewegung, wenn:
 \begin{align}
-    vL + vR > 0
+    \omega_L + \omega_R > 0
 \end{align}
 
 sonst ist es eine Rückwärtsbewegung.
 Folgende Bedingungen können vernachlässigt werden, da sie in der Realität nur Auftreten wenn der Overshoot $o = 0$ ist und damit $\vec{f_3} = 0$ und $\vec{r_3} = 0$:
 \begin{align}
-    vL =      & \ vR \\
-    vL + vR = & \ 0
+    \omega_L =            & \ \omega_R \\
+    \omega_L + \omega_R = & \ 0
 \end{align}
 
 \textbf{Fall 4:}
@@ -185,7 +185,7 @@ Bevor die zusammengehörenden Vektoren zusammengerechnet werden können, muss ü
 Gilt folgende Bedingung, drehen sich die Räder gegeneinander und es wird Fall 2 benötigt.
 Andernfalls gilt Fall 1.
 \begin{align}
-    (vL > 0) \oplus (vR > 0)
+    (\omega_L > 0) \oplus (\omega_R > 0)
 \end{align}
 
 Anschließend können die Bewegungskomponenten addiert werden:
@@ -203,7 +203,7 @@ Da die Räder bei einer beabsichtigten Bewegung nach vorne meist mit leicht unte
 Eine Ausrichtung des Rollstuhls, die der Nutzer gezielt vorgenommen hat, um ein bestimmtes Ziel im virtuellen Raum zu erreichen, ist damit nichtig, da der Rollstuhl sein Ziel verfehlt.
 Bildet man den Durchschnitt $v$ der Rotationen beider Räder und nutzt ihn anstelle vom $Minimum\ m$, so verhindert man die unbeabsichtigte Ablenkung.
 \begin{align}
-    \vec{v} = \frac {(vL + vR)} {2}
+    \vec{v} = \frac {(\omega_L + \omega_R)} {2}
 \end{align}
 
 Verwendet man den Durchschnitt $v$ müssen die verschiedenen Fälle distinkt sein, da sonst das Wenden mit einem Rad nicht mehr möglich wäre.
@@ -235,23 +235,23 @@ Jedoch lässt sich die Menge von Bewegungszuständen in folgende disjunkte Teilm
 
 Im Folgenden wird darauf eingegangen, wie diese Teilmengen-Zustände erkannt werden:
 \begin{align}
-    vl & :\ \mathrm{Bahngeschwindigkeit\ des\ linken\ Rades}  \\
-    vR & :\ \mathrm{Bahngeschwindigkeit\ des\ rechten\ Rades} \\
-    s  & :\ \mathrm{Schwellenwert}
+    \omega_L & :\ \mathrm{Winkelgeschwindigkeit\ des\ linken\ Rades}  \\
+    \omega_R & :\ \mathrm{Winkelgeschwindigkeit\ des\ rechten\ Rades} \\
+    s        & :\ \mathrm{Schwellenwert}
 \end{align}
 
 \textbf{\textit{Ruhezustand}}\\
 Der \textit{Ruhezustand} wird erreicht, wenn kein anderer Zustand zutrifft oder sich kein Rad dreht.
 Da das oben beschriebene Rauschen abgeschnitten wurde, gilt der Ruhezustand wenn:
 \begin{align}
-    (vL = 0) \land (vR = 0)
+    (\omega_L = 0) \land (\omega_R = 0)
 \end{align}
 
 \textbf{\textit{Einzelradbewegung}}\\
 Wie beim Ruhezustand ist es auch hier möglich, darauf zu prüfen, ob ein Wert 0 ist.
 Die einfachste Art und Weise dies zu prüfen, ist folgende Bedingung:
 \begin{align}
-    (vL = 0) \oplus (vR = 0)
+    (\omega_L = 0) \oplus (\omega_R = 0)
 \end{align}
 Der Nutzer hat jedoch Schwierigkeiten, ein Rad vollständig ruhig zu halten.
 Die Gyroskop-Werte überschreiten selbst bei kleinen Handbewegungen den Schwellenwert für die Rauschunterdrückung.
@@ -259,21 +259,21 @@ Dies führt zu unbeabsichtigten Eingaben.
 Deshalb ist diese Methode unzureichend.
 Führt man einen Schwellenwert $t$ ein, wird eine vom Nutzer unbeabsichtigte \textit{Einzelradbewegung} zuverlässiger unterdrückt:
 \begin{align}
-    (|vL| < s) \oplus (|vR| < s)
+    (|\omega_L| < s) \oplus (|\omega_R| < s)
 \end{align}
 
 \textbf{\textit{Rotation um die eigene Achse}}\\
 Die Bedingung, die gelten muss, wenn sich beide Räder gegeneinander drehen, ist identisch mit der Bedingung, welche schon im Kapitel \textit{Abbildung auf einen realistisch simulierten Rollstuhl} aufgestellt wurde.
-Diese gilt nur, wenn \textit{Ruhezustand} und \textit{Einzelradbewegung} ausgeschlossen werden konnten, da nicht die Fälle abgedeckt werden, wenn $vL$ oder $vR$ 0 sind:
+Diese gilt nur, wenn \textit{Ruhezustand} und \textit{Einzelradbewegung} ausgeschlossen werden konnten, da nicht die Fälle abgedeckt werden, wenn $\omega_L$ oder $\omega_R$ 0 sind:
 \begin{align}
-    (vL > 0) \oplus (vR > 0)
+    (\omega_L > 0) \oplus (\omega_R > 0)
 \end{align}
 
 \textbf{\textit{Sichtachsenbewegung}}\\
 Der Zustand der Sichtachsenbewegung gilt dann, wenn sich die Räder in dieselbe Richtung drehen.
 Damit ist dieser Zustand das logische Gegenteil der Bedingung \textit{Rotation um die eigene Achse}, vorausgesetzt es wurden \textit{Ruhezustand} und \textit{Einzelradbewegung} ausgeschlossen:
 \begin{align}
-    (vL > 0) \Leftrightarrow (vR > 0)
+    (\omega_L > 0) \Leftrightarrow (\omega_R > 0)
 \end{align}
 
 \subsection{Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen}
@@ -297,9 +297,9 @@ Im Wertebereich der langsamen Bewegungen können nun Bewegungen, wie das Neigen 
 Dabei wurde sich für die Bewegungszustände 2 (Neigung nach oben) und 8 (Neigung nach unten) entschieden.
 Für das Detektieren dieses neuen Teilmengen-Bewegungszustandes wird folgende Bedingung benötigt:
 
-\textbf{\textit{Neigen}}\\
+\textbf{\textit{Neigen}}
 \begin{align}
-    ((vL > 0) \Leftrightarrow (vR > 0))  \land (|vL| < s) \land (|vR| < s)
+    ((\omega_L > 0) \Leftrightarrow (\omega_R > 0))  \land (|\omega_L| < s) \land (|\omega_R| < s)
 \end{align}
 
 Unweigerlich geht dabei die Möglichkeit verloren, seinen Fortbewegungsvektor $s$ feiner einzustellen.
@@ -347,23 +347,23 @@ Durch das Einführen der neuen Schwellenwerte müssen folgende Teilmengen-Bewegu
 
 \textbf{\textit{Einzelradbewegung}}
 \begin{align}
-    ((|vL| < s_1) \oplus (|vR| < s_1)) \land ((|vL| > s_2) \oplus (|vR| > s_2))
+    ((|\omega_L| < s_1) \oplus (|\omega_R| < s_1)) \land ((|\omega_L| > s_2) \oplus (|\omega_R| > s_2))
 \end{align}
 
 \textbf{\textit{Sichtachsenbewegung}}
 \begin{align}
-    ((vL > 0) \Leftrightarrow (vR > 0)) \land ((|vL| \geq s_2) \land (|vR| \geq s_2))
+    ((\omega_L > 0) \Leftrightarrow (\omega_R > 0)) \land ((|\omega_L| \geq s_2) \land (|\omega_R| \geq s_2))
 \end{align}
 
 \textbf{\textit{Neigen}}
 \begin{align}
-    ((vL > 0) \Leftrightarrow (vR > 0)) \land (|vL| < s_2) \land (|vR| < s_2)
+    ((\omega_L > 0) \Leftrightarrow (\omega_R > 0)) \land (|\omega_L| < s_2) \land (|\omega_R| < s_2)
 \end{align}
 
 \subsection{Unbeabsichtigtes Neigen beim Anfahren}
 Beim Anfahren oder Bremsen (\textit{Sichtachsenbewegung}) wurde beobachtet, dass für ein kurzes Zeitintervall der Kamerawinkel unbeabsichtigt geneigt wird.
 Ähnlich wie beim vorangegangenen Problem wird auch hier beim Übergang von einem Zustand zum Nächsten ein unerwünschter Zwischenzustand erreicht.
-In diesem Fall gibt es beim Beschleunigen einen kurzes Zeitinterval in dem die Rollstuhl-Software im \textit{Neigen}-Zustand ist, da $|vL|$ und $|vR|$ beide unter dem Schwellenwert $s_2$ sind (siehe Abbildung \ref{fig:ohneAcc}).
+In diesem Fall gibt es beim Beschleunigen einen kurzes Zeitinterval in dem die Rollstuhl-Software im \textit{Neigen}-Zustand ist, da $|\omega_L|$ und $|\omega_R|$ beide unter dem Schwellenwert $s_2$ sind (siehe Abbildung \ref{fig:ohneAcc}).
 
 \begin{figure}[h]
     \centering
@@ -378,14 +378,14 @@ Haben die Räder ihre Zielgeschwindigkeit erreicht, fällt die Änderungsrate un
 In den Tests hat sich $s_3 = 15$ als ein akzeptabler Wert herausgestellt, wie aus den Diagrammen abzulesen ist.
 Für die Berechnung der Änderungsrate wird folgende Berechnung verwendet:
 \begin{align}
-    a = |(vL_{[1]} - vL_{[0]})| + |((vR_{[1]} - vR_{[0]})|
+    a = |(\omega_{L,[1]} - \omega_{L,[0]})| + |((\omega_{R,[1]} - \omega_{R,[0]})|
 \end{align}
 
 Die Bedingung des Teilmengen-Zustands \textit{Neigen} muss wie folgt ergänzt werden:
 
 \textbf{\textit{Neigen}}
 \begin{align}
-    ((vL > 0) \Leftrightarrow (vR > 0)) \land (|vL| < s_2) \land (|vR| < s_2) \land (a < s_3)
+    ((\omega_L > 0) \Leftrightarrow (\omega_R > 0)) \land (|\omega_L| < s_2) \land (|\omega_R| < s_2) \land (a < s_3)
 \end{align}
 
 

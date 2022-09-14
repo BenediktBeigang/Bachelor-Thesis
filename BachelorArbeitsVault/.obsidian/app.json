@@ -61,7 +61,8 @@
     "WebSocket-Protokoll",
     "Marwedel",
     "Trägheitssensoren",
-    "Interpolationstechniken"
+    "Interpolationstechniken",
+    "Thumbstick"
   ],
   "vimMode": false,
   "foldIndent": true,

@@ -52,16 +52,16 @@ Angewendet auf den Rollstuhl hat das zur Folge, dass das rotierende Rad bei nied
 Es gilt folgender Zusammenhang mit welchem die aktuelle Winkelgeschwindigkeit errechnet werden kann:
 
 \begin{align}
-    z        & : \ \mathrm{Gemessene\ Stufen}                                          \\
-    z_m      & : \ \mathrm{Maximale\ Anzahl\ von\ Stufen}                              \\
-    p        & : \ \mathrm{Stufen\ pro\ Grad} [s/\si{\degree}]                         \\
-    \omega   & : \ \mathrm{Aktuelle\ Winkelgeschwindigkeit} [\si{\degree}/s]           \\
-    \omega_m & : \ \mathrm{Maximal\ messbarere\ Winkelgeschwindigkeit}[\si{\degree}/s]
+    z        & : \ \mathrm{Gemessene\ Stufen}                                                  \\
+    z_m      & : \ \mathrm{Maximale\ Anzahl\ von\ Stufen}                                      \\
+    p        & : \ \mathrm{Stufen\ pro\ Grad}\ [\si{\second/\degree}]                          \\
+    \omega   & : \ \mathrm{Aktuelle\ Winkelgeschwindigkeit}\ [\si{\degree/\second}]            \\
+    \omega_m & : \ \mathrm{Maximal\ messbarere\ Winkelgeschwindigkeit}\ [\si{\degree/\second}]
 \end{align}
 
 \begin{align}
     z_m    & = 32768                      \\
-    z      & = \omega_m \cdot p           \\
+    z_m    & = \omega_m \cdot p           \\
     \omega & = \left(\frac {z} {p}\right)
 \end{align}
 
@@ -72,11 +72,11 @@ Es gilt folgender Zusammenhang mit welchem die aktuelle Winkelgeschwindigkeit er
         \begin{tabular}{|l|l|l|l|l|}
             \hline
             ~ & \textbf{Modus 0} & \textbf{Modus 1} & \textbf{Modus 2} & \textbf{Modus 3} \\ \hline
-            \parbox[c][1.5cm]{4cm}{\textbf{Maximal messbarere                             \\Winkel-\\geschwindigkeit [\si{\degree}/s]*}}                   & 250     & 500     & 1000    & 2000    \\ \hline
-            \parbox[c][1cm]{4cm}{\textbf{Stufen                                           \\pro Grad [1/\si{\degree}]*}}                                & 131     & 65,5    & 32,8    & 16,4    \\ \hline
-            \parbox[c][1.5cm]{4cm}{\textbf{Maximale                                       \\Umdrehungszahl \\pro Sekunde [1/s]}  }          & 0,69    & 1,39    & 2,78    & 5,56    \\ \hline
-            \parbox[c][1cm]{4cm}{\textbf{Maximale Radianten                               \\pro Sekunde [rad/s]    }  }           & 4,36    & 8,73    & 17,47   & 34,93   \\ \hline
-            \parbox[c][1cm]{4cm}{\textbf{Zurückgelegte Distanz                            \\pro Stufe [mm]**}} & 0,04    & 0,08    & 0,16    & 0,32    \\ \hline
+            \parbox[c][1.5cm]{4cm}{\textbf{Maximal messbarere                             \\Winkel-\\geschwindigkeit [\si{\degree/\second}]*}}                  & 250     & 500     & 1000    & 2000    \\ \hline
+            \parbox[c][1cm]{4cm}{\textbf{Stufen                                           \\pro Grad [\si{1/\degree}]*}}                               & 131     & 65,5    & 32,8    & 16,4    \\ \hline
+            \parbox[c][1.5cm]{4cm}{\textbf{Maximale                                       \\Umdrehungszahl \\pro Sekunde [\si{1/\second}]}}          & 0,69    & 1,39    & 2,78    & 5,56    \\ \hline
+            \parbox[c][1cm]{4cm}{\textbf{Maximale Radianten                               \\pro Sekunde [\si{\radian/\second}]    }  }           & 4,36    & 8,73    & 17,47   & 34,93   \\ \hline
+            \parbox[c][1cm]{4cm}{\textbf{Zurückgelegte Distanz                            \\pro Stufe [\si{\milli\metre}]**}} & 0,04    & 0,08    & 0,16    & 0,32    \\ \hline
         \end{tabular}
         \begin{tablenotes}
             \small
@@ -104,7 +104,7 @@ Eine Testperson hat dabei versucht, ein Rad so schnell wie möglich zu drehen.
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{gyroMax.PNG}
-    \caption{Bahngeschwindigkeiten im Verlauf der Zeit, bei dem die Testperson ein Rad, mit der dominanten Hand, so schnell wie möglich dreht}
+    \caption{Winkelgeschwindigkeiten der Räder im Verlauf der Zeit, bei dem die Testperson ein Rad, mit der dominanten Hand, so schnell wie möglich dreht}
     \label{fig:gyroMax}
 \end{figure}
 

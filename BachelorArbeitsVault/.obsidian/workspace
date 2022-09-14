@@ -6,6 +6,20 @@
       {
         "id": "1811a1f8ea61ebdb",
         "type": "leaf",
+        "dimension": 82.29229836264402,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Arbeit/Stand der Forschung.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      },
+      {
+        "id": "61fc18fcbe9dd326",
+        "type": "leaf",
+        "dimension": 17.707701637355974,
         "state": {
           "type": "kanban",
           "state": {
@@ -67,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ToDo-Board.md",
+                "file": "Arbeit/Stand der Forschung.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -96,15 +110,15 @@
   },
   "active": "1811a1f8ea61ebdb",
   "lastOpenFiles": [
-    "SprintBerichte/Bericht 1.md",
-    "Arbeit/Stand der Forschung.md",
     "ToDo-Board.md",
+    "Arbeit/Stand der Forschung.md",
+    "Quellen/Citation/@sharkey3rdInternationalConference2000.md",
+    "Arbeit/6_Erkenntnis.md",
+    "SprintBerichte/Bericht 1.md",
     "Arbeit/5_Abbildung der empfangenen Daten auf ein Eingabegerät.md",
     "Arbeit/4_Entwicklung des eingebetteten Systems.md",
-    "Arbeit/6_Erkenntnis.md",
     "Quellen/WissenschArbeiten.pdf",
     "SprintBerichte/Bericht 5.md",
-    "SprintBerichte/Bericht 4.md",
-    "Arbeit/OLD.md"
+    "SprintBerichte/Bericht 4.md"
   ]
 }

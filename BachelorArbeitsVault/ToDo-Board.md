@@ -7,9 +7,6 @@ kanban-plugin: basic
 ## Arbeit
 
 - [ ] Rechner kaufen?
-- [ ] themen wie heartbeat, calibration, etc aufnehmen
-- [ ] key A und D abbilden mit schneller rotation
-- [ ] ähnliche Arbeiten
 - [ ] system in cs testen, gibt es einen flaschenhals?
 - [ ] diagramme mit max und durschnitt beschriften
 - [ ] espnow quellen
@@ -19,17 +16,16 @@ kanban-plugin: basic
 - [ ] wifi bessere quellen
 - [ ] mpu6050 bessere quelle in bib?
 - [ ] zitate prüfen auf richtig zitiert
-- [ ] aublick
+- [ ] aublick, eigehen auf nicht genaue simulation, aber günstig, planung behindertengerecht und vr
 - [ ] abstract
-- [ ] umrechnung omega zu v, bzw genauer aufschreiben
-- [ ] ist nicht bahngeschwindigkeit sondern winkelgeschwindigkeit
-- [ ] einheiten
+- [ ] plots anpassen wegen bahngeschwindigkeit
+- [ ] stander forschung-ähnlche arbeiten
+- [ ] unterschied zwischen vr und virtueller raum klarmachen in begriffsklärung
+- [ ] auf geld eingehen bei erkentnis oder fazit
 
 
 ## refactoring
 
-- [ ] buttonPressed allowed entfernen
-- [ ] abhängigkeit acceleration von gyro entferenen, über Rotations gehen
 
 
 ## Connection
@@ -45,6 +41,8 @@ kanban-plugin: basic
 
 - [ ] WPF-GUI für Software
 - [ ] ESP DeepSleep wenn er wartet
+- [ ] themen wie heartbeat, calibration, etc aufnehmen
+- [ ] key A und D abbilden mit schneller rotation
 
 
 
