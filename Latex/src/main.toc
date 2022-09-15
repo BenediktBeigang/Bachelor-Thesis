@@ -35,5 +35,5 @@
 \contentsline {chapter}{\numberline {6}Ausblick}{35}{chapter.6}%
 \contentsline {chapter}{\numberline {7}Fazit}{36}{chapter.7}%
 \contentsline {chapter}{Literaturverzeichnis}{36}{chapter.7}%
-\contentsline {chapter}{Abbildungsverzeichnis}{39}{chapter*.37}%
-\contentsline {chapter}{Abkürzungsverzeichnis}{40}{chapter*.38}%
+\contentsline {chapter}{Abbildungsverzeichnis}{39}{chapter*.38}%
+\contentsline {chapter}{Abkürzungsverzeichnis}{40}{chapter*.39}%

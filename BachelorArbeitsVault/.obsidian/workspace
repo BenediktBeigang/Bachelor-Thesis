@@ -4,22 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "1811a1f8ea61ebdb",
+        "id": "61fc18fcbe9dd326",
         "type": "leaf",
-        "dimension": 82.29229836264402,
+        "dimension": 81.97815533980582,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Arbeit/Stand der Forschung.md",
+            "file": "Arbeit/6_Erkenntnis.md",
             "mode": "source",
             "source": false
           }
         }
       },
       {
-        "id": "61fc18fcbe9dd326",
+        "id": "09ce9a63e36ee4e8",
         "type": "leaf",
-        "dimension": 17.707701637355974,
+        "dimension": 18.021844660194176,
         "state": {
           "type": "kanban",
           "state": {
@@ -65,7 +65,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 339.5
+    "width": 272.5
   },
   "right": {
     "id": "4e931f97d5574494",
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/Stand der Forschung.md",
+                "file": "Arbeit/6_Erkenntnis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,12 +108,12 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "1811a1f8ea61ebdb",
+  "active": "61fc18fcbe9dd326",
   "lastOpenFiles": [
-    "ToDo-Board.md",
     "Arbeit/Stand der Forschung.md",
-    "Quellen/Citation/@sharkey3rdInternationalConference2000.md",
     "Arbeit/6_Erkenntnis.md",
+    "ToDo-Board.md",
+    "Quellen/Citation/@sharkey3rdInternationalConference2000.md",
     "SprintBerichte/Bericht 1.md",
     "Arbeit/5_Abbildung der empfangenen Daten auf ein Eingabegerät.md",
     "Arbeit/4_Entwicklung des eingebetteten Systems.md",

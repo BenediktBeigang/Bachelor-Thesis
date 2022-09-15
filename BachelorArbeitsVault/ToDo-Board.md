@@ -22,6 +22,7 @@ kanban-plugin: basic
 - [ ] stander forschung-ähnlche arbeiten
 - [ ] unterschied zwischen vr und virtueller raum klarmachen in begriffsklärung
 - [ ] auf geld eingehen bei erkentnis oder fazit
+- [ ] controller: umrechung deg/s auf axis
 
 
 ## refactoring
