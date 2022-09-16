@@ -16,13 +16,13 @@ kanban-plugin: basic
 - [ ] wifi bessere quellen
 - [ ] mpu6050 bessere quelle in bib?
 - [ ] zitate prüfen auf richtig zitiert
-- [ ] aublick, eigehen auf nicht genaue simulation, aber günstig, planung behindertengerecht und vr
 - [ ] abstract
 - [ ] plots anpassen wegen bahngeschwindigkeit
-- [ ] stander forschung-ähnlche arbeiten
 - [ ] unterschied zwischen vr und virtueller raum klarmachen in begriffsklärung
-- [ ] auf geld eingehen bei erkentnis oder fazit
 - [ ] controller: umrechung deg/s auf axis
+- [ ] eingabegerät ist sensor
+- [ ] virtueller raum mathe definierion
+- [ ] aktueller forschung => ist nicht aktuell
 
 
 ## refactoring

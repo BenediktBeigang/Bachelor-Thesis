@@ -1,5 +1,5 @@
 \chapter{Begriffsklärung}
-Im Folgenden sollen nicht triviale Begriffe erklärt werden die für das Verständis dieser Arbeit notwendig sind.
+Im Folgenden sollen nicht triviale Begriffe erklärt werden, die für das Verständis dieser Arbeit notwendig sind.
 
 %------------------------------------------------------------------------------------------------------
 \section{Eingebettetes System}
@@ -10,18 +10,18 @@ Marwedel definiert ein eingebettetes System wie folgt:
     „Eingebettete Systeme sind informationsverarbeitende Systeme, die in umgebende Produkte integriert sind.“ (S. 2)\cite{marwedelEingebetteteSystemeGrundlagen2021}
 \end{quote}
 
-Gessler definiert eingebettete Systeme wie folgt:
+Gessler erweitert diese Definition und schreibt:
 \begin{quote}
     „Das Eingebettete Systeme sind Rechenmaschinen, die in elektrischen Geräten „eingebettet“ sind, z. B. in Kaffeemaschinen, CD-, DVD-Spielern oder Mobiltelefonen.
     Unter eingebetteten Systemen verstehen wir alle Rechensysteme außer den Desktop-Computern.“ (S. 7)\cite{gesslerEntwicklungEingebetteterSysteme2014}
 \end{quote}
 
-Da für das Steuern von Aktoren und auslesen von Sensoren, sowie das Empfangen und Übertragen von Daten aus heutiger Sicht keine große Rechenleistung benötigt wird, sind die verwendeten Mikroprozessoren verglichen mit modernen Prozessoren nicht Leistungsstark.
+Da für das Steuern von Aktoren und das Auslesen von Sensoren, sowie das Empfangen und Übertragen von Daten aus heutiger Sicht keine große Rechenleistung benötigt wird, sind die verwendeten Mikroprozessoren verglichen mit modernen Prozessoren weniger leistungsstark.
 Das hat zur Folge, dass Randbedingungen entstehen, welche bei der Entwicklung beachtet werden müssen.
 Dazu zählen Rechenleistung, Verlustleistung und Ressourcenverbrauch (S. 233)\cite{gesslerEntwicklungEingebetteterSysteme2014}.
 Jedoch sind grade deshalb solche Systeme erschwinglich, da keine Hardware benötigt wird, welche auf maximale Rechenleistung und Speicherverbrauch ausgelegt ist.
-Heute sind eingebettete Systeme in den unterschiedlichsten Anwendungsgebieten zu finden, wie zum Beispiel: Autos, Schienenfahrzeuge, Flugzeugen, in der Telekommunikation und bei der Fertigungsautomatisierung (S. 2)\cite{marwedelEingebetteteSystemeGrundlagen2021}.
-Eingebettete Systeme werden meist mit Hardware-nahen Sprachen programmiert wie C und C++, da diese durch ihre Nähe zur Hardware die höchste Effizienz versprechen (S. 159)\cite{gesslerEntwicklungEingebetteterSysteme2014}.
+Aktuell sind eingebettete Systeme in den unterschiedlichsten Anwendungsgebieten zu finden, wie zum Beispiel: Autos, Schienenfahrzeuge, Flugzeugen, in der Telekommunikation und bei der Fertigungsautomatisierung (S. 2)\cite{marwedelEingebetteteSystemeGrundlagen2021}.
+Eingebettete Systeme werden meist mit hardwarenahen Sprachen programmiert wie C und C++, da diese durch ihre Nähe zur Hardware die höchste Effizienz versprechen (S. 159)\cite{gesslerEntwicklungEingebetteterSysteme2014}.
 
 %------------------------------------------------------------------------------------------------------
 \section{Virtueller Raum}
@@ -29,13 +29,12 @@ Im Rahmen dieser Arbeit wird der Begriff virtueller Raum wie folgt definiert:
 Ein virtueller Raum ist ein durch einen Computer erzeugte Umgebung mit unterscheidbaren Objekten in ihm, welche auf eine zweidimensionale Projektionsfläche abgebildet wird.
 Es ist kein im physikalischen Sinne real existierender Raum mit messbaren Abmessungen.
 Die Wahrnehmung als Raum entsteht erst durch die Interpretation des Nutzers als diesen.
-Ein Raum zeichnet sich dadurch aus, dass man durch ihn navigieren kann.
+Ein Raum zeichnet sich dadurch aus, dass man durch ihn hindurch navigieren kann.
 So hat der Nutzer eine Position in diesem Raum, sowie die Möglichkeit diese Position gezielt zu verändern.
 In der Praxis kann zwischen zweidimensionalen und dreidimensionalen Räumen unterschieden werden.
 Anders als zweidimensionale Räume können dreidimensionale Räume nicht 1:1 auf die Projektionsfläche abgebildet werden.
 Es ist eine Funktion notwendig, die alle Punkte des Raums auf die Projektionsfläche abbildet.
-Ein Beispiel für zweidimensionale Räume ist ein \ac{gui}.
-Der Nutzer kann innerhalb dieser zwischen verschiedenen Tabs, Seiten oder Bereichen navigieren.
+Ein Beispiel für zweidimensionale Räume ist ein \ac{gui}; der Nutzer kann innerhalb dieser zwischen verschiedenen Tabs, Seiten oder Bereichen navigieren.
 Ein Beispiel für dreidimensionale Räume sind 3D-Computerspiele.
 In ihnen wird eine virtuelle Welt berechnet, in der der Spieler selbstbestimmt umherwandern kann.
 
@@ -49,13 +48,12 @@ Der Duden definiert das Verb \textit{navigieren} wie folgt:
     \cite{DudenNavigierenRechtschreibung}
 \end{quote}
 
-Navigation ist also die Gesamtheit der Mittel, die nötig sind, um navigieren zu können.
 Ursprünglich kommt das Wort aus der Seefahrt.
 Früher wurden „\textit{Landmarken, die Küste, Meeresströmungen, Lotungen der Wassertiefen, jahreszeitliche regelmäßige Winde, Wolkenansammlungen und der Flug der Zugvögel}“ (S. 17)\cite{wolfschmidtNavigareNecesseEst2008} genutzt, um die aktuelle Position des eigenen Schiffes bestimmen zu können.
 Somit konnte sichergestellt werden, dass das Schiff sein Ziel erreicht.
 Im Laufe der Zeit kamen immer mehr Methoden und Werkzeuge zum Einsatz, um immer präziser die eigene Position ermitteln und den optimalen Weg bestimmen zu können.
 Jedoch beschränkt sich das Wort nicht auf das Herausfinden der eigenen Position, sondern schließt die Tätigkeit der Wegfindung, sowie das Kurshalten eines vorher festgelegten Pfades mit ein.
-Mit dem Aufkommen neuer Verkehrsmittel wie Flugzeuge und neuen Technologien wie GPS wurde der Begriff der Navigation weiter gefasst.
+Mit dem Aufkommen neuer Verkehrsmittel wie Flugzeuge und Technologien wie GPS wurde der Begriff der Navigation weiter gefasst.
 So definiert der Medienwissenschaftler Florian Sprenger Navigation wie folgt: „\textit{… eine Praxis des Umgangs mit Relationen.}“ (S. 1)\cite{sprengerNavigationenUndRelationen2022}.
 Das navigierende Individuum oder Objekt entscheidet auf Grundlage von „\textit{medial ver- oder kulturtechnisch ermittelten Verhältnis zu anderen Objekten […] oder durch Repräsentationen dieser Relationen auf imaginären, geographischen oder digitalen Karten}“ in welche Richtung sich bewegt werden muss (S. 1)\cite{sprengerNavigationenUndRelationen2022}.
 Im Kontext dieser Arbeit navigiert der Nutzer auf einer zweidimensionalen Ebene, in einem dreidimensionalen virtuellen Raum.
@@ -70,7 +68,7 @@ Es gibt verschiedene Arten von Gyroskopen, die Messungen mit unterschiedlichen M
 So wird zwischen drei Arten von Gyroskopen unterschieden: optische, vibrierende und welche, bei denen eine Masse rotiert.
 Mithilfe von \ac{mems} konnten Trägheitssensoren miniaturisiert und in Massen produziert werden.
 In der Elektrotechnik sind diese beliebt, da sie klein und kostengünstig sind\cite{maenakaMEMSInertialSensors2008}.
-Diese messen meist den Coriolis-Effekt. Die Kraft, die der Effekt wirken lässt, entsteht durch die Rotation um eine der vorher festgelegten Achsen.
+Sie messen die Coriolis-Kraft, welche durch die Rotation entlang von voher festgelegten Achsen wirkt.
 Der Sensor kann diese Kraft messen und als elektrisches Signal weitergeben, sodass anschließend das Signal digitalisiert werden kann\cite{utmelMPU6050ModuleDatasheet}.
 Heute sind sie in durch ihre Verfügbarkeit in den verschiedensten Anwendungsgebieten zu finden, wie dem Auto, der Medizin oder der Unterhaltungselektronik (S. 1)\cite{armeniseAdvancesGyroscopeTechnologies2010}.
 

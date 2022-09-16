@@ -1,8 +1,8 @@
 \chapter{Entwicklung des eingebetteten Systems}
 Damit der Rollstuhl-Software bekannt ist, mit welcher Geschwindigkeit sich welches Rad in welche Richtung dreht, ist Hardware notwendig.
 Um dies zu bewerkstelligen wurde ein eingebettetes System entwicklet. Dieses muss die Rotationsdaten messen und an die Software übermitteln.
-Dabei kommt ein ESP32-Mikrocontroller zum Einsatz der ein Gyroskop ausliest und anschließend die Daten mithilfe eines Übertragungsprotokolls an die Rollstuhl-Software überträgt.
-Näher soll in einem Vergleich beleuchtet werden, ob WiFi und ESP-Now das geeignetere Protokoll ist.
+Dabei kommt ein ESP32-Mikrocontroller zum Einsatz, der ein Gyroskop ausliest und anschließend die Daten mithilfe eines Übertragungsprotokolls an die Rollstuhl-Software überträgt.
+Näher soll in einem Vergleich beleuchtet werden, ob die Protokolle WiFi und ESP-Now für den vorliegenden Anwendungsfall geeignet sind.
 
 \section{PlatformIO}
 Zur Entwicklung der eingebetteten Software, die auf den Mikrocontrollern läuft, wurde PlatformIO verwendet.
@@ -14,8 +14,8 @@ Zusätzlich kann man nicht von den Vorteilen einer modernen \ac{ide} profitieren
 
 \section{Messung der Raddaten}
 Um die Rotation der Räder des Rollstuhls messen zu können, wird ein Sensor benötigt.
-Dabei wurde sich für ein Gyroskop entschieden, da diese verfügbar, kostengünstig und leicht integrierbar sind\footnote{Es wurde sich gegen die Verwendung einer Lichtschranke entschieden, da bei dieser Art von Messung keine kleinen Geschwindigkeiten möglich sind.}.
-Jedoch erfordert die Verwendung eines Gyroskops eine Voreinstellung und Kalibrierung, welche in diesem Unterkapitel erörtert werden.
+Dabei wurde sich für ein Gyroskop entschieden, da diese verfügbar, kostengünstig und leicht integrierbar sind\footnotetext{Es wurde sich gegen die Verwendung einer Lichtschranke entschieden, da bei dieser Art von Messung keine kleinen Geschwindigkeiten möglich sind.}.
+Jedoch erfordert die Verwendung eines Gyroskops eine Voreinstellung und Kalibrierung, welche in diesem Unterkapitel erörtert werden sollen.
 
 \subsection{Gyroskop}
 Im Zuge dieser Arbeit wurde sich für das Motion-Tracking-Device GY-521 MPU-6050 entschieden.
@@ -218,8 +218,8 @@ Eine Verbindung per \ac{usb}-Kabel ist ausreichend.
 \section{Analyse der Messungen}
 Damit der Nutzer eine präzise Eingabe tätigen kann, ist es notwendig, dass möglichst schnell und kontinuierlich neue Pakete empfangen werden.
 Um die Datenrate zu ermitteln, mit der beide Nodes (eingebettete Systeme an den Rädern) die Gyroskop-Werte verschicken, wird clientseitig alle 250ms die aktuelle Datenrate errechnet.
-Dazu zählt die Software seit der letzten Messung die eingegangenen Pakete und multipliziert diese mit 4, um die Datenrate pro Sekunde zu erhalten.
-Zusätzlich wird bei jedem Datensatz ermittelt, wie viel Zeit zwischen den letzten beiden Paketen vergangen ist\footnote{Auf die Messung der Latenz wird im Hinblick auf den Umfang der Arbeit verzichtet, da dies erfodert hätte beide Seiten der Verbindung zu synchronisieren.}.
+Dazu zählt die Software die eingegangenen Pakete seit dem letzten Empfangenen und multipliziert diese mit 4, um die Datenrate pro Sekunde zu erhalten.
+Zusätzlich wird bei jedem Datensatz ermittelt, wie viel Zeit zwischen den letzten beiden Paketen vergangen ist\footnotetext{Auf die Messung der Latenz wird im Hinblick auf den Umfang der Arbeit verzichtet, da dies erfordert hätte, beide Seiten der Verbindung zu synchronisieren.}.
 
 \begin{figure}[h]
     \centering
@@ -255,12 +255,12 @@ Zusätzlich wird bei jedem Datensatz ermittelt, wie viel Zeit zwischen den letzt
 Den Abbildungen \ref{fig:wifiStats} und \ref{fig:espnowStats}, sowie der Tabelle \ref{tab:connectionStats} ist zu entnehmen, dass das Interval zwischen zwei Paketen, bei beiden Mehtoden, im Schnitt im niedrigen einstelligen Millisekundenbereich ist.
 ESP-Now mit seriellem Port schafft dabei im Durchschnitt 80 Pakete mehr als WiFi mit einem WebSocket.
 Die Verbindung mit WiFi ist jedoch deutlich störungsfreier.
-So ist aus Abbildung \ref{fig:espnowStats} abzulesen, dass entweder ESP-Now oder der serielle Port regelmäßiger und höhere Ausreißer erzeugt, bei denen die Zeit zwischen zwei Paketen über 15 Millisekunden ist.
+So ist aus Abbildung \ref{fig:espnowStats} abzulesen, dass entweder ESP-Now oder der serielle Port regelmäßiger, sowie höhere Ausreißer erzeugt, bei denen die Zeit zwischen zwei Paketen über 15 Millisekunden ist.
 WiFi hingegen hat im kompletten Datensatz nur einen deutlichen Ausreißer (Abbildung \ref*{fig:wifiStats}) und hat ansonsten selten Zeiten über 15 Millisekunden. Es kann geschlussfolgert werden, dass WiFi vorzuziehen ist.
 Jedoch kann auf ESP-Now mit seriellem Port zurückgegriffen werden, wenn nur ein \ac{usb}-Anschluss und kein WiFi Netzwerk verfügbar ist.
 Anzumerken ist jedoch, dass die Messungen stark abhängig davon sind, welche \ac{usb}-Anschlüsse und -Protokolle verwendet wurden, sowie welche Datenraten der Router unterstützt.
 Ein weiterer Einflussfaktor ist die Verbindung zwischen Client und dem Router.
-Sind diese kabellos verbunden, erhöht sich zusätzlich die Zeit, die ein Paket zur Übertragung benötigt, im Gegensatz zur kabelgebundener Übertragung.
+Sind diese kabellos verbunden, erhöht sich zusätzlich die Zeit, die ein Paket zur Übertragung benötigt, im Gegensatz zur kabelgebundenen Übertragung.
 Deshalb sind die erhobenen Messwerte nur begrenzt aussagekräftig.
 Trotzdem lässt sich erkennen, dass beide Methoden genug Pakete verschicken können, um eine flüssige Bewegung nativ aus den Daten berechnen zu können.
 Es sind keine Interpolationstechniken notwendig, um die Bewegung flüssig erscheinen zu lassen.
