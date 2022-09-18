@@ -53,6 +53,7 @@ Eine zukünftige Arbeit muss sich ausführlicher an diesen Stellen mit den Betre
 
 \subsection{Abbildung auf einen Thumbstick}
 Der direkte Weg die Raddaten in eine Eingabe umzuwandeln ist, diese auf jeweils eine Achse eines Thumbsticks abzubilden.
+Anwendungsgebiet von dieser Art von Abbildung ist, die Steuerung eines Cursors.
 Dabei wird die x-Achse mit dem einen, die y-Achse mit dem anderen Rad dargestellt.
 Vorteilig ist dabei, dass beide Achsen gleichzeitig angesprochen werden können.
 Jedoch ist es schwieriger, die x-Achse zu bewegen, da sie anders ausgerichtet ist als das Rad, das gedreht wird.
@@ -291,7 +292,7 @@ Jedoch verkompliziert dies die Eingabe erheblich für den Nutzer, sodass diese M
 Eine Alternative dazu ist die Geschwindigkeit mit einzubeziehen.
 Teilt man den Wertebereich der Geschwindigkeiten eines Rades, so lässt sich in der Theorie die Anzahl der Bewegungszustände verdoppeln.
 Dazu wird der Wertebereich zunächst mithilfe des Schwellenwertes $s = 100$ geteilt.
-\footnotetext{Von einer weiteren Teilung ist abzuraten, da es sonst für den Nutzer schwierig wird, die Räder mit den gewünschten beziehungsweise notwendigen Geschwindigkeiten zu drehen.}
+\footnote{Von einer weiteren Teilung ist abzuraten, da es sonst für den Nutzer schwierig wird, die Räder mit den gewünschten beziehungsweise notwendigen Geschwindigkeiten zu drehen.}
 Die Unterscheidung zwischen langsamer und schneller Rotation ist jedoch intuitiv von jedem Nutzer begreifbar und umsetzbar.
 Im Wertebereich der langsamen Bewegungen können nun Bewegungen, wie das Neigen des Kamerawinkels, abgebildet werden.
 Dabei wurde sich für die Bewegungszustände 2 (Neigung nach oben) und 8 (Neigung nach unten) entschieden.

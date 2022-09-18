@@ -14,7 +14,7 @@ Zusätzlich kann man nicht von den Vorteilen einer modernen \ac{ide} profitieren
 
 \section{Messung der Raddaten}
 Um die Rotation der Räder des Rollstuhls messen zu können, wird ein Sensor benötigt.
-Dabei wurde sich für ein Gyroskop entschieden, da diese verfügbar, kostengünstig und leicht integrierbar sind\footnotetext{Es wurde sich gegen die Verwendung einer Lichtschranke entschieden, da bei dieser Art von Messung keine kleinen Geschwindigkeiten möglich sind.}.
+Dabei wurde sich für ein Gyroskop entschieden, da diese verfügbar, kostengünstig und leicht integrierbar sind\footnote{Es wurde sich gegen die Verwendung einer Lichtschranke entschieden, da bei dieser Art von Messung keine kleinen Geschwindigkeiten möglich sind.}.
 Jedoch erfordert die Verwendung eines Gyroskops eine Voreinstellung und Kalibrierung, welche in diesem Unterkapitel erörtert werden sollen.
 
 \subsection{Gyroskop}
@@ -219,7 +219,7 @@ Eine Verbindung per \ac{usb}-Kabel ist ausreichend.
 Damit der Nutzer eine präzise Eingabe tätigen kann, ist es notwendig, dass möglichst schnell und kontinuierlich neue Pakete empfangen werden.
 Um die Datenrate zu ermitteln, mit der beide Nodes (eingebettete Systeme an den Rädern) die Gyroskop-Werte verschicken, wird clientseitig alle 250ms die aktuelle Datenrate errechnet.
 Dazu zählt die Software die eingegangenen Pakete seit dem letzten Empfangenen und multipliziert diese mit 4, um die Datenrate pro Sekunde zu erhalten.
-Zusätzlich wird bei jedem Datensatz ermittelt, wie viel Zeit zwischen den letzten beiden Paketen vergangen ist\footnotetext{Auf die Messung der Latenz wird im Hinblick auf den Umfang der Arbeit verzichtet, da dies erfordert hätte, beide Seiten der Verbindung zu synchronisieren.}.
+Zusätzlich wird bei jedem Datensatz ermittelt, wie viel Zeit zwischen den letzten beiden Paketen vergangen ist\footnote{Auf die Messung der Latenz wird im Hinblick auf den Umfang der Arbeit verzichtet, da dies erfordert hätte, beide Seiten der Verbindung zu synchronisieren.}.
 
 \begin{figure}[h]
     \centering
