@@ -29,11 +29,11 @@ Es ist kein im physikalischen Sinne real existierender Raum mit messbaren Abmess
 Wie auch in anderen Räumen ist es auch im virtuellen Raum möglich, durch ihn hindurch zu navigieren.
 So hat der Nutzer eine Position in diesem, sowie die Möglichkeit diese Position gezielt zu verändern.
 
-In der vorliegenden Arbeit sind zweidimensionale und dreidimensionale Räumen zu finden.
-Ein Beispiel für zweidimensionale Räume ist ein Graphical User Interface (GUI); der Nutzer kann innerhalb dieser zwischen verschiedenen Bereichen navigieren. 
+In der vorliegenden Arbeit wird vorwiegend mit dreidimensionalen Räumen gearbeitet, auch wenn zweidimensionale Räume denkbar sind.
+Ein Beispiel für zweidimensionale Räume ist ein Grafical User Interface; der Nutzer kann innerhalb dieser zwischen verschiedenen Bereichen navigieren.
 Dazu werden Hyperlinks und Steuerungselemente wie ein Knopf verwendet.
-Ein Beispiel für dreidimensionale Räume sind 3D-Computerspiele. 
-Für diese wird ein euklidischer Raum berechnet, in der der Spieler selbstbestimmt umherwandern kann.
+Ein Beispiel für dreidimensionale Räume sind 3D-Computerspiele.
+Für diese wird ein euklidischer Raum berechnet, in dem der Spieler selbstbestimmt umherwandern kann.
 Jedoch kann auch eine GUI zusätzlich mit eingebettet sein.
 
 ___
@@ -50,9 +50,6 @@ Im Kontext dieser Arbeit navigiert der Nutzer auf einer zweidimensionalen Ebene,
 Es soll im Rahmen dieser Arbeit zusätzlich hervorgehoben werden, dass Navigation im Gegensatz zum reinen Fortbewegen nicht passiv ist. Das Objekt oder Individuum, das navigiert, hat einen Einfluss auf die Richtung der Fortbewegung.
 
 ___
-## Mappen/Abbilden auf Eingaben
-
-___
 ## Gyroskop
 Ein Gyroskop ist ein Sensor, der genutzt wird, um „_die Winkelgeschwindigkeit um eine feste Achse_“ zu messen (S. 1)[[@armeniseAdvancesGyroscopeTechnologies2010]]. Es gibt verschiedene Arten von Gyroskopen, die Messungen mit unterschiedlichen Methoden vornehmen. So wird zwischen drei Arten von Gyroskopen unterschieden: optische, vibrierende und welche, bei denen eine Masse rotiert. Mithilfe von MEMS (Micro Eelectro Mechanical Systems) konnten Trägheitssensoren miniaturisiert und in Massen produziert werden. In der Elektrotechnik sind diese beliebt, da sie klein und kostengünstig sind [[@maenakaMEMSInertialSensors2008]]. Diese messen meist den Coriolis-Effekt. Die Kraft, die der Effekt wirken lässt, entsteht durch die Rotation um eine der vorher festgelegten Achsen. Der Sensor kann diese Kraft messen und als elektrisches Signal weitergeben, sodass anschließend das Signal digitalisiert werden kann [[@nairCompleteGuideMPU60502021]]. Heute sind sie in durch ihre Verfügbarkeit in den verschiedensten Anwendungsgebieten zu finden, wie dem Auto, der Medizin oder der Unterhaltungselektronik (S. 1)[[@armeniseAdvancesGyroscopeTechnologies2010]].
 
@@ -64,3 +61,12 @@ Im Buch _Virtual und Augmented Reality (VR/AR)_ von 2013 werden Eingabegeräte w
 >(S. 97)[[@doernerVirtualUndAugmented2013]]
 
 Das heißt, dass Eingabegeräte eine Schnittstelle von Mensch zu Maschine darstellen. 
+Jedes benötigt dazu einen Sensor der eine physikalische Zustandsveränderung, meistens eine Bewegung in ein elektrisches Signal umwandelt. 
+Ein Computer kann das erzeugte Signal auslesen und interpretiert aus diesem eine auszuführende Anweisung. 
+Je nach Anwendungsgebiet sind unterschiedliche Eingabegeräte notwendig.
+So ist für das Schreiben eine Tastatur nutzerfreundlicher im Vergleich zu einem Spielcontroller.
+Ein Eingabegerät kann aus mehreren Eingabetypen bestehen.
+Die gängigsten sind binäre und stufenlose Tasten, sowie welche entlang von Achsen wie beispielsweise Thumbsticks oder Touchpads.
+Darüber hinaus gibt es noch weitere Eingabetypen, diese zu nennen, jedoch den Rahmen ausreizen würde.
+Allgemein lässt sich festhalten:
+Ist ein Mensch fähig die Messwerte eines Sensors zu manipulieren, kann dieser als Eingabegerät verwendet werden kann.

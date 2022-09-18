@@ -19,8 +19,7 @@ kanban-plugin: basic
 - [ ] abstract
 - [ ] plots anpassen wegen bahngeschwindigkeit
 - [ ] unterschied zwischen vr und virtueller raum klarmachen in begriffsklärung
-- [ ] eingabegerät ist sensor
-- [ ] virtueller raum mathe definierion
+- [ ] einleitung letzter absatz umschreiben
 
 
 ## refactoring

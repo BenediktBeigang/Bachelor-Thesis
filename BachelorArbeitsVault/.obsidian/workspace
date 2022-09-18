@@ -8,9 +8,11 @@
         "type": "leaf",
         "dimension": 81.97815533980582,
         "state": {
-          "type": "pdf",
+          "type": "markdown",
           "state": {
-            "file": "Quellen/WissenschArbeiten.pdf"
+            "file": "Arbeit/6_Erkenntnis.md",
+            "mode": "source",
+            "source": false
           }
         }
       },
@@ -79,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Quellen/WissenschArbeiten.pdf",
+                "file": "Arbeit/6_Erkenntnis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,15 +110,15 @@
   },
   "active": "61fc18fcbe9dd326",
   "lastOpenFiles": [
-    "Arbeit/3_Begriffsklärung.md",
-    "Arbeit/Theorie.md",
-    "Arbeit/6_Erkenntnis.md",
-    "ToDo-Board.md",
+    "Arbeit/7_Ausblick.md",
     "Arbeit/Stand der Forschung.md",
-    "Quellen/Citation/@sharkey3rdInternationalConference2000.md",
-    "SprintBerichte/Bericht 1.md",
-    "Arbeit/5_Abbildung der empfangenen Daten auf ein Eingabegerät.md",
+    "Arbeit/Theorie.md",
+    "ToDo-Board.md",
+    "Arbeit/3_Begriffsklärung.md",
     "Arbeit/4_Entwicklung des eingebetteten Systems.md",
-    "Quellen/WissenschArbeiten.pdf"
+    "Quellen/WissenschArbeiten.pdf",
+    "Arbeit/6_Erkenntnis.md",
+    "Quellen/Citation/@sharkey3rdInternationalConference2000.md",
+    "SprintBerichte/Bericht 1.md"
   ]
 }

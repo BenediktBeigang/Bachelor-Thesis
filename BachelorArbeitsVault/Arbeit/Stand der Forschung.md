@@ -1,24 +1,22 @@
 # Stand der Forschung
-Das Verwenden eines Rollstuhls als Eingabegerät ist zu großen Teilen in der Forschung zu finden, die sich damit beschäftigt, beeinträchtigten Menschen zu helfen. 
-So gibt es bislang Studien, die sich mit der Frage beschäftigen, inwieweit Virtual Reality genutzt werden kann, um Menschen, die seit kurzem einen Rollstuhl verwenden müssen, bei der Eingewöhnung zu helfen [[@arlatiVirtualRealitybasedWheelchair2020]].
-Jedoch ist in diesen Fällen der Rollstuhl meist nur ein passives Eingabegerät.
-Der Rollstuhl ist nicht aufgebockt, sondern die Bewegung im virtuellen Raum findet durch das Bewegen der VR-Brille statt. 
-Dadurch wird eine Rollstuhl-Simulation gespart, jedoch ist der Nutzer in der Fortbewegung im virtuellen Raum begrenzt, durch die physischen Begrenzungen im echten Raum.
+Die Verwendung eines Rollstuhls als Eingabegerät, ist in der Forschung vor allem in Bereichen zu finden, welche sich mit der Inklusion körperlich beeinträchtigter Menschen befassen.
+Dabei werden oftmals aufwändige Konstruktionen um einen Rollstuhl herum benötigt, um die Rotationen der Räder zu messen und gleichzeitig mithilfe von Motoren verschiedene Untergründe und Bewegungen zu simulieren. 
 
-Das im Jahr 2000 erschiene Paper: _Development of a wheelchair virtual reality platform for use in evaluating wheelchair access_ geht hingegen der Frage nach, inwieweit ein realer Rollstuhl im Virtuellen simuliert werden kann [[@harrisionDevelopmentWheelchairVirtual2000]].
-Dazu wurde eine „_Motion-Platform_“ konstruiert, auf den ein handelsüblicher Rollstuhl platziert werden kann.
-Die Konstruktion simuliert über die reine Fortbewegung hinaus, auch die Krafteinwirkung bei Schrägen und unebenen Böden.
-Im Paper wird jedoch nicht ausführlich auf die hard- oder softwareseitige Modellierung des virtuellen Rollstuhls oder der Plattform eingegangen.
-Zudem ist die Konstruktion entsprechend groß, unpraktikabel und teuer. 
-Für mögliche Endkunden würde eine so aufwändige Konstruktion einen Sinn ergeben.
+So erschien beispielsweise im Jahr 2011 das Paper: _A full motion manual wheelchair simulator for rehabilitation research_ von Crichlow et al. [[@crichlowFullMotionManual2011]].
+In diesem wird eine Rollstuhl-Simulation vorgestellt, bei dem ein Rollstuhl auf einer _Motion-Platform_ steht.
+Der Nutzer kann dann, umgeben von einem 240° Bildschirm, durch eine virtuelle Umgebung fahren.
+Dabei können unebene Bewegungen, wie „_tip-overs_“ und „_wheelies_“ simuliert werden, um alltägliche Situationen zu üben[[@crichlowFullMotionManual2011]].
+Jedoch werden ausschließlich Bewegungen im virtuellen Raum simuliert, sodass keine Interaktionen mit der Umgebung stattfinden können.
+Zudem ist die Konstruktion entsprechend groß, unpraktikabel und teuer.
+Für private Kunden ist eine so aufwändige Konstruktion unattraktiv.
 
-Ebenfalls im Jahr 2000 erschien das Paper: _Simulation of the behaviour of a powered wheelchair using virtual reality_ [[@ninissSimulationBehaviourPowered2000]].
-In diesem wird beschrieben, wie ein elektrischer Rollstuhl in der virtuellen Realität simuliert werden kann.
+Im Jahr 2000 erschien das Paper: _Simulation of the behaviour of a powered wheelchair using virtual reality_[[@ninissSimulationBehaviourPowered2000]].
+In diesem wird von Niniss und Nadif beschrieben, wie ein elektrischer Rollstuhl in einer virtuellen Welt simuliert werden kann.
 Jedoch beschränkt sich die Eingabe auf einen Thumbstick, der häufig an elektrischen Rollstühlen zu finden ist.
-In Ansätzen wird schon hier beschrieben, welche Auswirkungen die Rotation der Räder des Rollstuhls, auf dessen Rotation haben.
-Jedoch beschränkt sich die Simulation auf ideale Bewegungen und es gibt keine weiteren Interaktionsmöglichkeiten außer die Bewegung im Raum.
+In Ansätzen wird schon hier beschrieben, welche Auswirkungen die Rotation der Räder des Rollstuhls, auf dessen Bewegung haben.
+Jedoch beschränkt sich die Simulation auf ideale Bewegungen und es gibt keine Interaktionsmöglichkeiten neben der Bewegung im Raum.
 
-Diese Arbeit geht einen Schritt weiter und versucht ein System zu entwickeln, bei dem ein Rollstuhl im virtuellen Raum simuliert werden kann. 
-Dabei soll, wie bei Harrision und Co., auf aufwändige Konstruktionen verzichtet werden, sodass das System kostengünstig und praktikabel für mögliche Endkunden ist.
-Trotzdem soll der simulierte Rollstuhl, anders als bei Niniss und Nadif, eine realistische Simulation der Räder beinhalten und möglichst viele Interaktionen über die reine Fortbewegung beinhalten.
+Für private Kunden, die ohne große Konstruktion, wie bei Crichlow, ihren Rollstuhl als Eingabegerät an ihrem Heim-Computer nutzen wollen, sind die bisher entwickelten Systeme ungeeignet.
+Es bedarf eines kleineren und kostengünstigeren Systems, dass zur Steuerung von herkömmlicher Software genutzt werden kann.
+Da es sich um einen nicht-elektrischen Rollstuhl handelt, wird eine komplexere Modellierung des Rollstuhls benötigt, sodass die Analysen von Niniss und Nadif erweitert werden müssen.
 
