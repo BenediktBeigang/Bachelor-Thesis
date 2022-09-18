@@ -17,8 +17,24 @@ Da für das Steuern von Aktoren und auslesen von Sensoren, sowie das Empfangen u
 
 ___
 ## Virtueller Raum
-Im Rahmen dieser Arbeit wird der Begriff virtueller Raum wie folgt definiert:
-Ein virtueller Raum ist ein durch einen Computer erzeugte Umgebung mit unterscheidbaren Objekten in ihm, welche auf eine zweidimensionale Projektionsfläche abgebildet wird. Es ist kein im physikalischen Sinne real existierender Raum mit messbaren Abmessungen. Die Wahrnehmung als Raum entsteht erst durch die Interpretation des Nutzers als diesen. Ein Raum zeichnet sich dadurch aus, dass man durch ihn navigieren kann. So hat der Nutzer eine Position in diesem Raum, sowie die Möglichkeit diese Position gezielt zu verändern. In der Praxis kann zwischen zweidimensionalen und dreidimensionalen Räumen unterschieden werden. Anders als zweidimensionale Räume können dreidimensionale Räume nicht 1:1 auf die Projektionsfläche abgebildet werden. Es ist eine Funktion notwendig, die alle Punkte des Raums auf die Projektionsfläche abbildet. Ein Beispiel für zweidimensionale Räume sind gängige GUIs (Graphical user interface), der Nutzer kann innerhalb dieser zwischen verschiedenen Tabs, Seiten oder Bereichen navigieren. Ein Beispiel für dreidimensionale Räume sind 3D-Computerspiele. In ihnen wird eine virtuelle Welt berechnet, in der der Spieler selbstbestimmt umherwandern kann.
+Der Begriff des Raums ist in den unterschiedlichsten Fachbereichen zu finden, mit den verschiedensten Bedeutungen.
+In der Mathematik gibt es viele Arten von Räumen (algebraischer Raum, euklidischer Raum, Hilbert Raum, etc.), die präzise definiert werden können.
+Kulturwissenschaftlich spielt der Raum ebenfalls eine große Rolle, jedoch nicht als mathematisches Konstrukt, sondern bezieht zwischenmenschliche und gesellschaftliche Aspekte mit ein.
+Der Begriff des _virtuellen Raums_ ist jedoch nicht klar eingrenzbar.
+Da sich die verschiedensten Fachbereiche ihm bedienen, hängt die Definition davon ab, aus welcher Richtung man sich ihm nähert.
+Deshalb wird im Zuge dieser Arbeit der Begriff des _virtuellen Raums_ wie folgt definiert:
+
+Ein virtueller Raum ist ein durch einen Computer erzeugte Umgebung, welche auf eine zweidimensionale Projektionsfläche abgebildet werden kann.
+Es ist kein im physikalischen Sinne real existierender Raum mit messbaren Abmessungen.
+Wie auch in anderen Räumen ist es auch im virtuellen Raum möglich, durch ihn hindurch zu navigieren.
+So hat der Nutzer eine Position in diesem, sowie die Möglichkeit diese Position gezielt zu verändern.
+
+In der vorliegenden Arbeit sind zweidimensionale und dreidimensionale Räumen zu finden.
+Ein Beispiel für zweidimensionale Räume ist ein Graphical User Interface (GUI); der Nutzer kann innerhalb dieser zwischen verschiedenen Bereichen navigieren. 
+Dazu werden Hyperlinks und Steuerungselemente wie ein Knopf verwendet.
+Ein Beispiel für dreidimensionale Räume sind 3D-Computerspiele. 
+Für diese wird ein euklidischer Raum berechnet, in der der Spieler selbstbestimmt umherwandern kann.
+Jedoch kann auch eine GUI zusätzlich mit eingebettet sein.
 
 ___
 ## Navigation
