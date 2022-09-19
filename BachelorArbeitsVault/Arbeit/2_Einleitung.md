@@ -1,11 +1,33 @@
 # Einleitung
 ___
-Mit dem Aufkommen des modernen Computers sind parallel die unterschiedlichsten Geräte und Methoden entwickelt worden, mit denen man Anweisungen an die Rechenmaschine übermitteln kann. Anfangs noch mit Lochkarten, entwickelten sich die unterschiedlichsten Eingabegeräte und Methoden, um der Maschine präzise zu vermitteln, was sie tun soll. Mit dem Aufkommen des Bildschirms und der Verbreitung des Computers in der Breite der Bevölkerung, entstanden immer mehr virtuelle Umgebungen und gleichzeitig der Wunsch, in diesen möglichst barrierefrei zu navigieren. So wurden bekannte Eingabegeräte aus anderen Bereichen, in die Welt des Computers übersetzt, wie zum Beispiel die Schreibmaschine hin zur Tastatur. Jedoch wurden auch neue Formen und Funktionen gefunden, um den Ansprüchen einer komplexeren digitalen Umgebung gerecht werden zu können. So entstand zum Beispiel die Computer-Maus, um in einer zweidimensionalen Umgebung navigieren zu können. Der Spielcontroller hingegen entpuppte sich nicht nur als gutes Eingabegerät im zweidimensionalen Raum, sondern auch im dreidimensionalen. 
-Heute erlauben eingebettete Systeme theoretisch jeden Gegenstand in ein Eingabegerät zu verwandeln. Solange ein Gegenstand unterschiedliche Zustände abbilden kann, ist es möglich, über die Manipulation dieser Zustände dem Computer Anweisungen zu übermitteln. Begrenzt wird die Anzahl unterschiedlicher Anweisungen nur durch die Anzahl der verschiedenen Zustände, die das Eingabegerät annehmen kann. Jedoch muss gleichzeitig auch gewährleistet sein, dass jeder Nutzer einfach, präzise und bequem die Eingaben tätigen kann. 
-Ein Gegenstand, der wenig Beachtung als Eingabegerät erhalten hat, ist der Rollstuhl. Dieser besitzt zwei Räder, die, mit unterschiedlicher Geschwindigkeit, in jeweils zwei Richtungen gedreht werden können. Es stellt sich die Frage, inwieweit man mit einem Rollstuhl im virtuellen Raum sich bewegen und mit ihm interagieren kann und was nötig ist, um ein solches System zu entwickeln. Durch die geringe Anzahl von Eingaben, also den zwei Rädern, ist der Nutzer vermutlich eingeschränkter als wenn er zum Beispiel direkt einen Spielcontroller verwenden würde. Jedoch birgt die Reduktion von Eingaben und die sehr mechanische Art und Weise, wie man mit dem Rollstuhl interagiert, auch Chancen. So wäre denkbar, das entwickelte System in der Stadtplanung zu verwenden, um leichter die Barrierefreiheit von zukünftigen Bauprojekten virtuell zu testen. Auch wäre denkbar, das System in virtuellen Welten zu nutzen. Drehen sich die Räder des Rollstuhls frei, so kann der Nutzer sich frei im Raum bewegen. Dabei muss er seine Position in der echten Welt nicht verändern und ist nicht limitiert durch die Größe des Raums, in dem er sich befindet. 
-Diese Arbeit widmet sich also der Frage, mit welchen Mitteln ein Rollstuhl als Eingabegerät umfunktioniert werden kann und wie die Bewegungen der Räder des Rollstuhls in sinnvolle Anweisungen für den Computer abgebildet werden können. Dabei wird ein eingebettetes System entwickelt, dass die Rotationsdaten der Räder an eine Software auf dem Computer übermittelt (Im Folgenden _Rollstuhl-Software_ genannt). Danach werden Verfahren untersucht, mit dem die empfangenen Daten auf Eingaben eines herkömmlichen Eingabegeräts abgebildet werden können, damit die Anweisungen auch von anderer Software gelesen werden kann.
+Mit dem Aufkommen von Computern entwickelten sich parallel die unterschiedlichsten Geräte und Methoden, mit denen Anweisungen an die Rechenmaschine übermitteln werden können.
+Anfangs noch mit Schaltern und Lochkarten, entwickelten sich nach und nach, die unterschiedlichsten Eingabegeräte und Methoden, um den Maschinen präzise zu vermitteln, was diese tun sollen.
+Das Entstehen der verschiedensten virtuellen Umgebungen führte zum Wunsch, in diesen möglichst barrierefrei zu navigieren.
+So setzten sich beispielsweise Computermäuse durch, mit der Verbreitung erster Mikrocomputer mit graphischer Benutzeroberfläche.
+Grund dafür ist, dass die Navigation in einer zweidimensionalen Umgebung mit ihr vereinfacht wurde.
+Manche Eingabegeräte wurden aus anderen Bereichen, in die Welt des Computers übersetzt, wie zum Beispiel die Schreibmaschine hin zur Tastatur.
+Ein völlig neues Design hingegen war der Spielcontroller, der durch die Entwicklung von Videospielen und Spielkonsolen hervorkam.
+Dieser stellte sich nicht nur als geeignetes Eingabegerät im zweidimensionalen Raum raus, sondern auch im dreidimensionalen.
 
-<mark>eventuell OLD mit einbeziehen bzw genauer?</mark>
+Heute erlauben eingebettete Systeme theoretisch jeden Gegenstand in ein Eingabegerät zu verwandeln.
+Solange ein Gegenstand unterschiedliche Zustände abbilden kann, ist es möglich, über die Manipulation dieser Zustände dem Computer Anweisungen zu übermitteln.
+Begrenzt wird die Anzahl unterschiedlicher Anweisungen nur durch die Anzahl der verschiedenen Zustände, die das Eingabegerät annehmen kann.
+Jedoch muss gleichzeitig auch gewährleistet sein, dass jeder Nutzer einfach, präzise und bequem die Eingaben tätigen kann.
+
+Ein Gegenstand, der nur vereinzelt als Eingabegerät in Betracht gezogen wurde, ist der Rollstuhl.
+Durch die geringe Anzahl von Eingaben, bedingt durch die zwei Räder, ist der Nutzer eingeschränkter als bei anderen Eingabegeräten.
+So kann die Frage entwickelt werden, inwieweit man sich mit einem Rollstuhl im virtuellen Raum bewegen und mit ihm interagieren kann und was nötig ist, um ein solches System zu entwickeln.
+In der Vergangenheit wurde mithilfe von aufwändigen Konstruktionen Simulationen eines Rollstuhls entwickelt, welche mit einem echten Rollstuhl gesteuert werden können.
+Jedoch beschränkten sich diese auf die möglichst exakte Simulation der Bewegung, inklusive Krafteinwirkung auf die Räder, wenn in der virtuellen Welt der Boden uneben ist.
+Für einen privaten Endkunden, der seinen Rollstuhl als Eingabegerät an seinem Heimrechner nutzen möchte, sind die bislang entwickelten Systeme ungeeignet.
+
+Diese Arbeit widmet sich der Frage, mit welchen Mitteln ein Rollstuhl als Eingabegerät umfunktioniert werden kann und wie die Bewegungen der Räder des Rollstuhls in geeignete Anweisungen für den Computer abgebildet werden können.
+Möglichst viele Anwendungen sollen dabei theoretisch vom Rollstuhl gesteuert werden können.
+Das System soll dabei klein und kostengünstig sein, sodass es für einen privaten Endkunden praktikabel und erschwinglich ist.
+Dafür werden im Rahmen dieser Arbeit zunächst einige Begriffe erläutert, die Bachelor-Thesis im Kontext aktueller Forschung verortet, sowie anschließend ein eingebettetes System entwickelt und analysiert.
+Dieses System übermittelt die Rotationsdaten der Räder an eine externe Software (im Folgenden Rollstuhl-Software genannt), die auf dem selben Betriebssystem läuft wie die zu steuernde Anwendung.
+Zuletzt werden Verfahren implementiert und untersucht, mit dem die empfangenen Daten auf Eingaben eines herkömmlichen Eingabegeräts abgebildet werden können, damit die Anweisungen auch von anderer Software gelesen werden kann.
+Dabei soll dem Nutzer eine möglichst hohe Bewegungs- und Interaktionsfreiheit geboten sein.
 
 ___
 

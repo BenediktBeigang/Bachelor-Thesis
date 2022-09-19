@@ -19,7 +19,6 @@ kanban-plugin: basic
 - [ ] abstract
 - [ ] plots anpassen wegen bahngeschwindigkeit
 - [ ] unterschied zwischen vr und virtueller raum klarmachen in begriffsklärung
-- [ ] einleitung letzter absatz umschreiben
 
 
 ## refactoring

@@ -13,10 +13,16 @@ Solange ein Gegenstand unterschiedliche Zustände abbilden kann, ist es möglich
 Begrenzt wird die Anzahl unterschiedlicher Anweisungen nur durch die Anzahl der verschiedenen Zustände, die das Eingabegerät annehmen kann.
 Jedoch muss gleichzeitig auch gewährleistet sein, dass jeder Nutzer einfach, präzise und bequem die Eingaben tätigen kann.
 
-Ein Gegenstand, der wenig Beachtung als Eingabegerät erhalten hat, ist der Rollstuhl.
-So kann die Frage entwickelt werden, inwieweit man sich mit einem Rollstuhl im virtuellen Raum bewegen und mit ihm interagieren kann und was nötig ist, um ein solches System zu entwickeln.
+Ein Gegenstand, der nur vereinzelt als Eingabegerät in Betracht gezogen wurde, ist der Rollstuhl.
 Durch die geringe Anzahl von Eingaben, bedingt durch die zwei Räder, ist der Nutzer eingeschränkter als bei anderen Eingabegeräten.
-Diese Arbeit widmet sich der Frage, mit welchen Mitteln ein Rollstuhl als Eingabegerät umfunktioniert werden kann und wie die Bewegungen der Räder des Rollstuhls in geeignete Anweisungen für den Computer abgebildet werden können.
+So kann die Frage entwickelt werden, inwieweit man sich mit einem Rollstuhl im virtuellen Raum bewegen und mit ihm interagieren kann und was nötig ist, um ein solches System zu entwickeln.
+In der Vergangenheit wurde mithilfe von aufwändigen Konstruktionen Simulationen eines Rollstuhls entwickelt, welche mit einem echten Rollstuhl gesteuert werden können.
+Jedoch beschränkten sich diese auf die möglichst exakte Simulation der Bewegung, inklusive Krafteinwirkung auf die Räder, wenn in der virtuellen Welt der Boden uneben ist.
+Für einen privaten Endkunden, der seinen Rollstuhl als Eingabegerät an seinem Heimrechner nutzen möchte, sind die bislang entwickelten Systeme ungeeignet.
+
+Diese Arbeit widmet sich der Frage, mit welchen Mitteln ein Rollstuhl als Eingabegerät, für den Gebrauch am Heimcomputer, umfunktioniert werden kann und wie die Bewegungen der Räder des Rollstuhls in geeignete Anweisungen für den Computer abgebildet werden können.
+Möglichst viele Anwendungen sollen dabei theoretisch vom Rollstuhl gesteuert werden können.
+Das System soll dabei klein und kostengünstig sein, sodass es für einen privaten Endkunden praktikabel und erschwinglich ist.
 Dafür werden im Rahmen dieser Arbeit zunächst einige Begriffe erläutert, die Bachelor-Thesis im Kontext aktueller Forschung verortet, sowie anschließend ein eingebettetes System entwickelt und analysiert.
 Dieses System übermittelt die Rotationsdaten der Räder an eine externe Software (im Folgenden Rollstuhl-Software genannt), die auf dem selben Betriebssystem läuft wie die zu steuernde Anwendung.
 Zuletzt werden Verfahren implementiert und untersucht, mit dem die empfangenen Daten auf Eingaben eines herkömmlichen Eingabegeräts abgebildet werden können, damit die Anweisungen auch von anderer Software gelesen werden kann.

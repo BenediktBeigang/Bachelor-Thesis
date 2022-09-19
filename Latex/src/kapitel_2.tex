@@ -267,28 +267,20 @@ Es sind keine Interpolationstechniken notwendig, um die Bewegung flüssig ersche
 
 \newpage
 
-\begin{table}[t]
+\begin{table}
     \centering
-    \begin{threeparttable}
-        \caption{Die Verbindungsmethoden im Vergleich}
-        \begin{tabular}{|m{2.8cm}|m{3cm}|m{4cm}|}
-            \hline
-            ~                                                     & \parbox[c][1cm]{3cm}{\textbf{WiFi \\mit WebSocket}} & \parbox[c][1cm]{4cm}{\textbf{ESP-Now\\mit seriellem Port}} \\ \hline
-            \parbox[c][1cm]{2.8cm}{\textbf{Anzahl                                                     \\Mikrocontroller}} & 2                                                     & 3 \\ \hline
-            \parbox[c][3cm]{2.8cm}{\textbf{Daten-Pfad}}           & \parbox[c]{3cm}{\shortstack{ESP32 \\$\downarrow$     \\Router\\$\downarrow$ \\Rollstuhl-Software}}                            & \parbox[c]{3cm}{\shortstack{ESP32\\$\downarrow$\\ ESP32\\$\downarrow$\\ Serieller-Port\\$\downarrow$\\ Rollstuhl-Software}}   \\ \hline
-            \parbox[c][2cm]{2.8cm}{\textbf{"Hardcoding"                                               \\von\\Verbindungs-\\Informationen}} & nicht notwendig & Ziel-\ac{mac}-Adressen \\ \hline
-            \parbox[c][3.5cm]{2.8cm}{\textbf{Vorteile}}
-                                                                  &
-            \parbox[c][3cm]{4cm}{
-            \begin{itemize}
-                    \item Stabilere\\Verbindung
-                    \item Nur eine\\Übertragungs\\-technologie\\notwendig
-                \end{itemize}} &
-            \parbox[c][3.5cm]{4cm}{
-            \begin{itemize}
-                    \item Kein Verbindungsaufbau mit lokalem Netzwerk notwendig
-                    \item Kein WiFi-Netzwerk notwendig, ein \ac{usb}-Anschluss genügt
-                \end{itemize}}                          \\ \hline
-        \end{tabular}
-    \end{threeparttable}
+    \caption{Die Verbindungsmethoden im Vergleich}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        ~                                                                                                                & \begin{tabular}[c]{@{}l@{}}\textbf{WiFi }\\\textbf{mit Websocket}\end{tabular}                                                           & \begin{tabular}[c]{@{}l@{}}\textbf{ESP-Now}\\\textbf{mit seriellem Port}\end{tabular}                                                    \\
+        \hline
+        \begin{tabular}[c]{@{}l@{}}\textbf{Anzahl }\\\textbf{Mikrocontroller}\end{tabular}                               & 2                                                                                                                                        & 3                                                                                                                                        \\
+        \hline
+        \textbf{Daten-Pfad}                                                                                              & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}ESP32\\↓\\Router\\↓\\Rollstuhl-Software\end{tabular}}                                     & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}ESP32\\↓\\ESP32\\↓\\Serieller Port\\↓\\Rollstuhl-Software\end{tabular}}                   \\
+        \hline
+        \begin{tabular}[c]{@{}l@{}}\textbf{"Hardcoding"}\\\textbf{von Verbindungs}\\\textbf{-informationen}\end{tabular} & nicht notwendig                                                                                                                          & Ziel-MAC-Adressen                                                                                                                        \\
+        \hline
+        \textbf{Vorteile}                                                                                                & \begin{tabular}{@{\labelitemi\hspace{\dimexpr\labelsep+0.5\tabcolsep}}l@{}}\begin{tabular}[c]{@{}l@{}}Stabile \\Verbindung\end{tabular}\\\begin{tabular}[c]{@{}l@{}}Nur eine \\Übertragungstechnologie\\notwendig\end{tabular}\end{tabular} & \begin{tabular}{@{\labelitemi\hspace{\dimexpr\labelsep+0.5\tabcolsep}}l@{}}\begin{tabular}[c]{@{}l@{}}Kein Verbinungsaufbau \\mit lokalem Netzwerk\\notwendig\end{tabular}\\\begin{tabular}[c]{@{}l@{}}Kein WiFi-Netzwerk \\notwendig, ein \\USB-Anschluss genügt\end{tabular}\end{tabular} \\
+        \hline
+    \end{tabular}
 \end{table}

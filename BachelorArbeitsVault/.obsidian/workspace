@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Arbeit/6_Erkenntnis.md",
+            "file": "Arbeit/2_Einleitung.md",
             "mode": "source",
             "source": false
           }
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/6_Erkenntnis.md",
+                "file": "Arbeit/2_Einleitung.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,15 +110,15 @@
   },
   "active": "61fc18fcbe9dd326",
   "lastOpenFiles": [
-    "Arbeit/7_Ausblick.md",
+    "Arbeit/6_Erkenntnis.md",
+    "Arbeit/2_Einleitung.md",
     "Arbeit/Stand der Forschung.md",
+    "Arbeit/7_Ausblick.md",
     "Arbeit/Theorie.md",
     "ToDo-Board.md",
     "Arbeit/3_Begriffsklärung.md",
     "Arbeit/4_Entwicklung des eingebetteten Systems.md",
     "Quellen/WissenschArbeiten.pdf",
-    "Arbeit/6_Erkenntnis.md",
-    "Quellen/Citation/@sharkey3rdInternationalConference2000.md",
-    "SprintBerichte/Bericht 1.md"
+    "Quellen/Citation/@sharkey3rdInternationalConference2000.md"
   ]
 }
