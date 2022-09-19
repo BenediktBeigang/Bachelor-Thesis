@@ -9,15 +9,11 @@ kanban-plugin: basic
 - [ ] Rechner kaufen?
 - [ ] system in cs testen, gibt es einen flaschenhals?
 - [ ] diagramme mit max und durschnitt beschriften
-- [ ] espnow quellen
 - [ ] literaturverzeichnis überarbeiten
 - [ ] ein satz unter überschrift vermeiden
-- [ ] ziele besser definieren
 - [ ] wifi bessere quellen
-- [ ] mpu6050 bessere quelle in bib?
 - [ ] zitate prüfen auf richtig zitiert
 - [ ] abstract
-- [ ] plots anpassen wegen bahngeschwindigkeit
 - [ ] unterschied zwischen vr und virtueller raum klarmachen in begriffsklärung
 
 

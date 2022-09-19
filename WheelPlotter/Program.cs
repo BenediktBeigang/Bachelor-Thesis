@@ -27,19 +27,25 @@ public class Program
                 string jsonString = File.ReadAllText(path + name + filetype);
                 List<Sample> record = JsonSerializer.Deserialize<List<Sample>>(jsonString) ?? new List<Sample>();
 
-                string movementState = "button";
+                //string movementState = "button";
 
-                new Plot_PacketInterval(record, name);
+                // new Plot_PacketInterval(record, name);
                 // new Plot_GyroSignalNodeOne(record);
                 // new Plot_GyroSignalNodeTwo(record);
-                // Stats_Datarate(record);
                 // new Plot_Gyro(record, movementState, name);
+
+                // Stats_Datarate(record);
                 // new Plot_Datarate();
-                // new Plot_GyroWithAcceleration(record, movementState, name);
                 // new Plot_Datarate2(record, movementState, name);
+
+                // new Plot_GyroWithAcceleration(record, name);
                 // new Plot_NodeOne(record);
-                // new Plot_mitAcc(record, movementState, name);
-                // new Plot_ohneAcc(record, movementState, name);
+
+                // new Plot_mitAcc(record, "tilt", name);
+                new Plot_ohneAcc(record, "tilt", name);
+
+                // new Plot_1Th(record, "button", name);
+                // new Plot_2Th(record, "button", name);
             }
             catch (Exception e)
             {

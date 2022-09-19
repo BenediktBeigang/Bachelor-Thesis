@@ -6,7 +6,7 @@ Näher soll in einem Vergleich beleuchtet werden, ob die Protokolle WiFi und ESP
 
 \section{PlatformIO}
 Zur Entwicklung der eingebetteten Software, die auf den Mikrocontrollern läuft, wurde PlatformIO verwendet.
-Dies ist eine Framework-Erweiterung für Visual Studio Code, bei der die benötigten Bibliotheken, die für jeden Mikrocontroller und jedes Board notwendig sind, automatisch heruntergeladen und eingerichtet werden.
+Dies ist eine Framework-Erweiterung für Visual Studio Code, bei der die benötigten Bibliotheken, die für jeden Mikrocontroller und jedes Board notwendig sind, automatisch heruntergeladen und eingerichtet werden\cite{WhatPlatformIOPlatformIO}.
 Ebenfalls lassen sich über das \ac{ui}, Bibliotheken, die für das jeweilige Projekt notwendig sind, hinzufügen.
 Zusätzlich zur Entwicklungsumgebung von Visual Studio Code gibt es Funktionalitäten einen Chip zu flashen und anschließend im seriellen Monitor die Ausführung zu beobachten.
 Im Gegensatz zu Umgebungen wie der Arduino \ac{ide} wird Zeit gespart, da dort zunächst manuell Treiber heruntergeladen werden müssen.
@@ -20,12 +20,12 @@ Jedoch erfordert die Verwendung eines Gyroskops eine Voreinstellung und Kalibrie
 \subsection{Gyroskop}
 Im Zuge dieser Arbeit wurde sich für das Motion-Tracking-Device GY-521 MPU-6050 entschieden.
 Dieses ist klein (mit Pins: 20mm x 15mm x 11mm), kostengünstig zu erwerben (ca. 4 Euro) und verfügt unter anderem über 3-Achsen-Gyroskop-Sensoren, mit denen die Rotation gemessen werden kann.
-Der Chip besitzt folgende 8 Anschlüsse (S.7)\cite{az-delivery_vertriebs_gmbhGY5216AchsenGyroskop}:
+Der Chip besitzt folgende 8 Anschlüsse:
 
 \begin{table}[h]
     \centering
     \begin{threeparttable}
-        \caption{Pins des GY-521 MPU-6050}
+        \caption{Pins des GY-521 MPU-6050\cite{az-delivery_vertriebs_gmbhGY5216AchsenGyroskop}}
         \begin{tabular}{|l|l|l|}
             \hline
             \textbf{Anschluss}          & \textbf{Funktion}        & \textbf{Notwendig} \\ \hline
@@ -42,10 +42,10 @@ Der Chip besitzt folgende 8 Anschlüsse (S.7)\cite{az-delivery_vertriebs_gmbhGY5
 \end{table}
 
 Die Daten können mithilfe eines angeschlossenen Mikrocontrollers (ESP32) ausgelesen werden.
-Jede Achse wird auf zwei 8-Bit-Register abgebildet (S. 31)\cite{invensenseinc.MPU6000MPU6050Register2013}.
+Jede Achse wird auf zwei 8-Bit-Register abgebildet\cite{invensenseinc.MPU6000MPU6050Register2013}.
 Zusammen ergibt das einen Wertebereich von 65.536 unterscheidbaren Zuständen.
 Mit der Drehrichtung rückwärts halbiert sich dieser Wertebereich, da ein Bit für das Verschieben des Wertebereichs ins Negative benötigt wird.
-Das Gyroskop des MPU-6050 kann in vier verschiedenen Konfigurationen betrieben werden (S. 31)\cite{invensenseinc.MPU6000MPU6050Register2013}.
+Das Gyroskop des MPU-6050 kann in vier verschiedenen Konfigurationen betrieben werden\cite{invensenseinc.MPU6000MPU6050Register2013}.
 Damit wird festgelegt, wie klein der Winkel zwischen zwei verschiedenen Zuständen ist; mit anderen Worten, wie viele Stufen pro Grad unterschieden werden können.
 Da der Wertebereich konstant ist, bedeutet eine empfindlichere Messung, dass das Gyroskop bei einer geringeren Geschwindigkeit das Ende des Wertebereichs erreicht.
 Angewendet auf den Rollstuhl hat das zur Folge, dass das rotierende Rad bei niedrigeren Geschwindigkeiten seine maximal messbare Geschwindigkeit erreicht.
@@ -60,7 +60,7 @@ Es gilt folgender Zusammenhang mit welchem die aktuelle Winkelgeschwindigkeit er
 \end{align}
 
 \begin{align}
-    z_m    & = 32768                      \\
+    z_m    & = \pm 32768                  \\
     z_m    & = \omega_m \cdot p           \\
     \omega & = \left(\frac {z} {p}\right)
 \end{align}
@@ -72,16 +72,16 @@ Es gilt folgender Zusammenhang mit welchem die aktuelle Winkelgeschwindigkeit er
         \begin{tabular}{|l|l|l|l|l|}
             \hline
             ~ & \textbf{Modus 0} & \textbf{Modus 1} & \textbf{Modus 2} & \textbf{Modus 3} \\ \hline
-            \parbox[c][1.5cm]{4cm}{\textbf{Maximal messbarere                             \\Winkel-\\geschwindigkeit [\si{\degree/\second}]*}}                  & 250     & 500     & 1000    & 2000    \\ \hline
-            \parbox[c][1cm]{4cm}{\textbf{Stufen                                           \\pro Grad [\si{\second/\degree}]*}}                               & 131     & 65,5    & 32,8    & 16,4    \\ \hline
-            \parbox[c][1.5cm]{4cm}{\textbf{Maximale                                       \\Umdrehungszahl \\pro Sekunde [\si{1/\second}]}}          & 0,69    & 1,39    & 2,78    & 5,56    \\ \hline
-            \parbox[c][1cm]{4cm}{\textbf{Maximale Radianten                               \\pro Sekunde [\si{\radian/\second}]    }  }           & 4,36    & 8,73    & 17,47   & 34,93   \\ \hline
-            \parbox[c][1cm]{4cm}{\textbf{Zurückgelegte Distanz                            \\pro Stufe [\si{\milli\metre}]**}} & 0,04    & 0,08    & 0,16    & 0,32    \\ \hline
+            \parbox[c][1.5cm]{4cm}{\textbf{Maximal messbarere                             \\Winkel-\\geschwindigkeit [\si{\degree/\second}]*}}  & 250     & 500     & 1000    & 2000    \\ \hline
+            \parbox[c][1cm]{4cm}{\textbf{Stufen                                           \\pro Grad [\si{\second/\degree}]*}}                  & 131     & 65,5    & 32,8    & 16,4    \\ \hline
+            \parbox[c][1.5cm]{4cm}{\textbf{Maximale                                       \\Umdrehungszahl \\pro Sekunde [\si{1/\second}]}}     & 0,69    & 1,39    & 2,78    & 5,56    \\ \hline
+            \parbox[c][1cm]{4cm}{\textbf{Maximale Radianten                               \\pro Sekunde [\si{\radian/\second}]}}                & 4,36    & 8,73    & 17,47   & 34,93   \\ \hline
+            \parbox[c][1cm]{4cm}{\textbf{Zurückgelegte Distanz                            \\pro Stufe [\si{\milli\metre}]**}}                   & 0,04    & 0,08    & 0,16    & 0,32    \\ \hline
         \end{tabular}
         \begin{tablenotes}
             \small
             \item
-                  *(S. 31)\cite{invensenseinc.MPU6000MPU6050Register2013}\\ **Werte bei einem Raddurchmesser von 60 cm
+            *\cite{invensenseinc.MPU6000MPU6050Register2013}\\ **Werte bei einem Raddurchmesser von 60 cm
         \end{tablenotes}
     \end{threeparttable}
 \end{table}
@@ -136,8 +136,8 @@ Es muss die entsprechenden Register auslesen und mittels drahtloser Kommunikatio
 Auf dem Markt ist eine große Anzahl von Produkten für die verschiedensten Anwendungsgebiete erhältlich.
 Im Rahmen dieser Arbeit wurde der Mikrocontroller ESP32 verwendet, das aktuelle Modell der Firma \textit{Espressif}.
 Boards mit diesem Chip sind kostengünstig (ca. 8 Euro).
-Zudem ist der ESP32 mit WiFi (802.11 b/g/n), Bluetooth (v4.2) und ESP-Now Unterstützung ausgestattet (S. 8-9)\cite{ESP32Datasheet2022}.
-Verbaut wurde ein Xtensa® 32-bit LX6 Mikroprozessor, mit 240MHz Taktfrequenz, 448 KB \ac{rom} und 520 KB \ac{sram}. (S. 32)\cite{ESP32Datasheet2022}
+Zudem ist der ESP32 mit WiFi (802.11 b/g/n), Bluetooth (v4.2) und ESP-Now Unterstützung ausgestattet\cite{ESP32Datasheet2022}.
+Verbaut wurde ein Xtensa® 32-bit LX6 Mikroprozessor, mit 240MHz Taktfrequenz, 448 KB \ac{rom} und 520 KB \ac{sram}\cite{ESP32Datasheet2022}.
 Als Entwicklungsboard wurde das ESP32 Dev Kit C V4 verwendet.
 
 Der MPU-6050 muss wie folgt an das Entwicklungsboard angeschlossen werden:
@@ -185,8 +185,8 @@ Für die eigentliche Übertragung der Daten können verschiedene Protokolle verw
 Ein klassischer Vertreter ist \ac{https}.
 Dieses wurde für die vorliegende Arbeit jedoch nicht verwendet, da das Protokoll auf Hypertext ausgelegt ist.
 Es wird für jede Abfrage von Daten eine neue \ac{tcp}-Verbindung mit dem Server aufgebaut, der die Daten nach Eingang der Anfrage zurückschickt.
-Will der Client neue Daten empfangen, so muss dieser erneut eine \ac{tcp}-Verbindung mit dem Server aufbauen (S. 4)\cite{ietfRFC6455WebSocket}.
-Zusätzlich enthält jedes Paket, welches vom Clienten kommt, viel Overhead, da jede dieser Nachrichten einen \ac{https}-Header besitzt (S. 4)\cite{ietfRFC6455WebSocket}.
+Will der Client neue Daten empfangen, so muss dieser erneut eine \ac{tcp}-Verbindung mit dem Server aufbauen\cite{ietfRFC6455WebSocket}.
+Zusätzlich enthält jedes Paket, welches vom Clienten kommt, viel Overhead, da jede dieser Nachrichten einen \ac{https}-Header besitzt\cite{ietfRFC6455WebSocket}.
 Da es sich bei den Gyroskop-Daten jedoch um Echtzeitdaten handelt, wäre dieses Vorgehen ineffizient.
 Viel Zeit und Bandbreite würde für das Übertragen von nicht benötigte Daten verwendet werden.
 
@@ -194,7 +194,7 @@ Eine Alternative ist die Verwendung von einem WebSocket.
 Das Protokoll wurde entwickelt, um die Nachteile von \ac{https} bei Echtzeitdaten zu umgehen und wird heute breit unterstützt.
 Das WebSocket-Protokoll wurde in seiner finalen Form 2011 von der Internet Engineering Task Force entwickelt und veröffentlicht\cite{ietfRFC6455WebSocket}.
 Dabei wird analog zu \ac{https} zu Beginn ein \ac{tcp} Handshake durchgeführt. Der Client stellt an den Server eine Verbindungsanfrage, welcher dieser bestätigt.
-Ab diesem Zeitpunkt sendet der Server unaufgefordert die vom Client abonnierten Daten, bis die Verbindung vom Client beendet wird (S. 5)\cite{ietfRFC6455WebSocket}.
+Ab diesem Zeitpunkt sendet der Server unaufgefordert die vom Client abonnierten Daten, bis die Verbindung vom Client beendet wird\cite{ietfRFC6455WebSocket}.
 Somit lassen sich höhere Datenraten erzielen, die für Echtzeitanwendungen notwendig sind.
 Das für die vorliegende Bachelor-Thesis entwickelte System setzt auf einen vom ESP32 gehosteten WebSocket-Server, der von der Rollstuhl-Software auf dem \ac{pc} abonniert wird.
 Dabei kommt aufseiten des ESP die Bibliothek \textit{arduinoWebSockets}\cite{markusWebSocketServerClient2022} zum Einsatz, und auf der Client Seite die Bibliothek \textit{websocket-client}\cite{kotasWebsocketclient2022}.
@@ -205,7 +205,7 @@ Neben dem \ac{ip}-Endpunkt werden auch Informationen über das Gerät mitgesende
 Nach dieser Bekanntmachung kann der WebSocket abonniert und die Daten übertragen werden.
 
 \subsection{ESP-Now und Serieller Port}
-ESP-Now ist ein vom Unternehmen \textit{Espressif} selbst entwickeltes Übertragungsprotokoll, mit dem Mikrocontroller von \textit{Espressif} wie zum Beispiel der ESP8266 (Vorgänger des ESP32) und der ESP32 direkt miteinander Daten austauschen können.
+ESP-Now ist ein vom Unternehmen \textit{Espressif} selbst entwickeltes Übertragungsprotokoll, mit dem Mikrocontroller von \textit{Espressif} wie zum Beispiel der ESP8266 (Vorgänger des ESP32) und der ESP32 direkt miteinander Daten austauschen können\cite{ESPNowUserGuide2016}.
 Dabei verwendet das Protokoll die \ac{mac}-Adressen zur Identifikation der Geräte.
 Es wird jedoch nur eine Verbindung in eine Richtung aufgebaut.
 Ein großer Vorteil dieses Protokolls ist die unkomplizierte Einbindung in das System.

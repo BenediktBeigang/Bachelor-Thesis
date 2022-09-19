@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/2_Einleitung.md",
+                "file": "ToDo-Board.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,10 +108,10 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "61fc18fcbe9dd326",
+  "active": "09ce9a63e36ee4e8",
   "lastOpenFiles": [
-    "Arbeit/6_Erkenntnis.md",
     "Arbeit/2_Einleitung.md",
+    "Arbeit/6_Erkenntnis.md",
     "Arbeit/Stand der Forschung.md",
     "Arbeit/7_Ausblick.md",
     "Arbeit/Theorie.md",
