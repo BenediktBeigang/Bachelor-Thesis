@@ -126,16 +126,9 @@ Dabei dreht sich jedoch der Rollstuhl nicht.
     \vec{r_{1,2}} = & \ 0
 \end{align}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{wendekreis.PNG}
-    \caption{Skizze des Rollstuhls aus der Vogelperspektive mit Wendekreisen}
-    \label{fig:wendekreis}
-\end{figure}
-
 \textbf{Fall 2:}
 Zur Berechnung der Rotation um die eigene Achse wird zunächst der Wendekreis $w_1$ benötigt.
-Dieser Wendekreis ist abhängig vom Abstand der Räder $d$ und dessen Mittelpunkt liegt im Mittelpunkt zwischen den Rädern (siehe Abbildung \ref{fig:wendekreis}).
+Dieser Wendekreis ist abhängig vom Abstand der Räder $d$ und dessen Mittelpunkt $c_1$ liegt im Mittelpunkt zwischen den Rädern (siehe Abbildung \ref{fig:wendekreis}).
 Anschließend wird mithilfe des Minimums $m$, das Verhältnis von $m$ zu $w_1$ errechnet, also wie viel vom Wendekreis gedreht wird.
 Dieses Verhältnis muss zum Schluss mit $360$ multipliziert werden, um den resultierenden Winkel, beziehungsweise Rotationsvektor Fall1 oder Fall2 $r_{1,2}$, zu berechnen.
 Bei dieser Bewegung verändert der Rollstuhl jedoch nicht seine Position.
@@ -145,12 +138,44 @@ Bei dieser Bewegung verändert der Rollstuhl jedoch nicht seine Position.
     \vec{f_{1,2}} & =  \ 0
 \end{align}
 
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[domain=0:7,scale=0.75]
+        %Wendekreise
+        \draw[dotted, line width=1] (0,0) circle (4);
+        \draw[dotted, line width=1] (2,0) circle (2);
+        \node[text width=1] at (1,2.2) {\large$w_1$};
+        \node[text width=1] at (-4.2,-2) {\large$w_2$};
+        %Rollstuhl
+        \draw[line width=3] (0,0) -- (4,0);
+        \draw[line width=5] (0,-1.5) -- (0,1.5);
+        \draw[line width=5] (4,-1.5) -- (4,1.5);
+        %Winkel
+        \draw (0,0) -- (3.5,2);
+        \draw (2,0) arc (0:15.5:4);
+        \node[text width=1] at (1.2,0.4) {\large $\Theta$};
+        %Radabstand
+        \draw[dotted, line width=1] (0,-4.5) -- (4,-4.5);
+        \draw[line width=1] (0,-4.3) -- (0,-4.7);
+        \draw[line width=1] (4,-4.3) -- (4,-4.7);
+        \node[text width=1] at (1.9,-4.2) {\large$d$};
+        %Mitte 1
+        \draw[line width=0.7] (2,0) -- (2,-0.3);
+        \node[text width=1] at (1.8,-0.7) {\large$c_1$};
+        %Mitte 2
+        \draw[line width=0.7] (0,0) -- (-0.3,0);
+        \node[text width=1] at (-1,0) {\large$c_2$};
+    \end{tikzpicture}
+    \caption{Skizze des Rollstuhls aus der Vogelperspektive mit Wendekreisen}
+    \label{fig:wendekreis}
+\end{figure}
+
 \textbf{Fall 3:}
 Bei diesem Fall gibt es einen Fortbewegungs- und einen Rotationsvektor ungleich null.
 Da sich nur ein Rad bewegt, hat sich der Wendekreis vergrößert zu $w_2$.
-Der Durchmesser von $w_2$ ist nun doppelt so groß wie von $w_1$, da das stehende Rad nun der Mittelpunkt des Wendekreises ist.
+Der Durchmesser von $w_2$ ist nun doppelt so groß wie von $w_1$, da das stehende Rad nun der Mittelpunkt $c_2$ des Wendekreises ist (siehe Abbildung \ref{fig:wendekreis}).
 Jetzt wird der Overshoot $o$ (also der Anteil der Bewegung des Rades, das sich mehr als das andere dreht) ins Verhältnis gesetzt mit $w_2$ und erhält dadurch $\Theta$.
-Verrechnet man $\Theta$ mit dem inneren Wendekreis $w_1$, so erhält man den Fortbewegungsvektor Fall3 $f_3$.
+Verrechnet man $\Theta$ mit dem inneren Wendekreis $w_1$, so erhält man den Fortbewegungsvektor Fall3 $\vec{f_3}$.
 \begin{align}
     w_2 =       & \ 2 \cdot d \cdot \pi \\
     \Theta =    & \ \frac {o} {w_2}     \\
@@ -196,7 +221,7 @@ Anschließend können die Bewegungskomponenten addiert werden:
 \end{align}
 
 Sind die Bewegungskomponenten berechnet muss final eine Abbildung dieser auf den Spielcontroller erfolgen.
-Dabei bietet sich die y-Achse des linken-Thumbsticks an für den Fortbewegungsvektor $\vec{s}$ und die s-Achse des rechten Thumbsticks für den Rotationsvektor $\vec{r}$.
+Dabei bietet sich die y-Achse des linken-Thumbsticks an für den Fortbewegungsvektor $\vec{f}$ und die x-Achse des rechten Thumbsticks für den Rotationsvektor $\vec{r}$.
 In vielen Anwendungen, im besonderen 3D-Videospielen, ist der linke Thumbstick für das Bewegen im Raum zuständig und der rechte für das Umschauen.
 
 Berechnet man auf Grundlage der oben genannten Formeln die Bewegung des Rollstuhls, so stößt man auf folgendes Problem:
@@ -236,9 +261,9 @@ Jedoch lässt sich die Menge von Bewegungszuständen in folgende disjunkte Teilm
 
 Im Folgenden wird darauf eingegangen, wie diese Teilmengen-Zustände erkannt werden:
 \begin{align}
-    \omega_L & :\ \mathrm{Winkelgeschwindigkeit\ des\ linken\ Rades}  \\
-    \omega_R & :\ \mathrm{Winkelgeschwindigkeit\ des\ rechten\ Rades} \\
-    s        & :\ \mathrm{Schwellenwert}
+    \omega_L & :\ \mathrm{Winkelgeschwindigkeit\ des\ linken\ Rades}                 \\
+    \omega_R & :\ \mathrm{Winkelgeschwindigkeit\ des\ rechten\ Rades}                \\
+    s_1      & :\ \mathrm{Schwellenwert\ f\ddot{u}r\ Einzelradbewegung\ und\ Neigen}
 \end{align}
 
 \textbf{\textit{Ruhezustand}}\\
@@ -258,9 +283,9 @@ Der Nutzer hat jedoch Schwierigkeiten, ein Rad vollständig ruhig zu halten.
 Die Gyroskop-Werte überschreiten selbst bei kleinen Handbewegungen den Schwellenwert für die Rauschunterdrückung.
 Dies führt zu unbeabsichtigten Eingaben.
 Deshalb ist diese Methode unzureichend.
-Führt man einen Schwellenwert $t$ ein, wird eine vom Nutzer unbeabsichtigte \textit{Einzelradbewegung} zuverlässiger unterdrückt:
+Führt man einen Schwellenwert $s_1$ ein, wird eine vom Nutzer unbeabsichtigte \textit{Einzelradbewegung} zuverlässiger unterdrückt:
 \begin{align}
-    (|\omega_L| < s) \oplus (|\omega_R| < s)
+    (|\omega_L| < s_1) \oplus (|\omega_R| < s_1)
 \end{align}
 
 \textbf{\textit{Rotation um die eigene Achse}}\\
@@ -291,7 +316,7 @@ Bezieht man die Zeit in der sich Räder drehen mit ein, so könnte man das Morse
 Jedoch verkompliziert dies die Eingabe erheblich für den Nutzer, sodass diese Methode nicht weiter verfolgt wird.
 Eine Alternative dazu ist die Geschwindigkeit mit einzubeziehen.
 Teilt man den Wertebereich der Geschwindigkeiten eines Rades, so lässt sich in der Theorie die Anzahl der Bewegungszustände verdoppeln.
-Dazu wird der Wertebereich zunächst mithilfe des Schwellenwertes $s = 100$ geteilt.
+Dazu wird der Wertebereich zunächst mithilfe des schon bekannten Schwellenwertes $s_1=100$ geteilt.
 \footnote{Von einer weiteren Teilung ist abzuraten, da es sonst für den Nutzer schwierig wird, die Räder mit den gewünschten beziehungsweise notwendigen Geschwindigkeiten zu drehen.}
 Die Unterscheidung zwischen langsamer und schneller Rotation ist jedoch intuitiv von jedem Nutzer begreifbar und umsetzbar.
 Im Wertebereich der langsamen Bewegungen können nun Bewegungen, wie das Neigen des Kamerawinkels, abgebildet werden.
@@ -300,10 +325,10 @@ Für das Detektieren dieses neuen Teilmengen-Bewegungszustandes wird folgende Be
 
 \textbf{\textit{Neigen}}
 \begin{align}
-    ((\omega_L > 0) \Leftrightarrow (\omega_R > 0))  \land (|\omega_L| < s) \land (|\omega_R| < s)
+    ((\omega_L > 0) \Leftrightarrow (\omega_R > 0))  \land (|\omega_L| < s_1) \land (|\omega_R| < s_1)
 \end{align}
 
-Unweigerlich geht dabei die Möglichkeit verloren, seinen Fortbewegungsvektor $s$ feiner einzustellen.
+Unweigerlich geht dabei die Möglichkeit verloren, seinen Fortbewegungsvektor $\vec{f}$ feiner einzustellen.
 Es sind also keine langsamen Bewegungen nach vorne und hinten möglich.
 Dafür hat der Nutzer die Möglichkeit, sich frei im Raum umschauen zu können.
 
@@ -316,30 +341,29 @@ Bewegungen, wie die \textit{Rotation um die eigene Achse}, wollen vom Nutzer ent
 Nur in bestimmten Fällen, wie bei der Fortbewegung, kann es sinnvoll sein, den Wertebereich zu teilen.
 So ist die Anzahl der tatsächlich sinnvollen Bewegungsmuster kleiner als die theoretisch denkbaren.
 Es muss bei jedem Zustand und jeder Interaktion abgewogen werden, ob eine Teilung des Wertebereichs sinnvoll erscheint, oder den Nutzer behindert.
-Trotz der verringerten Anzahl an Bewegungsmustern, sind beim Testen der \textit{Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen} zwei primäre Probleme beobachtet worden, bei denen fehlerhafte Eingaben getätigt werden.
-Zum Testen des Systems und Aufnehmen der Daten wurde \textit{Counter-Strike: Global Offensive} verwendet.
+Trotz der verringerten Anzahl an Bewegungsmustern, sind beim Testen\footnote{Zum Testen des Systems und Aufnehmen der Daten wurde \textit{Counter-Strike: Global Offensive} verwendet.} der \textit{Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen} zwei primäre Probleme beobachtet worden, bei denen fehlerhafte Eingaben getätigt werden.
 
 \subsection{Unbeabsichtigtes Betätigen von Interaktionstasten}
-In den ersten Testreihen wurde für die Detektion von einer \textit{Einzelradbewegung} und dem Teilen des Wertebereichs in schnelle und langsame Bewegungen derselbe Schwellwert $s = 100$ verwendet.
+In den ersten Testreihen wurde für die Detektion von einer \textit{Einzelradbewegung} und dem Teilen des Wertebereichs in schnelle und langsame Bewegungen derselbe Schwellwert $s_1 = 100$ verwendet.
 Unter Verwendung dieser Methode kommt es beim Anfahren oder Bremsen (\textit{Sichtachsenbewegung}) zum unbeabsichtigten Betätigen von Interaktionstasten.
 Da sich die Räder nicht mit derselben Geschwindigkeit drehen, gibt es ein kurzes Zeitintervall, in dem ein Rad unter dem Schwellwert und ein Rad über dem Schwellenwert liegt.
 Aus der Abbildung \ref{fig:1_threshold} ist abzulesen, dass für dieses Zeitintervall die Bedingung der \textit{Einzelradbewegung} gilt, sodass eine Interaktionstaste betätigt wird.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.75\textwidth]{1threshold.PNG}
+    \includegraphics[width=\textwidth]{1threshold.PNG}
     \caption{Bewegungs-Zustände mit unerwünschter \textit{Sichtachsenbewegung}}
     \label{fig:1_threshold}
 \end{figure}
 
 Dieses Problem lässt sich über das Einführen eines neuen \textit{Einzelradbewegung} Schwellenwertes beheben.
-Wählt man für diesen einen geringeren Wert $s_1 = 25$ als für den Schwellwert für das Teilen des Wertebereichs $s_2$, entsteht eine Pufferzone.
-Beim Beschleunigen überschreiten die Gyroskop-Werte zunächst nacheinander $s_1$. Anschließend überschreiten die Werte nacheinander $s_2$.
+Wählt man für diesen einen geringeren Wert $s_2 = 25$ als für den Schwellwert für das Teilen des Wertebereichs $s_1$, entsteht eine Pufferzone.
+Beim Beschleunigen aus der Ruhe überschreiten die Gyroskop-Werte zunächst nacheinander $s_2$. Anschließend überschreiten die Werte nacheinander $s_1$.
 Solange beide Werte in der Pufferzone sind, kann weder eine \textit{Einzelradbewegung} noch eine \textit{Sichtachsenbewegung} detektiert werden (siehe Abbildung \ref{fig:2_threshold}).
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.75\textwidth]{2threshold.PNG}
+    \includegraphics[width=\textwidth]{2threshold.PNG}
     \caption{Bewegungs-Zustände ohne unerwünschter \textit{Sichtachsenbewegung}}
     \label{fig:2_threshold}
 \end{figure}
@@ -348,17 +372,17 @@ Durch das Einführen der neuen Schwellenwerte müssen folgende Teilmengen-Bewegu
 
 \textbf{\textit{Einzelradbewegung}}
 \begin{align}
-    ((|\omega_L| < s_1) \oplus (|\omega_R| < s_1)) \land ((|\omega_L| > s_2) \oplus (|\omega_R| > s_2))
+    ((|\omega_L| < s_2) \oplus (|\omega_R| < s_2)) \land ((|\omega_L| > s_1) \oplus (|\omega_R| > s_1))
 \end{align}
 
 \textbf{\textit{Sichtachsenbewegung}}
 \begin{align}
-    ((\omega_L > 0) \Leftrightarrow (\omega_R > 0)) \land ((|\omega_L| \geq s_2) \land (|\omega_R| \geq s_2))
+    ((\omega_L > 0) \Leftrightarrow (\omega_R > 0)) \land ((|\omega_L| \geq s_1) \land (|\omega_R| \geq s_1))
 \end{align}
 
 \textbf{\textit{Neigen}}
 \begin{align}
-    ((\omega_L > 0) \Leftrightarrow (\omega_R > 0)) \land (|\omega_L| < s_2) \land (|\omega_R| < s_2)
+    ((\omega_L > 0) \Leftrightarrow (\omega_R > 0)) \land (|\omega_L| < s_1) \land (|\omega_R| < s_1)
 \end{align}
 
 \subsection{Unbeabsichtigtes Neigen beim Anfahren}
@@ -368,7 +392,7 @@ In diesem Fall gibt es beim Beschleunigen einen kurzes Zeitinterval in dem die R
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.75\textwidth]{ohneAcc.PNG}
+    \includegraphics[width=\textwidth]{ohneAcc.PNG}
     \caption{Bewegungs-Zustände mit unerwünschtem \textit{Neigen}}
     \label{fig:ohneAcc}
 \end{figure}
@@ -386,13 +410,13 @@ Die Bedingung des Teilmengen-Zustands \textit{Neigen} muss wie folgt ergänzt we
 
 \textbf{\textit{Neigen}}
 \begin{align}
-    ((\omega_L > 0) \Leftrightarrow (\omega_R > 0)) \land (|\omega_L| < s_2) \land (|\omega_R| < s_2) \land (a < s_3)
+    ((\omega_L > 0) \Leftrightarrow (\omega_R > 0)) \land (|\omega_L| < s_1) \land (|\omega_R| < s_1) \land (a < s_3)
 \end{align}
 
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.75\textwidth]{mitAcc.PNG}
+    \includegraphics[width=\textwidth]{mitAcc.PNG}
     \caption{Bewegungs-Zustände unter Verwendung eines Schwellenwertes für die Änderungsrate ohne unerwünschtem \textit{Neigen}}
     \label{fig:mitAcc}
 \end{figure}

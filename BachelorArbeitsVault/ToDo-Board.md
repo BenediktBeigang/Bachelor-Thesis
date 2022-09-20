@@ -9,10 +9,8 @@ kanban-plugin: basic
 - [ ] Rechner kaufen?
 - [ ] system in cs testen, gibt es einen flaschenhals?
 - [ ] diagramme mit max und durschnitt beschriften
-- [ ] literaturverzeichnis überarbeiten
 - [ ] ein satz unter überschrift vermeiden
 - [ ] wifi bessere quellen
-- [ ] zitate prüfen auf richtig zitiert
 - [ ] abstract
 - [ ] unterschied zwischen vr und virtueller raum klarmachen in begriffsklärung
 

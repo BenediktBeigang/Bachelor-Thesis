@@ -139,9 +139,7 @@ Boards mit diesem Chip sind kostengünstig (ca. 8 Euro).
 Zudem ist der ESP32 mit WiFi (802.11 b/g/n), Bluetooth (v4.2) und ESP-Now Unterstützung ausgestattet\cite{ESP32Datasheet2022}.
 Verbaut wurde ein Xtensa® 32-bit LX6 Mikroprozessor, mit 240MHz Taktfrequenz, 448 KB \ac{rom} und 520 KB \ac{sram}\cite{ESP32Datasheet2022}.
 Als Entwicklungsboard wurde das ESP32 Dev Kit C V4 verwendet.
-
-Der MPU-6050 muss wie folgt an das Entwicklungsboard angeschlossen werden:
-
+Aus der Tabelle \ref{tab:pinZuweisung} ist zu entnehmen wie der MPU-6050 angeschlossen werden muss.
 \begin{table}[h]
     \centering
     \begin{threeparttable}
@@ -155,12 +153,20 @@ Der MPU-6050 muss wie folgt an das Entwicklungsboard angeschlossen werden:
             \parbox[c][0.5cm]{3cm}{GPIO21 (I2C DA)} & \parbox[c][0.5cm]{3cm}{SCL} \\ \hline
             \parbox[c][0.5cm]{3cm}{ADO}             & \parbox[c][0.5cm]{3cm}{GND} \\ \hline
         \end{tabular}
+        \label{tab:pinZuweisung}
     \end{threeparttable}
 \end{table}
 
 \section{3D gedruckte Box}
 Damit Entwicklungsboard, Gyroskop und Akku zusammengehalten werden, geschützt sind und am Rad befestigt werden können, wird eine Box benötigt, die alle Komponenten aufnehmen kann und diese trägt.
-Aufgrund dessen wurde – mithilfe von Blender – eine entsprechend seinen Anforderungen konstruierte Box entworfen und mittels 3D-Druckers gedrucht.
+Aufgrund dessen wurde – mithilfe von Blender – eine entsprechend seinen Anforderungen konstruierte Box entworfen und mittels 3D-Druckers gedruckt (siehe Abbildung \ref{fig:gedruckteBox}).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{boxFull2.png}
+    \caption{Gedruckte Box mit Deckel und Hardware}
+    \label{fig:gedruckteBox}
+\end{figure}
 
 \section{Vergleich zwischen WiFi und ESP-Now}
 Für die Übermittlung der Sensordaten an die Rollstuhl-Software auf einem \ac{pc}, stehen verschiedene Möglichkeiten zur Verfügung.
@@ -272,13 +278,13 @@ Es sind keine Interpolationstechniken notwendig, um die Bewegung flüssig ersche
     \caption{Die Verbindungsmethoden im Vergleich}
     \begin{tabular}{|l|l|l|}
         \hline
-        ~                                                                                                                & \begin{tabular}[c]{@{}l@{}}\textbf{WiFi }\\\textbf{mit Websocket}\end{tabular}                                                           & \begin{tabular}[c]{@{}l@{}}\textbf{ESP-Now}\\\textbf{mit seriellem Port}\end{tabular}                                                    \\
+        ~                                                                                                                & \begin{tabular}[c]{@{}l@{}}\textbf{WiFi }\\\textbf{mit Websocket}\end{tabular}                                                            & \begin{tabular}[c]{@{}l@{}}\textbf{ESP-Now}\\\textbf{mit seriellem Port}\end{tabular}                                                     \\
         \hline
-        \begin{tabular}[c]{@{}l@{}}\textbf{Anzahl }\\\textbf{Mikrocontroller}\end{tabular}                               & 2                                                                                                                                        & 3                                                                                                                                        \\
+        \begin{tabular}[c]{@{}l@{}}\textbf{Anzahl }\\\textbf{Mikrocontroller}\end{tabular}                               & 2                                                                                                                                         & 3                                                                                                                                         \\
         \hline
-        \textbf{Daten-Pfad}                                                                                              & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}ESP32\\↓\\Router\\↓\\Rollstuhl-Software\end{tabular}}                                     & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}ESP32\\↓\\ESP32\\↓\\Serieller Port\\↓\\Rollstuhl-Software\end{tabular}}                   \\
+        \textbf{Daten-Pfad}                                                                                              & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}ESP32\\↓\\Router\\↓\\Rollstuhl-Software\end{tabular}}                                      & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}ESP32\\↓\\ESP32\\↓\\Serieller Port\\↓\\Rollstuhl-Software\end{tabular}}                    \\
         \hline
-        \begin{tabular}[c]{@{}l@{}}\textbf{"Hardcoding"}\\\textbf{von Verbindungs}\\\textbf{-informationen}\end{tabular} & nicht notwendig                                                                                                                          & Ziel-MAC-Adressen                                                                                                                        \\
+        \begin{tabular}[c]{@{}l@{}}\textbf{"Hardcoding"}\\\textbf{von Verbindungs}\\\textbf{-informationen}\end{tabular} & nicht notwendig                                                                                                                           & Ziel-MAC-Adressen                                                                                                                         \\
         \hline
         \textbf{Vorteile}                                                                                                & \begin{tabular}{@{\labelitemi\hspace{\dimexpr\labelsep+0.5\tabcolsep}}l@{}}\begin{tabular}[c]{@{}l@{}}Stabile \\Verbindung\end{tabular}\\\begin{tabular}[c]{@{}l@{}}Nur eine \\Übertragungstechnologie\\notwendig\end{tabular}\end{tabular} & \begin{tabular}{@{\labelitemi\hspace{\dimexpr\labelsep+0.5\tabcolsep}}l@{}}\begin{tabular}[c]{@{}l@{}}Kein Verbinungsaufbau \\mit lokalem Netzwerk\\notwendig\end{tabular}\\\begin{tabular}[c]{@{}l@{}}Kein WiFi-Netzwerk \\notwendig, ein \\USB-Anschluss genügt\end{tabular}\end{tabular} \\
         \hline
