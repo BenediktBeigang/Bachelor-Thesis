@@ -1,6 +1,10 @@
 # Bachelor-Thesis
 I want to use the rotation of wheels of a wheelchair to control an emulated XBox-Controller. For my embedded-system I use an ESP32 (Board: DevKit C V4) and the MPU6050 Gyroscope. The components are held together by a 3D-printed box that also contains a power bank for power-supply. On the other end is a .Net 6.0 console application receiving the data and using it to map the gyro-data to different controller-inputs. As long as other software has XBox-Controller support, my Software can be used to control it. The longterm goal is to use the wheelchair as a new method to move in Virtual-Reality.
 
+You need the following Drivers:
+- [ViGEmBus](https://ds4-windows.com/download/vigembus-driver/)
+- [Driver](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads) needed to connect ESP32 to USB-Port (install driver in devicemanager).
+
 ## Languages
 - C/C++
 - C#
