@@ -6,8 +6,38 @@ using System.Text.Json;
 
 public class Program
 {
+    public static void ToDat()
+    {
+        string path = @"Files\";
+        string name = "Thresholds/2th";
+        string filetype = ".json";
+
+        string jsonString = File.ReadAllText(path + name + filetype);
+        List<Sample> record = JsonSerializer.Deserialize<List<Sample>>(jsonString) ?? new List<Sample>();
+
+        string newfile = "time left right\n";
+        for (int i = 0; i < record.Count; i++)
+        {
+            float time = (float)(i / (float)60);
+            int timeMilli = (int)(time * 1000);
+            // int acc = (int)record[i].NodeOne_Acceleration + (int)record[i].NodeTwo_Acceleration;
+            // newfile += $"{timeMilli} {(int)record[i].NodeOne_SmoothedValue} {(int)record[i].NodeTwo_SmoothedValue} {acc}\n";
+            // newfile += $"{time.ToString("0.00")} {(int)record[i].NodeOne_SmoothedValue} {(int)record[i].NodeTwo_SmoothedValue} {acc}\n";
+            newfile += $"{timeMilli} {(int)record[i].NodeOne_SmoothedValue} {(int)record[i].NodeTwo_SmoothedValue}\n";
+            // newfile += $"{time.ToString("0.00")} {(int)record[i].NodeOne_SmoothedValue} {(int)record[i].NodeTwo_SmoothedValue}\n";
+            // newfile += $"{time.ToString("0.00")} {(int)record[i].NodeOne_PacketInterval} {(int)record[i].NodeTwo_PacketInterval}\n";
+        }
+        newfile = newfile.Replace(',', '.');
+
+        // File.WriteAllText($"{name}.dat", newfile);
+        File.WriteAllText($"2_threshold.dat", newfile);
+    }
+
     public static void Main(string[] args)
     {
+        ToDat();
+        return;
+
         bool running = true;
         while (running)
         {

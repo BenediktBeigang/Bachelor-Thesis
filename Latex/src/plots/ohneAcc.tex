@@ -1,0 +1,48 @@
+\begin{figure}[h]
+    \centering
+    \pgfplotstableread{./plots/ohneAcc.dat}{\data}
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel = {$\mathrm{Zeit}\ [\si{\milli\second}]$},
+            ylabel = {$\mathrm{Winkelgeschwindigkeit}\ [\si{\degree/\second}]$},
+            xmin = 2150, xmax = 2400,
+            ymin = -100, ymax = 400,
+            xtick distance = 100,
+            ytick distance = 100,
+            grid = both,
+            minor tick num = 1,
+            major grid style = {lightgray},
+            minor grid style = {lightgray!25},
+            width = \textwidth,
+            height = 0.75\textwidth,
+            legend cell align = {left},
+            legend pos = north west
+            ]
+
+            %red area
+            \addplot+[name path = A1, black, mark = none, domain = 2150:2316, samples = 2, forget plot] {400};
+            \addplot+[name path = A2, black, mark = none, domain = 2150:2316, samples = 2, forget plot] {-100};
+            \addplot[red!50, opacity=0.5] fill between[of=A1 and A2];
+
+            %green area
+            \addplot+[name path = B1, black, mark = none, domain = 2333:2400, samples = 2, forget plot] {400};
+            \addplot+[name path = B2, black, mark = none, domain = 2333:2400, samples = 2, forget plot] {-100};
+            \addplot[green!50, opacity=0.5] fill between[of=B1 and B2];
+
+            \addplot[blue, mark = *] table [x = {time}, y = {left}] {\data};
+            \addplot[orange, mark = *] table [x = {time}, y = {right}] {\data};
+
+            \addplot[black, mark = none, domain = 2000:3000, samples = 2, dotted] {100};
+
+            \legend{
+                $\mathrm{Neigen}$,
+                $\mathrm{Sichtachsenbewegung}$,
+                $\omega_L$,
+                $\omega_R$,
+                $s_1$
+            }
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Bewegungs-Zustände mit unerwünschtem \textit{Neigen}}
+    \label{fig:ohneAcc}
+\end{figure}

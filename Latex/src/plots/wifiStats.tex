@@ -1,0 +1,37 @@
+\begin{figure}[h]
+    \centering
+    \pgfplotstableread{./plots/wifiStats.dat}{\data}
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel = {$\mathrm{Zeit}\ [\si{\second}]$},
+            ylabel = {$\mathrm{Intervall\ zwischen\ zwei\ Paketen}\ [\si{\milli\second}]$},
+            xmin = 0, xmax = 100,
+            ymin = 0, ymax = 50,
+            xtick distance = 25,
+            ytick distance = 5,
+            grid = both,
+            minor tick num = 1,
+            major grid style = {lightgray},
+            minor grid style = {lightgray!25},
+            width = \textwidth,
+            height = 0.75\textwidth,
+            legend cell align = {left},
+            legend pos = north west
+            ]
+
+            \addplot[blue, mark = none] table [x = {time}, y = {left}] {\data};
+            \addplot[orange, mark = none] table [x = {time}, y = {right}] {\data};
+            \addplot[black, mark = none, domain = 0:100, samples = 2, dashed] {3.09};
+            \addplot[black, mark = none, domain = 0:100, samples = 2, dotted] {26};
+
+            \legend{
+                $\mathrm{Node\ One}$,
+                $\mathrm{Node\ Two}$,
+                $\mathrm{Paketintervall\ Durchschnitt}$,
+                $\mathrm{Paketintervall\ Maximum}$,
+            }
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Intervall zwischen Paketen im Verlauf der Zeit bei WiFi}
+    \label{fig:wifiStats}
+\end{figure}

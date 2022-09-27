@@ -1,0 +1,76 @@
+\begin{figure}[h]
+    \centering
+    \pgfplotstableread{./plots/mitAcc.dat}{\data}
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel = {$\mathrm{Zeit}\ [\si{\milli\second}]$},
+            ylabel = {$\mathrm{Winkelgeschwindigkeit}\ [\si{\degree/\second}]$},
+            xmin = 2150, xmax = 2400,
+            ymin = -100, ymax = 400,
+            xtick distance = 100,
+            ytick distance = 100,
+            grid = both,
+            minor tick num = 1,
+            major grid style = {lightgray},
+            minor grid style = {lightgray!25},
+            width = \textwidth,
+            height = 0.75\textwidth,
+            legend cell align = {left},
+            legend pos = north west
+            ]
+
+            %red area
+            \addplot+[name path = A1, black, mark = none, domain = 2000:2250, samples = 2, forget plot] {400};
+            \addplot+[name path = A2, black, mark = none, domain = 2000:2250, samples = 2, forget plot] {-100};
+            \addplot[red!50, opacity=0.5] fill between[of=A1 and A2];\label{plot_one}
+
+            %gray area
+            \addplot+[name path = B1, black, mark = none, domain = 2266:2316, samples = 2, forget plot] {400};
+            \addplot+[name path = B2, black, mark = none, domain = 2266:2316, samples = 2, forget plot] {-100};
+            \addplot[gray!50, opacity=0.5] fill between[of=B1 and B2];\label{plot_two}
+
+            %green area
+            \addplot+[name path = C1, black, mark = none, domain = 2333:3000, samples = 2, forget plot] {400};
+            \addplot+[name path = C2, black, mark = none, domain = 2333:3000, samples = 2, forget plot] {-100};
+            \addplot[green!50, opacity=0.5] fill between[of=C1 and C2];\label{plot_three}
+
+            \addplot[blue, mark = *] table [x = {time}, y = {left}] {\data};\label{plot_four}
+            \addplot[orange, mark = *] table [x = {time}, y = {right}] {\data};\label{plot_five}
+            \addplot[black, mark = none, domain = 2000:3000, samples = 2, dotted] {100};\label{plot_six}
+
+            \legend{
+                $\mathrm{Neigen}$,
+                $\mathrm{Ruhezustand}$,
+                $\mathrm{Sichtachsenbewegung}$,
+                $\omega_L$,
+                $\omega_R$,
+                $s_1$
+            }
+        \end{axis}
+
+        \begin{axis}[
+            axis y line*=right,
+            axis x line=none,
+            ylabel = {$\mathrm{\ddot{A}nderungsrate}\ [\si{\degree/\second^2}]$},
+            xmin = 2150, xmax = 2400,
+            ymin = 0, ymax = 100,
+            xtick distance = 100,
+            ytick distance = 25,
+            width = \textwidth,
+            height = 0.75\textwidth,
+            legend cell align = {right},
+            legend pos = north east
+            ]
+
+            \addplot[violet, mark = *] table [x = {time}, y = {acc}] {\data};\label{plot_eight}
+            \addplot[black, mark = none, domain = 2000:3000, samples = 2, dashed] {15};\label{plot_seven}
+
+            \legend{
+                $a$,
+                $s_3$
+            }
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Bewegungs-Zustände unter Verwendung eines Schwellenwertes für die Änderungsrate ohne unerwünschtem \textit{Neigen}}
+    \label{fig:mitAcc}
+\end{figure}

@@ -1,0 +1,37 @@
+\begin{figure}[h]
+    \centering
+    \pgfplotstableread{./plots/gyroMax.dat}{\data}
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel = {$\mathrm{Zeit}\ [\si{\second}]$},
+            ylabel = {$\mathrm{Winkelgeschwindigkeit}\ [\si{\degree/\second}]$},
+            xmin = 19, xmax = 92,
+            ymin = -1000, ymax = 1000,
+            xtick distance = 10,
+            ytick distance = 250,
+            grid = both,
+            minor tick num = 1,
+            major grid style = {lightgray},
+            minor grid style = {lightgray!25},
+            width = 0.95\textwidth,
+            height = 0.75\textwidth,
+            legend cell align = {left},
+            legend pos = south west
+            ]
+
+            \addplot[blue, mark = none] table [x = {time}, y = {left}] {\data};
+            \addplot[orange, mark = none] table [x = {time}, y = {right}] {\data};
+
+            \addplot[black, mark = none, domain = 19:92, samples = 2, dashed] {792};
+            \addplot[black, mark = none, domain = 19:92, samples = 2, dashed, forget plot] {-892};
+
+            \legend{
+                $\omega_L$,
+                $\omega_R$,
+                Maximaler Wert
+            }
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Winkelgeschwindigkeiten der Räder im Verlauf der Zeit, bei dem die Testperson ein Rad, mit der dominanten Hand, so schnell wie möglich dreht}
+    \label{fig:gyroMax}
+\end{figure}

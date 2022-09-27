@@ -1,0 +1,46 @@
+\begin{figure}[h]
+    \centering
+    \pgfplotstableread{./plots/2_threshold.dat}{\data}
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel = {$\mathrm{Zeit}\ [\si{\milli\second}]$},
+            ylabel = {$\mathrm{Winkelgeschwindigkeit}\ [\si{\degree/\second}]$},
+            xmin = 8350, xmax = 8750,
+            ymin = -450, ymax = 50,
+            xtick distance = 100,
+            ytick distance = 100,
+            grid = both,
+            minor tick num = 1,
+            major grid style = {lightgray},
+            minor grid style = {lightgray!25},
+            width = \textwidth,
+            height = 0.75\textwidth,
+            legend cell align = {left},
+            legend pos = south east
+            ]
+
+            %green area
+            \addplot+[name path = A1, black, mark = none, domain = 8350:8517, samples = 2, forget plot] {150};
+            \addplot+[name path = A2, black, mark = none, domain = 8350:8517, samples = 2, forget plot] {-500};
+            \addplot[green!50, opacity=0.5] fill between[of=A1 and A2];
+
+            \addplot[blue, mark = *] table [x = {time}, y = {left}] {\data};
+            \addplot[orange, mark = *] table [x = {time}, y = {right}] {\data};
+
+            \addplot[black, mark = none, domain = 8350:8750, samples = 2, dashed] {-100};
+            \addplot[black, mark = none, domain = 8350:8750, samples = 2, dashed, forget plot] {100};
+            \addplot[black, mark = none, domain = 8350:8750, samples = 2, dotted] {-25};
+            \addplot[black, mark = none, domain = 8350:8750, samples = 2, dotted, forget plot] {25};
+
+            \legend{
+                $\mathrm{Sichtachsenbewegung}$,
+                $\omega_L$,
+                $\omega_R$,
+                $s_1$,
+                $s_2$
+            }
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Bewegungs-Zustände ohne unerwünschter \textit{Sichtachsenbewegung}}
+    \label{fig:2_threshold}
+\end{figure}
