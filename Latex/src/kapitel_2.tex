@@ -101,12 +101,7 @@ Wie zuvor beschrieben, muss der Frage nachgegangen werden, in welchem Modus das 
 Hierfür wurde eine Datenreihe gemessen, mit der Gradzahl pro Sekunde im Verlauf der Zeit.
 Eine Testperson hat dabei versucht, ein Rad so schnell wie möglich zu drehen.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\textwidth]{gyroMax.PNG}
-    \caption{Winkelgeschwindigkeiten der Räder im Verlauf der Zeit, bei dem die Testperson ein Rad, mit der dominanten Hand, so schnell wie möglich dreht}
-    \label{fig:gyroMax}
-\end{figure}
+\input{./plots/gyroMax.tex}
 
 Abbildung \ref{fig:gyroMax} zeigt bei einer Roation nach vorne einen maximal erreichten Ausschlag um $800\ \si{\degree}/s$.
 Bei Rotationen nach hinten ist der Ausschlag etwas höher, übersteigt jedoch nicht $-900\ \si{\degree}/s$.
@@ -227,18 +222,9 @@ Um die Datenrate zu ermitteln, mit der beide Nodes (eingebettete Systeme an den 
 Dazu zählt die Software die eingegangenen Pakete seit dem letzten Empfangenen und multipliziert diese mit 4, um die Datenrate pro Sekunde zu erhalten.
 Zusätzlich wird bei jedem Datensatz ermittelt, wie viel Zeit zwischen den letzten beiden Paketen vergangen ist\footnote{Auf die Messung der Latenz wird im Hinblick auf den Umfang der Arbeit verzichtet, da dies erfordert hätte, beide Seiten der Verbindung zu synchronisieren.}.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\textwidth]{wifiStats.PNG}
-    \caption{Intervall zwischen Paketen im Verlauf der Zeit bei WiFi}
-    \label{fig:wifiStats}
-\end{figure}
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\textwidth]{espnowStats.PNG}
-    \caption{Intervall zwischen Paketen im Verlauf der Zeit bei ESP-Now}
-    \label{fig:espnowStats}
-\end{figure}
+\input{./plots/wifiStats.tex}
+
+\input{./plots/espnowStats.tex}
 
 \begin{table}[h]
     \centering
@@ -262,7 +248,7 @@ Den Abbildungen \ref{fig:wifiStats} und \ref{fig:espnowStats}, sowie der Tabelle
 ESP-Now mit seriellem Port schafft dabei im Durchschnitt 80 Pakete mehr als WiFi mit einem WebSocket.
 Die Verbindung mit WiFi ist jedoch deutlich störungsfreier.
 So ist aus Abbildung \ref{fig:espnowStats} abzulesen, dass entweder ESP-Now oder der serielle Port regelmäßiger, sowie höhere Ausreißer erzeugt, bei denen die Zeit zwischen zwei Paketen über 15 Millisekunden ist.
-WiFi hingegen hat im kompletten Datensatz nur einen deutlichen Ausreißer (Abbildung \ref*{fig:wifiStats}) und hat ansonsten selten Zeiten über 15 Millisekunden. Es kann geschlussfolgert werden, dass WiFi vorzuziehen ist.
+WiFi hingegen hat im kompletten Datensatz nur einen deutlichen Ausreißer (Abbildung \ref{fig:wifiStats}) und hat ansonsten selten Zeiten über 15 Millisekunden. Es kann geschlussfolgert werden, dass WiFi vorzuziehen ist.
 Jedoch kann auf ESP-Now mit seriellem Port zurückgegriffen werden, wenn nur ein \ac{usb}-Anschluss und kein WiFi Netzwerk verfügbar ist.
 Anzumerken ist jedoch, dass die Messungen stark abhängig davon sind, welche \ac{usb}-Anschlüsse und -Protokolle verwendet wurden, sowie welche Datenraten der Router unterstützt.
 Ein weiterer Einflussfaktor ist die Verbindung zwischen Client und dem Router.
@@ -278,13 +264,13 @@ Es sind keine Interpolationstechniken notwendig, um die Bewegung flüssig ersche
     \caption{Die Verbindungsmethoden im Vergleich}
     \begin{tabular}{|l|l|l|}
         \hline
-        ~                                                                                                                & \begin{tabular}[c]{@{}l@{}}\textbf{WiFi }\\\textbf{mit Websocket}\end{tabular}                                                            & \begin{tabular}[c]{@{}l@{}}\textbf{ESP-Now}\\\textbf{mit seriellem Port}\end{tabular}                                                     \\
+        ~                                                                                                                & \begin{tabular}[c]{@{}l@{}}\textbf{WiFi }\\\textbf{mit Websocket}\end{tabular}                                                           & \begin{tabular}[c]{@{}l@{}}\textbf{ESP-Now}\\\textbf{mit seriellem Port}\end{tabular}                                                    \\
         \hline
-        \begin{tabular}[c]{@{}l@{}}\textbf{Anzahl }\\\textbf{Mikrocontroller}\end{tabular}                               & 2                                                                                                                                         & 3                                                                                                                                         \\
+        \begin{tabular}[c]{@{}l@{}}\textbf{Anzahl }\\\textbf{Mikrocontroller}\end{tabular}                               & 2                                                                                                                                        & 3                                                                                                                                        \\
         \hline
-        \textbf{Daten-Pfad}                                                                                              & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}ESP32\\↓\\Router\\↓\\Rollstuhl-Software\end{tabular}}                                      & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}ESP32\\↓\\ESP32\\↓\\Serieller Port\\↓\\Rollstuhl-Software\end{tabular}}                    \\
+        \textbf{Daten-Pfad}                                                                                              & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}ESP32\\↓\\Router\\↓\\Rollstuhl-Software\end{tabular}}                                     & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}ESP32\\↓\\ESP32\\↓\\Serieller Port\\↓\\Rollstuhl-Software\end{tabular}}                   \\
         \hline
-        \begin{tabular}[c]{@{}l@{}}\textbf{"Hardcoding"}\\\textbf{von Verbindungs}\\\textbf{-informationen}\end{tabular} & nicht notwendig                                                                                                                           & Ziel-MAC-Adressen                                                                                                                         \\
+        \begin{tabular}[c]{@{}l@{}}\textbf{"Hardcoding"}\\\textbf{von Verbindungs}\\\textbf{-informationen}\end{tabular} & nicht notwendig                                                                                                                          & Ziel-MAC-Adressen                                                                                                                        \\
         \hline
         \textbf{Vorteile}                                                                                                & \begin{tabular}{@{\labelitemi\hspace{\dimexpr\labelsep+0.5\tabcolsep}}l@{}}\begin{tabular}[c]{@{}l@{}}Stabile \\Verbindung\end{tabular}\\\begin{tabular}[c]{@{}l@{}}Nur eine \\Übertragungstechnologie\\notwendig\end{tabular}\end{tabular} & \begin{tabular}{@{\labelitemi\hspace{\dimexpr\labelsep+0.5\tabcolsep}}l@{}}\begin{tabular}[c]{@{}l@{}}Kein Verbinungsaufbau \\mit lokalem Netzwerk\\notwendig\end{tabular}\\\begin{tabular}[c]{@{}l@{}}Kein WiFi-Netzwerk \\notwendig, ein \\USB-Anschluss genügt\end{tabular}\end{tabular} \\
         \hline

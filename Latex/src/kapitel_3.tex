@@ -31,7 +31,6 @@ Das Framework unterstützt Xbox 360-, sowie DualShock 4-Controller\cite{VirtualG
 
 Die Internet-Vertriebsplattform Steam, welche hauptsächlich Computerspiele vertreibt, hat eine Umfrage veröffentlicht, über die Verteilung von Spielcontrollern auf ihrer Platform.
 Der Abbildung \ref{tab:connectionStats} ist zu entnehmen, dass $45\ \%$ aller Controller ein Xbox 360 Controller sind\cite{SteamSteamNews2018}.
-%Zusätzliche $19\ \%$ aller Controller sind ein Xbox One Controller, ein Modell welches seinem Vorgänger sehr ähnlich ist.
 Damit sind sie mit großem Abstand am verbreitetsten.
 Aufgrund dessen wurde sich im Rahmen der vorliegenden Arbeit für die Emulation eines Xbox 360 Controllers entschieden, da anzunehmen ist, dass dieser Controller am wahrscheinlichsten unterstützt wird.
 
@@ -244,12 +243,7 @@ Im nächsten Kapitel wird darauf eingegangen, welche Bewegungszustände existier
 Um alle Bewegungszustand-Permutationen ermitteln zu können, muss festegestellt werden, dass sich ein Rad in drei Zuständen befinden kann: Still stehend, nach vorne drehend und nach hinten drehend.
 Zwei Räder mit jeweils drei Zuständen ergeben dabei neun Bewegungszustände ($3^2 = 9$), welche in Abbildung \ref{fig:wheelstates} skizziert sind.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.75\textwidth]{WheelchairStates.PNG}
-    \caption{Die neun Bewegungszustände eines Rollstuhls}
-    \label{fig:wheelstates}
-\end{figure}
+\input{./sketches/wheelchairStates.tex}
 
 Jedoch lässt sich die Menge von Bewegungszuständen in folgende disjunkte Teilmengen unterteilen:
 \begin{itemize}
@@ -349,24 +343,14 @@ Unter Verwendung dieser Methode kommt es beim Anfahren oder Bremsen (\textit{Sic
 Da sich die Räder nicht mit derselben Geschwindigkeit drehen, gibt es ein kurzes Zeitintervall, in dem ein Rad unter dem Schwellwert und ein Rad über dem Schwellenwert liegt.
 Aus der Abbildung \ref{fig:1_threshold} ist abzulesen, dass für dieses Zeitintervall die Bedingung der \textit{Einzelradbewegung} gilt, sodass eine Interaktionstaste betätigt wird.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\textwidth]{1threshold.PNG}
-    \caption{Bewegungs-Zustände mit unerwünschter \textit{Sichtachsenbewegung}}
-    \label{fig:1_threshold}
-\end{figure}
+\input{./plots/1_threshold.tex}
 
 Dieses Problem lässt sich über das Einführen eines neuen \textit{Einzelradbewegung} Schwellenwertes beheben.
 Wählt man für diesen einen geringeren Wert $s_2 = 25$ als für den Schwellwert für das Teilen des Wertebereichs $s_1$, entsteht eine Pufferzone.
 Beim Beschleunigen aus der Ruhe überschreiten die Gyroskop-Werte zunächst nacheinander $s_2$. Anschließend überschreiten die Werte nacheinander $s_1$.
 Solange beide Werte in der Pufferzone sind, kann weder eine \textit{Einzelradbewegung} noch eine \textit{Sichtachsenbewegung} detektiert werden (siehe Abbildung \ref{fig:2_threshold}).
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\textwidth]{2threshold.PNG}
-    \caption{Bewegungs-Zustände ohne unerwünschter \textit{Sichtachsenbewegung}}
-    \label{fig:2_threshold}
-\end{figure}
+\input{./plots/2_threshold.tex}
 
 Durch das Einführen der neuen Schwellenwerte müssen folgende Teilmengen-Bewegungszustände erweitert werden:
 
@@ -390,12 +374,7 @@ Beim Anfahren oder Bremsen (\textit{Sichtachsenbewegung}) wurde beobachtet, dass
 Ähnlich wie beim vorangegangenen Problem wird auch hier beim Übergang von einem Zustand zum Nächsten ein unerwünschter Zwischenzustand erreicht.
 In diesem Fall gibt es beim Beschleunigen einen kurzes Zeitinterval in dem die Rollstuhl-Software im \textit{Neigen}-Zustand ist, da $|\omega_L|$ und $|\omega_R|$ beide unter dem Schwellenwert $s_2$ sind (siehe Abbildung \ref{fig:ohneAcc}).
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\textwidth]{ohneAcc.PNG}
-    \caption{Bewegungs-Zustände mit unerwünschtem \textit{Neigen}}
-    \label{fig:ohneAcc}
-\end{figure}
+\input{./plots/ohneAcc.tex}
 
 Da die Fehldetektion immer dann auftritt, wenn sich die Geschwindigkeit der Räder ändert, ist der hier verwendete Lösungsansatz, die Bedingung des Neigungs-Zustandes zu erweitern.
 In dieser wird nun auch abgefragt, ob die Summe der Änderungsraten $a$ der Gyroskope unter einem neuen Schwellenwert $s_3$ liegt.
@@ -413,17 +392,10 @@ Die Bedingung des Teilmengen-Zustands \textit{Neigen} muss wie folgt ergänzt we
     ((\omega_L > 0) \Leftrightarrow (\omega_R > 0)) \land (|\omega_L| < s_1) \land (|\omega_R| < s_1) \land (a < s_3)
 \end{align}
 
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\textwidth]{mitAcc.PNG}
-    \caption{Bewegungs-Zustände unter Verwendung eines Schwellenwertes für die Änderungsrate ohne unerwünschtem \textit{Neigen}}
-    \label{fig:mitAcc}
-\end{figure}
+\input{./plots/mitAcc.tex}
 
 Aus der Abbildung \ref{fig:mitAcc} ist abzulesen, dass zwischen dem \textit{Sichtachsenbewegung}-Zustand und dem \textit{Neigen}-Zustand nun ein kurzer Ruhezustand existiert.
 Diese Verzögerung bei der Fortbewegung ist vom Nutzer kaum bis gar nicht wahrnehmbar.
 Im gezeigten Beispiel beträgt diese nur etwa 70ms.
 Jedoch ist anzumerken, dass diese Methode vor allem bei ruckartigen Bewegungen funktioniert, da besonders dann die Änderungsrate schnell einen registrierbaren Ausschlag hat.
 Verändert sich die Geschwindigkeit nicht schnell genug, kann es immer noch zu registrierbaren Neigungen kommen.
-
