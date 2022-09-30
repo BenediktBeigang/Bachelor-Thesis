@@ -9,14 +9,11 @@ public static class Program
 {
     public static void Main(string[] args)
     {
-        // Console.WriteLine(ProjectStats.LinesOfCode());
-        // Console.Clear();
-        // Console.Write(Templates.Template());
         Start_Loops();
         Controller.Start();
-        Connection._Connection = Connection.SetConnection(ConnectionType.WIFI);
-        // Connection._Connection = Connection.SetConnection(ConnectionType.ESP_NOW);
-        Load_Options();
+        if (args.Length == 0) Connection._Connection = Connection.SetConnection(ConnectionType.WIFI);
+        if (args.Length == 1 && args[0] == "wifi") Connection._Connection = Connection.SetConnection(ConnectionType.WIFI);
+        if (args.Length == 2 && args[0] == "espnow") Connection._Connection = Connection.SetConnection(ConnectionType.ESP_NOW, args[1]);
         Exit_Code();
     }
 
@@ -40,10 +37,13 @@ public static class Program
 
     private static void Exit_Code()
     {
-        UserInput.Input();
-        SavedOptions.Options.Save();
-        Connection._Connection!.Disconnect_AllNodes();
-        Terminal.Add_Message("PROGRAM STOPPED");
+        if (Connection._Connection is not null)
+        {
+            UserInput.Input();
+            SavedOptions.Options.Save();
+            Connection._Connection!.Disconnect_AllNodes();
+            Terminal.Add_Message("PROGRAM STOPPED");
+        }
         Loop.Close_AllLoops();
         Console.Clear();
         Console.WriteLine(Terminal.InterfaceToString());

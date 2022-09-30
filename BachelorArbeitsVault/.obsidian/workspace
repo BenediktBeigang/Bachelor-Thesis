@@ -6,24 +6,13 @@
       {
         "id": "61fc18fcbe9dd326",
         "type": "leaf",
-        "dimension": 81.97815533980582,
+        "dimension": 99.99999999999999,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Arbeit/2_Einleitung.md",
+            "file": "Arbeit/6_Erkenntnis.md",
             "mode": "source",
             "source": false
-          }
-        }
-      },
-      {
-        "id": "09ce9a63e36ee4e8",
-        "type": "leaf",
-        "dimension": 18.021844660194176,
-        "state": {
-          "type": "kanban",
-          "state": {
-            "file": "ToDo-Board.md"
           }
         }
       }
@@ -81,7 +70,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ToDo-Board.md",
+                "file": "Arbeit/6_Erkenntnis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,17 +97,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "09ce9a63e36ee4e8",
+  "active": "61fc18fcbe9dd326",
   "lastOpenFiles": [
+    "Arbeit/5_Abbildung der empfangenen Daten auf ein Eingabegerät.md",
+    "ToDo-Board.md",
     "Arbeit/2_Einleitung.md",
+    "Master.md",
     "Arbeit/6_Erkenntnis.md",
     "Arbeit/Stand der Forschung.md",
     "Arbeit/7_Ausblick.md",
     "Arbeit/Theorie.md",
-    "ToDo-Board.md",
     "Arbeit/3_Begriffsklärung.md",
-    "Arbeit/4_Entwicklung des eingebetteten Systems.md",
-    "Quellen/WissenschArbeiten.pdf",
-    "Quellen/Citation/@sharkey3rdInternationalConference2000.md"
+    "Arbeit/4_Entwicklung des eingebetteten Systems.md"
   ]
 }

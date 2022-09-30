@@ -136,7 +136,12 @@ public class Gyro
         return Peek_RawValue() / StepsPerDegree;
     }
 
-    // first is newest, last is oldest
+    /// <summary>
+    /// Returs last Values as DegreePerSecond in an array. The parameter count specifices how many values are needed.
+    /// The first element of the array is the newest, the last the oldest.
+    /// </summary>
+    /// <param name="count"></param>
+    /// <returns></returns>
     public double[] DegreePerSecond_Last(int count)
     {
         double[] result = new double[count];
@@ -150,11 +155,20 @@ public class Gyro
     #endregion
 
     #region Smoothing Value
+    /// <summary>
+    /// Returns the newest value smoothed by a smothing function.
+    /// </summary>
+    /// <returns></returns>
     public double SmoothedDegreePerSecond_Last()
     {
         return SmoothedDegreePerSecond_Last(1).First();
     }
 
+    /// <summary>
+    /// Returns the newest values smoothed by a smothing function as array.
+    /// </summary>
+    /// <param name="count"></param>
+    /// <returns></returns>
     public double[] SmoothedDegreePerSecond_Last(int count)
     {
         if (count < 1) return new double[] { };
@@ -168,6 +182,13 @@ public class Gyro
     }
 
     #region Smoothing
+    /// <summary>
+    /// Smooths unfiltered values by appling weights(SmoothingFilter) to the last values.
+    /// The sum of these weighted values is the new smoothed value.
+    /// </summary>
+    /// <param name="count"></param>
+    /// <param name="unfilteredValues"></param>
+    /// <returns></returns>
     public double[] SmoothedDegreePerSecond_Last(int count, double[] unfilteredValues)
     {
         if (count < 1) return new double[] { };
@@ -180,6 +201,13 @@ public class Gyro
     }
     #endregion
 
+    /// <summary>
+    /// Smooths unfiltered values by appling weights(SmoothingFilter) to the last values.
+    /// The sum of these weighted values is the new smoothed value.
+    /// </summary>
+    /// <param name="unfilteredValues"></param>
+    /// <param name="start"></param>
+    /// <returns></returns>
     public double SmoothValue(double[] unfilteredValues, int start)
     {
         double result = 0;
@@ -192,6 +220,11 @@ public class Gyro
     #endregion
 
     #region Acceleration
+    /// <summary>
+    /// Returns the rate of change(acceleration) of the last two values. 
+    /// It does this by calculating the slope between the two values.
+    /// </summary>
+    /// <returns></returns>
     public double Acceleration()
     {
         const int samples = 2;
@@ -228,6 +261,10 @@ public class Gyro
         if (Node.Node_Two.ConnectionType is not ConnectionType.NOTHING) Node.Node_Two.Gyro.CalibrationStatus = CalibrationStatus.REQUESTED;
     }
 
+    /// <summary>
+    /// Starts calibration process. Collects for a given time the newest values.
+    /// </summary>
+    /// <param name="seconds"></param>
     public void Start_Calibration(int seconds)
     {
         CalibrationStatus = CalibrationStatus.CALIBRATING;
@@ -236,6 +273,10 @@ public class Gyro
         Task.Run(() => Stop_Calibration(seconds));
     }
 
+    /// <summary>
+    /// Ends the calibration process. Sets the Offset to the average value of CalibrationValues.
+    /// </summary>
+    /// <param name="seconds"></param>
     private void Stop_Calibration(int seconds)
     {
         Thread.Sleep(seconds * 1000);
@@ -271,6 +312,10 @@ public class Gyro
     }
     #endregion
 
+    /// <summary>
+    /// Returns the current values of this gyro as GyroSnapshot.
+    /// </summary>
+    /// <returns></returns>
     public GyroSnapshot Snapshot()
     {
         return new GyroSnapshot()

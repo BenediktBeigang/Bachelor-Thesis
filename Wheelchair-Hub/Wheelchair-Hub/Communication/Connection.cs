@@ -4,16 +4,15 @@ using System.Timers;
 public abstract class Connection
 {
     private const int TIMEOUT = 10;
-    private const string COM = "COM4";
     private const int BAUDRATE = 115200;
     public static Connection? _Connection { get; set; }
 
-    public static Connection? SetConnection(ConnectionType connection)
+    public static Connection? SetConnection(ConnectionType connection, string? com = null)
     {
         switch (connection)
         {
             case ConnectionType.WIFI: return new WiFi();
-            case ConnectionType.ESP_NOW: return new ESP_Now(COM, BAUDRATE);
+            case ConnectionType.ESP_NOW: return new ESP_Now(com!, BAUDRATE);
             case ConnectionType.BLUETOOTH: return null;
             default: return null;
         }

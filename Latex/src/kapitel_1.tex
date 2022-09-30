@@ -20,8 +20,8 @@ Gessler erweitert diese Definition und schreibt:
 Da für das Steuern von Aktoren und das Auslesen von Sensoren, sowie das Empfangen und Übertragen von Daten aus heutiger Sicht keine große Rechenleistung benötigt wird, sind die verwendeten Mikroprozessoren verglichen mit modernen Prozessoren weniger leistungsstark.
 Das hat zur Folge, dass Randbedingungen entstehen, welche bei der Entwicklung beachtet werden müssen.
 Dazu zählen Rechenleistung, Verlustleistung und Ressourcenverbrauch\cite{gesslerEntwicklungEingebetteterSysteme2014}.
-Jedoch sind grade deshalb solche Systeme erschwinglich, da keine Hardware benötigt wird, welche auf maximale Rechenleistung und Speicherverbrauch ausgelegt ist.
-Aktuell sind eingebettete Systeme in den unterschiedlichsten Anwendungsgebieten zu finden, so zum Beispiel in: Autos, Schienenfahrzeuge, Flugzeugen, in der Telekommunikation und bei der Fertigungsautomatisierung\cite{marwedelEingebetteteSystemeGrundlagen2021}.
+Doch gerade diese geringen Anforderungen machen solche Systeme erschwinglich, da keine Hardware benötigt wird, welche auf maximale Rechenleistung und Speicherverbrauch ausgelegt ist.
+Aktuell sind eingebettete Systeme in den unterschiedlichsten Anwendungsgebieten zu finden, so zum Beispiel in: Autos, Schienenfahrzeugen, Flugzeugen, in der Telekommunikation und bei der Fertigungsautomatisierung\cite{marwedelEingebetteteSystemeGrundlagen2021}.
 Eingebettete Systeme werden meist mit hardwarenahen Sprachen programmiert wie C und C++, da diese durch ihre Nähe zur Hardware die höchste Effizienz versprechen\cite{gesslerEntwicklungEingebetteterSysteme2014}.
 
 %------------------------------------------------------------------------------------------------------
@@ -30,13 +30,13 @@ Der Begriff des Raums ist in den unterschiedlichsten Fachbereichen zu finden, mi
 In der Mathematik gibt es viele Arten von Räumen (algebraischer Raum, euklidischer Raum, Hilbert Raum, etc.), die präzise definiert werden können.
 Kulturwissenschaftlich spielt der Raum ebenfalls eine große Rolle, jedoch nicht als mathematisches Konstrukt, sondern bezieht zwischenmenschliche und gesellschaftliche Aspekte mit ein (zum Beispiel der Kulturraum).
 Der Begriff des \textit{virtuellen Raums} ist jedoch nicht klar eingrenzbar.
-Da sich die verschiedensten Fachbereiche ihm bedienen, hängt die Definition davon ab, aus welcher Richtung man sich ihm nähert.
+Da sich die verschiedensten Fachbereiche seiner bedienen, hängt die Definition davon ab, aus welcher Richtung man sich ihm nähert.
 Deshalb wird im Zuge dieser Arbeit der Begriff des \textit{virtuellen Raums} wie folgt definiert:
 
-Ein virtueller Raum ist ein durch einen Computer erzeugte Umgebung, welche auf eine zweidimensionale Projektionsfläche abgebildet werden kann.
-Es ist kein im physikalischen Sinne real existierender Raum mit messbaren Abmessungen.
-Wie auch in anderen Räumen ist es auch im virtuellen Raum möglich, durch ihn hindurch zu navigieren.
-So hat der Nutzer eine Position in diesem, sowie die Möglichkeit diese Position gezielt zu verändern.
+\textit{Ein virtueller Raum ist eine durch einen Computer erzeugte Umgebung, welche auf eine zweidimensionale Projektionsfläche abgebildet werden kann.
+    Es ist kein im physikalischen Sinne real existierender Raum mit messbaren Abmessungen.
+    Wie auch in anderen Räumen ist es auch im virtuellen Raum möglich, durch ihn hindurch zu navigieren.
+    So hat der Nutzer eine Position in diesem, sowie die Möglichkeit diese Position gezielt zu verändern.}
 
 In der vorliegenden Arbeit wird vorwiegend mit dreidimensionalen Räumen gearbeitet, auch wenn zweidimensionale Räume denkbar sind.
 Ein Beispiel für zweidimensionale Räume ist ein \ac{gui}; der Nutzer kann innerhalb dieser zwischen verschiedenen Bereichen navigieren.
@@ -67,8 +67,8 @@ Das navigierende Individuum oder Objekt entscheidet auf Grundlage von „\textit
 
 Im Kontext dieser Arbeit navigiert der Nutzer auf einer zweidimensionalen Ebene, in einem dreidimensionalen virtuellen Raum.
 Er steuert dabei gezielt seine Fortbewegung und interagiert mit der virtuellen Umgebung, indem die Räder eines Rollstuhls, in dem er sitzt, gedreht werden.
-Es soll im Rahmen dieser Arbeit zusätzlich hervorgehoben werden, dass Navigation im Gegensatz zum reinen Fortbewegen nicht passiv ist.
-Das Objekt oder Individuum, das navigiert, hat einen Einfluss auf die Richtung der Fortbewegung.
+% Es soll im Rahmen dieser Arbeit zusätzlich betont werden, dass Navigation im Gegensatz zum reinen Fortbewegen nicht passiv ist.
+% Das Objekt oder Individuum, das navigiert, hat einen Einfluss auf die Richtung der Fortbewegung.
 
 %------------------------------------------------------------------------------------------------------
 \section{Gyroskop}
@@ -79,7 +79,7 @@ Mithilfe von \ac{mems} konnten Trägheitssensoren miniaturisiert und in Massen p
 In der Elektrotechnik sind diese beliebt, da sie klein und kostengünstig sind\cite{maenakaMEMSInertialSensors2008}.
 Sie messen die Coriolis-Kraft, welche durch die Rotation entlang von voher festgelegten Achsen wirkt.
 Der Sensor kann diese Kraft messen und als elektrisches Signal weitergeben, sodass anschließend das Signal digitalisiert werden kann\cite{utmelMPU6050ModuleDatasheet}.
-Heute sind sie in durch ihre Verfügbarkeit in den verschiedensten Anwendungsgebieten zu finden, wie dem Auto, der Medizin oder der Unterhaltungselektronik\cite{armeniseAdvancesGyroscopeTechnologies2010}.
+Heute sind sie aufgrund ihrer guten Verfügbarkeit in den verschiedensten Anwendungsgebieten zu finden, wie dem Auto, der Medizin oder der Unterhaltungselektronik\cite{armeniseAdvancesGyroscopeTechnologies2010}.
 
 %------------------------------------------------------------------------------------------------------
 \section{Eingabegerät}
@@ -96,6 +96,6 @@ Je nach Anwendungsgebiet sind unterschiedliche Eingabegeräte geeigneter.
 So ist für das Schreiben eines Textes eine Tastatur nutzerfreundlicher, als im Vergleich dazu beispielsweise ein Spielecontroller.
 Ein Eingabegerät kann aus mehreren Eingabetypen bestehen.
 Die gängigsten sind binäre und stufenlose Tasten, sowie welche entlang von Achsen, wie beispielsweise Thumbsticks oder Touchpads.
-Darüber hinaus gibt es noch weitere Eingabetypen, diese zu nennen, jedoch den Rahmen der vorliegenden Arbeit ausreizen würde.
+Darüber hinaus gibt es noch weitere Eingabetypen, diese zu nennen jedoch den Rahmen der vorliegenden Arbeit sprengen würde.
 Allgemein lässt sich festhalten:
-Solange ein Mensch fähig ist die Messwerte eines Sensors zu manipulieren, kann dieser theoretisch als Eingabegerät verwendet werden kann.
+Solange ein Mensch fähig ist, die Messwerte eines Sensors zu manipulieren, kann dieser theoretisch als Eingabegerät verwendet werden.

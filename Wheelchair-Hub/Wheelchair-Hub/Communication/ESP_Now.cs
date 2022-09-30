@@ -21,6 +21,9 @@ public class ESP_Now : Connection
         Task.Run(() => Open_SerialPort());
     }
 
+    /// <summary>
+    /// Opens Serial-Port so that messages can be read from it.
+    /// </summary>
     private void Open_SerialPort()
     {
         bool first = true;
@@ -39,13 +42,18 @@ public class ESP_Now : Connection
             }
             catch (Exception)
             {
-                if (first) Terminal.Add_Message($"Serial Port (Com{Com}) is not existing.");
+                if (first) Terminal.Add_Message($"Serial Port ({Com}) is not existing.");
                 first = false;
                 Thread.Sleep(1000);
             }
         }
     }
 
+    /// <summary>
+    /// Uses incoming message to extract the containing gyrovalues.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Handle_Message(object sender, SerialDataReceivedEventArgs e)
     {
         try

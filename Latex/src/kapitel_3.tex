@@ -1,25 +1,27 @@
-\chapter{Abbildung der empfangenen Daten auf ein Eingabegerät}
-Nachdem die Daten des eingebetteten Systems zur Rollstuhl-Software übermittelt wurden, müssen diese nun auf auf ein herkömmliches Eingabegerät abgebildet werden.
-Es wird sich der Frage gewidmet, welches Eingabegerät in Frage kommt und wie möglichst viele, präzise Eingaben auf dieses Eingabegerät abgebildet werden können.
+\chapter{Abbildung der empfangenen Daten auf einem Eingabegerät}
+Nachdem die Daten des eingebetteten Systems zur Rollstuhl-Software übermittelt wurden, müssen diese nun auf ein herkömmliches Eingabegerät abgebildet werden.
+Daher stellt sich die Frage, welches Eingabegerät in Frage kommt und wie möglichst viele, präzise Eingaben auf dieses Eingabegerät abgebildet werden können.
 Im letzten Teil des Kapitels werden aufgenommene Datenreihen untersucht, um fehlerhafte Eingaben zu minimieren.
 
 \section{Interface zur Nutzung der Rad-Daten in externer Software}
-Die Raddaten, welche die Rollstuhl-Software empfangen hat, müssen nun zu externer Software gelangen.
+Die Raddaten, welche die Rollstuhl-Software empfangen hat, müssen nun zur Software gelangen, welche gesteuert werden soll.
 Dazu ist eine vorhandene Schnittstelle notwendig (Tastatur, Maus, Spielcontroller, ...), denn es kann nicht davon ausgegangen werden, dass jede externe Software eine neue Schnittstelle implementiert.
-Jedoch muss in diesem Fall, in der Rollstuhl-Software eine Abbildung auf eine vorhandene Schnittstelle durchgeführt werden.
+Jedoch muss in diesem Fall in der Rollstuhl-Software eine Abbildung auf eine vorhandene Schnittstelle durchgeführt werden.
 
 \subsection{Vergleich zwischen Tastatur und Spielcontroller}
 Tastaturen und Spielcontroller werden von den meisten Anwendungen unterstützt und eignen sich unterschiedlich gut für die Zwecke des hier entwickelten Systems.
-Tastatureingaben bieten den Vorteil, dass sie von fast jeder erdenklichen Software unterstützt werden. Jedoch lassen nur binäre Eingaben, durch das Drücken von Tasten tätigen.
+Tastatureingaben bieten den Vorteil, dass sie von fast jeder erdenklichen Software unterstützt werden.
+Jedoch lassen sich nur binäre Eingaben, durch das Drücken von Tasten, tätigen.
 Da die Rollstuhl-Eingaben jedoch unterschiedliche Werte innerhalb eines Wertebereichs darstellen, wird bei einer Tastatureingabe die Interaktionsmöglichkeit stark eingeschränkt.
-Zudem ist oft das zusätzliche Verwenden einer Maus erforderlich. Dies verkompliziert das Abbilden zusätzlich.
+Zudem ist oft das zusätzliche Verwenden einer Maus erforderlich.
+Dies verkompliziert das Abbilden zusätzlich.
 Die Alternative ist ein Mapping auf eine Spielcontroller-Eingabe.
 Hier gibt es ebenfalls Knöpfe, beziehungsweise binäre Eingaben, aber auch Eingaben entlang von Achsen innerhalb eines Wertebereichs.
-Überwiegend werden die Achsen in Form eines Thumb-Sticks oder Knopfes mit mehreren Stufen realisiert.
+Überwiegend werden die Achsen in Form eines Thumbsticks oder Knopfes mit mehreren Stufen realisiert.
 Auf der einen Seite könnten so Rollstuhl-Eingaben, wie das Fortbewegen, einfacher auf das Gerät abgebildet werden.
 Andererseites unterstützt nicht jede Software Eingaben mittels eines Spielcontrollers.
 Es wurde sich im Rahmen dieser Arbeit für das Abbilden auf, und emulieren von, einem Spielcontroller entschieden.
-Grund dafür ist, dass die meiste Software in der Fortbewegung eine Rolle spielt (meist Computerspiele oder andere 3D-Räume), diese unterstützen.
+Grund dafür ist, dass die meiste Software, in der Fortbewegung eine Rolle spielt (meist Computerspiele oder andere 3D-Räume), diese unterstützen.
 
 \subsection{Emulation des Spielcontrollers}
 Um die Eingaben des Rollstuhls in tatsächliche Spielcontroller-Eingaben umzuwandeln, die vom Betriebssystem auch als Controller-Eingabe verstanden werden, ist eine Emulation eines Controllers notwendig.
@@ -29,7 +31,7 @@ Dies ist eine Bibliothek, welche in bestehende Software integriert werden kann u
 Über Befehle lassen sich anschließend Controller-Eingaben tätigen.
 Das Framework unterstützt Xbox 360-, sowie DualShock 4-Controller\cite{VirtualGamepadEmulationa}.
 
-Die Internet-Vertriebsplattform Steam, welche hauptsächlich Computerspiele vertreibt, hat eine Umfrage veröffentlicht, über die Verteilung von Spielcontrollern auf ihrer Platform.
+Die Internet-Vertriebsplattform Steam, welche hauptsächlich Computerspiele vertreibt, hat eine Umfrage über die Verteilung von Spielcontrollern auf ihrer Plattform veröffentlicht.
 Der Abbildung \ref{tab:connectionStats} ist zu entnehmen, dass $45\ \%$ aller Controller ein Xbox 360 Controller sind\cite{SteamSteamNews2018}.
 Damit sind sie mit großem Abstand am verbreitetsten.
 Aufgrund dessen wurde sich im Rahmen der vorliegenden Arbeit für die Emulation eines Xbox 360 Controllers entschieden, da anzunehmen ist, dass dieser Controller am wahrscheinlichsten unterstützt wird.
@@ -44,15 +46,16 @@ Aufgrund dessen wurde sich im Rahmen der vorliegenden Arbeit für die Emulation 
 \section{Algorithmen zur Abbildung der Rad-Daten in Controller-Eingaben}
 Die Sensor-Daten der Gyroskope liefern die Winkelgeschwindigkeiten der Räder des Rollstuhls.
 Diese sollen – wie bereits in Kapitel 5.3.1 beschrieben – auf die Eingabemöglichkeiten eines Spielcontrollers abgebildet werden, um sich im virtuellen Raum bewegen oder andere Eingaben tätigen zu können.
-Die Abbildung erfolgt dabei auf einen Xbox360 Controller. Somit sind die abgebildeten Eingaben von jeder Software lesbar, die eine Xbox360 Controllerunterstützung implementiert haben.
-Die in diesem Kapitel werden gelgentlich Aussagen getroffen die mit dem Emfinden des Nutzers zu tun haben oder von ihm abhängig sind.
+Die Abbildung erfolgt dabei auf einen Xbox360 Controller.
+Somit sind die abgebildeten Eingaben von jeder Software lesbar, die eine Xbox360 Controllerunterstützung implementiert haben.
+In diesem Kapitel werden gelegentlich Aussagen getroffen, die mit dem Empfinden des Nutzers zu tun haben oder von ihm abhängig sind.
 Da subjektive Eindrücke nur schwer und unpräzise gemessen werden können, leidet dadurch an manchen Stellen die Aussagekraft.
-Darüber hinaus konnten nur wenige Personen im Umkreis des Erstellers dieser Arbeit als Testperson verwendet werden, was zusätzlich einzelne Aussagen abschwächt.
-Eine zukünftige Arbeit muss sich ausführlicher an diesen Stellen mit den Betreffenden Fragen befassen, und einen größeren diverseren Pool aus Testpersonen verwenden, um die Aussagekraft zu erhöhen.
+Darüber hinaus konnten im Rahmen dieser Arbeit nur wenige Personen als Testperson eingesetzt werden, was zusätzlich einzelne Aussagen abschwächt.
+Eine zukünftige Arbeit muss sich ausführlicher an diesen Stellen mit den betreffenden Fragen befassen und einen größeren, diverseren Pool aus Testpersonen hinzuziehen, um die Aussagekraft zu erhöhen.
 
 \subsection{Abbildung auf einen Thumbstick}
 Der direkte Weg die Raddaten in eine Eingabe umzuwandeln ist, diese auf jeweils eine Achse eines Thumbsticks abzubilden.
-Anwendungsgebiet von dieser Art von Abbildung ist, die Steuerung eines Cursors.
+Anwendungsgebiet von dieser Art von Abbildung ist die Steuerung eines Cursors.
 Dabei wird die x-Achse mit dem einen, die y-Achse mit dem anderen Rad dargestellt.
 Vorteilig ist dabei, dass beide Achsen gleichzeitig angesprochen werden können.
 Jedoch ist es schwieriger, die x-Achse zu bewegen, da sie anders ausgerichtet ist als das Rad, das gedreht wird.
@@ -62,25 +65,25 @@ Damit wird eine intuitive Nutzung angestrebt.
 Jedoch ist es dabei nicht mehr möglich, gleichzeitig den Cursor entlang beider Achsen zu bewegen, da sich die Räder nicht gleichzeitig mit- und gegeneinander drehen können.
 
 \subsection{Abbildung auf einen simulierten Rollstuhl}
-Da das im Rahmen dieser Arbeit entwickelte System darauf abzielt, in einem dreidimensionalen virtuellen Raum, auf einer Ebene zu navigieren, wird eine Abbildung benötigt, die die Position des Nutzers im virtuellen Raum verändert.
-Da die Daten ohnehin von einem Rollstuhl kommen, liegt die Abbildung auf einen simulierten Rollstuhl nahe.
+Da das im Rahmen dieser Arbeit entwickelte System darauf abzielt, in einem dreidimensionalen virtuellen Raum auf einer Ebene zu navigieren, wird eine Abbildung benötigt, die die Position des Nutzers im virtuellen Raum verändert.
+Da die Daten von einem Rollstuhl kommen, liegt die Abbildung auf einem simulierten Rollstuhl nahe.
 Um die Raddaten der zwei Räder auf eine Bewegung und Rotation eines Rollstuhls umzurechnen, muss erst festgestellt werden, welche Drehbewegungen zu welchen Rollstuhlbewegungen führt.
 Dabei können vier vereinfachte Fälle unterschieden werden:
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{wheelchairCases.PNG}
-    \caption{Die Bewegungs-Fälle des Rollstuhl aus der Vogelperspektive}
+    \caption{Die Bewegungs-Fälle des Rollstuhls aus der Vogelperspektive}
     \label{fig:wheelchairCases}
 \end{figure}
 
-\textbf{Fall 1:} Drehen sich die Räder mit gleicher Geschwindigkeit in dieselbe Richtung, so ruft dies eine Bewegung nach vorne oder hinten aus (Abbildung \ref{fig:wheelchairCases}, Fall 1).
+\textbf{Fall 1:} Drehen sich die Räder mit gleicher Geschwindigkeit in dieselbe Richtung, ruft dies eine Bewegung nach vorne oder hinten aus (Abbildung \ref{fig:wheelchairCases}, Fall 1).
 
-\textbf{Fall 2:} Drehen sich die Räder mit gleicher Geschwindigkeit gegeneinander, so ruft dies eine Rotation um die eigene Achse hervor (Abbildung \ref{fig:wheelchairCases}, Fall 2).
+\textbf{Fall 2:} Drehen sich die Räder mit gleicher Geschwindigkeit gegeneinander, ruft dies eine Rotation um die eigene Achse hervor (Abbildung \ref{fig:wheelchairCases}, Fall 2).
 
-\textbf{Fall 3:} Dreht sich nur ein Rad, so dreht sich dieses um das Stehende (Abbildung \ref{fig:wheelchairCases}, Fall 3).
+\textbf{Fall 3:} Dreht sich nur ein Rad, dreht sich dieses um das Stehende (Abbildung \ref{fig:wheelchairCases}, Fall 3).
 
-\textbf{Fall 4:} Drehen sich die Räder unterschiedlich schnell, so muss die Bewegung zusammengesetzt werden aus den Bewegungskomponenten einer der ersten beiden Fälle und dem dritten Fall.
+\textbf{Fall 4:} Drehen sich die Räder unterschiedlich schnell, muss die Bewegung zusammengesetzt werden aus den Bewegungskomponenten einer der ersten beiden Fälle und dem dritten Fall.
 
 Im Folgenden wird die Berechnung der Bewegungsanteile aufgezeigt, bestehend aus Bewegung nach vorne/hinten und der Rotation um die eigene Achse:
 
@@ -89,7 +92,7 @@ Im Folgenden wird die Berechnung der Bewegungsanteile aufgezeigt, bestehend aus 
     \omega_R      & : \ \mathrm{Winkelgeschwindigkeit\ des\ rechten\ Rades}\ [\si{\degree/\second}] \\
     m             & : \ \mathrm{Winkelgeschwindigkeit\ Minimum}\ [\si{\degree/\second}]             \\
     o             & : \ \mathrm{Overshoot}\ [\si{\degree/\second}]                                  \\
-    d             & : \ \mathrm{Abstand\ Der\ R\ddot{a}der}\ [\si{\metre}]                          \\
+    d             & : \ \mathrm{Abstand\ der\ R\ddot{a}der}\ [\si{\metre}]                          \\
     \vec{f}       & : \ \mathrm{Fortbewegungsvektor}\ [\si{\metre/\second}]                         \\
     \vec{r}       & : \ \mathrm{Rotationsvektor}\ [\si{\metre/\second}]                             \\
     \vec{f_{1,2}} & : \ \mathrm{Fortbewegungsvektor\ Fall1\ oder\ Fall2}\ [\si{\metre/\second}]     \\
@@ -127,8 +130,9 @@ Dabei dreht sich jedoch der Rollstuhl nicht.
 
 \textbf{Fall 2:}
 Zur Berechnung der Rotation um die eigene Achse wird zunächst der Wendekreis $w_1$ benötigt.
-Dieser Wendekreis ist abhängig vom Abstand der Räder $d$ und dessen Mittelpunkt $c_1$ liegt im Mittelpunkt zwischen den Rädern (siehe Abbildung \ref{fig:wendekreis}).
-Anschließend wird mithilfe des Minimums $m$, das Verhältnis von $m$ zu $w_1$ errechnet, also wie viel vom Wendekreis gedreht wird.
+Er ist abhängig vom Abstand der Räder $d$.
+Der Mittelpunkt $c_1$ von diesem Wendekreis, ist die Mitte zwischen den beiden Rädern(siehe Abbildung \ref{fig:wendekreis}).
+Anschließend wird mithilfe des Minimums $m$ das Verhältnis von $m$ zu $w_1$ errechnet, also wie viel vom Wendekreis gedreht wird.
 Dieses Verhältnis muss zum Schluss mit $360$ multipliziert werden, um den resultierenden Winkel, beziehungsweise Rotationsvektor Fall1 oder Fall2 $r_{1,2}$, zu berechnen.
 Bei dieser Bewegung verändert der Rollstuhl jedoch nicht seine Position.
 \begin{align}
@@ -186,7 +190,7 @@ Um den Rotationsvektor Fall3 $r_3$ berechnen zu können, muss $\Theta$ mit $360$
     \vec{r_3} = \Theta \cdot 360
 \end{align}
 
-Da die Berechnungen mit den absoluten Rotationswerten errechnet wurden, ist es notwendig anhand der Drehrichtungen beider Räder zu bestimmen, ob sich der Rollstuhl vor- oder zurückbewegt und ob er sich dabei nach links oder rechts dreht.
+Da die Berechnungen mit den absoluten Rotationswerten errechnet wurden, ist es notwendig, anhand der Drehrichtungen beider Räder zu bestimmen, ob sich der Rollstuhl vor- oder zurückbewegt und ob er sich dabei nach links oder rechts dreht.
 Die Drehrichtung ist immer dann links, wenn:
 \begin{align}
     \omega_L < \omega_R
@@ -199,7 +203,7 @@ Es handelt sich um eine Vorwärtsbewegung, wenn:
 \end{align}
 
 sonst ist es eine Rückwärtsbewegung.
-Folgende Bedingungen können vernachlässigt werden, da sie in der Realität nur Auftreten wenn der Overshoot $o = 0$ ist und damit $\vec{f_3} = 0$ und $\vec{r_3} = 0$:
+Folgende Bedingungen können vernachlässigt werden, da sie in der Realität nur auftreten, wenn der Overshoot $o = 0$ ist und damit $\vec{f_3} = 0$ und $\vec{r_3} = 0$:
 \begin{align}
     \omega_L =            & \ \omega_R \\
     \omega_L + \omega_R = & \ 0
@@ -219,9 +223,9 @@ Anschließend können die Bewegungskomponenten addiert werden:
     \vec{r} = & \ \vec{r_{1,2}} + \vec{r_3}
 \end{align}
 
-Sind die Bewegungskomponenten berechnet muss final eine Abbildung dieser auf den Spielcontroller erfolgen.
+Sind die Bewegungskomponenten berechnet, muss final eine Abbildung dieser auf den Spielcontroller erfolgen.
 Dabei bietet sich die y-Achse des linken-Thumbsticks an für den Fortbewegungsvektor $\vec{f}$ und die x-Achse des rechten Thumbsticks für den Rotationsvektor $\vec{r}$.
-In vielen Anwendungen, im besonderen 3D-Videospielen, ist der linke Thumbstick für das Bewegen im Raum zuständig und der rechte für das Umschauen.
+In vielen Anwendungen, im besonderen in 3D-Videospielen, ist der linke Thumbstick für das Bewegen im Raum zuständig und der rechte für das Umschauen.
 
 Berechnet man auf Grundlage der oben genannten Formeln die Bewegung des Rollstuhls, so stößt man auf folgendes Problem:
 Da die Räder bei einer beabsichtigten Bewegung nach vorne meist mit leicht unterschiedlicher Geschwindkeit drehen, erfährt der simulierte Rollstuhl eine Ablenkung nach rechts oder links.
@@ -231,8 +235,8 @@ Bildet man den Durchschnitt $v$ der Rotationen beider Räder und nutzt ihn anste
     \vec{v} = \frac {(\omega_L + \omega_R)} {2}
 \end{align}
 
-Verwendet man den Durchschnitt $v$ müssen die verschiedenen Fälle distinkt sein, da sonst das Wenden mit einem Rad nicht mehr möglich wäre.
-Grund dafür ist der zusammenaddierter Mittelwert der Geschwindigkeiten des stillstehenden und des sich drehenden Rades.
+Verwendet man den Durchschnitt $\vec{v}$ müssen die verschiedenen Fälle distinkt sein, da sonst das Wenden mit einem Rad nicht mehr möglich wäre.
+Grund dafür ist der zusammenaddierte Mittelwert der Geschwindigkeiten des stillstehenden und des sich drehenden Rades.
 Dieser würde anstelle einer Drehung zu einer Vorwärtsbegung führen.
 Das Zusammenrechnen von Fall 1 oder Fall 2, mit Fall 3 darf also nicht geschehen.
 Um dies zu realisieren, sind Bewegungszustände notwendig.
@@ -240,7 +244,7 @@ Auf Basis dieser kann entschieden werden, welcher Fall genutzt werden muss, um d
 Im nächsten Kapitel wird darauf eingegangen, welche Bewegungszustände existieren und wie diese erkannt werden können.
 
 \subsection{Bewegungszustände}
-Um alle Bewegungszustand-Permutationen ermitteln zu können, muss festegestellt werden, dass sich ein Rad in drei Zuständen befinden kann: Still stehend, nach vorne drehend und nach hinten drehend.
+Um alle Bewegungszustand-Permutationen ermitteln zu können, muss berücksichtigt werden, dass sich ein Rad in drei Zuständen befinden kann: Still stehend, nach vorne drehend und nach hinten drehend.
 Zwei Räder mit jeweils drei Zuständen ergeben dabei neun Bewegungszustände ($3^2 = 9$), welche in Abbildung \ref{fig:wheelstates} skizziert sind.
 
 \input{./sketches/wheelchairStates.tex}
@@ -268,7 +272,7 @@ Da das oben beschriebene Rauschen abgeschnitten wurde, gilt der Ruhezustand wenn
 \end{align}
 
 \textbf{\textit{Einzelradbewegung}}\\
-Wie beim Ruhezustand ist es auch hier möglich, darauf zu prüfen, ob ein Wert 0 ist.
+Wie beim Ruhezustand ist es auch hier möglich, darauf hin zu überprüfen, ob ein Wert 0 ist.
 Die einfachste Art und Weise dies zu prüfen, ist folgende Bedingung:
 \begin{align}
     (\omega_L = 0) \oplus (\omega_R = 0)
@@ -291,7 +295,7 @@ Diese gilt nur, wenn \textit{Ruhezustand} und \textit{Einzelradbewegung} ausgesc
 
 \textbf{\textit{Sichtachsenbewegung}}\\
 Der Zustand der Sichtachsenbewegung gilt dann, wenn sich die Räder in dieselbe Richtung drehen.
-Damit ist dieser Zustand das logische Gegenteil der Bedingung \textit{Rotation um die eigene Achse}, vorausgesetzt es wurden \textit{Ruhezustand} und \textit{Einzelradbewegung} ausgeschlossen:
+Damit ist dieser Zustand das logische Gegenteil der Bedingung \textit{Rotation um die eigene Achse}, vorausgesetzt, es wurden \textit{Ruhezustand} und \textit{Einzelradbewegung} ausgeschlossen:
 \begin{align}
     (\omega_L > 0) \Leftrightarrow (\omega_R > 0)
 \end{align}
@@ -301,12 +305,13 @@ Werden, wie in Kapitel \textit{Abbildung auf einen simulierten Rollstuhl} erläu
 Aktionen, wie ein Tastendruck auf dem emulierten Spielcontroller sind in diesen Fällen nicht möglich.
 Jedoch können bestimmte Bewegungsmuster, die nicht zwangsläufig notwendig sind, genutzt werden, um weitere Interaktionen abzubilden.
 Werden für das Drehen des Rollstuhls nur die Zustände genutzt, bei denen sich die Räder gegeneinander drehen (Abb. \ref{fig:wheelstates} Zustand 4 und 6), so bleiben vier Zustände übrig, die mit anderen Interaktionen belegt werden können (Abb. \ref{fig:wheelstates} Zustand 1, 3, 7, 9).
-Bei diesen vier Mustern handelt es sich, um die Einzelradbewegungs-Zustände.
+Bei diesen vier Mustern handelt es sich um die Einzelradbewegungs-Zustände.
 Diese können dann beispielsweise für das Drücken der Interaktionstasten des Spielcontrollers (\textit{A}, \textit{B}, \textit{X}, \textit{Y}) genutzt werden.
 
-Bislang wurde die Anzahl der möglichen Interaktionen, durch die Anzahl der Bewegungszustände begrenzt.
+Bislang wurde die Anzahl der möglichen Interaktionen durch die Anzahl der Bewegungszustände begrenzt.
 Will man weitere Interaktionen abbilden, so bleibt nur die Geschwindigkeit mit der sich die Räder drehen oder die Zeit, um Anweisungen zu kodieren.
-Bezieht man die Zeit in der sich Räder drehen mit ein, so könnte man das Morse-Alphabet abbilden. Dazu wäre nötig zwei Zustände zu definieren, wie zum Beispiel ein Rad kurz oder lange drehen.
+Bezieht man die Zeit in der sich Räder drehen mit ein, so könnte man das Morse-Alphabet abbilden.
+Dazu wäre nötig, zwei Zustände zu definieren, wie zum Beispiel ein Rad kurz oder lange drehen.
 Jedoch verkompliziert dies die Eingabe erheblich für den Nutzer, sodass diese Methode nicht weiter verfolgt wird.
 Eine Alternative dazu ist die Geschwindigkeit mit einzubeziehen.
 Teilt man den Wertebereich der Geschwindigkeiten eines Rades, so lässt sich in der Theorie die Anzahl der Bewegungszustände verdoppeln.
@@ -330,7 +335,7 @@ Dafür hat der Nutzer die Möglichkeit, sich frei im Raum umschauen zu können.
 Für den Nutzer ist die korrekte Detektion von Bewegungszuständen entscheidend.
 Werden unerwünschte Zustände ermittelt, führt dies zu fehlerhaften Eingaben, welche der Nutzer als störend empfindet.
 Je mehr verschiedene Bewegungszustände voneinander unterschieden werden müssen, desto höher ist die Gefahr der Missinterpretation.
-Abgesehen davon ist es nicht immer sinnvoll für alle Bewegungsmuster den Wertebereich zu teilen (wie in Kapitel \textit{Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen}).
+Abgesehen davon ist es nicht immer sinnvoll, für alle Bewegungsmuster den Wertebereich zu teilen (wie in Kapitel \textit{Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen}).
 Bewegungen, wie die \textit{Rotation um die eigene Achse}, wollen vom Nutzer entweder langsam und präzise oder schnell durchgeführt werden.
 Nur in bestimmten Fällen, wie bei der Fortbewegung, kann es sinnvoll sein, den Wertebereich zu teilen.
 So ist die Anzahl der tatsächlich sinnvollen Bewegungsmuster kleiner als die theoretisch denkbaren.
@@ -347,7 +352,8 @@ Aus der Abbildung \ref{fig:1_threshold} ist abzulesen, dass für dieses Zeitinte
 
 Dieses Problem lässt sich über das Einführen eines neuen \textit{Einzelradbewegung} Schwellenwertes beheben.
 Wählt man für diesen einen geringeren Wert $s_2 = 25$ als für den Schwellwert für das Teilen des Wertebereichs $s_1$, entsteht eine Pufferzone.
-Beim Beschleunigen aus der Ruhe überschreiten die Gyroskop-Werte zunächst nacheinander $s_2$. Anschließend überschreiten die Werte nacheinander $s_1$.
+Beim Beschleunigen aus der Ruhe überschreiten die Gyroskop-Werte zunächst nacheinander $s_2$.
+Anschließend überschreiten die Werte nacheinander $s_1$.
 Solange beide Werte in der Pufferzone sind, kann weder eine \textit{Einzelradbewegung} noch eine \textit{Sichtachsenbewegung} detektiert werden (siehe Abbildung \ref{fig:2_threshold}).
 
 \input{./plots/2_threshold.tex}
@@ -372,7 +378,7 @@ Durch das Einführen der neuen Schwellenwerte müssen folgende Teilmengen-Bewegu
 \subsection{Unbeabsichtigtes Neigen beim Anfahren}
 Beim Anfahren oder Bremsen (\textit{Sichtachsenbewegung}) wurde beobachtet, dass für ein kurzes Zeitintervall der Kamerawinkel unbeabsichtigt geneigt wird.
 Ähnlich wie beim vorangegangenen Problem wird auch hier beim Übergang von einem Zustand zum Nächsten ein unerwünschter Zwischenzustand erreicht.
-In diesem Fall gibt es beim Beschleunigen einen kurzes Zeitinterval in dem die Rollstuhl-Software im \textit{Neigen}-Zustand ist, da $|\omega_L|$ und $|\omega_R|$ beide unter dem Schwellenwert $s_2$ sind (siehe Abbildung \ref{fig:ohneAcc}).
+In diesem Fall gibt es beim Beschleunigen ein kurzes Zeitinterval, in dem die Rollstuhl-Software im \textit{Neigen}-Zustand ist, da $|\omega_L|$ und $|\omega_R|$ beide unter dem Schwellenwert $s_2$ sind (siehe Abbildung \ref{fig:ohneAcc}).
 
 \input{./plots/ohneAcc.tex}
 

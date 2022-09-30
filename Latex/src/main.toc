@@ -6,7 +6,7 @@
 \contentsline {section}{\numberline {2.2}Virtueller Raum}{7}{section.2.2}%
 \contentsline {section}{\numberline {2.3}Navigation}{7}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Gyroskop}{8}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Eingabegerät}{9}{section.2.5}%
+\contentsline {section}{\numberline {2.5}Eingabegerät}{8}{section.2.5}%
 \contentsline {chapter}{\numberline {3}Aktueller Forschungsstand}{10}{chapter.3}%
 \contentsline {chapter}{\numberline {4}Entwicklung des eingebetteten Systems}{12}{chapter.4}%
 \contentsline {section}{\numberline {4.1}PlatformIO}{12}{section.4.1}%
@@ -20,7 +20,7 @@
 \contentsline {subsection}{\numberline {4.5.1}WiFi und WebSockets}{18}{subsection.4.5.1}%
 \contentsline {subsection}{\numberline {4.5.2}ESP-Now und Serieller Port}{19}{subsection.4.5.2}%
 \contentsline {section}{\numberline {4.6}Analyse der Messungen}{19}{section.4.6}%
-\contentsline {chapter}{\numberline {5}Abbildung der empfangenen Daten auf ein Eingabegerät}{23}{chapter.5}%
+\contentsline {chapter}{\numberline {5}Abbildung der empfangenen Daten auf einem Eingabegerät}{23}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Interface zur Nutzung der Rad-Daten in externer Software}{23}{section.5.1}%
 \contentsline {subsection}{\numberline {5.1.1}Vergleich zwischen Tastatur und Spielcontroller}{23}{subsection.5.1.1}%
 \contentsline {subsection}{\numberline {5.1.2}Emulation des Spielcontrollers}{24}{subsection.5.1.2}%
@@ -32,9 +32,8 @@
 \contentsline {section}{\numberline {5.3}Optimierung der Detektion von Bewegungszuständen}{33}{section.5.3}%
 \contentsline {subsection}{\numberline {5.3.1}Unbeabsichtigtes Betätigen von Interaktionstasten}{34}{subsection.5.3.1}%
 \contentsline {subsection}{\numberline {5.3.2}Unbeabsichtigtes Neigen beim Anfahren}{35}{subsection.5.3.2}%
-\contentsline {chapter}{\numberline {6}Diskussion und Ausblick}{38}{chapter.6}%
-\contentsline {chapter}{\numberline {7}Fazit}{40}{chapter.7}%
-\contentsline {chapter}{Literaturverzeichnis}{40}{chapter.7}%
-\contentsline {chapter}{Abbildungsverzeichnis}{43}{chapter*.39}%
-\contentsline {chapter}{Tabellenverzeichnis}{44}{chapter*.40}%
-\contentsline {chapter}{Abkürzungsverzeichnis}{45}{chapter*.41}%
+\contentsline {chapter}{\numberline {6}Abschlussdiskussion}{38}{chapter.6}%
+\contentsline {chapter}{Literaturverzeichnis}{39}{chapter.6}%
+\contentsline {chapter}{Abbildungsverzeichnis}{42}{chapter*.39}%
+\contentsline {chapter}{Tabellenverzeichnis}{43}{chapter*.40}%
+\contentsline {chapter}{Abkürzungsverzeichnis}{44}{chapter*.41}%
