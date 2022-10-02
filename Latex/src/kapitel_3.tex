@@ -70,12 +70,7 @@ Da die Daten von einem Rollstuhl kommen, liegt die Abbildung auf einem simuliert
 Um die Raddaten der zwei Räder auf eine Bewegung und Rotation eines Rollstuhls umzurechnen, muss erst festgestellt werden, welche Drehbewegungen zu welchen Rollstuhlbewegungen führt.
 Dabei können vier vereinfachte Fälle unterschieden werden:
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\textwidth]{wheelchairCases.PNG}
-    \caption{Die Bewegungs-Fälle des Rollstuhls aus der Vogelperspektive}
-    \label{fig:wheelchairCases}
-\end{figure}
+\input{./sketches/wheelchairCases.tex}
 
 \textbf{Fall 1:} Drehen sich die Räder mit gleicher Geschwindigkeit in dieselbe Richtung, ruft dies eine Bewegung nach vorne oder hinten aus (Abbildung \ref{fig:wheelchairCases}, Fall 1).
 
@@ -101,12 +96,7 @@ Im Folgenden wird die Berechnung der Bewegungsanteile aufgezeigt, bestehend aus 
     \vec{r_{3}}   & : \ \mathrm{Rotationsvektor\ Fall3}\ [\si{\metre/\second}]
 \end{align}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.75\textwidth]{WheelchairMath.PNG}
-    \caption{Skizze des Rollstuhls aus der Vogelperspektive mit Bewegungsvektoren}
-    \label{fig:wheelchairMath}
-\end{figure}
+\input{./sketches/wheelchairMath.tex}
 
 Zunächst müssen die Rotationen der Räder dekonstruiert werden.
 Dabei lässt sich die Rotation eines Rades in zwei Komponenten aufspalten (siehe Abbildung \ref{fig:wheelchairMath}).
