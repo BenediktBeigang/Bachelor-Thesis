@@ -1,4 +1,4 @@
-# 5. Abbildung der empfangenen Daten auf ein Eingabegerät
+# 5. Abbildung der empfangenen Daten auf einem Eingabegerät
 ___
 ```toc
 ```

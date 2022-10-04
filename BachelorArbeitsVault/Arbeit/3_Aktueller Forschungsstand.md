@@ -1,4 +1,4 @@
-# Stand der Forschung
+# Aktueller Forschungsstand
 Die Verwendung eines Rollstuhls als Eingabegerät, ist in der Forschung vor allem in Bereichen zu finden, welche sich mit der Inklusion körperlich beeinträchtigter Menschen befassen.
 Dabei werden oftmals aufwändige Konstruktionen um einen Rollstuhl herum benötigt, um die Rotationen der Räder zu messen und gleichzeitig mithilfe von Motoren verschiedene Untergründe und Bewegungen zu simulieren. 
 

@@ -6,11 +6,10 @@
       {
         "id": "61fc18fcbe9dd326",
         "type": "leaf",
-        "dimension": 99.99999999999999,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Arbeit/6_Erkenntnis.md",
+            "file": "SprintBerichte/Test.md",
             "mode": "source",
             "source": false
           }
@@ -70,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Arbeit/6_Erkenntnis.md",
+                "file": "SprintBerichte/Test.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,15 +98,15 @@
   },
   "active": "61fc18fcbe9dd326",
   "lastOpenFiles": [
-    "Arbeit/5_Abbildung der empfangenen Daten auf ein Eingabegerät.md",
-    "ToDo-Board.md",
-    "Arbeit/2_Einleitung.md",
-    "Master.md",
-    "Arbeit/6_Erkenntnis.md",
-    "Arbeit/Stand der Forschung.md",
-    "Arbeit/7_Ausblick.md",
+    "Arbeit/6_Abschlussdiskussion.md",
+    "Arbeit/5_Abbildung der empfangenen Daten auf einem Eingabegerät.md",
+    "Arbeit/4_Entwicklung des eingebetteten Systems.md",
+    "Arbeit/3_Aktueller Forschungsstand.md",
+    "Arbeit/2_Begriffsklärung.md",
+    "Arbeit/1_Einleitung.md",
+    "Arbeit/0_Abstract.md",
+    "Arbeit/0_Inhaltsverzeichnis.md",
     "Arbeit/Theorie.md",
-    "Arbeit/3_Begriffsklärung.md",
-    "Arbeit/4_Entwicklung des eingebetteten Systems.md"
+    "Arbeit/OLD.md"
   ]
 }

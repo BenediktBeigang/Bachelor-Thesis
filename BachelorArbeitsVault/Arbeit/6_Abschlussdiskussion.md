@@ -1,10 +1,16 @@
-# 4. Ausblick
+# 4. Abschlussdiskussion
 ___
+In dieser Arbeit wurde sich zum Ziel gesetzt, ein kostengünstiges System zu entwickeln, mithilfe es einem Nutzer möglich ist, einen Rollstuhl als Eingabegerät an seinem Heimcomputer zu nutzen.
+Dazu musste ein eingebettetes System entworfen werden, welches die Rotationsdaten der Räder misst und an eine auf dem Heimcomputer laufende Rollstuhl-Software übermittelt.
+Die Software soll dann die Eingaben des Nutzers auf dem Rollstuhl, auf Eingaben eines Spielcontrollers abbilden, um so fremde Software steuern zu können.
+
 In der vorliegenden Arbeit konnte das zum Ziel gesetzte System erfolgreich entwickelt werden.
-Das eingebettete System ist in der Lage, die Rotation der Räder des Rollstuhls zu messen und an eine extern laufende Software zu übermitteln.
-Dabei werden ausreichende Bandbreiten erreicht, sodass flüssige Eingaben möglich sind.
-Mit den empfangenen Daten konnten Eingaben auf einen Spielcontroller abgebildet werden.
-In einem dreidimensionalen Raum ist es dem Nutzer möglich sich fortzubewegen, frei umzuschauen und vier Aktionstasten zu betätigen, durch gezielte Drehungen der Räder.
+Das eingebettete System ist in der Lage, die Rotation der Räder des Rollstuhls mithilfe des Gyroskops MPU-6050 präzise zu messen, ohne dass der Nutzer eine hardwarebedingte maximale Geschwindigkeit zu erreicht.
+Für die Übermittlung der Daten haben sich die beiden getesteten Übertragungsprotokolle WiFi und ESP-Now als den Anforderungen entsprechend erwiesen.
+Sie erreichen beide ausreichende Bandbreiten, sodass flüssige Eingaben möglich sind.
+Die Verbindung mit WiFi ist im Vergleich jedoch ein wenig stabiler.
+Es konnten Verfahren entwickelt werden, mit denen die empfangenen Daten auf Eingaben eines Spielcontrollers abgebildet werden konnten.
+So ist es dem Nutzer möglich, in einem dreidimensionalen Raum sich fortzubewegen, frei umzuschauen und vier Aktionstasten zu betätigen, durch gezielte Drehungen der Räder.
 Dabei konnten vom Nutzer unerwünschte Eingaben, sprich Abweichungen von der eigentlichen Eingabe, minimiert werden.
 
 Es ist jedoch anzuzweifeln, ob die Anzahl möglicher Eingaben ausreichend ist, um in komplexen virtuellen Welten zu navigieren.
