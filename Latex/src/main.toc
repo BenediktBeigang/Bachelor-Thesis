@@ -30,8 +30,8 @@
 \contentsline {subsection}{\numberline {5.2.3}Bewegungszustände}{27}{subsection.5.2.3}%
 \contentsline {subsection}{\numberline {5.2.4}Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen}{29}{subsection.5.2.4}%
 \contentsline {section}{\numberline {5.3}Optimierung der Detektion von Bewegungszuständen}{30}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Unbeabsichtigtes Betätigen von Interaktionstasten}{31}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Unbeabsichtigtes Neigen beim Anfahren}{32}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.1}Unbeabsichtigtes Betätigen von Aktionstasten}{31}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Unbeabsichtigtes Neigen beim Anfahren}{33}{subsection.5.3.2}%
 \contentsline {chapter}{\numberline {6}Abschlussdiskussion}{35}{chapter.6}%
 \contentsline {chapter}{Literaturverzeichnis}{}{chapter.6}%
 \contentsline {chapter}{Abbildungsverzeichnis}{}{chapter*.39}%

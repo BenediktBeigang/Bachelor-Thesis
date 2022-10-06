@@ -105,6 +105,7 @@ Zum einen in den Minimum-Anteil $m$, den sich beide Räder drehen,
     m = \min{(\left| \omega_L \right|,\left| \omega_R\right|)}
 \end{align}
 
+\newpage
 zum anderen in den Overshoot-Anteil $o$, den sich ein Rad schneller dreht als das andere.
 \begin{align}
     o = \left|\left| \omega_L \right|-\left| \omega_R\right| \right|
@@ -236,10 +237,11 @@ Im nächsten Kapitel wird darauf eingegangen, welche Bewegungszustände existier
 \subsection{Bewegungszustände}
 Um alle Bewegungszustand-Permutationen ermitteln zu können, muss berücksichtigt werden, dass sich ein Rad in drei Zuständen befinden kann: Still stehend, nach vorne drehend und nach hinten drehend.
 Zwei Räder mit jeweils drei Zuständen ergeben dabei neun Bewegungszustände ($3^2 = 9$), welche in Abbildung \ref{fig:wheelstates} skizziert sind.
+Jedoch lässt sich die Menge von Bewegungszuständen in folgende disjunkte Teilmengen unterteilen:
 
 \input{./sketches/wheelchairStates.tex}
 
-Jedoch lässt sich die Menge von Bewegungszuständen in folgende disjunkte Teilmengen unterteilen:
+\newpage
 \begin{itemize}
     \item \textit{Ruhezustand}: kein Rad dreht sich (5)
     \item \textit{Rotation um die eigene Achse}: Räder drehen sich gegeneinander (4, 6)
@@ -296,7 +298,7 @@ Aktionen, wie ein Tastendruck auf dem emulierten Spielcontroller sind in diesen 
 Jedoch können bestimmte Bewegungsmuster, die nicht zwangsläufig notwendig sind, genutzt werden, um weitere Interaktionen abzubilden.
 Werden für das Drehen des Rollstuhls nur die Zustände genutzt, bei denen sich die Räder gegeneinander drehen (Abb. \ref{fig:wheelstates} Zustand 4 und 6), so bleiben vier Zustände übrig, die mit anderen Interaktionen belegt werden können (Abb. \ref{fig:wheelstates} Zustand 1, 3, 7, 9).
 Bei diesen vier Mustern handelt es sich um die Einzelradbewegungs-Zustände.
-Diese können dann beispielsweise für das Drücken der Interaktionstasten des Spielcontrollers (\textit{A}, \textit{B}, \textit{X}, \textit{Y}) genutzt werden.
+Diese können dann beispielsweise für das Drücken der Aktionstasten des Spielcontrollers (\textit{A}, \textit{B}, \textit{X}, \textit{Y}) genutzt werden.
 
 Bislang wurde die Anzahl der möglichen Interaktionen durch die Anzahl der Bewegungszustände begrenzt.
 Will man weitere Interaktionen abbilden, so bleibt nur die Geschwindigkeit mit der sich die Räder drehen oder die Zeit, um Anweisungen zu kodieren.
@@ -305,8 +307,7 @@ Dazu wäre nötig, zwei Zustände zu definieren, wie zum Beispiel ein Rad kurz o
 Jedoch verkompliziert dies die Eingabe erheblich für den Nutzer, sodass diese Methode nicht weiter verfolgt wird.
 Eine Alternative dazu ist die Geschwindigkeit mit einzubeziehen.
 Teilt man den Wertebereich der Geschwindigkeiten eines Rades, so lässt sich in der Theorie die Anzahl der Bewegungszustände verdoppeln.
-Dazu wird der Wertebereich zunächst mithilfe des schon bekannten Schwellenwertes $s_1=100$ geteilt.
-\footnote{Von einer weiteren Teilung ist abzuraten, da es sonst für den Nutzer schwierig wird, die Räder mit den gewünschten beziehungsweise notwendigen Geschwindigkeiten zu drehen.}
+Dazu wird der Wertebereich zunächst mithilfe des schon bekannten Schwellenwertes $s_1=100$ geteilt\footnote{Von einer weiteren Teilung ist abzuraten, da es sonst für den Nutzer schwierig wird, die Räder mit den gewünschten beziehungsweise notwendigen Geschwindigkeiten zu drehen.}.
 Die Unterscheidung zwischen langsamer und schneller Rotation ist jedoch intuitiv von jedem Nutzer begreifbar und umsetzbar.
 Im Wertebereich der langsamen Bewegungen können nun Bewegungen, wie das Neigen des Kamerawinkels, abgebildet werden.
 Dabei wurde sich für die Bewegungszustände 2 (Neigung nach oben) und 8 (Neigung nach unten) entschieden.
@@ -332,14 +333,15 @@ So ist die Anzahl der tatsächlich sinnvollen Bewegungsmuster kleiner als die th
 Es muss bei jedem Zustand und jeder Interaktion abgewogen werden, ob eine Teilung des Wertebereichs sinnvoll erscheint, oder den Nutzer behindert.
 Trotz der verringerten Anzahl an Bewegungsmustern, sind beim Testen\footnote{Zum Testen des Systems und Aufnehmen der Daten wurde \textit{Counter-Strike: Global Offensive} verwendet.} der \textit{Abbildung auf einen simulierten Rollstuhl mit zusätzlichen Interaktionen} zwei primäre Probleme beobachtet worden, bei denen fehlerhafte Eingaben getätigt werden.
 
-\subsection{Unbeabsichtigtes Betätigen von Interaktionstasten}
+\subsection{Unbeabsichtigtes Betätigen von Aktionstasten}
 In den ersten Testreihen wurde für die Detektion von einer \textit{Einzelradbewegung} und dem Teilen des Wertebereichs in schnelle und langsame Bewegungen derselbe Schwellwert $s_1 = 100$ verwendet.
-Unter Verwendung dieser Methode kommt es beim Anfahren oder Bremsen (\textit{Sichtachsenbewegung}) zum unbeabsichtigten Betätigen von Interaktionstasten.
+Unter Verwendung dieser Methode kommt es beim Anfahren oder Bremsen (\textit{Sichtachsenbewegung}) zum unbeabsichtigten Betätigen von Aktionstasten.
 Da sich die Räder nicht mit derselben Geschwindigkeit drehen, gibt es ein kurzes Zeitintervall, in dem ein Rad unter dem Schwellwert und ein Rad über dem Schwellenwert liegt.
 Aus der Abbildung \ref{fig:1_threshold} ist abzulesen, dass für dieses Zeitintervall die Bedingung der \textit{Einzelradbewegung} gilt, sodass eine Interaktionstaste betätigt wird.
 
 \input{./plots/1_threshold.tex}
 
+\newpage
 Dieses Problem lässt sich über das Einführen eines neuen \textit{Einzelradbewegung} Schwellenwertes beheben.
 Wählt man für diesen einen geringeren Wert $s_2 = 25$ als für den Schwellwert für das Teilen des Wertebereichs $s_1$, entsteht eine Pufferzone.
 Beim Beschleunigen aus der Ruhe überschreiten die Gyroskop-Werte zunächst nacheinander $s_2$.
@@ -365,6 +367,7 @@ Durch das Einführen der neuen Schwellenwerte müssen folgende Teilmengen-Bewegu
     ((\omega_L > 0) \Leftrightarrow (\omega_R > 0)) \land (|\omega_L| < s_1) \land (|\omega_R| < s_1)
 \end{align}
 
+\newpage
 \subsection{Unbeabsichtigtes Neigen beim Anfahren}
 Beim Anfahren oder Bremsen (\textit{Sichtachsenbewegung}) wurde beobachtet, dass für ein kurzes Zeitintervall der Kamerawinkel unbeabsichtigt geneigt wird.
 Ähnlich wie beim vorangegangenen Problem wird auch hier beim Übergang von einem Zustand zum Nächsten ein unerwünschter Zwischenzustand erreicht.
@@ -372,7 +375,7 @@ In diesem Fall gibt es beim Beschleunigen ein kurzes Zeitinterval, in dem die Ro
 
 \input{./plots/ohneAcc.tex}
 
-Da die Fehldetektion immer dann auftritt, wenn sich die Geschwindigkeit der Räder ändert, ist der hier verwendete Lösungsansatz, die Bedingung des Neigungs-Zustandes zu erweitern.
+Da die Fehldetektion immer dann auftritt, wenn sich die Geschwindigkeit der Räder ändert, ist der hier verwendete Lösungsansatz, die Bedingung des\\Neigungs-Zustandes zu erweitern.
 In dieser wird nun auch abgefragt, ob die Summe der Änderungsraten $a$ der Gyroskope unter einem neuen Schwellenwert $s_3$ liegt.
 Haben die Räder ihre Zielgeschwindigkeit erreicht, fällt die Änderungsrate unter $s_3$, sodass der nächste korrekte Zustand detektiert werden kann.
 In den Tests hat sich $s_3 = 15$ als ein akzeptabler Wert herausgestellt, wie aus den Diagrammen abzulesen ist.
@@ -381,6 +384,7 @@ Für die Berechnung der Änderungsrate wird folgende Berechnung verwendet:
     a = |(\omega_{L,[1]} - \omega_{L,[0]})| + |((\omega_{R,[1]} - \omega_{R,[0]})|
 \end{align}
 
+\newpage
 Die Bedingung des Teilmengen-Zustands \textit{Neigen} muss wie folgt ergänzt werden:
 
 \textbf{\textit{Neigen}}
@@ -388,10 +392,10 @@ Die Bedingung des Teilmengen-Zustands \textit{Neigen} muss wie folgt ergänzt we
     ((\omega_L > 0) \Leftrightarrow (\omega_R > 0)) \land (|\omega_L| < s_1) \land (|\omega_R| < s_1) \land (a < s_3)
 \end{align}
 
-\input{./plots/mitAcc.tex}
-
 Aus der Abbildung \ref{fig:mitAcc} ist abzulesen, dass zwischen dem \textit{Sichtachsenbewegung}-Zustand und dem \textit{Neigen}-Zustand nun ein kurzer Ruhezustand existiert.
 Diese Verzögerung bei der Fortbewegung ist vom Nutzer kaum bis gar nicht wahrnehmbar.
 Im gezeigten Beispiel beträgt diese nur etwa 70ms.
 Jedoch ist anzumerken, dass diese Methode vor allem bei ruckartigen Bewegungen funktioniert, da besonders dann die Änderungsrate schnell einen registrierbaren Ausschlag hat.
 Verändert sich die Geschwindigkeit nicht schnell genug, kann es immer noch zu registrierbaren Neigungen kommen.
+
+\input{./plots/mitAcc.tex}
