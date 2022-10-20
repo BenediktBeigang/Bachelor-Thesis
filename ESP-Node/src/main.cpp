@@ -73,6 +73,6 @@ void ESPNow_Loop()
 
 void loop()
 {
-  WebSocket_Loop();
-  // ESPNow_Loop();
+  // WebSocket_Loop();
+  ESPNow_Loop();
 }

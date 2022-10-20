@@ -11,9 +11,10 @@ public static class Program
     {
         Start_Loops();
         Controller.Start();
-        if (args.Length == 0) Connection._Connection = Connection.SetConnection(ConnectionType.WIFI);
-        if (args.Length == 1 && args[0] == "wifi") Connection._Connection = Connection.SetConnection(ConnectionType.WIFI);
-        if (args.Length == 2 && args[0] == "espnow") Connection._Connection = Connection.SetConnection(ConnectionType.ESP_NOW, args[1]);
+
+        Connection._Connection = Connection.SetConnection(ConnectionType.ESP_NOW);
+        Load_Options();
+
         Exit_Code();
     }
 

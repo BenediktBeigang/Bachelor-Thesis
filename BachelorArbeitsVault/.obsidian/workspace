@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "SprintBerichte/Test.md",
+            "file": "Software/Kommunikation.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SprintBerichte/Test.md",
+                "file": "Software/Kommunikation.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -98,15 +98,15 @@
   },
   "active": "61fc18fcbe9dd326",
   "lastOpenFiles": [
+    "Quellen/General.md",
+    "Hardware/Batterie.md",
+    "Hardware/Kommunikation/ESP-Now.md",
+    "Software/Kommunikation.md",
+    "SprintBerichte/Test.md",
     "Arbeit/6_Abschlussdiskussion.md",
     "Arbeit/5_Abbildung der empfangenen Daten auf einem Eingabegerät.md",
     "Arbeit/4_Entwicklung des eingebetteten Systems.md",
     "Arbeit/3_Aktueller Forschungsstand.md",
-    "Arbeit/2_Begriffsklärung.md",
-    "Arbeit/1_Einleitung.md",
-    "Arbeit/0_Abstract.md",
-    "Arbeit/0_Inhaltsverzeichnis.md",
-    "Arbeit/Theorie.md",
-    "Arbeit/OLD.md"
+    "Arbeit/2_Begriffsklärung.md"
   ]
 }
