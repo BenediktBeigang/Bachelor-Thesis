@@ -1,4 +1,4 @@
-# Bachelor-Thesis
+# Development and investigation of the usability of a wheelchair as an input device for navigation in virtual space
 In this Projekt I want to use the rotation of wheels of a wheelchair to control an emulated XBox-Controller. For my embedded-system I use an ESP32 (Board: DevKit C V4) and the MPU6050 Gyroscope. The components are held together by a 3D-printed box that also contains a power bank for power-supply. On the other end is a .Net 6.0 console application receiving the data and using it to map the gyro-data to different controller-inputs. As long as other software has XBox-Controller support, my Software can be used to control it.
 
 ## Folder
